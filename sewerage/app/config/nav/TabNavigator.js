@@ -1,40 +1,53 @@
 import React from 'react';
 import {TabNavigator, TabBarBottom} from 'react-navigation';
-import UIPage from '../../../example/ui/index'
-import BusinessPage from '../../../example/business/index'
-import {TabBarItem} from '../../core/widget/index'
+import TabBarItem from '../../core/widget/TabBarItem'
+import * as Modules from '../../project/modules';
+import * as Asserts from '../../project/assets'
 
 const Dimensions = require('Dimensions');
 let {width} = Dimensions.get('window');
 const scale = width / 375.0;
 
-
 const TabNav = TabNavigator(
     {
-        Home: {
-            screen: UIPage,
+        Work: {
+            screen: Modules.WorkScreen,
             navigationOptions: {
-                tabBarLabel: 'UI组件',
+                tabBarLabel: '工作',
                 tabBarIcon: ({focused, tintColor}) => (
                     <TabBarItem
                         showMessage={false}
                         focused={focused}
-                        selectedImage={require('../../project/images/icon_work_selected.png')}
-                        normalImage={require('../../project/images/icon_work.png')}
+                        selectedImage={Asserts.Home.work_selected}
+                        normalImage={Asserts.Home.work}
                     />
                 )
             },
         },
-        MailList: {
-            screen: BusinessPage,
+        Message: {
+            screen: Modules.MessageScreen,
             navigationOptions: {
-                tabBarLabel: '业务组件',
+                tabBarLabel: '消息',
                 tabBarIcon: ({focused, tintColor}) => (
                     <TabBarItem
                         showMessage={false}
                         focused={focused}
-                        selectedImage={require('../../project/images/icon_maillist_selected.png')}
-                        normalImage={require('../../project/images/icon_maillist.png')}
+                        selectedImage={Asserts.Home.work_selected}
+                        normalImage={Asserts.Home.work}
+                    />
+                )
+            },
+        },
+        Me: {
+            screen: Modules.MeScreen,
+            navigationOptions: {
+                tabBarLabel: '我的',
+                tabBarIcon: ({focused, tintColor}) => (
+                    <TabBarItem
+                        showMessage={false}
+                        focused={focused}
+                        selectedImage={Asserts.Home.work_selected}
+                        normalImage={Asserts.Home.work}
                     />
                 )
             },
@@ -51,8 +64,9 @@ const TabNav = TabNavigator(
             activeTintColor: '#29a1f7',
             inactiveBackgroundColor: 'white',
             inactiveTintColor: '#999999',
-            showLabel: true,
-            style: {height: 55 * scale},
+            style: {
+                height: 55 * scale
+            },
             labelStyle: {
                 marginBottom: 5 * scale,
                 fontSize: 10 * scale,

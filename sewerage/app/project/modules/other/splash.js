@@ -1,19 +1,18 @@
-import React, {Component} from 'react';
+import React from 'react';
 import {
     Image,
     View,
+    Text,
     Dimensions,
-    StatusBar
 } from 'react-native';
-import {
-    RkText,
-} from 'react-native-ui-kitten'
 import {ProgressBar} from '../../components';
 import {NavigationActions} from 'react-navigation';
 import * as Utils from '../../../core/utils'
+import {WrapScreen} from "../wrap";
+
 let timeFrame = 500;
 
-export class SplashScreen extends Component {
+export class SplashScreen extends WrapScreen {
 
     constructor(props) {
         super(props);
@@ -23,12 +22,12 @@ export class SplashScreen extends Component {
     }
 
     componentDidMount() {
-        StatusBar.setHidden(true, 'none');
+        this.hideStatusBar();
         this.timer = setInterval(() => {
             if (this.state.progress === 1) {
                 clearInterval(this.timer);
                 setTimeout(() => {
-                    StatusBar.setHidden(false, 'slide');
+                    this.showStatusBar('transparent');
                     let toHome = NavigationActions.reset({
                         index: 0,
                         actions: [NavigationActions.navigate({routeName: 'Home'})]
@@ -44,7 +43,6 @@ export class SplashScreen extends Component {
                 this.setState({progress});
             }
         }, timeFrame)
-
     }
 
     render() {
@@ -54,8 +52,8 @@ export class SplashScreen extends Component {
                 <View>
                     <Image style={[styles.image, {width}]} source={require('../../assets/images/splashBack.png')}/>
                     <View style={styles.text}>
-                        <RkText rkType='light' style={styles.hero}>React Native</RkText>
-                        <RkText rkType='logo' style={styles.appName}>UI Kitten</RkText>
+                        <Text style={styles.hero}>中联</Text>
+                        <Text style={styles.appName}>污水治不理</Text>
                     </View>
                 </View>
                 <ProgressBar

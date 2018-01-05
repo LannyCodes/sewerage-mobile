@@ -1,5 +1,6 @@
 import {StackNavigator} from 'react-navigation';
 import * as Modules from '../../project/modules';
+import TabNav from "./TabNavigator";
 
 /**
  * 欢迎页
@@ -9,20 +10,20 @@ const Splash = {
     Splash: {
         screen: Modules.SplashScreen
     }
-}
+};
 
 /**
  * 首页
  * @type {{Home: {screen: Settings}}}
  */
 const Home = {
-    Home: {screen: Modules.Settings}
+    Home: {screen: TabNav}
 };
 
 
 const Navigator = StackNavigator(
     {
-        ...Splash,
+        // ...Splash,
         ...Home,
     }, {
         navigationOptions: {
