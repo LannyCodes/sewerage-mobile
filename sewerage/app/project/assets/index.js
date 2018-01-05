@@ -6,7 +6,12 @@ const Home = {
     work_selected: require('./images/icon_work_selected.png')
 };
 
+const Header = {
+    filter: require('./images/icon_header_filter.png'),
+}
+
 
 export {
-    Home
+    Home,
+    Header
 }
