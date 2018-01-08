@@ -55,7 +55,7 @@ export class KHeader extends Component {
                             onPress={this.props.onLeftPress}
                         />
                     }
-                    centerComponent={{text: t, style: {fontSize: 20, color: '#666'}}}
+                    centerComponent={{text: t, style: {fontSize: 17, color: '#666'}}}
                     rightComponent={
                         this._renderRight(header)
                     }

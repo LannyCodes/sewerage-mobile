@@ -14,17 +14,26 @@ const Splash = {
 
 /**
  * 首页
- * @type {{Home: {screen: Settings}}}
+ * @type {{Main: {screen: TabNav}}}
  */
 const Main = {
     Main: {screen: TabNav}
 };
 
+const Home = {
+    AuditManagement: {screen: Modules.AuditManagementScreen},
+    DataStatistics: {screen: Modules.DataStatisticsScreen},
+    DeviceQuery: {screen: Modules.DeviceQueryScreen},
+    FaultList: {screen: Modules.FaultListScreen},
+    InspectionManagement: {screen: Modules.InspectionManagementScreen},
+    MaintenanceManagement: {screen: Modules.MaintenanceManagementScreen}
+};
 
 const Navigator = StackNavigator(
     {
         // ...Splash,
         ...Main,
+        ...Home
     }, {
         navigationOptions: {
             header: null,

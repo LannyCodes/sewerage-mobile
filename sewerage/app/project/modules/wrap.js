@@ -53,6 +53,13 @@ export class WrapScreen extends Component {
         if (_.isNull(this.props.navigation)) return;
         return this.props.navigation.state.routeName
     }
+
+
+    // 横屏
+    setRequestedOrientation = (param) => {
+        // 'landscape'--横屏
+        // 'portrait'--竖屏
+    }
 }
 
 const styles = Utils.PLStyle({
