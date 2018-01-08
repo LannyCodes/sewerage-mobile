@@ -15,7 +15,7 @@ export class WorkScreen extends WrapScreen {
     }
 
     static defaultProps = {
-        header: '工作'
+        header: 'none'
     }
 
     _render() {
