@@ -1,6 +1,6 @@
 import {View} from "react-native";
 import React, {Component} from "react";
-import * as Utils from "../../core/utils";
+import * as Utils from "../../core/utils/index";
 import {Header, Icon} from "react-native-elements";
 import _ from 'lodash'
 
@@ -98,10 +98,3 @@ export class KHeader extends Component {
         return header.title === '' || !(_.has(header, 'title') || _.isNull(header.title))
     }
 }
-
-const styles = Utils.PLStyle({
-    headerImage: {
-        width: 18,
-        height: 18
-    }
-});
