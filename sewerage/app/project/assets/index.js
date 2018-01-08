@@ -3,15 +3,13 @@
  */
 const Home = {
     work: require('./images/icon_work.png'),
-    work_selected: require('./images/icon_work_selected.png')
+    work_selected: require('./images/icon_work_selected.png'),
+    message: require('./images/icon_message.png'),
+    message_selected: require('./images/icon_message_selected.png'),
+    me: require('./images/icon_person.png'),
+    me_selected: require('./images/icon_person_selected.png'),
 };
-
-const Header = {
-    filter: require('./images/icon_header_filter.png'),
-}
-
 
 export {
     Home,
-    Header
 }

@@ -32,8 +32,8 @@ const TabNav = TabNavigator(
                     <TabBarItem
                         showMessage={false}
                         focused={focused}
-                        selectedImage={Asserts.Home.work_selected}
-                        normalImage={Asserts.Home.work}
+                        selectedImage={Asserts.Home.message_selected}
+                        normalImage={Asserts.Home.message}
                     />
                 )
             },
@@ -46,8 +46,8 @@ const TabNav = TabNavigator(
                     <TabBarItem
                         showMessage={false}
                         focused={focused}
-                        selectedImage={Asserts.Home.work_selected}
-                        normalImage={Asserts.Home.work}
+                        selectedImage={Asserts.Home.me_selected}
+                        normalImage={Asserts.Home.me}
                     />
                 )
             },
