@@ -16,15 +16,15 @@ const Splash = {
  * 首页
  * @type {{Home: {screen: Settings}}}
  */
-const Home = {
-    Home: {screen: TabNav}
+const Main = {
+    Main: {screen: TabNav}
 };
 
 
 const Navigator = StackNavigator(
     {
         // ...Splash,
-        ...Home,
+        ...Main,
     }, {
         navigationOptions: {
             header: null,

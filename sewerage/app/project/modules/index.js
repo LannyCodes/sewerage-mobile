@@ -1,2 +1,2 @@
 export * from './other';
-export * from './home'
+export * from './main'
