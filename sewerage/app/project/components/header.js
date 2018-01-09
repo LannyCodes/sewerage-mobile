@@ -8,10 +8,10 @@ import _ from 'lodash'
  *
  * 使用：
  如果header typeof Object ，会带有arrow-left ， 如果是 static defaultProps = {header="标题"} 则只有title
- static defaultProps = {
+ static defaultProps = {   // 只有标题
         header: '标题'
     }
- static defaultProps = {
+ static defaultProps = {  // 左右中都有
         header: {
             title: "标题",
             right: {
@@ -21,6 +21,12 @@ import _ from 'lodash'
                     alert('aaa')
                 }
             }
+        }
+    }
+
+ static defaultProps = {  // 左中
+        header: {
+            title: "标题",
         }
     }
  */
@@ -48,7 +54,7 @@ export class KHeader extends Component {
                     backgroundColor={'white'}
                     leftComponent={
                         <Icon
-                            size={26}
+                            size={24}
                             name={'chevron-left'}
                             type='feather'
                             color={'#666'}
@@ -67,11 +73,11 @@ export class KHeader extends Component {
     _renderRight(header) {
         let right;
         if (this.isNoRight(header)) {
-            right = (<View style={{width: 26}}/>)
+            right = (<View style={{width: 18}}/>)
         } else {
             right = (
                 <Icon
-                    size={26}
+                    size={18}
                     name={header.right.icon}
                     type={header.right.type}
                     color={'#666'}

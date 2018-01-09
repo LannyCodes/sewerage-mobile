@@ -1,7 +1,7 @@
 import React from 'react';
 import {
     View,
-    Text, FlatList,
+    Text, FlatList, TouchableOpacity,
 } from 'react-native';
 import {WrapScreen} from "../wrap";
 import {GetInspectionTaskList} from "../../api";
@@ -12,6 +12,13 @@ export class InspectionManagementScreen extends WrapScreen {
     static defaultProps = {
         header: {
             title: "巡检任务",
+            right: {
+                icon: 'filter',
+                type: 'feather',
+                onPress: () => {
+                    alert('筛选')
+                }
+            }
         }
     }
 
@@ -46,7 +53,11 @@ export class InspectionManagementScreen extends WrapScreen {
     };
 
     _renderItem = ({item}) => (
-        <View style={styles.cardItem}>
+        <TouchableOpacity style={styles.cardItem}
+                          onPress={()=>{
+                              this.props.navigation.navigate()
+                          }}
+        >
             <View style={styles.row}>
                 <Text style={styles.cardTitle}>{item.title}</Text>
                 {this._renderCardStatus(item.status)}
@@ -56,7 +67,7 @@ export class InspectionManagementScreen extends WrapScreen {
                 <Text style={styles.cardPerson}>{item.person}</Text>
                 <Text style={styles.cardTime}>{item.time}</Text>
             </View>
-        </View>
+        </TouchableOpacity>
     );
 
     _render() {

@@ -4,6 +4,7 @@ import {View} from "react-native";
 import _ from 'lodash'
 import React from "react";
 import {KHeader} from "../components";
+
 /**
  * BaseScreen
  */
