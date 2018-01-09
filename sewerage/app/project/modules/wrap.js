@@ -1,10 +1,11 @@
 import * as Utils from "../../core/utils/index";
-import { Component } from 'react'
-import { View } from "react-native";
+import {Component} from 'react'
+import {View} from "react-native";
 import _ from 'lodash'
 import React from "react";
-import { KHeader } from "../components";
+import {KHeader} from "../components";
 import Orientation from 'react-native-orientation';
+import store from '../redux/store/configStore'
 
 /**
  * BaseScreen
@@ -18,6 +19,7 @@ export class WrapScreen extends Component {
 
     constructor(props) {
         super(props);
+        this.store = store
         this.routeName = this.getCurrentRouteName();
     }
 
@@ -33,7 +35,7 @@ export class WrapScreen extends Component {
             <View style={styles.container}>
                 <KHeader header={this.props.header} title={t} onLeftPress={() => {
                     this.props.navigation.goBack()
-                }} />
+                }}/>
                 {this._render()}
             </View>
         )

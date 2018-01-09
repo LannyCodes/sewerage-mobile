@@ -66,7 +66,7 @@ const filterArray = [
     }
 ];
 
-export class DeviceQueryScreen extends WrapScreen {
+export  default class DeviceQueryScreen extends WrapScreen {
 
     constructor(props) {
         super(props);

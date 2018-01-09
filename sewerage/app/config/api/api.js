@@ -1,5 +1,5 @@
 import {create} from 'apisauce'
-import {header, timeout} from "../../config/api/api.config";
+import {header, timeout} from "./api.config";
 
 const api = (baseUrl) => create({
     baseURL: baseUrl,

@@ -4,11 +4,12 @@ import {
     Text, FlatList, TouchableOpacity,
 } from 'react-native';
 import {WrapScreen} from "../wrap";
-import {GetInspectionTaskList} from "../../api";
 import * as Utils from "../../../core/utils";
+import {connect} from 'react-redux';
+import * as Actions from '../../redux/actions'
+import Urls from "../../../config/api/urls";
 
-export class InspectionManagementScreen extends WrapScreen {
-
+class InspectionManagementScreen extends WrapScreen {
     static defaultProps = {
         header: {
             title: "巡检任务",
@@ -22,7 +23,7 @@ export class InspectionManagementScreen extends WrapScreen {
         }
     }
 
-    _keyExtractor = (item, index) => item.id;
+    _keyExtractor = (item, index) => index;
 
     constructor(props) {
         super(props);
@@ -32,12 +33,7 @@ export class InspectionManagementScreen extends WrapScreen {
     }
 
     componentDidMount() {
-        let me = this;
-        new GetInspectionTaskList().start(function (succ) {
-            me.setState({
-                list: succ
-            })
-        })
+        this.store.dispatch(Actions.request(Urls.Inspections.getTaskList));
     }
 
     _renderCardStatus = (status) => {
@@ -54,7 +50,7 @@ export class InspectionManagementScreen extends WrapScreen {
 
     _renderItem = ({item}) => (
         <TouchableOpacity style={styles.cardItem}
-                          onPress={()=>{
+                          onPress={() => {
                               this.props.navigation.navigate()
                           }}
         >
@@ -71,10 +67,10 @@ export class InspectionManagementScreen extends WrapScreen {
     );
 
     _render() {
-        if (this.state.list.length > 0) {
+        if (this.props.inspectionList.length > 0) {
             return (
                 <FlatList
-                    data={this.state.list}
+                    data={this.props.inspectionList}
                     keyExtractor={this._keyExtractor}
                     renderItem={this._renderItem}
                 />
@@ -82,6 +78,15 @@ export class InspectionManagementScreen extends WrapScreen {
         }
     }
 }
+
+//make this component available to the app
+function mapStateToProps(state) {
+    return {
+        inspectionList: state.Request.getTaskList,
+    }
+}
+
+export default connect(mapStateToProps)(InspectionManagementScreen);
 
 const styles = Utils.PLStyle({
     row: {
