@@ -57,6 +57,8 @@ const styles = Utils.PLStyle({
     },
     headContainer: {
         flex: 1.7,
+        justifyContent: 'center',
+        alignItems: 'center',
     },
     configContainer: {
         flex: 1,

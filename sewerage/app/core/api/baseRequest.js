@@ -38,7 +38,7 @@ class BaseRequest {
         }
         api(config.WebServerUrl).post(url, formData)
             .then((response) => {
-                log(response);
+                console.log(response);
                 const {status} = response;
                 if (response.ok) {
                     if (response.status) {

@@ -18,7 +18,6 @@ export class WrapScreen extends Component {
 
     constructor(props) {
         super(props);
-        this.utils = Utils;
         this.routeName = this.getCurrentRouteName();
     }
 
@@ -82,6 +81,6 @@ export class WrapScreen extends Component {
 const styles = Utils.PLStyle({
     container: {
         flex: 1,
-        backgroundColor: 'white'
+        backgroundColor: '#F3F3F3'
     },
 });
