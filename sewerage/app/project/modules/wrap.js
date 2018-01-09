@@ -1,9 +1,10 @@
 import * as Utils from "../../core/utils/index";
-import {Component} from 'react'
-import {View} from "react-native";
+import { Component } from 'react'
+import { View } from "react-native";
 import _ from 'lodash'
 import React from "react";
-import {KHeader} from "../components";
+import { KHeader } from "../components";
+import Orientation from 'react-native-orientation';
 
 /**
  * BaseScreen
@@ -33,7 +34,7 @@ export class WrapScreen extends Component {
             <View style={styles.container}>
                 <KHeader header={this.props.header} title={t} onLeftPress={() => {
                     this.props.navigation.goBack()
-                }}/>
+                }} />
                 {this._render()}
             </View>
         )
@@ -54,11 +55,27 @@ export class WrapScreen extends Component {
         return this.props.navigation.state.routeName
     }
 
-
-    // 横屏
+    // 设置横竖屏，但是是整个应用切换横竖屏了
     setRequestedOrientation = (param) => {
         // 'landscape'--横屏
         // 'portrait'--竖屏
+        switch (param) {
+            case 'landscape':
+                Orientation.lockToLandscape();
+                break;
+            case 'landscapeLeft':
+                Orientation.lockToLandscapeLeft();
+                break;
+            case 'landscapeRight':
+                Orientation.lockToLandscapeRight();
+                break;
+            case 'portrait':
+                Orientation.lockToPortrait();
+                break;
+            default:
+                break;
+        }
+
     }
 }
 

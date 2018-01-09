@@ -13,7 +13,7 @@ export class DataStatisticsScreen extends WrapScreen {
 
     static defaultProps = {
         header: {
-            title: "审核管理",
+            title: "数据统计",
         }
     }
 
