@@ -4,7 +4,6 @@ import {View} from "react-native";
 import _ from 'lodash'
 import React from "react";
 import {KHeader} from "../components";
-
 /**
  * BaseScreen
  */
@@ -17,7 +16,6 @@ export class WrapScreen extends Component {
 
     constructor(props) {
         super(props);
-        this.utils = Utils;
         this.routeName = this.getCurrentRouteName();
     }
 
@@ -65,6 +63,6 @@ export class WrapScreen extends Component {
 const styles = Utils.PLStyle({
     container: {
         flex: 1,
-        backgroundColor: 'white'
+        backgroundColor: '#F3F3F3'
     },
 });
