@@ -3,6 +3,7 @@ import {
     View,
     Text,
     FlatList,
+    TouchableOpacity
 } from 'react-native';
 import {SearchBar, Divider, Icon, Avatar} from 'react-native-elements';
 import * as Utils from "../../../core/utils";
@@ -12,56 +13,50 @@ import {ListFilter} from '../../components';
 const filterArray = [
     {
         title: '类型',
-        key: 0,
         keyName: 'ssb',
+        multipleChoice:false,
         data: [{
             name: '类型一',
             value: '11',
-            key: 0
         }, {
             name: '类型二',
             value: '22',
-            key: 1
         }, {
             name: '类型三',
             value: '33',
-            key: 2
         }]
     },
     {
         title: '规格',
-        key: 1,
         keyName: 'aab',
+        multipleChoice:true,
         data: [{
             name: '规格一',
             value: '11',
-            key: 3
         }, {
             name: '规格二',
             value: '22',
-            key: 4
         }, {
             name: '规格三',
             value: '33',
-            key: 5
+        }, {
+            name: '规格四',
+            value: '44',
         }]
     },
     {
         title: '规格',
-        key: 1,
-        keyName: 'aab',
+        keyName: 'ccs',
+        multipleChoice:false,
         data: [{
             name: '规格一',
             value: '11',
-            key: 3
         }, {
             name: '规格二',
             value: '22',
-            key: 4
         }, {
             name: '规格三',
             value: '33',
-            key: 5
         }]
     }
 ];
@@ -77,10 +72,6 @@ export default class DeviceQueryScreen extends WrapScreen {
     }
 
     _keyExtractor = (item, index) => item.id;
-
-    _renderFilter = () => {
-
-    }
 
     //渲染单行
     _renderItem = () => {
@@ -162,14 +153,15 @@ export default class DeviceQueryScreen extends WrapScreen {
                     keyExtractor={this._keyExtractor}
                     renderItem={this._renderItem}
                 />
-                {this.state.isFilterShow === true ? <View
-                    style={styles.listFilter}
-                >
-                    <ListFilter
-                        filterArray={filterArray}
-                    />
-                </View> : <View/>}
-
+                {this.state.isFilterShow === true ? <ListFilter
+                    containerStyles={{ top: 121 }}
+                    filterArray={filterArray}
+                    maskerClick={() => {
+                        this.setState({
+                            isFilterShow:false,
+                        })
+                    }}
+                /> : <View />}
             </View>
         )
     }
@@ -228,7 +220,7 @@ const styles = Utils.PLStyle({
     listItemName: {
         fontSize: 16,
         color: '#333333',
-
+        // fontFamily:''
     },
     listItemNumbering: {
         color: '#888888',
