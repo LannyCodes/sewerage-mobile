@@ -4,6 +4,21 @@ import api from "../../../../config/api/api";
 import {SUCCESS_CODE, TOKEN_ERROR_CODE} from "../../../../config/api/api.config";
 
 const fetchData = (url, body, dispatch) => {
+    if (!body) {
+        body = {};
+    }
+    let userId;
+    if (!body.hasOwnProperty('userId')) {
+        if (_USERID_) {
+            userId = _USERID_;
+            Object.assign(body, {
+                userId: userId,
+            })
+        }
+    }
+    Object.assign(body, {
+        token: _USERTOKEN_ ? _USERTOKEN_ : ''
+    });
     let formData = new FormData();
     for (let prop in body) {
         if (Array.isArray(body[prop])) {
