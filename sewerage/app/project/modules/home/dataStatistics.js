@@ -4,6 +4,8 @@ import {
     Text,
 } from 'react-native';
 import {WrapScreen} from "../wrap";
+import {ScrollableTabBar} from '../../components/ScrollableTabViewBars';
+import ScrollableTabView from 'react-native-scrollable-tab-view';
 
 export default class DataStatisticsScreen extends WrapScreen {
 

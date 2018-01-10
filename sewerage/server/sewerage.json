@@ -67,5 +67,31 @@
         }
       ]
     }
+  },
+  {
+    "url":"/app/fault/workOrder",//故障工单
+    "method":"get",
+    "response":{
+      "code":0,
+      "message":"",
+      "body": [
+        {
+
+        }
+      ]
+    }
+  },
+  {
+    "url":"/app/fault/list",//故障清单
+    "method":"get",
+    "response":{
+      "code":0,
+      "message":"",
+      "body": [
+        {
+
+        }
+      ]
+    }
   }
 ]
