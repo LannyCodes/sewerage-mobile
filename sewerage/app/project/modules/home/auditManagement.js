@@ -8,7 +8,7 @@ import * as Utils from "../../../core/utils";
 import * as Actions from "../../redux/actions";
 import {connect} from "react-redux";
 import Urls from "../../../config/api/urls";
-import Overlay from "teaset/components/Overlay/Overlay";
+import {ListFilter} from "../../components";
 
 class AuditManagementScreen extends WrapScreen {
 
@@ -22,25 +22,19 @@ class AuditManagementScreen extends WrapScreen {
                 icon: 'filter',
                 type: 'feather',
                 onPress: () => {
-                    this.showPull('top', false, 'Pull from top')
+                    this.setState({
+                        isFilterShow: !this.state.isFilterShow
+                    })
                 }
             }
+        }
+        this.state = {
+            isFilterShow: false
         }
     }
 
     componentDidMount() {
         this.store.dispatch(Actions.request(Urls.Audit.getAuditList));
-    }
-
-
-    showPull(side, modal, text, rootTransform) {
-        let overlayView = (
-            <Overlay.PullView side={side} modal={modal} rootTransform={rootTransform}
-                              ref={v => this.overlayPullView = v}>
-
-            </Overlay.PullView>
-        );
-        Overlay.show(overlayView);
     }
 
 
@@ -77,11 +71,23 @@ class AuditManagementScreen extends WrapScreen {
     _render() {
         if (this.props.auditList.length > 0) {
             return (
-                <FlatList
-                    data={this.props.auditList}
-                    keyExtractor={this._keyExtractor}
-                    renderItem={this._renderItem}
-                />
+                <View style={{flex: 1}}>
+                    <FlatList
+                        data={this.props.auditList}
+                        keyExtractor={this._keyExtractor}
+                        renderItem={this._renderItem}
+                    />
+                    {this.state.isFilterShow === true ?
+                        <ListFilter
+                            containerStyles={{top: 0}}
+                            filterArray={filterArray}
+                            maskerClick={() => {
+                                this.setState({
+                                    isFilterShow: false,
+                                })
+                            }}
+                        /> : <View/>}
+                </View>
             )
         }
     }
@@ -135,3 +141,55 @@ const styles = Utils.PLStyle({
         borderRadius: 20
     }
 })
+
+
+const filterArray = [
+    {
+        title: '类型',
+        keyName: 'ssb',
+        multipleChoice: false,
+        data: [{
+            name: '类型一',
+            value: '11',
+        }, {
+            name: '类型二',
+            value: '22',
+        }, {
+            name: '类型三',
+            value: '33',
+        }]
+    },
+    {
+        title: '规格',
+        keyName: 'aab',
+        multipleChoice: true,
+        data: [{
+            name: '规格一',
+            value: '11',
+        }, {
+            name: '规格二',
+            value: '22',
+        }, {
+            name: '规格三',
+            value: '33',
+        }, {
+            name: '规格四',
+            value: '44',
+        }]
+    },
+    {
+        title: '规格',
+        keyName: 'ccs',
+        multipleChoice: false,
+        data: [{
+            name: '规格一',
+            value: '11',
+        }, {
+            name: '规格二',
+            value: '22',
+        }, {
+            name: '规格三',
+            value: '33',
+        }]
+    }
+];
