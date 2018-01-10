@@ -5,11 +5,10 @@ import {
     StyleSheet
     // Button,
 } from 'react-native';
-import { WrapScreen } from "../wrap";
-import * as Assert from '../../assets';
+import {WrapScreen} from "../wrap";
 import Camera from 'react-native-camera';
 
-export class MessageScreen extends WrapScreen {
+class MessageScreen extends WrapScreen {
     constructor(props) {
         super(props);
     }
@@ -27,19 +26,20 @@ export class MessageScreen extends WrapScreen {
                     ref={(cam) => {
                         this.camera = cam;
                     }}
-                    onBarCodeRead={this._onBarCodeRead.bind(this)}></Camera>
+                    onBarCodeRead={this._onBarCodeRead.bind(this)}/>
             </View>
         )
     }
 }
 
+export default MessageScreen
 const styles = StyleSheet.create({
     container: {
         flex: 1,
         flexDirection: 'row',
-      },
+    },
     camera: {
-        flex:1,
-        backgroundColor:'red',
+        flex: 1,
+        backgroundColor: 'red',
     }
 })

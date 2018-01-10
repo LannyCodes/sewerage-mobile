@@ -1,38 +1,33 @@
 import React, {Component} from 'react';
 import {
     View,
-    Text, TouchableOpacity, FlatList,
+    Text,
+    TouchableOpacity,
+    FlatList,
 } from 'react-native';
 import {WrapScreen} from "../wrap";
-import * as Utils from "../../../core/utils";
-import * as Actions from "../../redux/actions";
 import {connect} from "react-redux";
+import * as Actions from '../../redux/actions'
 import Urls from "../../../config/api/urls";
+import * as Utils from "../../../core/utils";
 
-class AuditManagementScreen extends WrapScreen {
-
-    static defaultProps = {
-        header: {
-            title: "审核管理",
-            right: {
-                icon: 'filter',
-                type: 'feather',
-                onPress: () => {
-                    alert('筛选')
-                }
-            }
-        }
-    }
-
-    _keyExtractor = (item, index) => index;
+class MaintenanceTaskScreen extends WrapScreen {
 
     constructor(props) {
         super(props);
     }
 
-    componentDidMount() {
-        this.store.dispatch(Actions.request(Urls.Audit.getAuditList));
+    static defaultProps = {
+        header: {
+            title: "任务选择",
+        }
     }
+
+    componentDidMount() {
+        const {qrData} = this.props.navigation.state.params; // 获取参数
+        this.store.dispatch(Actions.request(Urls.Maintenance.getMaintenanceTask, {params: qrData})); // 请求
+    }
+    _keyExtractor = (item, index) => index;
 
     _renderCardStatus = (status) => {
         let st = {text: '待执行', color: '#47A9EB', backgroundColor: '#ECF6FD'};
@@ -65,10 +60,10 @@ class AuditManagementScreen extends WrapScreen {
     );
 
     _render() {
-        if (this.props.auditList.length > 0) {
+        if (this.props.tasks.length > 0) {
             return (
                 <FlatList
-                    data={this.props.auditList}
+                    data={this.props.tasks}
                     keyExtractor={this._keyExtractor}
                     renderItem={this._renderItem}
                 />
@@ -80,11 +75,11 @@ class AuditManagementScreen extends WrapScreen {
 //make this component available to the app
 function mapStateToProps(state) {
     return {
-        auditList: state.Request.getAuditList,
+        tasks: state.Maintenance.getMaintenanceTask,
     }
 }
 
-export default connect(mapStateToProps)(AuditManagementScreen);
+export default connect(mapStateToProps)(MaintenanceTaskScreen);
 
 const styles = Utils.PLStyle({
     row: {
