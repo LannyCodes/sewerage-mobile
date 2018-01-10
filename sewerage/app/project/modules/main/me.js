@@ -9,10 +9,7 @@ class MeScreen extends WrapScreen {
 
     constructor(props) {
         super(props);
-    }
-
-    static defaultProps = {
-        header: {
+        this.header = {
             title: "我的",
         }
     }

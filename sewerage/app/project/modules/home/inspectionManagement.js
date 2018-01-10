@@ -10,8 +10,12 @@ import * as Actions from '../../redux/actions'
 import Urls from "../../../config/api/urls";
 
 class InspectionManagementScreen extends WrapScreen {
-    static defaultProps = {
-        header: {
+
+    _keyExtractor = (item, index) => index;
+
+    constructor(props) {
+        super(props);
+        this.header = {
             title: "巡检任务",
             right: {
                 icon: 'filter',
@@ -21,12 +25,7 @@ class InspectionManagementScreen extends WrapScreen {
                 }
             }
         }
-    }
 
-    _keyExtractor = (item, index) => index;
-
-    constructor(props) {
-        super(props);
         this.state = {
             list: []
         }

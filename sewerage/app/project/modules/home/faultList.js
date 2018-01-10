@@ -9,13 +9,11 @@ export default class FaultListScreen extends WrapScreen {
 
     constructor(props) {
         super(props);
-    }
-
-    static defaultProps = {
-        header: {
+        this.header = {
             title: "故障工单",
         }
     }
+
 
     _render() {
         return (

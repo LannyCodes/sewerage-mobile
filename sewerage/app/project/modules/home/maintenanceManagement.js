@@ -9,10 +9,7 @@ export default class MaintenanceManagementScreen extends WrapScreen {
 
     constructor(props) {
         super(props);
-    }
-
-    static defaultProps = {
-        header: {
+        this.header = {
             title: "维保管理",
         }
     }

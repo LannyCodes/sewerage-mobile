@@ -2,6 +2,7 @@ import {StackNavigator} from 'react-navigation';
 import * as Modules from '../../project/modules';
 import TabNav from "./TabNavigator";
 import QrScan from "../../project/components/qrScan";
+import OverlayExample from "../../project/modules/inspection";
 
 /**
  * 欢迎页

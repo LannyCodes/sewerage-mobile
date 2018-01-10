@@ -1,13 +1,13 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import {
     View,
     Text,
     FlatList,
 } from 'react-native';
-import { SearchBar, Divider, Icon, Avatar } from 'react-native-elements';
+import {SearchBar, Divider, Icon, Avatar} from 'react-native-elements';
 import * as Utils from "../../../core/utils";
-import { WrapScreen } from "../wrap";
-import { ListFilter } from '../../components';
+import {WrapScreen} from "../wrap";
+import {ListFilter} from '../../components';
 
 const filterArray = [
     {
@@ -66,17 +66,14 @@ const filterArray = [
     }
 ];
 
-export  default class DeviceQueryScreen extends WrapScreen {
+export default class DeviceQueryScreen extends WrapScreen {
 
     constructor(props) {
         super(props);
+        this.header = 'none'
         this.state = {
-            isFilterShow:false
+            isFilterShow: false
         }
-    }
-
-    static defaultProps = {
-        header: 'none'
     }
 
     _keyExtractor = (item, index) => item.id;
@@ -115,7 +112,7 @@ export  default class DeviceQueryScreen extends WrapScreen {
                     <View style={styles.navigation}>
                         <View style={styles.navigator}>
                             <Icon
-                                style={{ marginLeft: 10 }}
+                                style={{marginLeft: 10}}
                                 size={26}
                                 name={'chevron-left'}
                                 type='feather'
@@ -126,14 +123,14 @@ export  default class DeviceQueryScreen extends WrapScreen {
                             />
                             <Text style={styles.navigatorTitle}>设备查询</Text>
                             <Icon
-                                style={{ marginRight: 10 }}
+                                style={{marginRight: 10}}
                                 size={26}
                                 name={'chevron-left'}
                                 type='feather'
                                 color={'#666'}
                                 onPress={() => {
                                     self.setState({
-                                        isFilterShow:!self.state.isFilterShow
+                                        isFilterShow: !self.state.isFilterShow
                                     })
                                 }}
                             />
@@ -159,9 +156,9 @@ export  default class DeviceQueryScreen extends WrapScreen {
                         placeholder='搜索'
                     />
                 </View>
-                <Divider style={{ backgroundColor: '#e0e0e0' }} />
+                <Divider style={{backgroundColor: '#e0e0e0'}}/>
                 <FlatList
-                    data={['s','s','d','d','d','d']}
+                    data={['s', 's', 'd', 'd', 'd', 'd']}
                     keyExtractor={this._keyExtractor}
                     renderItem={this._renderItem}
                 />

@@ -8,31 +8,41 @@ import * as Utils from "../../../core/utils";
 import * as Actions from "../../redux/actions";
 import {connect} from "react-redux";
 import Urls from "../../../config/api/urls";
+import Overlay from "teaset/components/Overlay/Overlay";
 
 class AuditManagementScreen extends WrapScreen {
-
-    static defaultProps = {
-        header: {
-            title: "审核管理",
-            right: {
-                icon: 'filter',
-                type: 'feather',
-                onPress: () => {
-                    alert('筛选')
-                }
-            }
-        }
-    }
 
     _keyExtractor = (item, index) => index;
 
     constructor(props) {
         super(props);
+        this.header = {
+            title: "审核管理",
+            right: {
+                icon: 'filter',
+                type: 'feather',
+                onPress: () => {
+                    this.showPull('top', false, 'Pull from top')
+                }
+            }
+        }
     }
 
     componentDidMount() {
         this.store.dispatch(Actions.request(Urls.Audit.getAuditList));
     }
+
+
+    showPull(side, modal, text, rootTransform) {
+        let overlayView = (
+            <Overlay.PullView side={side} modal={modal} rootTransform={rootTransform}
+                              ref={v => this.overlayPullView = v}>
+
+            </Overlay.PullView>
+        );
+        Overlay.show(overlayView);
+    }
+
 
     _renderCardStatus = (status) => {
         let st = {text: '待执行', color: '#47A9EB', backgroundColor: '#ECF6FD'};
