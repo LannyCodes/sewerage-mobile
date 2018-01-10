@@ -7,8 +7,10 @@ import _ from 'lodash'
 import * as Utils from "../../../core/utils";
 import {WrapScreen} from "../wrap";
 import {homeModules} from '../../../config/nav/home.route'
+import {Button, Icon} from "react-native-elements";
+import QrScan from "../../components/qrScan";
 
-export class WorkScreen extends WrapScreen {
+class WorkScreen extends WrapScreen {
     constructor(props) {
         super(props);
         this.state = {
@@ -18,14 +20,28 @@ export class WorkScreen extends WrapScreen {
 
     static defaultProps = {
         header: 'none'
-    }
+    };
+
+    _onQrSuccess = (result) => {
+        // 进入维保页面
+        this.props.navigation.navigate('MaintenanceTask', {
+            qrData: result
+        })
+    };
 
     _render() {
         const modules = _.chunk(homeModules, 3); // 将HomeModule 每三个分成一个数组
         return (
             <View style={styles.container}>
                 <View style={styles.headContainer}>
-
+                    <Icon
+                        name='md-qr-scanner'
+                        type='ionicon'
+                        color='#517fa4'
+                        onPress={() => this.props.navigation.navigate('Qr', {
+                            onSuccess: this._onQrSuccess
+                        })}
+                    />
                 </View>
                 <View style={styles.configContainer}>
                     {modules.map((item, index) => {
@@ -51,6 +67,7 @@ export class WorkScreen extends WrapScreen {
     }
 }
 
+export default WorkScreen
 const styles = Utils.PLStyle({
     container: {
         flex: 1,

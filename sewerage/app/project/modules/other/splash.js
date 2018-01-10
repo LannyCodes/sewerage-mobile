@@ -10,7 +10,7 @@ import {NavigationActions} from 'react-navigation';
 import * as Utils from '../../../core/utils'
 import {WrapScreen} from "../wrap";
 
-let timeFrame = 500;
+let timeFrame = 200;
 
 export class SplashScreen extends WrapScreen {
 
@@ -30,7 +30,7 @@ export class SplashScreen extends WrapScreen {
                     this.showStatusBar('transparent');
                     let toHome = NavigationActions.reset({
                         index: 0,
-                        actions: [NavigationActions.navigate({routeName: 'Home'})]
+                        actions: [NavigationActions.navigate({routeName: 'Main'})]
                     });
                     this.props.navigation.dispatch(toHome)
                 }, timeFrame);

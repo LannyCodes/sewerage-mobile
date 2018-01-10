@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {
     View,
-    Text,
+    Text, TouchableOpacity,
 } from 'react-native';
 import {WrapScreen} from "../wrap";
 
@@ -17,10 +17,23 @@ export default class MaintenanceManagementScreen extends WrapScreen {
         }
     }
 
+    _onSuccess = (result) => {
+        console.log(result);
+    }
+
+
+    _onPressQRCode = () => {
+        this.props.navigation.navigate('Qr', {
+            onSuccess: this._onSuccess
+        });
+    }
+
     _render() {
         return (
             <View>
-                <Text>Me</Text>
+                <TouchableOpacity onPress={this._onPressQRCode}>
+                    <Text>Read QRCode</Text>
+                </TouchableOpacity>
             </View>
         )
     }
