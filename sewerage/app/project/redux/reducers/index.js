@@ -1,9 +1,11 @@
 import {combineReducers} from 'redux';
-import Request from './request'
 import Maintenance from './maintenance'
+import Audit from './audit'
+import Inspections from './inspections'
 
 let MainReducer = combineReducers({
-    Request,
+    Audit,
+    Inspections,
     Maintenance
 });
 

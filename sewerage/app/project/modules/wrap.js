@@ -22,19 +22,16 @@ export class WrapScreen extends Component {
         this.commonFlag = true;
         this.store = store
         this.routeName = this.getCurrentRouteName();
-    }
-
-    static defaultProps = {
-        header: {
+        this.header = {
             title: '',
         }
-    };
+    }
 
     render() {
         let t = this.getCurrentRouteName();
         return (
             <View style={styles.container}>
-                <KHeader header={this.props.header} title={t} onLeftPress={() => {
+                <KHeader header={this.header} title={t} onLeftPress={() => {
                     this.props.navigation.goBack()
                 }}/>
                 {this._render()}

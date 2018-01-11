@@ -8,11 +8,10 @@ import _ from 'lodash'
  *
  * 使用：
  如果header typeof Object ，会带有arrow-left ， 如果是 static defaultProps = {header="标题"} 则只有title
- static defaultProps = {   // 只有标题
-        header: '标题'
-    }
- static defaultProps = {  // 左右中都有
-        header: {
+
+        this.header: '标题' // 只有标题
+
+        this.header={
             title: "标题",
             right: {
                 icon: 'home',
@@ -22,10 +21,8 @@ import _ from 'lodash'
                 }
             }
         }
-    }
 
- static defaultProps = {  // 左中
-        header: {
+        this.header={
             title: "标题",
         }
     }
@@ -34,8 +31,6 @@ export class KHeader extends Component {
     constructor(props) {
         super(props);
     }
-
-
     _renderHeader = (header, title) => {
         if (_.isNull(header)) return (<View/>);
         else if (_.isString(header) && _.isEqual(header, 'none')) return (<View/>);

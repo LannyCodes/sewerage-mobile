@@ -8,31 +8,35 @@ import * as Utils from "../../../core/utils";
 import * as Actions from "../../redux/actions";
 import {connect} from "react-redux";
 import Urls from "../../../config/api/urls";
+import {ListFilter} from "../../components";
 
 class AuditManagementScreen extends WrapScreen {
-
-    static defaultProps = {
-        header: {
-            title: "审核管理",
-            right: {
-                icon: 'filter',
-                type: 'feather',
-                onPress: () => {
-                    alert('筛选')
-                }
-            }
-        }
-    }
 
     _keyExtractor = (item, index) => index;
 
     constructor(props) {
         super(props);
+        this.header = {
+            title: "审核管理",
+            right: {
+                icon: 'filter',
+                type: 'feather',
+                onPress: () => {
+                    this.setState({
+                        isFilterShow: !this.state.isFilterShow
+                    })
+                }
+            }
+        }
+        this.state = {
+            isFilterShow: false
+        }
     }
 
     componentDidMount() {
         this.store.dispatch(Actions.request(Urls.Audit.getAuditList));
     }
+
 
     _renderCardStatus = (status) => {
         let st = {text: '待执行', color: '#47A9EB', backgroundColor: '#ECF6FD'};
@@ -67,11 +71,23 @@ class AuditManagementScreen extends WrapScreen {
     _render() {
         if (this.props.auditList.length > 0) {
             return (
-                <FlatList
-                    data={this.props.auditList}
-                    keyExtractor={this._keyExtractor}
-                    renderItem={this._renderItem}
-                />
+                <View style={{flex: 1}}>
+                    <FlatList
+                        data={this.props.auditList}
+                        keyExtractor={this._keyExtractor}
+                        renderItem={this._renderItem}
+                    />
+                    {this.state.isFilterShow === true ?
+                        <ListFilter
+                            containerStyles={{top: 0}}
+                            filterArray={filterArray}
+                            maskerClick={() => {
+                                this.setState({
+                                    isFilterShow: false,
+                                })
+                            }}
+                        /> : <View/>}
+                </View>
             )
         }
     }
@@ -80,7 +96,7 @@ class AuditManagementScreen extends WrapScreen {
 //make this component available to the app
 function mapStateToProps(state) {
     return {
-        auditList: state.Request.getAuditList,
+        auditList: state.Audit.getAuditList,
     }
 }
 
@@ -125,3 +141,55 @@ const styles = Utils.PLStyle({
         borderRadius: 20
     }
 })
+
+
+const filterArray = [
+    {
+        title: '类型',
+        keyName: 'ssb',
+        multipleChoice: false,
+        data: [{
+            name: '类型一',
+            value: '11',
+        }, {
+            name: '类型二',
+            value: '22',
+        }, {
+            name: '类型三',
+            value: '33',
+        }]
+    },
+    {
+        title: '规格',
+        keyName: 'aab',
+        multipleChoice: true,
+        data: [{
+            name: '规格一',
+            value: '11',
+        }, {
+            name: '规格二',
+            value: '22',
+        }, {
+            name: '规格三',
+            value: '33',
+        }, {
+            name: '规格四',
+            value: '44',
+        }]
+    },
+    {
+        title: '规格',
+        keyName: 'ccs',
+        multipleChoice: false,
+        data: [{
+            name: '规格一',
+            value: '11',
+        }, {
+            name: '规格二',
+            value: '22',
+        }, {
+            name: '规格三',
+            value: '33',
+        }]
+    }
+];

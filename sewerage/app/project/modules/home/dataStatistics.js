@@ -12,14 +12,10 @@ export default class DataStatisticsScreen extends WrapScreen {
 
     constructor(props) {
         super(props);
-    }
-
-    static defaultProps = {
-        header: {
+        this.header = {
             title: "数据统计",
         }
     }
-
     _render() {
         return (
             <ScrollableTabView

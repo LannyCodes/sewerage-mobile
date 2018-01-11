@@ -13,14 +13,11 @@ import QrScan from "../../components/qrScan";
 class WorkScreen extends WrapScreen {
     constructor(props) {
         super(props);
+        this.header= 'none'
         this.state = {
             currentIndex: 0,
         }
     }
-
-    static defaultProps = {
-        header: 'none'
-    };
 
     _onQrSuccess = (result) => {
         // 进入维保页面
