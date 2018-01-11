@@ -103,13 +103,8 @@ export default class DeviceQueryScreen extends WrapScreen {
                     <View style={styles.navigation}>
                         <View style={styles.navigator}>
                             <Icon
-<<<<<<< HEAD
                                 style={{ marginLeft: 10 }}
                                 size={24}
-=======
-                                style={{marginLeft: 10}}
-                                size={26}
->>>>>>> e4c52f19605770fa3db20f77f263f4ac2d620ec4
                                 name={'chevron-left'}
                                 type='feather'
                                 color={'#666'}
@@ -119,15 +114,9 @@ export default class DeviceQueryScreen extends WrapScreen {
                             />
                             <Text style={styles.navigatorTitle}>设备查询</Text>
                             <Icon
-<<<<<<< HEAD
                                 style={{ marginRight:10 }}
                                 size={18}
                                 name={'filter'}
-=======
-                                style={{marginRight: 10}}
-                                size={26}
-                                name={'chevron-left'}
->>>>>>> e4c52f19605770fa3db20f77f263f4ac2d620ec4
                                 type='feather'
                                 color={this.state.isFilterShow ? '#42BD56' :"#666"}
                                 onPress={() => {
