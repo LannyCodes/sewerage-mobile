@@ -18,7 +18,8 @@ const screenWidth = Dimensions.get('window').width;
 const filterArray = [
     {
         title: '类型',
-        keyName: 'ssb', //选中后会以这个值为Key返回
+        keyName: 'ssb',
+        multipleChoice:false,
         data: [{
             name: '类型一',
             value: '11',
@@ -33,6 +34,7 @@ const filterArray = [
     {
         title: '规格',
         keyName: 'aab',
+        multipleChoice:true,
         data: [{
             name: '规格一',
             value: '11',
@@ -42,11 +44,15 @@ const filterArray = [
         }, {
             name: '规格三',
             value: '33',
+        }, {
+            name: '规格四',
+            value: '44',
         }]
     },
     {
         title: '规格',
-        keyName: 'aab',
+        keyName: 'ccs',
+        multipleChoice:false,
         data: [{
             name: '规格一',
             value: '11',
@@ -60,12 +66,20 @@ const filterArray = [
     }
 ];
 
-
 export class ListFilter extends React.PureComponent {
 
     constructor(props) {
         super(props);
-        this.state = {}
+        let initailState = {}
+        if(this.props.initailArray != undefined){
+            this.props.initailArray.map((item,index)=>{
+                let value = typeof(item.value) === 'array' ? JSON.stringify(item.value) : item.value;
+                initailState[item.keyName] = value;
+            })
+        }
+        this.state = {
+            ...initailState,
+        }
     }
 
     static propTypes = {
@@ -81,6 +95,7 @@ export class ListFilter extends React.PureComponent {
         unselectedColor: PropTypes.string,
         selectedTextColor: PropTypes.string,
         unselectedTextColor: PropTypes.string,
+        initailArray: PropTypes.array,//初始化选中
     };
 
     static defaultProps = {
@@ -115,14 +130,21 @@ export class ListFilter extends React.PureComponent {
     }
 
     _reset = () => {
+        // this.setState({})
+        this.props.filterArray.map((item,index)=>{
+            let test = this.state;
+            this.setState({
+                [item.keyName]:'[]'
+            })
+        })
         if (typeof (this.props.reset) === 'function') {
-            this.props.reset();
+            this.props.reset(this.state);
         }
     }
 
     _confirm = () => {
         if (typeof (this.props.confirm) === 'function') {
-            this.props.comfirm(this.state.formData)
+            this.props.confirm(this.state)
         }
     }
 

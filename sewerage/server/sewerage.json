@@ -67,7 +67,7 @@
   },
   {
     "url": "/app/fault/workOrder",
-    "method": "get",
+    "method": "post",
     "response": {
       "code": 0,
       "message": "",
@@ -94,7 +94,7 @@
   },
   {
     "url": "/app/fault/list",
-    "method": "get",
+    "method": "post",
     "response": {
       "code": 0,
       "message": "",
