@@ -7,13 +7,12 @@ import _ from 'lodash'
 import * as Utils from "../../../core/utils";
 import {WrapScreen} from "../wrap";
 import {homeModules} from '../../../config/nav/home.route'
-import {Button, Icon} from "react-native-elements";
-import QrScan from "../../components/qrScan";
+import {Icon} from "react-native-elements";
 
 class WorkScreen extends WrapScreen {
     constructor(props) {
         super(props);
-        this.header= 'none'
+        this.header = 'none'
         this.state = {
             currentIndex: 0,
         }
@@ -21,7 +20,7 @@ class WorkScreen extends WrapScreen {
 
     _onQrSuccess = (result) => {
         // 进入维保页面
-        this.props.navigation.navigate('MaintenanceTask', {
+        this.props.navigation.navigate('TaskList', {
             qrData: result
         })
     };
@@ -35,9 +34,10 @@ class WorkScreen extends WrapScreen {
                         name='md-qr-scanner'
                         type='ionicon'
                         color='#517fa4'
-                        onPress={() => this.props.navigation.navigate('Qr', {
-                            onSuccess: this._onQrSuccess
-                        })}
+                        // onPress={() => this.props.navigation.navigate('Qr', { //'Qr'
+                        //     onSuccess: this._onQrSuccess
+                        // })}
+                        onPress={() => this.props.navigation.navigate('TaskList')}
                     />
                 </View>
                 <View style={styles.configContainer}>

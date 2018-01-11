@@ -8,6 +8,8 @@ import * as Utils from "../../../core/utils";
 import {connect} from 'react-redux';
 import * as Actions from '../../redux/actions'
 import Urls from "../../../config/api/urls";
+import {Status} from "../../../config/api/api.config";
+import {DefaultPage, ErrorPage, ListFilter, Loading} from "../../components";
 
 class InspectionManagementScreen extends WrapScreen {
 
@@ -21,13 +23,15 @@ class InspectionManagementScreen extends WrapScreen {
                 icon: 'filter',
                 type: 'feather',
                 onPress: () => {
-                    alert('筛选')
+                    this.setState({
+                        isFilterShow: !this.state.isFilterShow
+                    })
                 }
             }
         }
 
         this.state = {
-            list: []
+            isFilterShow: false
         }
     }
 
@@ -66,13 +70,36 @@ class InspectionManagementScreen extends WrapScreen {
     );
 
     _render() {
-        if (this.props.inspectionList.length > 0) {
+        if (this.props.requestStatus === Status.SUCCESS) {
+            if(!Loading.checkData(this.props.inspectionList)) return;
+            if (this.props.inspectionList.length > 0) {
+                return (
+                    <View style={{flex: 1}}>
+                        <FlatList
+                            data={this.props.inspectionList}
+                            keyExtractor={this._keyExtractor}
+                            renderItem={this._renderItem}
+                        />
+                        {this.state.isFilterShow === true ?
+                            <ListFilter
+                                containerStyles={{top: 0}}
+                                filterArray={filterArray}
+                                maskerClick={() => {
+                                    this.setState({
+                                        isFilterShow: false,
+                                    })
+                                }}
+                            /> : <View/>}
+                    </View>
+                )
+            } else {
+                return (
+                    <DefaultPage content={'暂无巡检任务'}/>
+                )
+            }
+        } else if (this.props.requestStatus === Status.FAIL) {
             return (
-                <FlatList
-                    data={this.props.inspectionList}
-                    keyExtractor={this._keyExtractor}
-                    renderItem={this._renderItem}
-                />
+                <ErrorPage/>
             )
         }
     }
@@ -82,6 +109,7 @@ class InspectionManagementScreen extends WrapScreen {
 function mapStateToProps(state) {
     return {
         inspectionList: state.Inspections.getTaskList,
+        requestStatus: state.Common.requestStatus
     }
 }
 
@@ -126,3 +154,54 @@ const styles = Utils.PLStyle({
         borderRadius: 20
     }
 })
+
+const filterArray = [
+    {
+        title: '类型',
+        keyName: 'ssb',
+        multipleChoice: false,
+        data: [{
+            name: '类型一',
+            value: '11',
+        }, {
+            name: '类型二',
+            value: '22',
+        }, {
+            name: '类型三',
+            value: '33',
+        }]
+    },
+    {
+        title: '规格',
+        keyName: 'aab',
+        multipleChoice: true,
+        data: [{
+            name: '规格一',
+            value: '11',
+        }, {
+            name: '规格二',
+            value: '22',
+        }, {
+            name: '规格三',
+            value: '33',
+        }, {
+            name: '规格四',
+            value: '44',
+        }]
+    },
+    {
+        title: '规格',
+        keyName: 'ccs',
+        multipleChoice: false,
+        data: [{
+            name: '规格一',
+            value: '11',
+        }, {
+            name: '规格二',
+            value: '22',
+        }, {
+            name: '规格三',
+            value: '33',
+        }]
+    }
+];

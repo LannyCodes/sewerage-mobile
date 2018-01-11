@@ -1,8 +1,7 @@
 import {combineReducers} from 'redux';
 import Urls from "../../../../config/api/urls";
 
-
-let auditList = []
+let auditList = null
 const getAuditList = (state = [], action) => {
     if (action.type === Urls.Audit.getAuditList) {
         auditList = action.data

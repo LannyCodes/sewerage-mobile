@@ -19,7 +19,6 @@ export class WrapScreen extends Component {
 
     constructor(props) {
         super(props);
-        this.commonFlag = true;
         this.store = store
         this.routeName = this.getCurrentRouteName();
         this.header = {

@@ -18,7 +18,7 @@ export const resetNavigation = (navigation, route) => {
 let lastClickTime = 0;
 export const isFastExecute = () => {
     let timeNow = new Date().getTime();
-    if (timeNow - lastClickTime < 1500) {
+    if (timeNow - lastClickTime < 5000) {
         return true;
     }
     lastClickTime = timeNow;
