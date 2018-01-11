@@ -81,7 +81,7 @@ class InspectionManagementScreen extends WrapScreen {
 //make this component available to the app
 function mapStateToProps(state) {
     return {
-        inspectionList: state.Request.getTaskList,
+        inspectionList: state.Inspections.getTaskList,
     }
 }
 

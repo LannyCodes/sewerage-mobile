@@ -96,7 +96,7 @@ class AuditManagementScreen extends WrapScreen {
 //make this component available to the app
 function mapStateToProps(state) {
     return {
-        auditList: state.Request.getAuditList,
+        auditList: state.Audit.getAuditList,
     }
 }
 
