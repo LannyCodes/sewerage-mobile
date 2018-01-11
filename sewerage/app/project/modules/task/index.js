@@ -1,5 +1,5 @@
 import tasks from './tasks';
-import maintenanceDetail from './detail';
+import maintenanceDetail from './maintenanceDetail';
 
 export const TaskListScreen = tasks;
 export const TaskMaintenanceDetailScreen = maintenanceDetail;
