@@ -10,8 +10,10 @@ import {connect} from "react-redux";
 import * as Actions from '../../redux/actions'
 import Urls from "../../../config/api/urls";
 import * as Utils from "../../../core/utils";
+import {Status} from "../../../config/api/api.config";
+import {DefaultPage, ErrorPage, Loading} from "../../components";
 
-class MaintenanceTaskScreen extends WrapScreen {
+class TaskListScreen extends WrapScreen {
 
     constructor(props) {
         super(props);
@@ -21,8 +23,8 @@ class MaintenanceTaskScreen extends WrapScreen {
     }
 
     componentDidMount() {
-        const {qrData} = this.props.navigation.state.params; // 获取参数
-        this.store.dispatch(Actions.request(Urls.Maintenance.getMaintenanceTask, {params: qrData})); // 请求
+        const {qrData} = this.props.navigation.state.params || ''; // 获取参数
+        this.store.dispatch(Actions.request(Urls.Task.getTaskList, {params: qrData})); // 请求
     }
 
     _keyExtractor = (item, index) => index;
@@ -42,7 +44,7 @@ class MaintenanceTaskScreen extends WrapScreen {
     _renderItem = ({item}) => (
         <TouchableOpacity style={styles.cardItem}
                           onPress={() => {
-
+                              this.props.navigation.navigate('MaintenanceDetail')
                           }}
         >
             <View style={styles.row}>
@@ -58,13 +60,26 @@ class MaintenanceTaskScreen extends WrapScreen {
     );
 
     _render() {
-        if (this.props.tasks.length > 0) {
+        if (this.props.requestStatus === Status.SUCCESS) {
+            if (!Loading.checkData(this.props.tasks)) return;
+            if (this.props.tasks.length > 0) {
+                return (
+                    <View style={{flex: 1}}>
+                        <FlatList
+                            data={this.props.tasks}
+                            keyExtractor={this._keyExtractor}
+                            renderItem={this._renderItem}
+                        />
+                    </View>
+                )
+            } else {
+                return (
+                    <DefaultPage content={'暂无审核任务'}/>
+                )
+            }
+        } else if (this.props.requestStatus === Status.FAIL) {
             return (
-                <FlatList
-                    data={this.props.tasks}
-                    keyExtractor={this._keyExtractor}
-                    renderItem={this._renderItem}
-                />
+                <ErrorPage/>
             )
         }
     }
@@ -73,11 +88,12 @@ class MaintenanceTaskScreen extends WrapScreen {
 //make this component available to the app
 function mapStateToProps(state) {
     return {
-        tasks: state.Maintenance.getMaintenanceTask,
+        tasks: state.Task.getTaskList,
+        requestStatus: state.Common.requestStatus
     }
 }
 
-export default connect(mapStateToProps)(MaintenanceTaskScreen);
+export default connect(mapStateToProps)(TaskListScreen);
 
 const styles = Utils.PLStyle({
     row: {

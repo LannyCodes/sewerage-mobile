@@ -38,7 +38,14 @@ const Home = {
  *  维保
  */
 const Maintenance = {
-    MaintenanceTask: {screen: Modules.MaintenanceTaskScreen}
+    MaintenanceManagement: {screen: Modules.MaintenanceManagementScreen}
+};
+/**
+ * 任务
+ */
+const Task = {
+    TaskList: {screen: Modules.TaskListScreen},
+    TaskMaintenanceDetail: {screen: Modules.TaskMaintenanceDetailScreen},
 }
 
 const Navigator = StackNavigator(
@@ -47,7 +54,8 @@ const Navigator = StackNavigator(
         ...Main,
         ...Home,
         ...Common,
-        ...Maintenance
+        ...Maintenance,
+        ...Task
     }, {
         navigationOptions: {
             header: null,

@@ -8,7 +8,7 @@ import * as Utils from "../../../core/utils";
 import * as Actions from "../../redux/actions";
 import {connect} from "react-redux";
 import Urls from "../../../config/api/urls";
-import {DefaultPage, ErrorPage, ListFilter} from "../../components";
+import {DefaultPage, ErrorPage, ListFilter, Loading} from "../../components";
 import {Status} from "../../../config/api/api.config";
 
 class AuditManagementScreen extends WrapScreen {
@@ -71,6 +71,7 @@ class AuditManagementScreen extends WrapScreen {
 
     _render() {
         if (this.props.requestStatus === Status.SUCCESS) {
+            if(!Loading.checkData(this.props.auditList)) return;
             if (this.props.auditList.length > 0) {
                 return (
                     <View style={{flex: 1}}>
