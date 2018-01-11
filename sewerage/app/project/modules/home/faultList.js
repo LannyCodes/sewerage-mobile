@@ -14,7 +14,9 @@ import * as Actions from "../../redux/actions";
 import { connect } from "react-redux";
 import Urls from "../../../config/api/urls";
 import PropTypes from 'prop-types';
-import { ListFilter } from '../../components';
+import { ListFilter,TagLabel } from '../../components';
+
+// import {FaultDetailScreen, WorkOrderDetailScreen} from '../dataStatistics';
 
 class ListCell extends Component {
     constructor(props) {
@@ -41,12 +43,8 @@ class ListCell extends Component {
                 <View style={styles.cellHeader}>
                     <Text style={styles.cellTitle}>{this.data.title}</Text>
                     <View style={styles.cellTagContainer}>
-                        <View style={[styles.cellTag, { width: 40, backgroundColor: '#ECF6FD' }]}>
-                            <Text style={styles.cellTagText}>II级</Text>
-                        </View>
-                        <View style={[styles.cellTag, { width: 56, backgroundColor: '#FEF5EB' }]}>
-                            <Text style={styles.cellTagText}>处理中</Text>
-                        </View>
+                        <TagLabel>II级</TagLabel>
+                        <TagLabel containerStyle={{marginLeft:10}}>处理中</TagLabel>
                     </View>
                 </View>
                 <View style={styles.cellContentContainer}>
@@ -101,8 +99,12 @@ class FaultListScreen extends WrapScreen {
 
     _keyExtractor = (item, index) => item.id;
 
-    _cellClicked = () => {
-
+    _cellClicked = (type) => {
+        if(type === 'faultsList'){
+            this.props.navigation.navigate('FaultDetail');
+        }else{
+            this.props.navigation.navigate('WorkOrderDetail');
+        }
     }
 
     _filterReset = (data) => {
@@ -139,7 +141,7 @@ class FaultListScreen extends WrapScreen {
                     return <ListCell
                         item={data}
                         index={index}
-                        clickFunc={this._cellClicked} />
+                        clickFunc={this._cellClicked.bind(this,type)} />
                 }}
             />
         )

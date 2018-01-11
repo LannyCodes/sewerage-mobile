@@ -66,6 +66,15 @@ const filterArray = [
     }
 ];
 
+//示例
+const initailArray = [{
+    keyName:'ssb',//单选
+    value:'1'
+},{
+    keyName:'aab',//多选
+    value:['1','2']
+}]
+
 export class ListFilter extends React.PureComponent {
 
     constructor(props) {
@@ -95,7 +104,7 @@ export class ListFilter extends React.PureComponent {
         unselectedColor: PropTypes.string,
         selectedTextColor: PropTypes.string,
         unselectedTextColor: PropTypes.string,
-        initailArray: PropTypes.array,//初始化选中
+        initailArray: PropTypes.array,//初始化选中，规格看示例
     };
 
     static defaultProps = {

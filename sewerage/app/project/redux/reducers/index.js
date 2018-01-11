@@ -11,7 +11,7 @@ let MainReducer = combineReducers({
     Audit,
     Inspections,
     Maintenance,
-    faults
+    faults,
     Task
 });
 

@@ -6,7 +6,7 @@ import {
 import { WrapScreen } from "../wrap";
 import { ScrollableTabBar } from '../../components/ScrollableTabViewBars';
 import ScrollableTabView from 'react-native-scrollable-tab-view';
-import DataStatisticsView from '../dataStatistics/DataStatisticsView';
+import { DataStatisticsView } from '../dataStatistics/components';
 
 export default class DataStatisticsScreen extends WrapScreen {
 
@@ -20,7 +20,7 @@ export default class DataStatisticsScreen extends WrapScreen {
         return (
             <ScrollableTabView
                 // locked={true}
-                renderTabBar={() => 
+                renderTabBar={() =>
                     <ScrollableTabBar
                         style={{ height: 50 }}
                         tabStyle={{ height: 50 }}
@@ -31,13 +31,13 @@ export default class DataStatisticsScreen extends WrapScreen {
                         underlineStyle={{ backgroundColor: '#42BB55', height: 2 }}
                     />
                 }
-                >
+            >
                 <DataStatisticsView
-                    tabLabel="巡检统计"/>
+                    tabLabel="巡检统计" />
                 <DataStatisticsView
-                    tabLabel="维保统计"/>
+                    tabLabel="维保统计" />
                 <DataStatisticsView
-                    tabLabel="厂站统计"/>
+                    tabLabel="厂站统计" />
             </ScrollableTabView>
         )
     }

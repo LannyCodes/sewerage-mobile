@@ -9,8 +9,8 @@ import {
     Dimensions,
 } from "react-native"
 import PropTypes from 'prop-types';
-import * as Utils from '../../../core/utils';
-import Echarts from '../../components/echarts';
+import * as Utils from '../../../../core/utils';
+import Echarts from '../../../components/echarts';
 const screenWidth = Dimensions.get('window').width;
 const screenHeight = Dimensions.get('window').height;
 
