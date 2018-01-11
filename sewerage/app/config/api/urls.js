@@ -7,6 +7,10 @@ const Urls = {
     },
     Maintenance:{
         getMaintenanceTask: '/app/maintenance/task', // 获取维保任务
+    },
+    faults: {
+        faultList:'/app/fault/list',//故障清单
+        workOrder:'/app/fault/workOrder',//故障工单
     }
 };
 export default Urls

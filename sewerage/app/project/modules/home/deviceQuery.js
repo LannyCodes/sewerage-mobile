@@ -107,7 +107,7 @@ export default class DeviceQueryScreen extends WrapScreen {
                         <View style={styles.navigator}>
                             <Icon
                                 style={{ marginLeft: 10 }}
-                                size={26}
+                                size={24}
                                 name={'chevron-left'}
                                 type='feather'
                                 color={'#666'}
@@ -117,17 +117,18 @@ export default class DeviceQueryScreen extends WrapScreen {
                             />
                             <Text style={styles.navigatorTitle}>设备查询</Text>
                             <Icon
-                                style={{ marginRight: 10 }}
-                                size={26}
-                                name={'chevron-left'}
+                                style={{ marginRight:10 }}
+                                size={18}
+                                name={'filter'}
                                 type='feather'
-                                color={'#666'}
+                                color={this.state.isFilterShow ? '#42BD56' :"#666"}
                                 onPress={() => {
                                     self.setState({
                                         isFilterShow: !self.state.isFilterShow
                                     })
                                 }}
                             />
+                            
                         </View>
                     </View>
                     <SearchBar
@@ -184,6 +185,8 @@ const styles = Utils.PLStyle({
     },
     navigator: {
         marginTop: 32,
+        paddingLeft:10,
+        paddingRight:10,
         flexDirection: 'row',
         justifyContent: 'space-between',
     },
@@ -202,6 +205,7 @@ const styles = Utils.PLStyle({
         flexDirection: 'row',
         height: 75,
         alignItems: 'center',
+        backgroundColor:'#ffffff',
     },
     listAvatar: {
         marginLeft: 20,

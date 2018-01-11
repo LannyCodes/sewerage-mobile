@@ -6,6 +6,7 @@ import {
 import { WrapScreen } from "../wrap";
 import { ScrollableTabBar } from '../../components/ScrollableTabViewBars';
 import ScrollableTabView from 'react-native-scrollable-tab-view';
+import DataStatisticsView from '../dataStatistics/DataStatisticsView';
 
 export default class DataStatisticsScreen extends WrapScreen {
 
@@ -21,23 +22,27 @@ export default class DataStatisticsScreen extends WrapScreen {
 
     _render() {
         return (
-            <View/>
-            // <ScrollableTabView
-            //     locked={true}
-            //     renderTabBar={() => {
-            //         <ScrollableTabBar
-            //             style={{ height: 50 }}
-            //             tabStyle={{ height: 50 }}
-            //             // scrollWithoutAnimation
-            //             activeTextColor='#42BB55'
-            //             inactiveTextColor='#333333'
-            //             backgroundColor="#fff"
-            //             underlineAlignLabel={true}
-            //             underlineStyle={{ backgroundColor: '#42BB55', height: 2 }}
-            //         />
-            //     }}>
-
-            // </ScrollableTabView>
+            <ScrollableTabView
+                // locked={true}
+                renderTabBar={() => 
+                    <ScrollableTabBar
+                        style={{ height: 50 }}
+                        tabStyle={{ height: 50 }}
+                        activeTextColor='#42BB55'
+                        inactiveTextColor='#333333'
+                        backgroundColor="#fff"
+                        underlineAlignLabel={true}
+                        underlineStyle={{ backgroundColor: '#42BB55', height: 2 }}
+                    />
+                }
+                >
+                <DataStatisticsView
+                    tabLabel="巡检统计"/>
+                <DataStatisticsView
+                    tabLabel="维保统计"/>
+                <DataStatisticsView
+                    tabLabel="厂站统计"/>
+            </ScrollableTabView>
         )
     }
 }

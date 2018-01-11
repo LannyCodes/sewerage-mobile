@@ -7,6 +7,9 @@ import {
 import {WrapScreen} from "../wrap";
 import {ScrollableTabBar} from '../../components/ScrollableTabViewBars';
 import ScrollableTabView from 'react-native-scrollable-tab-view';
+import * as Actions from "../../redux/actions";
+import {connect} from "react-redux";
+import Urls from "../../../config/api/urls";
 
 class ListCell extends Component {
     constructor(props) {
@@ -74,5 +77,11 @@ export default class FaultListScreen extends WrapScreen {
                 </ScrollableTabView>
             </View>
         )
+    }
+}
+
+function mapStateToProps(state) {
+    return {
+        
     }
 }
