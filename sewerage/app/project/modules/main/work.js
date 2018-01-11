@@ -8,7 +8,6 @@ import * as Utils from "../../../core/utils";
 import {WrapScreen} from "../wrap";
 import {homeModules} from '../../../config/nav/home.route'
 import {Button, Icon} from "react-native-elements";
-import QrScan from "../../components/qrScan";
 
 class WorkScreen extends WrapScreen {
     constructor(props) {
