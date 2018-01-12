@@ -54,9 +54,6 @@ const filterArray = [
         }, {
             name: '规格二',
             value: '22',
-        }, {
-            name: '规格三',
-            value: '33',
         }]
     }
 ];
