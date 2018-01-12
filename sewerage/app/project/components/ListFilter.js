@@ -271,7 +271,6 @@ const styles = Util.PLStyle({
         fontSize: 12,
     },
     itemContainer: {
-        justifyContent: 'space-between',
         flexDirection: 'row',
         flexWrap: 'wrap',
         backgroundColor: '#fafafa',
