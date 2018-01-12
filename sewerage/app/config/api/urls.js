@@ -4,6 +4,7 @@ const Urls = {
     },
     Task: {
         getTaskList: '/app/task/list', // 获取任务列表
+        getMaintenanceTaskDetail: '/app/task/maintenanceDetail', // 获取维保任务详情
     },
     Audit: {
         getAuditList: '/app/audit/list', // 获取巡检列表

@@ -44,7 +44,7 @@ class TaskListScreen extends WrapScreen {
     _renderItem = ({item}) => (
         <TouchableOpacity style={styles.cardItem}
                           onPress={() => {
-                              this.props.navigation.navigate('MaintenanceDetail')
+                              this.props.navigation.navigate('TaskMaintenanceDetail')
                           }}
         >
             <View style={styles.row}>
