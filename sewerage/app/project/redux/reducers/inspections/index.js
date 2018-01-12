@@ -10,7 +10,19 @@ const getTaskList = (state = [], action) => {
     return taskList
 };
 
+
+let inspectionDetail = null;// 缓存请求数据
+const getInspectionDetail = (state = [], action) => {
+    if (action.type === Urls.Inspections.getInspectionDetail) {
+        inspectionDetail = action.data
+        return inspectionDetail
+    }
+    return inspectionDetail
+};
+
+
 export default combineReducers({
-    getTaskList
+    getTaskList,
+    getInspectionDetail
 });
 
