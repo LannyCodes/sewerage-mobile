@@ -60,6 +60,7 @@ const Task = {
 const Fault = {
     FaultDetail: {screen: Modules.FaultDetailScreen},
     WorkOrderDetail: {screen: Modules.WorkOrderDetailScreen},
+    DealWorkOrder: {screen:Modules.DealWorkOrderScreen},
 }
 
 const Navigator = StackNavigator(

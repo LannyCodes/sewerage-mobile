@@ -29,7 +29,7 @@ class WorkOrderDetailScreen extends WrapScreen {
     _keyExtractor = (item, index) => item.id;
 
     _dealWorkOrder = () => {
-
+        this.props.navigation.navigate('DealWorkOrder');
     }
 
     _imageClick=()=>{
@@ -152,7 +152,7 @@ class WorkOrderDetailScreen extends WrapScreen {
                         <Text style={[styles.headerFootText, { color: '#333333', marginBottom: 11, marginTop: 14 }]}>湖南宁乡经济技术开发区污水处理厂采用较为先进的污水处理工艺五段式A/A/O-A/O+二沉池+微絮凝池+V型滤池+ClO2消毒， 其设计规模为5万立方米/日</Text>
                     </View>
                     <GridView
-                        imgs={[{uri: "https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg"},{uri: "https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg"},{uri: "https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg"}]}
+                        imgs={[{uri: "https://s3.amazonaws.com/uifaces/faces/twitter/brynn/128.jpg"},{uri: "https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg"},{uri: "https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg"}]}
                         containerStyle={{marginBottom:20}}
                         columns={4}
                         marginLeft={10}
