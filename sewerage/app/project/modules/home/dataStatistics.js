@@ -19,7 +19,7 @@ export default class DataStatisticsScreen extends WrapScreen {
     _render() {
         return (
             <ScrollableTabView
-                // locked={true}
+                locked={true}
                 renderTabBar={() =>
                     <ScrollableTabBar
                         style={{ height: 50 }}

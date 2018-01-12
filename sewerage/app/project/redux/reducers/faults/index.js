@@ -19,7 +19,17 @@ const getWorkOrder = (state=[],action)=>{
     return workOrders;
 }
 
+let faultDetail = {}
+const getFaultDetail = (state=[],action) => {
+    if(action.type === Urls.faults.faultDetail){
+        faultDetail = action.data;
+        return faultDetail;
+    }
+    return faultDetail;
+}
+
 export default combineReducers({
     getFaultsList,
-    getWorkOrder
+    getWorkOrder,
+    getFaultDetail
 })

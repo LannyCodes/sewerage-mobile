@@ -14,6 +14,9 @@ import { WrapScreen } from '../wrap'
 import * as Utils from '../../../core/utils'
 import { Divider } from 'react-native-elements'
 import {TagLabel} from '../../components'
+import * as Actions from "../../redux/actions";
+import { connect } from "react-redux";
+import Urls from "../../../config/api/urls";
 
 class FaultDetailScreen extends WrapScreen {
     constructor(props) {
@@ -23,7 +26,12 @@ class FaultDetailScreen extends WrapScreen {
         }
     }
 
+    componentDidMount() {
+        this.store.dispatch(Actions.request(Urls.faults.faultDetail))
+    }
+
     _render() {
+        let faultDetail = this.props.faultDetail
         return (
             <ScrollView
                 style={styles.scrollView}
@@ -32,42 +40,42 @@ class FaultDetailScreen extends WrapScreen {
                 <View style={styles.container}>
                     <View style={styles.header}>
                         <View style={styles.headerTitle}>
-                            <Text style={styles.headerText}>一号一体机设备</Text>
+                            <Text style={styles.headerText}>{faultDetail.name}</Text>
                             <TagLabel>处理中</TagLabel>
                         </View>
                         <Text style={styles.headerFootText}>
                             发起时间：
-                            <Text>2017-06-30-12：00</Text>
+                            <Text>{faultDetail.time}</Text>
                         </Text>
                     </View>
                     <View style={styles.divider}/>
                     <View style={styles.contentCell}>
                         <Text style={styles.cellText}>上报人</Text>
-                        <Text style={[styles.cellText,{color:'#333333'}]}>杨涛</Text>
+                        <Text style={[styles.cellText,{color:'#333333'}]}>{faultDetail.reportPerson}</Text>
                     </View>
                     <View style={styles.divider}/>
                     <View style={styles.contentCell}>
                         <Text style={styles.cellText}>故障来源</Text>
-                        <Text style={[styles.cellText,{color:'#333333'}]}>维保</Text>
+                        <Text style={[styles.cellText,{color:'#333333'}]}>{faultDetail.faultFrom}</Text>
                     </View>
                     <View style={styles.divider}/>
                     <View style={styles.contentCell}>
                         <Text style={styles.cellText}>故障类型</Text>
-                        <Text style={[styles.cellText,{color:'#333333'}]}>机械故障</Text>
+                        <Text style={[styles.cellText,{color:'#333333'}]}>{faultDetail.faultType}</Text>
                     </View>
                     <View style={styles.divider}/>
                     <View style={styles.contentCell}>
                         <Text style={styles.cellText}>故障等级</Text>
-                        <Text style={[styles.cellText,{color:'#333333'}]}>一级</Text>
+                        <Text style={[styles.cellText,{color:'#333333'}]}>{faultDetail.level}</Text>
                     </View>
                     <View style={styles.divider}/>
                     <View>
                         <Text style={[styles.cellText,{marginTop:14,marginBottom:14}]}>故障描述</Text>
-                        <Text style={[styles.cellText,{color:'#333333',marginBottom:14}]}>湖南宁乡经济技术开发区污水处理厂采用较为先进的污水处理工艺五段式A/A/O-A/O+二沉池+微絮凝池+V型滤池+ClO2消毒， 其设计规模为5万立方米/日</Text>
+                        <Text style={[styles.cellText,{color:'#333333',marginBottom:14}]}>{faultDetail.description}</Text>
                     </View>
                     <View>
                         <Text style={[styles.cellText,{marginTop:14,marginBottom:14}]}>处理方式</Text>
-                        <Text style={[styles.cellText,{color:'#333333',marginBottom:14}]}>湖南宁乡经济技术开发区污水处理厂采用较为先进的污水处理工艺五段式A/A/O-A/O+二沉池+微絮凝池+V型滤池+ClO2消毒， 其设计规模为5万立方米/日</Text>
+                        <Text style={[styles.cellText,{color:'#333333',marginBottom:14}]}>{faultDetail.dealway}</Text>
                     </View>
                 </View>
             </ScrollView >
@@ -75,7 +83,13 @@ class FaultDetailScreen extends WrapScreen {
     }
 }
 
-export default FaultDetailScreen
+function mapStateToProps(state){
+    return {
+        faultDetail:state.faults.getFaultDetail
+    }
+}
+
+export default connect(mapStateToProps)(FaultDetailScreen);
 
 const styles = Utils.PLStyle({
     scrollView: {

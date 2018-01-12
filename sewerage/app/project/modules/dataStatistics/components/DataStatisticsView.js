@@ -41,11 +41,12 @@ export default class DataStatisticsView extends Component {
         return (
             <ScrollView
                 ref={(scrollView) => { this._scrollView = scrollView }}
-                horizontal={true}
+                bounces={false}
             >
-                <View>
+                <ScrollView
+                    horizontal={true}>
 
-                </View>
+                </ScrollView>
                 {/* <Echarts
                     option={this._echartOption()}
                 /> */}
