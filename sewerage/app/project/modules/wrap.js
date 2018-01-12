@@ -73,7 +73,6 @@ export class WrapScreen extends Component {
             default:
                 break;
         }
-
     }
 }
 

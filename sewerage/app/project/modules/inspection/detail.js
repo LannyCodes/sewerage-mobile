@@ -11,108 +11,29 @@ import {FlatList, ScrollView, Text, TouchableOpacity, View} from "react-native";
 import {Avatar, Divider, Icon} from "react-native-elements";
 import _ from 'lodash'
 
-class TaskMaintenanceDetailScreen extends WrapScreen {
+class InspectionDetailScreen extends WrapScreen {
 
     constructor(props) {
         super(props);
-        console.log(this.props.maintenanceTaskDetail)
         this.header = {
             title: "任务详情",
         };
-        this.state = {
-            undoList: [],
-            doList: [],
-        }
     }
 
     componentDidMount() {
-        this.store.dispatch(Actions.request(Urls.Task.getMaintenanceTaskDetail)); // 请求
-    }
-
-    componentWillReceiveProps(nextProps) {
-        if (nextProps) {
-            this.setState({
-                undoList: nextProps.maintenanceTaskDetail.unDo,
-                doList: nextProps.maintenanceTaskDetail.do
-            })
-        }
+        this.store.dispatch(Actions.request(Urls.Inspections.getInspectionDetail)); // 请求
     }
 
     _keyExtractor = (item, index) => index;
 
-    _renderUndoItem = ({item}) => (
-        <TouchableOpacity style={styles.doItemContent} onPress={() => {
-            this.props.navigation.navigate('TaskMaintenanceUpload', {
-                errorId: item,
-                onComplete: (error: {}) => {
-                    console.log(error)
-                    this._moveUndo(error.errorId);
-                }
-            })
-        }}>
-            <Icon
-                name='check-box-outline-blank'
-                type='materialIcons'
-                color='#D2D5DB'
-                onPress={() => {
-                    this._moveUndo(item);
-                }}
-            />
-            <Text style={[styles.text, {marginLeft: 5}]}>{item}</Text>
-        </TouchableOpacity>
-    );
-    _moveUndo = (item) => {
-        // 在undoList 删除点击的item
-        let unDoList = _.remove(this.state.undoList, function (n) {
-            return n === item;
-        });
-        this.setState({
-            unDoList: unDoList
-        });
-        //   在doList 添加点击的item
-        this.state.doList.push(item);
-    }
-
-    _renderDoItem = ({item}) => (
-        <View style={styles.doItemContent}>
+    _renderItem = ({item}) => (
+        <View style={{padding: 10}}>
             <Text style={[styles.text, {marginLeft: 5}]}>{item}</Text>
         </View>
     );
-
-    _renderUndo = () => (
-        <View>
-            <View style={{backgroundColor: '#FEF5EE', height: 25, justifyContent: 'center'}}>
-                <Text style={{color: '#666', fontSize: 12, marginLeft: 10}}>未完成</Text>
-            </View>
-            <FlatList
-                data={this.state.undoList}
-                keyExtractor={this._keyExtractor}
-                renderItem={this._renderUndoItem}
-                ItemSeparatorComponent={() => (
-                    <Divider style={{backgroundColor: '#ddd'}}/>
-                )}
-            />
-        </View>
-    )
-
-    _renderDo = () => (
-        <View>
-            <View style={{backgroundColor: '#E8F6E8', height: 25, justifyContent: 'center'}}>
-                <Text style={{color: '#666', fontSize: 12, marginLeft: 10}}>已完成</Text>
-            </View>
-            <FlatList
-                data={this.state.doList}
-                keyExtractor={this._keyExtractor}
-                renderItem={this._renderDoItem}
-                ItemSeparatorComponent={() => (
-                    <Divider style={{backgroundColor: '#ddd'}}/>
-                )}
-            />
-        </View>
-    )
 
     _render() {
-        const detail = this.props.maintenanceTaskDetail;
+        const detail = this.props.inspectionDetail;
         if (this.props.requestStatus === Status.SUCCESS) {
             if (!Loading.checkData(detail)) return;
             return (
@@ -161,8 +82,15 @@ class TaskMaintenanceDetailScreen extends WrapScreen {
                         <View style={styles.contentTitle}>
                             <Text>巡检内容</Text>
                         </View>
-                        {this._renderUndo()}
-                        {this._renderDo()}
+                        <Divider style={{backgroundColor: '#ddd'}}/>
+                        <FlatList
+                            data={detail.xjContent}
+                            keyExtractor={this._keyExtractor}
+                            renderItem={this._renderItem}
+                            ItemSeparatorComponent={() => (
+                                <Divider style={{backgroundColor: '#ddd'}}/>
+                            )}
+                        />
                     </View>
                 </ScrollView>
             )
@@ -176,12 +104,12 @@ class TaskMaintenanceDetailScreen extends WrapScreen {
 
 function mapStateToProps(state) {
     return {
-        maintenanceTaskDetail: state.Task.getMaintenanceTaskDetail,
+        inspectionDetail: state.Inspections.getInspectionDetail,
         requestStatus: state.Common.requestStatus
     }
 }
 
-export default connect(mapStateToProps)(TaskMaintenanceDetailScreen);
+export default connect(mapStateToProps)(InspectionDetailScreen);
 
 
 const styles = Utils.PLStyle({

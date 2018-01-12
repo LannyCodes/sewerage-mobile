@@ -52,7 +52,7 @@ export class KHeader extends Component {
                             size={24}
                             name={'chevron-left'}
                             type='feather'
-                            color={'#666'}
+                            color={'#42BB55'}
                             onPress={this.props.onLeftPress}
                         />
                     }
@@ -75,7 +75,7 @@ export class KHeader extends Component {
                     size={18}
                     name={header.right.icon}
                     type={header.right.type}
-                    color={'#666'}
+                    color={'#42BB55'}
                     onPress={header.right.onPress}
                 />
             )

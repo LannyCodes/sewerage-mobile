@@ -19,15 +19,6 @@ class InspectionManagementScreen extends WrapScreen {
         super(props);
         this.header = {
             title: "巡检任务",
-            right: {
-                icon: 'filter',
-                type: 'feather',
-                onPress: () => {
-                    this.setState({
-                        isFilterShow: !this.state.isFilterShow
-                    })
-                }
-            }
         }
 
         this.state = {
@@ -54,7 +45,7 @@ class InspectionManagementScreen extends WrapScreen {
     _renderItem = ({item}) => (
         <TouchableOpacity style={styles.cardItem}
                           onPress={() => {
-                              this.props.navigation.navigate()
+                              this.props.navigation.navigate('InspectionDetail')
                           }}
         >
             <View style={styles.row}>

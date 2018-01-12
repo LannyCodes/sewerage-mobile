@@ -40,10 +40,11 @@ class AuditManagementScreen extends WrapScreen {
 
 
     _renderCardStatus = (status) => {
-        let st = {text: '待执行', color: '#47A9EB', backgroundColor: '#ECF6FD'};
-        if (status === '0') st = {text: '待执行', color: '#47A9EB', backgroundColor: '#ECF6FD'};
-        else if (status === '1') st = {text: '执行中', color: '#FAA346', backgroundColor: '#FEF5EB'};
-        else st = {text: '已完成', color: '#1AAD19', backgroundColor: '#E8F6E8'};
+        let st = {text: '待审核', color: '#FAA346', backgroundColor: '#FEF5EB'};
+        if (status === '0') st = {text: '待审核', color: '#FAA346', backgroundColor: '#FEF5EB'};
+        else if (status === '1') st = {text: '已通过', color: '#1AAD19', backgroundColor: '#E8F6E8'};
+        else if (status === '2') st = {text: '已驳回', color: '#47A9EB', backgroundColor: '#ECF6FD'};
+        else if (status === '3') st = {text: '已废弃', color: '#FF6E61', backgroundColor: '#FFE2DF'};
         return (
             <View style={[styles.cardStatus, {backgroundColor: st.backgroundColor}]}>
                 <Text style={{color: st.color}}>{st.text}</Text>
@@ -71,7 +72,7 @@ class AuditManagementScreen extends WrapScreen {
 
     _render() {
         if (this.props.requestStatus === Status.SUCCESS) {
-            if(!Loading.checkData(this.props.auditList)) return;
+            if (!Loading.checkData(this.props.auditList)) return;
             if (this.props.auditList.length > 0) {
                 return (
                     <View style={{flex: 1}}>
@@ -105,7 +106,6 @@ class AuditManagementScreen extends WrapScreen {
     }
 }
 
-//make this component available to the app
 function mapStateToProps(state) {
     return {
         auditList: state.Audit.getAuditList,
@@ -158,51 +158,39 @@ const styles = Utils.PLStyle({
 
 const filterArray = [
     {
-        title: '类型',
+        title: '状态',
         keyName: 'ssb',
         multipleChoice: false,
         data: [{
-            name: '类型一',
+            name: '待审核',
             value: '11',
         }, {
-            name: '类型二',
+            name: '已通过',
             value: '22',
         }, {
-            name: '类型三',
+            name: '已驳回',
             value: '33',
-        }]
-    },
-    {
-        title: '规格',
-        keyName: 'aab',
-        multipleChoice: true,
-        data: [{
-            name: '规格一',
-            value: '11',
-        }, {
-            name: '规格二',
-            value: '22',
-        }, {
-            name: '规格三',
-            value: '33',
-        }, {
-            name: '规格四',
+        },{
+            name: '已废弃',
             value: '44',
         }]
     },
     {
-        title: '规格',
-        keyName: 'ccs',
+        title: '类型',
+        keyName: 'aab',
         multipleChoice: false,
         data: [{
-            name: '规格一',
+            name: '巡检计划审核',
             value: '11',
         }, {
-            name: '规格二',
+            name: '维保计划审核',
             value: '22',
         }, {
-            name: '规格三',
+            name: '故障工单审核',
             value: '33',
+        }, {
+            name: '变更单审核',
+            value: '44',
         }]
     }
 ];
