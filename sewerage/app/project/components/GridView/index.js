@@ -33,12 +33,14 @@ export class GridView extends Component {
         columns: PropTypes.number,//列数
         containerStyle: ViewPropTypes.style,
         gridClick: PropTypes.func,//每一个grid点击事件
-        addGrid:PropTypes.func, //增加按钮点击事件
+        addGrid: PropTypes.func, //增加按钮点击事件
         resizeMode: PropTypes.string,
         gridMargin: PropTypes.number,
         marginLeft: PropTypes.number,//定义外围左右的margin
         marginRight: PropTypes.number,
         isShowAdd: PropTypes.bool,//是否展示增加的按钮
+        showDelete: PropTypes.any,//展示删除按钮
+        deleteClick: PropTypes.func,
     };
 
     static defaultProps = {
@@ -49,6 +51,7 @@ export class GridView extends Component {
         marginLeft: 0,
         marginRight: 0,
         isShowAdd: false,
+        showDelete:false,
     };
 
     _gridClick = (item, index) => {
@@ -58,7 +61,7 @@ export class GridView extends Component {
     }
 
     _addGrid = () => {
-        if (typeof (this.props.gridClick) === 'function') {
+        if (typeof (this.props.addGrid) === 'function') {
             this.props.addGrid();
         }
     }
@@ -77,6 +80,12 @@ export class GridView extends Component {
         }
     }
 
+    _deleteClick = (item, index) => {
+        if (typeof (this.props.deleteClick) === 'function') {
+            this.props.deleteClick();
+        }
+    }
+
     _renderAddButton = () => {
         let gridStyle = this._getGridStyle(this.totalCount - 1);
         return (
@@ -86,10 +95,9 @@ export class GridView extends Component {
                     ...gridStyle
                 }]}
                 onPress={this._addGrid}
-                >
+            >
                 <View style={{ backgroundColor: "#D8D8D9", width: 40, height: 2 }} />
                 <View style={{ backgroundColor: "#D8D8D9", height: 40, width: 2, position: 'absolute' }} />
-                {/* <Text style={styles.plus}>+</Text> */}
             </TouchableOpacity>
         )
     }
@@ -107,6 +115,15 @@ export class GridView extends Component {
                         ...gridStyle
                     }}
                 />
+                {
+                    this.props.showDelete ? <TouchableOpacity
+                        activeOpacity={1}
+                        style={styles.deleteButton}
+                        onPress={this._deleteClick}>
+                        <Text style={styles.deleteX}>×</Text>
+                    </TouchableOpacity> : <View />
+                }
+
             </TouchableOpacity>
         )
     }
@@ -139,9 +156,22 @@ const styles = Utils.PLStyle({
         borderWidth: 1,
         borderColor: '#D8D8D9',
     },
-    plus: {
-        fontSize: 100,
-        fontWeight: '100',
-        color: '#D8D8D9'
+    deleteButton: {
+        width: 22,
+        height: 22,
+        top: -11,
+        right: 0,
+        borderWidth: 1,
+        borderColor: 'transparent',
+        borderRadius: 25,
+        position: 'absolute',
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: "#d8d8d8",
+    },
+    deleteX: {
+        color: "#ffffff",
+        fontSize: 20,
+        backgroundColor: "transparent"
     }
 })
