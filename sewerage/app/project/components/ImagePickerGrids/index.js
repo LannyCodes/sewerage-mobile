@@ -1,13 +1,13 @@
 import React, {Component} from 'react'
 import {
-    FlatList, Image, Text, TouchableOpacity,
+    FlatList, Image, TouchableOpacity, TouchableWithoutFeedback,
     View,
 } from "react-native"
 import * as Utils from '../../../core/utils'
 import PropTypes from 'prop-types'
 import * as Assets from '../../assets'
-import _ from 'lodash'
 import ImagePicker from 'react-native-image-picker';
+import {PictureOverlay} from "../PictureOverlay";
 
 const PICKER_HOLDER = "PICKER_HOLDER";
 const HOLDER_IMG = {uri: PICKER_HOLDER};
@@ -17,21 +17,26 @@ export class GridImagePicker extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            images: [
-                HOLDER_IMG
-            ]
+            clickImageUri: '',
         }
     }
 
     _keyExtractor = (item, index) => index;
 
     static propTypes = {
-        cols: PropTypes.number
+        cols: PropTypes.number,
+        images: PropTypes.array,
+        onPhotoTapped: PropTypes.func,
     };
 
     static defaultProps = {
-        cols: 3
+        cols: 3,
+        images: []
     };
+
+    componentWillReceiveProps(newProps) {
+        console.log(newProps.images)
+    }
 
     _selectPhotoTapped = () => {
         let me = this;
@@ -66,14 +71,7 @@ export class GridImagePicker extends Component {
                     console.log('User tapped custom button: ', response.customButton);
                 }
                 else {
-                    console.log(response)
-                    let images = me.state.images;
-                    let source = {uri: response.uri};
-                    images.push(source);
-                    images =_.drop(images);
-                    me.setState({
-                        images: images
-                    })
+                    me.props.onPhotoTapped(response);
                 }
             });
         } catch (exception) {
@@ -107,6 +105,11 @@ export class GridImagePicker extends Component {
                     height: Utils.sw / this.props.cols,
                     justifyContent: 'center',
                     alignItems: 'center',
+                }} onPress={() => {
+                    this.oc.showModal();
+                    this.setState({
+                        clickImageUri: item.uri
+                    })
                 }}>
                     <Image
                         source={item}
@@ -121,14 +124,28 @@ export class GridImagePicker extends Component {
     }
 
     render() {
+        let images = this.props.images;
+        let renderImg = images.filter((val) => {
+            return val.uri !== PICKER_HOLDER;
+        })
+        renderImg.push(HOLDER_IMG);
         return (
-            <FlatList
-                style={{marginTop: 10}}
-                numColumns={4}
-                keyExtractor={this._keyExtractor}
-                data={this.state.images}
-                renderItem={this._renderItem}
-            />
+            <View>
+                <FlatList
+                    style={{marginTop: 10}}
+                    numColumns={4}
+                    keyExtractor={this._keyExtractor}
+                    data={renderImg}
+                    renderItem={this._renderItem}
+                />
+                <PictureOverlay
+                    ref={(oc) => {
+                        this.oc = oc
+                    }}
+                    cache={true} //如果是本地图片，必须设置为false
+                    url={this.state.clickImageUri}/>
+            </View>
+
         )
     }
 }

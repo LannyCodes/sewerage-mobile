@@ -29,7 +29,9 @@ class TaskMaintenanceUploadScreen extends WrapScreen {
             selectedIndex: 1,
             typeIndex: null,
             levelIndex: null,
-            s1Text: ''
+            s1Text: '',
+            uploadImages0: [],
+            uploadImages1: [],
         }
     }
 
@@ -182,6 +184,16 @@ class TaskMaintenanceUploadScreen extends WrapScreen {
                 </View>
                 <GridImagePicker
                     cols={4}
+                    onPhotoTapped={(picture) => {
+                        let source = {uri: picture.uri};
+                        let images = status === 0 ? this.state.uploadImages0 : this.state.uploadImages1;
+                        images.push(source);
+                        let check = status === 0 ? "uploadImages0" : "uploadImages1";
+                        this.setState({
+                            [check]: images
+                        })
+                    }}
+                    images={status === 0 ? this.state.uploadImages0 : this.state.uploadImages1}
                 />
             </ScrollView>
         )
@@ -218,7 +230,7 @@ class TaskMaintenanceUploadScreen extends WrapScreen {
     _render() {
         const btnGroup = ['巡检正常', '故障能处理', '故障不能处理']
         return (
-            <View style={{flex: 1, backgroundColor: 'white'}}>
+            <ScrollView style={{flex: 1, backgroundColor: 'white'}}>
                 <View style={{flexDirection: 'row', height: 47}}>
                     {
                         btnGroup.map((item, i) => {
@@ -244,7 +256,7 @@ class TaskMaintenanceUploadScreen extends WrapScreen {
                 </View>
                 <Divider style={{backgroundColor: '#EBEBEB'}}/>
                 {this._renderContent()}
-            </View>
+            </ScrollView>
         )
     }
 }

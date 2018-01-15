@@ -9,7 +9,7 @@ import QrScan from "../../project/components/qrScan";
  */
 const Splash = {
     Splash: {
-        screen: Modules.TaskMaintenanceUploadScreen
+        screen: Modules.SplashScreen
     }
 };
 
@@ -29,7 +29,7 @@ const Main = {
 };
 
 const Common = {
-    Bridge: {screen: Modules.BridgeScreen},
+    Bridge: {screen: Modules.TaskMaintenanceUploadScreen},
     Qr: {screen: QrScan},
 }
 
@@ -71,6 +71,7 @@ const Fault = {
 
 const Navigator = StackNavigator(
     {
+        // ...Splash,
         ...Common,
         ...Main,
         ...Login,
