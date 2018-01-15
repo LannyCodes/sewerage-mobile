@@ -29,7 +29,7 @@ const Main = {
 };
 
 const Common = {
-    Bridge: {screen: Modules.TaskMaintenanceUploadScreen},
+    Bridge: {screen: Modules.BridgeScreen},
     Qr: {screen: QrScan},
 }
 
