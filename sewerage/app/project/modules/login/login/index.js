@@ -29,7 +29,6 @@ class LoginScreen extends WrapScreen {
 
     constructor(props: Object) {
         super(props);
-        this.header = 'none'
         this.state = {
             showMima: false,
             inputPhoneAndEmail: '',
@@ -63,7 +62,7 @@ class LoginScreen extends WrapScreen {
         return (
             <ScrollView ref="scrollView" style={{flex: 1, backgroundColor: 'white'}}>
                 <View style={styles.container}>
-                    <Text adjustsFontSizeToFit={false} allowFontScaling={false} style={styles.content}>盈峰项目管理系统</Text>
+                    <Text adjustsFontSizeToFit={false} allowFontScaling={false} style={styles.content}>中联污水厂</Text>
                     {LoginPart(this)}
                 </View>
             </ScrollView>

@@ -2,7 +2,6 @@ import {StackNavigator} from 'react-navigation';
 import * as Modules from '../../project/modules';
 import TabNav from "./TabNavigator";
 import QrScan from "../../project/components/qrScan";
-import OverlayExample from "../../project/modules/inspection";
 
 /**
  * 欢迎页
@@ -30,7 +29,8 @@ const Main = {
 };
 
 const Common = {
-    Qr: {screen: QrScan}
+    Bridge: {screen: Modules.BridgeScreen},
+    Qr: {screen: QrScan},
 }
 
 const Home = {
@@ -50,8 +50,7 @@ const Inspections = {
 /**
  *  维保
  */
-const Maintenance = {
-};
+const Maintenance = {};
 /**
  * 任务
  */
@@ -67,15 +66,15 @@ const Task = {
 const Fault = {
     FaultDetail: {screen: Modules.FaultDetailScreen},
     WorkOrderDetail: {screen: Modules.WorkOrderDetailScreen},
-    DealWorkOrder: {screen:Modules.DealWorkOrderScreen},
-}
+    DealWorkOrder: {screen: Modules.DealWorkOrderScreen},
+};
 
 const Navigator = StackNavigator(
     {
-        ...Login,
-        ...Main,
-        ...Home,
         ...Common,
+        ...Main,
+        ...Login,
+        ...Home,
         ...Maintenance,
         ...Task,
         ...Fault,
@@ -85,6 +84,6 @@ const Navigator = StackNavigator(
             header: null,
         }
     }
-);
+)
 
 export default Navigator

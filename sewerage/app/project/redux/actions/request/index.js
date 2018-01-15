@@ -1,8 +1,9 @@
 import ActionType from "../../actionType";
-import {config} from "../../../../config/setting";
+import {config, USER_KEY} from "../../../../config/setting";
 import api from "../../../../config/api/api";
 import {SUCCESS_CODE, TOKEN_ERROR_CODE, Status, header} from "../../../../config/api/api.config";
 import Toast from "teaset/components/Toast/Toast";
+import * as Utils from "../../../../core/utils";
 
 const fetchData = (url, body, dispatch) => {
     if (!body) {
@@ -18,7 +19,7 @@ const fetchData = (url, body, dispatch) => {
     //     }
     // }
     Object.assign(header, {
-        token: _USERTOKEN_ || ''
+        token: _USERTOKEN_
     });
     let formData = new FormData();
     for (let prop in body) {

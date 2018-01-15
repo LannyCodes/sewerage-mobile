@@ -1,8 +1,9 @@
-import * as Utils from "../../core/utils/index";
+import React from "react";
 import {Component} from 'react'
 import {View} from "react-native";
 import _ from 'lodash'
-import React from "react";
+import * as Utils from "../../core/utils/index";
+import {USER_KEY} from '../../config/setting'
 import {KHeader} from "../components";
 import Orientation from 'react-native-orientation';
 import store from '../redux/store/configStore'
@@ -12,18 +13,29 @@ import store from '../redux/store/configStore'
  */
 export class WrapScreen extends Component {
     componentDidMount() {
-        if (!_.isEqual(this.getCurrentRouteName(), "Splash"))
+        if (!_.isEqual(this.getCurrentRouteName(), "Splash")) {
             this.showStatusBar('transparent');
-
+        }
     }
 
     constructor(props) {
         super(props);
-        this.store = store
+        this.store = store;
         this.routeName = this.getCurrentRouteName();
         this.header = {
             title: '',
-        }
+        };
+        storage.load({
+            key: USER_KEY
+        }).then(data => {
+            if (!_.isNull(data.token)) {
+                _USERTOKEN_ = data.token;
+            } else {
+                _USERTOKEN_ = '';
+            }
+        }).catch(err => {
+            _USERTOKEN_ = '';
+        })
     }
 
     render() {

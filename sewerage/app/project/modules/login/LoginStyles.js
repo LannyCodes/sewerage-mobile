@@ -3,7 +3,6 @@ import * as Utils from "../../../core/utils";
 
 const styles = Utils.PLStyle({
     container: {
-        height: Utils.sh,
         flex: 1,
         backgroundColor: 'white',
         alignItems: 'center',

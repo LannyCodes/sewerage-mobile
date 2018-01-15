@@ -20,9 +20,7 @@ const GLOB = {
  * 用户信息key:用户storage存取数据
  * @type {{USERSTAGE_KEY: string}}
  */
-const USER_KEY = {
-    USERSTAGE_KEY: 'INFROREUSERSTATEKEY',
-};
+const USER_KEY = 'USERSTATEKEY'
 
 if (__DEV__) {
     Object.assign(config, {
@@ -30,8 +28,7 @@ if (__DEV__) {
         // WebServerUrl: "http://192.168.31.100:8089",
     })
 } else {
-    Object.assign(config, {
-    });
+    Object.assign(config, {});
 }
 
-export { config, GLOB, USER_KEY }
+export {config, GLOB, USER_KEY}

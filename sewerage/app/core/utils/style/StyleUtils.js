@@ -1,5 +1,5 @@
 /** * Created by InforeXuan on 2017/9/27. */
-const Dimensions = require('Dimensions');
+import {Dimensions} from 'react-native';
 let {width} = Dimensions.get('window');
 const scale = width / 375.0;
 let _type = ['width', 'height',

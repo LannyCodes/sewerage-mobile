@@ -1,24 +1,16 @@
-import {config} from "../../../config/setting";
+import {config, USER_KEY} from "../../../config/setting";
 import api from "../../../config/api/api";
 import {SUCCESS_CODE, TOKEN_ERROR_CODE, header} from "../../../config/api/api.config";
 import Toast from "teaset/components/Toast/Toast";
+import * as Utils from "../index";
 
 export const fetch = (url, body) => {
     return new Promise((resolve, reject) => {
         if (!body) {
             body = {};
         }
-        // let userId;
-        // if (!body.hasOwnProperty('userId')) {
-        //     if (_USERID_) {
-        //         userId = _USERID_;
-        //         Object.assign(body, {
-        //             userId: userId,
-        //         })
-        //     }
-        // }
         Object.assign(header, {
-            token: _USERTOKEN_ || ''
+            token: _USERTOKEN_
         });
         let formData = new FormData();
         for (let prop in body) {
@@ -40,7 +32,11 @@ export const fetch = (url, body) => {
                                 resolve(response.data.data)
                             } else if (parseInt(response.data.code) === TOKEN_ERROR_CODE) {
                                 // 这里处理token异常
-                                console.log('token is over , please 重新登录')
+                                storage.remove({
+                                    key: USER_KEY
+                                });
+                                _USERTOKEN_ = '';
+
                             } else {
                                 // 请求有问题
                                 Toast.message('请求失败,请稍后重试。')

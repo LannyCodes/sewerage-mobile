@@ -1,4 +1,7 @@
 import {NavigationActions} from 'react-navigation'
+import {USER_KEY} from "../../../config/setting";
+import {AsyncStorage} from "react-native";
+
 export const resetNavigation = (navigation, route) => {
     const resetAction = NavigationActions.reset({
         index: 0,
@@ -24,3 +27,4 @@ export const isFastExecute = () => {
     lastClickTime = timeNow;
     return false;
 };
+

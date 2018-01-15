@@ -9,7 +9,6 @@ import {Status} from "../../../config/api/api.config";
 import {ErrorPage, Loading} from "../../components";
 import {FlatList, ScrollView, Text, TouchableOpacity, View} from "react-native";
 import {Avatar, Divider, Icon} from "react-native-elements";
-import _ from 'lodash'
 
 class InspectionDetailScreen extends WrapScreen {
 

@@ -5,7 +5,7 @@ import {Toast} from 'teaset'
 import * as Utils from "../../../core/utils";
 import _ from 'lodash'
 import Urls from "../../../config/api/urls";
-import * as Actions from '../../redux/actions'
+import {USER_KEY} from "../../../config/setting"
 
 export function checkOtp(self) {
     if (Utils.isTel(self.state.inputPhoneNum)) {
@@ -45,8 +45,14 @@ export async function loginSubmit(self) {
     let password = self.state.inputPwd;
     let params = {'loginName': username, 'pwd': '14e1b600b1fd579f47433b88e8d85291'};
     Utils.fetch(Urls.Login.login, params).then((data) => {
-        // 保存登录状态
-        self.store.dispatch(Actions.saveUser(data));
+        // 保存登录状态 --- 只保存token到localStorage
+        storage.save({
+            key: USER_KEY,
+            data: {
+                userId: data.user.userId,
+                token: data.token
+            }
+        });
         Toast.message('登陆成功！');
         Utils.resetNavigation(self.props.navigation, 'Main');
     });
