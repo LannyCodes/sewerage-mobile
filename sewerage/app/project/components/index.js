@@ -7,3 +7,6 @@ export * from './default'; //请求数据为null页面
 export * from './loading'; //请求数据为null页面
 export * from './TagLabel';
 export * from './GridView';
+export * from './ImagePickerGrids';  // 九宫格拍照 TODO
+export * from './checkBox';
+export * from './submitBtn';

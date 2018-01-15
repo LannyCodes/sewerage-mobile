@@ -12,8 +12,8 @@ const config = {
  * @type {{_USERID_: string, _USERTOKEN_: string}}
  */
 const GLOB = {
-    _USERID_: 'userID',
-    _USERTOKEN_: 'token'
+    _USERID_: '',
+    _USERTOKEN_: ''
 };
 
 /**
@@ -27,6 +27,7 @@ const USER_KEY = {
 if (__DEV__) {
     Object.assign(config, {
         WebServerUrl: "http://localhost:10086",
+        // WebServerUrl: "http://192.168.31.100:8089",
     })
 } else {
     Object.assign(config, {

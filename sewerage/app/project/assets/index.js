@@ -10,6 +10,12 @@ const Home = {
     me_selected: require('./images/icon_person_selected.png'),
 };
 
+const Login = {
+    eye: require('./images/icon_eye.png'),
+    invalid: require('./images/icon_invalid.png')
+}
+
 export {
     Home,
+    Login
 }

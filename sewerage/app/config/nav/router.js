@@ -10,9 +10,16 @@ import OverlayExample from "../../project/modules/inspection";
  */
 const Splash = {
     Splash: {
-        screen: Modules.TaskMaintenanceDetailScreen
+        screen: Modules.TaskMaintenanceUploadScreen
     }
 };
+
+const Login = {
+    Login: {screen: Modules.LoginlScreen},
+    Vertify: {screen: Modules.VertifyScreen},
+    Modify: {screen: Modules.ModifyScreen},
+};
+
 
 /**
  * 首页
@@ -65,7 +72,7 @@ const Fault = {
 
 const Navigator = StackNavigator(
     {
-        // ...Splash,
+        ...Login,
         ...Main,
         ...Home,
         ...Common,

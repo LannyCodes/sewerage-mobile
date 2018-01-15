@@ -1,10 +1,10 @@
 import React from 'react';
-
 import {WrapScreen} from "../wrap";
 import {connect} from "react-redux";
 import * as Utils from "../../../core/utils";
-import {Text, TextInput, TouchableOpacity, View} from "react-native";
+import {ScrollView, Text, TextInput, TouchableOpacity, View} from "react-native";
 import {Divider, Icon} from "react-native-elements";
+import {GridImagePicker} from "../../components";
 
 class TaskMaintenanceUploadScreen extends WrapScreen {
 
@@ -119,7 +119,77 @@ class TaskMaintenanceUploadScreen extends WrapScreen {
         return style;
     }
 
+    _imageClick = () => {
+
+    }
+
+    _renderMulti = (status /*0:故障能处理，1：故障不能处理*/, typeGroup: Array, levelGroup: Array) => {
+        return (
+            <ScrollView>
+                <Text style={styles.groupTitle}>故障描述</Text>
+                <View style={{alignItems: 'center'}}>
+                    <TextInput
+                        placeholder={'请输入巡检反馈（若无可不填）'}
+                        multiline={true}
+                        style={styles.textInput}
+                        onChangeText={(text) => this.setState({s1Text: text})}
+                        value={this.state.text}
+                    />
+                </View>
+                <Text style={styles.groupTitle}>故障类型</Text>
+                <View style={{flexDirection: 'row', height: 32}}>
+                    {
+                        typeGroup.map((item, i) => {
+                            const s = this._getBtnRadioStyle(i, 'type');
+                            return (
+                                <TouchableOpacity style={s.container} key={i} onPress={() => {
+                                    this.setState({
+                                        typeIndex: i
+                                    })
+                                }}>
+                                    <Text style={s.text}>{item}</Text>
+                                </TouchableOpacity>
+                            )
+                        })
+                    }
+                </View>
+                <Text style={styles.groupTitle}>故障等级</Text>
+                <View style={{flexDirection: 'row', height: 32}}>
+                    {
+                        levelGroup.map((item, i) => {
+                            const s = this._getBtnRadioStyle(i);
+                            return (
+                                <TouchableOpacity style={s.container} key={i} onPress={() => {
+                                    this.setState({
+                                        levelIndex: i
+                                    })
+                                }}>
+                                    <Text style={s.text}>{item}</Text>
+                                </TouchableOpacity>
+                            )
+                        })
+                    }
+                </View>
+                <Text style={styles.groupTitle}>处理方式</Text>
+                <View style={{alignItems: 'center'}}>
+                    <TextInput
+                        placeholder={'请输入处理方式（若无可不填）'}
+                        multiline={true}
+                        style={styles.textInput}
+                        onChangeText={(text) => this.setState({s1Text: text})}
+                        value={this.state.text}
+                    />
+                </View>
+                <GridImagePicker
+                    cols={4}
+                />
+            </ScrollView>
+        )
+    }
+
     _renderContent() {
+        const typeGroup = ['机械故障', '控制故障', '电气故障'];
+        const levelGroup = ['I级', 'II级', 'III级'];
         switch (this.state.selectedIndex) {
             case 0: {
                 return (
@@ -135,128 +205,11 @@ class TaskMaintenanceUploadScreen extends WrapScreen {
                 )
             }
             case 1: {
-                const typeGroup = ['机械故障', '控制故障', '电气故障'];
-                const levelGroup = ['I级', 'II级', 'III级'];
-                return (
-                    <View>
-                        <Text style={styles.groupTitle}>故障描述</Text>
-                        <View style={{alignItems: 'center'}}>
-                            <TextInput
-                                placeholder={'请输入巡检反馈（若无可不填）'}
-                                multiline={true}
-                                style={styles.textInput}
-                                onChangeText={(text) => this.setState({s1Text: text})}
-                                value={this.state.text}
-                            />
-                        </View>
-                        <Text style={styles.groupTitle}>故障类型</Text>
-                        <View style={{flexDirection: 'row', height: 32}}>
-                            {
-                                typeGroup.map((item, i) => {
-                                    const s = this._getBtnRadioStyle(i, 'type');
-                                    return (
-                                        <TouchableOpacity style={s.container} key={i} onPress={() => {
-                                            this.setState({
-                                                typeIndex: i
-                                            })
-                                        }}>
-                                            <Text style={s.text}>{item}</Text>
-                                        </TouchableOpacity>
-                                    )
-                                })
-                            }
-                        </View>
-                        <Text style={styles.groupTitle}>故障等级</Text>
-                        <View style={{flexDirection: 'row', height: 32}}>
-                            {
-                                levelGroup.map((item, i) => {
-                                    const s = this._getBtnRadioStyle(i);
-                                    return (
-                                        <TouchableOpacity style={s.container} key={i} onPress={() => {
-                                            this.setState({
-                                                levelIndex: i
-                                            })
-                                        }}>
-                                            <Text style={s.text}>{item}</Text>
-                                        </TouchableOpacity>
-                                    )
-                                })
-                            }
-                        </View>
-                        <Text style={styles.groupTitle}>处理方式</Text>
-                        <View style={{alignItems: 'center'}}>
-                            <TextInput
-                                placeholder={'请输入处理方式（若无可不填）'}
-                                multiline={true}
-                                style={styles.textInput}
-                                onChangeText={(text) => this.setState({s1Text: text})}
-                                value={this.state.text}
-                            />
-                        </View>
-                    </View>
-                )
+                return this._renderMulti(0, typeGroup, levelGroup);
             }
             case 2: {
-                const typeGroup = ['机械故障', '控制故障', '电气故障'];
-                const levelGroup = ['I级', 'II级', 'III级'];
-                return (
-                    <View>
-                        <Text style={styles.groupTitle}>故障描述</Text>
-                        <View style={{alignItems: 'center'}}>
-                            <TextInput
-                                placeholder={'请输入巡检反馈（若无可不填）'}
-                                multiline={true}
-                                style={styles.textInput}
-                                onChangeText={(text) => this.setState({s1Text: text})}
-                                value={this.state.text}
-                            />
-                        </View>
-                        <Text style={styles.groupTitle}>故障类型</Text>
-                        <View style={{flexDirection: 'row', height: 32}}>
-                            {
-                                typeGroup.map((item, i) => {
-                                    const s = this._getBtnRadioStyle(i, 'type');
-                                    return (
-                                        <TouchableOpacity style={s.container} key={i} onPress={() => {
-                                            this.setState({
-                                                typeIndex: i
-                                            })
-                                        }}>
-                                            <Text style={s.text}>{item}</Text>
-                                        </TouchableOpacity>
-                                    )
-                                })
-                            }
-                        </View>
-                        <Text style={styles.groupTitle}>故障等级</Text>
-                        <View style={{flexDirection: 'row', height: 32}}>
-                            {
-                                levelGroup.map((item, i) => {
-                                    const s = this._getBtnRadioStyle(i);
-                                    return (
-                                        <TouchableOpacity style={s.container} key={i} onPress={() => {
-                                            this.setState({
-                                                levelIndex: i
-                                            })
-                                        }}>
-                                            <Text style={s.text}>{item}</Text>
-                                        </TouchableOpacity>
-                                    )
-                                })
-                            }
-                        </View>
-                        <Text style={styles.groupTitle}>处理方式</Text>
-                        <View style={{alignItems: 'center'}}>
-                            <TextInput
-                                placeholder={'请输入处理方式（若无可不填）'}
-                                multiline={true}
-                                style={styles.textInput}
-                                onChangeText={(text) => this.setState({s1Text: text})}
-                                value={this.state.text}
-                            />
-                        </View>
-                    </View>
-                )
+                return this._renderMulti(1, typeGroup, levelGroup);
+
             }
         }
     }

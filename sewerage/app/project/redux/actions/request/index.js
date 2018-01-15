@@ -1,24 +1,24 @@
 import ActionType from "../../actionType";
 import {config} from "../../../../config/setting";
 import api from "../../../../config/api/api";
-import {SUCCESS_CODE, TOKEN_ERROR_CODE, Status} from "../../../../config/api/api.config";
+import {SUCCESS_CODE, TOKEN_ERROR_CODE, Status, header} from "../../../../config/api/api.config";
 import Toast from "teaset/components/Toast/Toast";
 
 const fetchData = (url, body, dispatch) => {
     if (!body) {
         body = {};
     }
-    let userId;
-    if (!body.hasOwnProperty('userId')) {
-        if (_USERID_) {
-            userId = _USERID_;
-            Object.assign(body, {
-                userId: userId,
-            })
-        }
-    }
-    Object.assign(body, {
-        token: _USERTOKEN_ ? _USERTOKEN_ : ''
+    // let userId;
+    // if (!body.hasOwnProperty('userId')) {
+    //     if (_USERID_) {
+    //         userId = _USERID_;
+    //         Object.assign(body, {
+    //             userId: userId,
+    //         })
+    //     }
+    // }
+    Object.assign(header, {
+        token: _USERTOKEN_ || ''
     });
     let formData = new FormData();
     for (let prop in body) {
@@ -39,11 +39,11 @@ const fetchData = (url, body, dispatch) => {
                         if (parseInt(response.data.code) === SUCCESS_CODE) {
                             dispatch({
                                 type: url,
-                                data: response.data.body
+                                data: response.data.data
                             })
                         } else if (parseInt(response.data.code) === TOKEN_ERROR_CODE) {
                             // 这里处理token异常
-                            console.log('token is over , please 重新登录')
+                            console.log('token is over, please 重新登录')
                             dispatch({
                                 type: ActionType.REQUEST_STATUS,
                                 data: Status.TOKEN_FAIL
