@@ -32,6 +32,7 @@ export const fetch = (context,url, body) => {
                                 resolve(response.data.data)
                             } else if (parseInt(response.data.code) === TOKEN_ERROR_CODE) {
                                 // 这里处理token异常
+                                Toast.message('token失效，请重新登录。')
                                 Utils.exitApp(context)
                             } else {
                                 // 请求有问题

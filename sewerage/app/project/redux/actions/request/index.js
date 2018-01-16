@@ -49,6 +49,7 @@ const fetchData = (context, url, body, dispatch) => {
                                 type: ActionType.REQUEST_STATUS,
                                 data: Status.TOKEN_FAIL
                             });
+                            Toast.message('token失效，请重新登录。')
                             Utils.exitApp(context)
                         } else {
                             // 请求有问题
