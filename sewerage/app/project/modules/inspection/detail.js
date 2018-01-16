@@ -20,7 +20,7 @@ class InspectionDetailScreen extends WrapScreen {
     }
 
     componentDidMount() {
-        this.store.dispatch(Actions.request(Urls.Inspections.getInspectionDetail)); // 请求
+        this.store.dispatch(Actions.request(this, Urls.Inspections.getInspectionDetail)); // 请求
     }
 
     _keyExtractor = (item, index) => index;
@@ -33,6 +33,7 @@ class InspectionDetailScreen extends WrapScreen {
 
     _render() {
         const detail = this.props.inspectionDetail;
+        console.log(this.props.requestStatus)
         if (this.props.requestStatus === Status.SUCCESS) {
             if (!Loading.checkData(detail)) return;
             return (

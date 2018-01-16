@@ -26,7 +26,7 @@ class TaskMaintenanceDetailScreen extends WrapScreen {
     }
 
     componentDidMount() {
-        this.store.dispatch(Actions.request(Urls.Task.getMaintenanceTaskDetail)); // 请求
+        this.store.dispatch(Actions.request(this,Urls.Task.getMaintenanceTaskDetail)); // 请求
     }
 
     componentWillReceiveProps(nextProps) {

@@ -4,7 +4,6 @@ import {
     Text, TouchableOpacity,
 } from 'react-native';
 import {WrapScreen} from "../wrap";
-import {USER_KEY} from "../../../config/setting";
 import * as Utils from "../../../core/utils/common";
 
 class MeScreen extends WrapScreen {
@@ -21,11 +20,7 @@ class MeScreen extends WrapScreen {
             <View>
                 <Text>Me</Text>
                 <TouchableOpacity onPress={() => {
-                    storage.remove({
-                        key: USER_KEY
-                    });
-                    _USERTOKEN_ = '';
-                    Utils.resetNavigation(this.props.navigation, 'Login')
+                   Utils.exitApp(this);
                 }}>
                     <Text>退出</Text>
                 </TouchableOpacity>

@@ -292,7 +292,7 @@
     "url": "/app/inspection/inspectionDetail",
     "method": "post",
     "response": {
-      "code": 0,
+      "code": 422,
       "msg": "",
       "data": {
         "title": "宁乡污水处理厂月巡检任务",

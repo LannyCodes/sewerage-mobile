@@ -1,6 +1,6 @@
 import {NavigationActions} from 'react-navigation'
 import {USER_KEY} from "../../../config/setting";
-import {AsyncStorage} from "react-native";
+import * as Utils from "./index";
 
 export const resetNavigation = (navigation, route) => {
     const resetAction = NavigationActions.reset({
@@ -28,3 +28,11 @@ export const isFastExecute = () => {
     return false;
 };
 
+
+export const exitApp = (context)=>{
+    storage.remove({
+        key: USER_KEY
+    });
+    _USERTOKEN_ = '';
+    Utils.resetNavigation(context.props.navigation, 'Login')
+}

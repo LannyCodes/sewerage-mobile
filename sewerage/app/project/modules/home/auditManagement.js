@@ -35,7 +35,7 @@ class AuditManagementScreen extends WrapScreen {
     }
 
     componentDidMount() {
-        this.store.dispatch(Actions.request(Urls.Audit.getAuditList));
+        this.store.dispatch(Actions.request(this,Urls.Audit.getAuditList));
     }
 
 

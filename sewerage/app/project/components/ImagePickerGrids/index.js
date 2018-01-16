@@ -77,7 +77,7 @@ export class GridImagePicker extends Component {
         } catch (exception) {
             console.log(exception)
         }
-    }
+    };
 
 
     _renderItem = ({item, index}) => {

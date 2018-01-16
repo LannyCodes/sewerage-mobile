@@ -36,7 +36,7 @@ class MaintenanceManagementScreen extends WrapScreen {
     }
 
     componentDidMount() {
-        this.store.dispatch(Actions.request(Urls.Maintenance.getMaintenanceList));
+        this.store.dispatch(Actions.request(this,Urls.Maintenance.getMaintenanceList));
     }
 
     _renderCardStatus = (status) => {

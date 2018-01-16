@@ -4,7 +4,7 @@ import {SUCCESS_CODE, TOKEN_ERROR_CODE, header} from "../../../config/api/api.co
 import Toast from "teaset/components/Toast/Toast";
 import * as Utils from "../index";
 
-export const fetch = (url, body) => {
+export const fetch = (context,url, body) => {
     return new Promise((resolve, reject) => {
         if (!body) {
             body = {};
@@ -32,11 +32,7 @@ export const fetch = (url, body) => {
                                 resolve(response.data.data)
                             } else if (parseInt(response.data.code) === TOKEN_ERROR_CODE) {
                                 // 这里处理token异常
-                                storage.remove({
-                                    key: USER_KEY
-                                });
-                                _USERTOKEN_ = '';
-
+                                Utils.exitApp(context)
                             } else {
                                 // 请求有问题
                                 Toast.message('请求失败,请稍后重试。')

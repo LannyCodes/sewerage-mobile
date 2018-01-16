@@ -24,7 +24,7 @@ class TaskListScreen extends WrapScreen {
 
     componentDidMount() {
         const {qrData} = this.props.navigation.state.params || ''; // 获取参数
-        this.store.dispatch(Actions.request(Urls.Task.getTaskList, {params: qrData})); // 请求
+        this.store.dispatch(Actions.request(this,Urls.Task.getTaskList, {params: qrData})); // 请求
     }
 
     _keyExtractor = (item, index) => index;

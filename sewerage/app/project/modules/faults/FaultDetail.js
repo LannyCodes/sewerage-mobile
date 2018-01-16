@@ -27,7 +27,7 @@ class FaultDetailScreen extends WrapScreen {
     }
 
     componentDidMount() {
-        this.store.dispatch(Actions.request(Urls.faults.faultDetail))
+        this.store.dispatch(Actions.request(this,Urls.faults.faultDetail))
     }
 
     _render() {

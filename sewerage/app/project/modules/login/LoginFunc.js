@@ -26,7 +26,7 @@ export function checkPhoneAndOtp(self) {
 export function submitOtp(self) {
     if (Utils.isTel(self.state.inputPhoneNum)) {
         let params = {'telephone': self.state.inputPhoneNum, 'otp': self.state.inputVertify};
-        Utils.fetch(Urls.Login.otp, params).then(data => {
+        Utils.fetch(self, Urls.Login.otp, params).then(data => {
             console.log(data);
             self.props.navigation.navigate('Modify', {tel: self.state.inputPhoneNum});
         });
@@ -44,7 +44,7 @@ export async function loginSubmit(self) {
     let username = self.state.inputPhoneAndEmail;
     let password = self.state.inputPwd;
     let params = {'loginName': username, 'pwd': '14e1b600b1fd579f47433b88e8d85291'};
-    Utils.fetch(Urls.Login.login, params).then((data) => {
+    Utils.fetch(self, Urls.Login.login, params).then((data) => {
         // 保存登录状态 --- 只保存token到localStorage
         storage.save({
             key: USER_KEY,

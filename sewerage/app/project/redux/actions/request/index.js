@@ -5,7 +5,7 @@ import {SUCCESS_CODE, TOKEN_ERROR_CODE, Status, header} from "../../../../config
 import Toast from "teaset/components/Toast/Toast";
 import * as Utils from "../../../../core/utils";
 
-const fetchData = (url, body, dispatch) => {
+const fetchData = (context, url, body, dispatch) => {
     if (!body) {
         body = {};
     }
@@ -44,11 +44,12 @@ const fetchData = (url, body, dispatch) => {
                             })
                         } else if (parseInt(response.data.code) === TOKEN_ERROR_CODE) {
                             // 这里处理token异常
-                            console.log('token is over, please 重新登录')
+                            console.log('token exception');
                             dispatch({
                                 type: ActionType.REQUEST_STATUS,
                                 data: Status.TOKEN_FAIL
-                            })
+                            });
+                            Utils.exitApp(context)
                         } else {
                             // 请求有问题
                             Toast.message('请求失败,请稍后重试。')
@@ -70,6 +71,6 @@ const fetchData = (url, body, dispatch) => {
         );
 }
 
-export const request = (url, body) => (dispatch) => {
-    fetchData(url, body, dispatch);
+export const request = (context, url, body) => (dispatch) => {
+    fetchData(context, url, body, dispatch);
 }
