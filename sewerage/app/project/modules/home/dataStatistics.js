@@ -7,8 +7,11 @@ import { WrapScreen } from "../wrap";
 import { ScrollableTabBar } from '../../components/ScrollableTabViewBars';
 import ScrollableTabView from 'react-native-scrollable-tab-view';
 import { DataStatisticsView } from '../dataStatistics/components';
+import * as Actions from "../../redux/actions";
+import { connect } from "react-redux";
+import Urls from "../../../config/api/urls";
 
-export default class DataStatisticsScreen extends WrapScreen {
+class DataStatisticsScreen extends WrapScreen {
 
     constructor(props) {
         super(props);
@@ -16,6 +19,15 @@ export default class DataStatisticsScreen extends WrapScreen {
             title: "数据统计",
         }
     }
+
+    componentDidMount() {
+        this.store.dispatch(Actions.request(Urls.statistics.inspectionStatistics));
+        this.store.dispatch(Actions.request(Urls.statistics.maintenanceStatistics));
+        this.store.dispatch(Actions.request(Urls.statistics.stationStatistics));
+        // this.props.navigation.gesturesEnabled = false;
+        // console.log(this.props.navigation);
+    }
+
     _render() {
         return (
             <ScrollableTabView
@@ -33,12 +45,26 @@ export default class DataStatisticsScreen extends WrapScreen {
                 }
             >
                 <DataStatisticsView
-                    tabLabel="巡检统计" />
+                    tabLabel="巡检统计" 
+                    data={this.props.inspectionDatas}/>
                 <DataStatisticsView
-                    tabLabel="维保统计" />
+                    tabLabel="维保统计" 
+                    data={this.props.maintenanceDatas}/>
                 <DataStatisticsView
-                    tabLabel="厂站统计" />
+                    tabLabel="厂站统计" 
+                    data={this.props.stationDatas}/>
             </ScrollableTabView>
         )
     }
 }
+
+
+function mapStateToProps(state) {
+    return {
+        inspectionDatas: state.dataStatistics.getInspectionDatas,
+        maintenanceDatas: state.dataStatistics.getMaintenanceDatas,
+        stationDatas: state.dataStatistics.getStationDatas
+    }
+}
+
+export default connect(mapStateToProps)(DataStatisticsScreen);

@@ -17,6 +17,11 @@ const Urls = {
         faultList: '/app/fault/list',//故障清单
         workOrder: '/app/fault/workOrder',//故障工单
         faultDetail: '/app/fault/listDetail',//故障清单详情
+    },
+    statistics: {
+        inspectionStatistics:'/app/statistics/inspection',
+        maintenanceStatistics:'/app/statistics/maintenance',
+        stationStatistics:'/app/statistics/station',
     }
 };
 export default Urls
