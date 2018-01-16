@@ -93,8 +93,8 @@ class FaultListScreen extends WrapScreen {
     }
 
     componentDidMount() {
-        this.store.dispatch(Actions.request(Urls.faults.faultList));
-        this.store.dispatch(Actions.request(Urls.faults.workOrder));
+        this.store.dispatch(Actions.request(this,this,Urls.faults.faultList));
+        this.store.dispatch(Actions.request(this,Urls.faults.workOrder));
     }
 
     _keyExtractor = (item, index) => item.id;

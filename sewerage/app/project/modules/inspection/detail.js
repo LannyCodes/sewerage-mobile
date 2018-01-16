@@ -9,7 +9,6 @@ import {Status} from "../../../config/api/api.config";
 import {ErrorPage, Loading} from "../../components";
 import {FlatList, ScrollView, Text, TouchableOpacity, View} from "react-native";
 import {Avatar, Divider, Icon} from "react-native-elements";
-import _ from 'lodash'
 
 class InspectionDetailScreen extends WrapScreen {
 
@@ -21,7 +20,7 @@ class InspectionDetailScreen extends WrapScreen {
     }
 
     componentDidMount() {
-        this.store.dispatch(Actions.request(Urls.Inspections.getInspectionDetail)); // 请求
+        this.store.dispatch(Actions.request(this, Urls.Inspections.getInspectionDetail)); // 请求
     }
 
     _keyExtractor = (item, index) => index;
@@ -34,6 +33,7 @@ class InspectionDetailScreen extends WrapScreen {
 
     _render() {
         const detail = this.props.inspectionDetail;
+        console.log(this.props.requestStatus)
         if (this.props.requestStatus === Status.SUCCESS) {
             if (!Loading.checkData(detail)) return;
             return (

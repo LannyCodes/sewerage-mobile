@@ -1,4 +1,8 @@
 const Urls = {
+    Login: {
+        login: '/api/user/login',
+        otp: '/app/login/otp'
+    },
     Inspections: {
         getTaskList: '/app/inspection/list', // 获取巡检列表，
         getInspectionDetail: '/app/inspection/inspectionDetail', // 获取巡检任务详情

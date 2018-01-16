@@ -2,7 +2,6 @@ import {StackNavigator} from 'react-navigation';
 import * as Modules from '../../project/modules';
 import TabNav from "./TabNavigator";
 import QrScan from "../../project/components/qrScan";
-import OverlayExample from "../../project/modules/inspection";
 
 /**
  * 欢迎页
@@ -10,9 +9,16 @@ import OverlayExample from "../../project/modules/inspection";
  */
 const Splash = {
     Splash: {
-        screen: Modules.TaskMaintenanceDetailScreen
+        screen: Modules.SplashScreen
     }
 };
+
+const Login = {
+    Login: {screen: Modules.LoginlScreen},
+    Vertify: {screen: Modules.VertifyScreen},
+    Modify: {screen: Modules.ModifyScreen},
+};
+
 
 /**
  * 首页
@@ -23,7 +29,8 @@ const Main = {
 };
 
 const Common = {
-    Qr: {screen: QrScan}
+    Bridge: {screen: Modules.BridgeScreen},
+    Qr: {screen: QrScan},
 }
 
 const Home = {
@@ -43,8 +50,7 @@ const Inspections = {
 /**
  *  维保
  */
-const Maintenance = {
-};
+const Maintenance = {};
 /**
  * 任务
  */
@@ -60,15 +66,16 @@ const Task = {
 const Fault = {
     FaultDetail: {screen: Modules.FaultDetailScreen},
     WorkOrderDetail: {screen: Modules.WorkOrderDetailScreen},
-    DealWorkOrder: {screen:Modules.DealWorkOrderScreen},
-}
+    DealWorkOrder: {screen: Modules.DealWorkOrderScreen},
+};
 
 const Navigator = StackNavigator(
     {
         // ...Splash,
-        ...Main,
-        ...Home,
         ...Common,
+        ...Main,
+        ...Login,
+        ...Home,
         ...Maintenance,
         ...Task,
         ...Fault,
@@ -78,6 +85,6 @@ const Navigator = StackNavigator(
             header: null,
         }
     }
-);
+)
 
 export default Navigator

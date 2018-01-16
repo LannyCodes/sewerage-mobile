@@ -1,9 +1,10 @@
 import React, {Component} from 'react';
 import {
     View,
-    Text,
+    Text, TouchableOpacity,
 } from 'react-native';
 import {WrapScreen} from "../wrap";
+import * as Utils from "../../../core/utils/common";
 
 class MeScreen extends WrapScreen {
 
@@ -18,6 +19,11 @@ class MeScreen extends WrapScreen {
         return (
             <View>
                 <Text>Me</Text>
+                <TouchableOpacity onPress={() => {
+                   Utils.exitApp(this);
+                }}>
+                    <Text>退出</Text>
+                </TouchableOpacity>
             </View>
         )
     }

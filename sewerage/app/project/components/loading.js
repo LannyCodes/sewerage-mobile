@@ -18,7 +18,7 @@ export const Loading = {
             text: '正在加载中',
             icon: <ActivityIndicator size='large' color={Theme.toastIconTintColor}/>,
             position: 'center',
-            duration: 5000,
+            duration: 3000,
         });
     },
     hideCustom() {

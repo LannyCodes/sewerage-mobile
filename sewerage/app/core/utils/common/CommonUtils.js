@@ -1,4 +1,8 @@
 import {NavigationActions} from 'react-navigation'
+import {USER_KEY} from "../../../config/setting";
+import * as Utils from "./index";
+import Toast from "teaset/components/Toast/Toast";
+
 export const resetNavigation = (navigation, route) => {
     const resetAction = NavigationActions.reset({
         index: 0,
@@ -24,3 +28,12 @@ export const isFastExecute = () => {
     lastClickTime = timeNow;
     return false;
 };
+
+
+export const exitApp = (context)=>{
+    storage.remove({
+        key: USER_KEY
+    });
+    _USERTOKEN_ = '';
+    Utils.resetNavigation(context.props.navigation, 'Login')
+}

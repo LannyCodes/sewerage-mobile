@@ -4,8 +4,8 @@ import Maintenance from './maintenance'
 import Audit from './audit'
 import Inspections from './inspections'
 import faults from './faults';
-import Task from './task'
-import dataStatistics from './dataStatistics'
+import Task from './task';
+import dataStatistics from './dataStatistics';
 
 let MainReducer = combineReducers({
     Common,

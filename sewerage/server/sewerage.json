@@ -1,11 +1,40 @@
 [
   {
+    "url": "/api/user/login",
+    "method": "post",
+    "response": {
+      "code": 0,
+      "msg": "成功",
+      "data": {
+        "user": {
+          "userId": "11E787B2A7179B4E9911D583E7E8BEA9",
+          "userName": "super",
+          "nickName": "超级管理员",
+          "mobile": "15919910301",
+          "email": "123456@qq.com",
+          "tel": "159999999",
+          "jobNum": "11111",
+          "deleted": "0",
+          "lastLoginTime": 1515992977000,
+          "locked": "0",
+          "applicationName": "中联环境乡镇污水处理厂,权限管理系统",
+          "organizeId": "11E7E48ACE9AF1E4B418057D9106F500",
+          "organizeName": "中联环境",
+          "userGender": 1,
+          "pwdErrorTimes": 0,
+          "pwdErrorTime": 1515983641000
+        },
+        "token": "11E7F9B376E54B178628D9D2761E7942"
+      }
+    }
+  },
+  {
     "url": "/app/inspection/list",
     "method": "post",
     "response": {
       "code": "0",
-      "message": "",
-      "body": [
+      "msg": "",
+      "data": [
         {
           "title": "宁乡污水处理厂水月巡检任务",
           "content": "巡检宁乡市经济开发区一号场站，其中区安监项目包含一体机设备，进水口监控设备，出水口监控设备。",
@@ -42,8 +71,8 @@
     "method": "post",
     "response": {
       "code": 0,
-      "message": "",
-      "body": [
+      "msg": "",
+      "data": [
         {
           "title": "故障工单审核",
           "content": "巡检宁乡市经济开发区一号场站，其中区安监项目包含一体机设备，进水口监控设备，出水口监控设备。",
@@ -87,8 +116,8 @@
     "method": "post",
     "response": {
       "code": 0,
-      "message": "",
-      "body": [
+      "msg": "",
+      "data": [
         {
           "orderCode": "GZGD-01-11",
           "status": "1",
@@ -118,10 +147,10 @@
     "method": "post",
     "response": {
       "code": 0,
-      "message": "",
-      "body": [
+      "msg": "",
+      "data": [
         {
-          "id":0,
+          "id": 0,
           "name": "人间大炮",
           "status": "1",
           "level": "2",
@@ -130,7 +159,7 @@
           "time": "2017-09-03 15:20"
         },
         {
-          "id":1,
+          "id": 1,
           "name": "阿姆斯特朗炮",
           "status": "0",
           "level": "3",
@@ -139,7 +168,7 @@
           "time": "2017-09-03 15:20"
         },
         {
-          "id":2,
+          "id": 2,
           "name": "人间大炮",
           "status": "1",
           "level": "1",
@@ -151,21 +180,21 @@
     }
   },
   {
-    "url":"/app/fault/listDetail",
-    "method":"post",
+    "url": "/app/fault/listDetail",
+    "method": "post",
     "response": {
-      "code":0,
-      "message":"",
-      "body": {
-        "name":"紫罗兰的永恒花园",
-        "status":"1",
-        "time":"2017-09-03 15:20",
-        "reportPerson":"京阿尼",
-        "faultFrom":"维保",
-        "faultType":"机械故障",
-        "level":"1",
-        "description":"湖南宁乡经济技术开发区污水处理厂采用较为先进的污水处理工艺五段式A/A/O-A/O+二沉池+微絮凝池+V型滤池+ClO2消毒， 其设计规模为5万立方米/日",
-        "dealway":"湖南宁乡经济技术开发区污水处理厂采用较为先进的污水处理工艺五段式A/A/O-A/O+二沉池+微絮凝池+V型滤池+ClO2消毒， 其设计规模为5万立方米/日"
+      "code": 0,
+      "msg": "",
+      "data": {
+        "name": "紫罗兰的永恒花园",
+        "status": "1",
+        "time": "2017-09-03 15:20",
+        "reportPerson": "京阿尼",
+        "faultFrom": "维保",
+        "faultType": "机械故障",
+        "level": "1",
+        "description": "湖南宁乡经济技术开发区污水处理厂采用较为先进的污水处理工艺五段式A/A/O-A/O+二沉池+微絮凝池+V型滤池+ClO2消毒， 其设计规模为5万立方米/日",
+        "dealway": "湖南宁乡经济技术开发区污水处理厂采用较为先进的污水处理工艺五段式A/A/O-A/O+二沉池+微絮凝池+V型滤池+ClO2消毒， 其设计规模为5万立方米/日"
       }
     }
   },
@@ -280,8 +309,8 @@
     "method": "post",
     "response": {
       "code": 0,
-      "message": "",
-      "body": [
+      "msg": "",
+      "data": [
         {
           "title": "宁乡污水处理厂水月巡检任务",
           "content": "巡检宁乡市经济开发区一号场站，其中区安监项目包含一体机设备，进水口监控设备，出水口监控设备。",
@@ -306,8 +335,8 @@
     "method": "post",
     "response": {
       "code": 0,
-      "message": "",
-      "body": [
+      "msg": "",
+      "data": [
         {
           "title": "宁乡污水处理厂水月巡检任务",
           "content": "巡检宁乡市经济开发区一号场站，其中区安监项目包含一体机设备，进水口监控设备，出水口监控设备。",
@@ -344,8 +373,8 @@
     "method": "post",
     "response": {
       "code": 0,
-      "message": "",
-      "body": {
+      "msg": "",
+      "data": {
         "title": "宁乡污水处理厂月维保任务",
         "endTime": "2017-06-30 12:00",
         "device": "二向箔发射装置",
@@ -369,9 +398,9 @@
     "url": "/app/inspection/inspectionDetail",
     "method": "post",
     "response": {
-      "code": 0,
-      "message": "",
-      "body": {
+      "code": 422,
+      "msg": "",
+      "data": {
         "title": "宁乡污水处理厂月巡检任务",
         "endTime": "2017-06-30 12:00",
         "device": "二向箔发射装置",

@@ -1,8 +1,8 @@
-/** 
- * Created by Infore.Wlun. 
+/**
+ * Created by Infore.Wlun.
  */
 
-import React, { Component } from 'react'
+import React, {Component} from 'react'
 import {
     View,
     Text,
@@ -51,7 +51,7 @@ export class GridView extends Component {
         marginLeft: 0,
         marginRight: 0,
         isShowAdd: false,
-        showDelete:false,
+        showDelete: false,
     };
 
     _gridClick = (item, index) => {
@@ -96,8 +96,8 @@ export class GridView extends Component {
                 }]}
                 onPress={this._addGrid}
             >
-                <View style={{ backgroundColor: "#D8D8D9", width: 40, height: 2 }} />
-                <View style={{ backgroundColor: "#D8D8D9", height: 40, width: 2, position: 'absolute' }} />
+                <View style={{backgroundColor: "#D8D8D9", width: 40, height: 2}}/>
+                <View style={{backgroundColor: "#D8D8D9", height: 40, width: 2, position: 'absolute'}}/>
             </TouchableOpacity>
         )
     }
@@ -106,6 +106,7 @@ export class GridView extends Component {
         let gridStyle = this._getGridStyle(index)
         return (
             <TouchableOpacity
+                key={index}
                 activeOpacity={1}
                 onPress={this._gridClick.bind(this, item, index)}>
                 <Image
@@ -121,7 +122,7 @@ export class GridView extends Component {
                         style={styles.deleteButton}
                         onPress={this._deleteClick}>
                         <Text style={styles.deleteX}>×</Text>
-                    </TouchableOpacity> : <View />
+                    </TouchableOpacity> : <View/>
                 }
 
             </TouchableOpacity>
@@ -131,14 +132,17 @@ export class GridView extends Component {
     render() {
         console.log(this.props.children)
         return (
-            <View style={[styles.container, this.props.containerStyle, { marginLeft: this.props.marginLeft, marginRight: this.props.marginRight }]}>
+            <View style={[styles.container, this.props.containerStyle, {
+                marginLeft: this.props.marginLeft,
+                marginRight: this.props.marginRight
+            }]}>
                 {
                     this.props.imgs.map((item, index) => {
                         return this._renderGrid(item, index);
                     })
                 }
                 {
-                    this.props.isShowAdd ? this._renderAddButton() : <View />
+                    this.props.isShowAdd ? this._renderAddButton() : <View/>
                 }
             </View>
         )

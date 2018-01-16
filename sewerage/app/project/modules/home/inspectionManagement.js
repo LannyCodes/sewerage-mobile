@@ -27,7 +27,7 @@ class InspectionManagementScreen extends WrapScreen {
     }
 
     componentDidMount() {
-        this.store.dispatch(Actions.request(Urls.Inspections.getTaskList));
+        this.store.dispatch(Actions.request(this,Urls.Inspections.getTaskList));
     }
 
     _renderCardStatus = (status) => {
