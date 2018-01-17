@@ -1,7 +1,11 @@
-import {View} from "react-native";
-import React, {Component} from "react";
+import {
+    View,
+    Text,
+    TouchableOpacity,
+} from "react-native";
+import React, { Component } from "react";
 import * as Utils from "../../core/utils/index";
-import {Header, Icon} from "react-native-elements";
+import { Header, Icon } from "react-native-elements";
 import _ from 'lodash'
 
 /**
@@ -32,13 +36,13 @@ export class KHeader extends Component {
         super(props);
     }
     _renderHeader = (header, title) => {
-        if (_.isNull(header)) return (<View/>);
-        else if (_.isString(header) && _.isEqual(header, 'none')) return (<View/>);
+        if (_.isNull(header)) return (<View />);
+        else if (_.isString(header) && _.isEqual(header, 'none')) return (<View />);
         else if (_.isString(header) && !_.isEqual(header, 'none')) {
             return (
                 <Header
                     backgroundColor={'white'}
-                    centerComponent={{text: header, style: {fontSize: 20, color: '#666'}}}
+                    centerComponent={{ text: header, style: { fontSize: 20, color: '#666' } }}
                 />
             )
         }
@@ -56,7 +60,7 @@ export class KHeader extends Component {
                             onPress={this.props.onLeftPress}
                         />
                     }
-                    centerComponent={{text: t, style: {fontSize: 17, color: '#666'}}}
+                    centerComponent={{ text: t, style: { fontSize: 17, color: '#666' } }}
                     rightComponent={
                         this._renderRight(header)
                     }
@@ -68,17 +72,30 @@ export class KHeader extends Component {
     _renderRight(header) {
         let right;
         if (this.isNoRight(header)) {
-            right = (<View style={{width: 18}}/>)
+            right = (<View style={{ width: 18 }} />)
         } else {
-            right = (
-                <Icon
-                    size={18}
-                    name={header.right.icon}
-                    type={header.right.type}
-                    color={'#42BB55'}
-                    onPress={header.right.onPress}
-                />
-            )
+            if (header.right.text) {
+                //文字
+                right = (
+                    <TouchableOpacity
+                        onPress={header.right.onPress}>
+                        <Text style={{
+                            fontSize: header.right.fontSize,
+                            color: header.right.color,
+                        }}>{header.right.text}</Text>
+                    </TouchableOpacity>
+                )
+            } else {
+                right = (
+                    <Icon
+                        size={18}
+                        name={header.right.icon}
+                        type={header.right.type}
+                        color={'#42BB55'}
+                        onPress={header.right.onPress}
+                    />
+                )
+            }
         }
         return right;
     }
