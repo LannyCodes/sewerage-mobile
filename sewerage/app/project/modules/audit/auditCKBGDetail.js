@@ -6,9 +6,9 @@ import * as Utils from "../../../core/utils";
 import Urls from "../../../config/api/urls";
 import * as Actions from "../../redux/actions";
 import {Status} from "../../../config/api/api.config";
-import {ErrorPage, Loading} from "../../components";
+import {ErrorPage, Loading, Dialog} from "../../components";
 import {ScrollView, Text, TouchableOpacity, View} from "react-native";
-import {Avatar, Divider, Icon} from "react-native-elements";
+import {Divider, Icon} from "react-native-elements";
 
 class AuditCKBGDetailScreen extends WrapScreen {
 
@@ -18,7 +18,7 @@ class AuditCKBGDetailScreen extends WrapScreen {
             title: "仓库变更审核详情",
         };
         this.state = {
-            status: this.props.navigation.state.params.status
+            status: '0' //this.props.navigation.state.params.status
         }
     }
 
@@ -146,7 +146,7 @@ class AuditCKBGDetailScreen extends WrapScreen {
                                 <Divider style={{backgroundColor: '#ddd'}}/>
                                 <View style={{padding: 10}}>
                                     <Text style={{fontSize: 15, color: '#666'}}>变更后库存</Text>
-                                    <View style={[styles.rowBetween, {marginTop: 10}]}>
+                                    <View style={[styles.rowBetween, {marginTop: 10, marginBottom: 10}]}>
                                         <View style={{
                                             height: 53,
                                             width: 140,
@@ -176,7 +176,6 @@ class AuditCKBGDetailScreen extends WrapScreen {
                                             borderWidth: 1,
                                             justifyContent: 'center',
                                             alignItems: 'center',
-                                            marginTop: 10
                                         }}>
                                             <Text style={{fontSize: 15, color: '#999'}}>{item.to.ck}</Text>
                                             <Text
@@ -193,11 +192,19 @@ class AuditCKBGDetailScreen extends WrapScreen {
     };
     _renderOperate = () => (
         <View style={styles.operate}>
-            <TouchableOpacity style={styles.operateBox}>
+            <TouchableOpacity style={styles.operateBox} onPress={() => {
+                Dialog.showInput("审核备注", "请输入备注", (input) => {
+                    console.log(input)
+                });
+            }}>
                 <Text style={styles.text}>废弃</Text>
             </TouchableOpacity>
             <View style={{height: 32, width: 0.5, backgroundColor: '#ccc'}}/>
-            <TouchableOpacity style={styles.operateBox}>
+            <TouchableOpacity style={styles.operateBox} onPress={() => {
+                Dialog.show("确定退出登录？", () => {
+                    alert("确定")
+                });
+            }}>
                 <Text style={styles.text}>驳回</Text>
             </TouchableOpacity>
             <View style={{height: 32, width: 0.5, backgroundColor: '#ccc'}}/>
