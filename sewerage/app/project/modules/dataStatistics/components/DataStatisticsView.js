@@ -242,7 +242,7 @@ export default class DataStatisticsView extends Component {
 
     _renderChartView() {
         return (
-            <View style={styles.chartView}>
+            <View style={[styles.chartView]}>
                 <View style={styles.chartHeader}>
                     <Text style={styles.chartHeaderTitle}>故障数量</Text>
                     <View style={{ flexDirection: 'row', alignItems: 'center' }}>
@@ -269,10 +269,7 @@ export default class DataStatisticsView extends Component {
                         <Text>扩大</Text>
                     </TouchableOpacity>
                 </View>
-                {/* <View style={{backgroundColor:'red',height:screenHeight-332}}/> */}
                 <Echarts
-                    style={{ backgroundColor: 'red' }}
-                    // height={600}
                     height={screenHeight - 332}
                     width={screenWidth}
                     option={this._echartOption()} />
@@ -291,7 +288,7 @@ export default class DataStatisticsView extends Component {
             //         option={this._echartOption()}
             //     /> */}
             // </ScrollView>
-            <View>
+            <View style={{position:'absolute'}}>
                 {
                     this._renderHeaderView()
                 }

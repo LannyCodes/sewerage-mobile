@@ -21,11 +21,9 @@ class DataStatisticsScreen extends WrapScreen {
     }
 
     componentDidMount() {
-        this.store.dispatch(Actions.request(Urls.statistics.inspectionStatistics));
-        this.store.dispatch(Actions.request(Urls.statistics.maintenanceStatistics));
-        this.store.dispatch(Actions.request(Urls.statistics.stationStatistics));
-        // this.props.navigation.gesturesEnabled = false;
-        // console.log(this.props.navigation);
+        this.store.dispatch(Actions.request(this,Urls.statistics.inspectionStatistics));
+        this.store.dispatch(Actions.request(this,Urls.statistics.maintenanceStatistics));
+        this.store.dispatch(Actions.request(this,Urls.statistics.stationStatistics));
     }
 
     _render() {
@@ -46,13 +44,16 @@ class DataStatisticsScreen extends WrapScreen {
             >
                 <DataStatisticsView
                     tabLabel="巡检统计" 
-                    data={this.props.inspectionDatas}/>
+                    data={this.props.inspectionDatas}
+                    navigation={this.props.navigation}/>
                 <DataStatisticsView
                     tabLabel="维保统计" 
-                    data={this.props.maintenanceDatas}/>
+                    data={this.props.maintenanceDatas}
+                    navigation={this.props.navigation}/>
                 <DataStatisticsView
                     tabLabel="厂站统计" 
-                    data={this.props.stationDatas}/>
+                    data={this.props.stationDatas}
+                    navigation={this.props.navigation}/>
             </ScrollableTabView>
         )
     }

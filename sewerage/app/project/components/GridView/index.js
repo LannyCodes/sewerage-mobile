@@ -44,6 +44,7 @@ export class GridView extends Component {
     };
 
     static defaultProps = {
+        imgs:[],
         width: screenWidth,
         columns: 3,
         resizeMode: 'contain',

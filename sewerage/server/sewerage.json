@@ -209,7 +209,7 @@
     "response": {
       "code":0,
       "message":"",
-      "body":[
+      "data":[
         {
           "name":"巡检完成数",
           "number":400
@@ -247,7 +247,7 @@
     "response": {
       "code":0,
       "message":"",
-      "body":[
+      "data":[
         {
           "name":"巡检完成数",
           "number":400
@@ -281,7 +281,7 @@
     "response": {
       "code":0,
       "message":"",
-      "body":[
+      "data":[
         {
           "name":"巡检完成数",
           "number":400

@@ -93,7 +93,7 @@ class FaultListScreen extends WrapScreen {
     }
 
     componentDidMount() {
-        this.store.dispatch(Actions.request(this,this,Urls.faults.faultList));
+        this.store.dispatch(Actions.request(this,Urls.faults.faultList));
         this.store.dispatch(Actions.request(this,Urls.faults.workOrder));
     }
 
