@@ -50,7 +50,7 @@ class AuditWBDetailScreen extends WrapScreen {
     _keyExtractor = (item, index) => index;
 
     _renderItem = ({item}) => (
-        <View style={{padding: 10}}>
+        <View style={{padding: 13}}>
             <Text style={[styles.text, {marginLeft: 5}]}>{item}</Text>
         </View>
     );
@@ -203,18 +203,14 @@ const styles = Utils.PLStyle({
         marginLeft: 10,
         justifyContent: 'center'
     },
-    doItemContent: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        height: 44,
-        paddingLeft: 10
-    },
     operate: {
         height: 47,
         width: Utils.sw,
         flexDirection: 'row',
         backgroundColor: 'white',
-        alignItems: 'center'
+        alignItems: 'center',
+        borderWidth: 1,
+        borderColor: '#ddd'
     },
     operateBox: {
         flex: 1,

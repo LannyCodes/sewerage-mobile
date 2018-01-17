@@ -48,7 +48,149 @@ class AuditCKBGDetailScreen extends WrapScreen {
     };
 
     _keyExtractor = (item, index) => index;
-
+    _renderContent = (type, list) => {
+        // 0--同仓变更 1--异仓变更
+        if (type === '0') {
+            // 同仓变更
+            return (
+                <View>
+                    <View style={[styles.rowBetween, {justifyContent: 'flex-start'}]}>
+                        <View style={{backgroundColor: '#42BB55', width: 3, height: 16}}/>
+                        <Text style={{fontSize: 15, color: '#666', marginLeft: 10}}>变更清单</Text>
+                    </View>
+                    {
+                        list.map((item, i) => (
+                            <View key={i}>
+                                <View style={[styles.rowBetween, {backgroundColor: '#E8F6E8', height: 25}]}><Text
+                                    style={{fontSize: 12, color: '#666'}}>{item.bgname}</Text>
+                                </View>
+                                <Divider style={{backgroundColor: '#ddd'}}/>
+                                <View style={styles.rowBetween}>
+                                    <Text style={{fontSize: 15, color: '#666'}}>变更数量（件）</Text>
+                                    <Text style={{fontSize: 15, color: '#333'}}>{item.size}</Text>
+                                </View>
+                                <Divider style={{backgroundColor: '#ddd'}}/>
+                                <View style={{padding: 10}}>
+                                    <Text style={{fontSize: 15, color: '#666'}}>变更后库存</Text>
+                                    <View style={{
+                                        height: 53,
+                                        width: 140,
+                                        borderRadius: 2,
+                                        borderColor: '#ccc',
+                                        borderWidth: 1,
+                                        justifyContent: 'center',
+                                        alignItems: 'center',
+                                        marginTop: 10
+                                    }}>
+                                        <Text style={{fontSize: 15, color: '#999'}}>{item.ck}</Text>
+                                        <Text style={{fontSize: 15, color: '#999', marginTop: 5}}>{item.after}件</Text>
+                                    </View>
+                                </View>
+                            </View>
+                        ))
+                    }
+                </View>
+            )
+        } else {
+            // 异仓变更
+            return (
+                <View>
+                    <View style={[styles.rowBetween, {justifyContent: 'flex-start'}]}>
+                        <View style={{backgroundColor: '#42BB55', width: 3, height: 16}}/>
+                        <Text style={{fontSize: 15, color: '#666', marginLeft: 10}}>变更清单</Text>
+                    </View>
+                    {
+                        list.map((item, i) => (
+                            <View key={i}>
+                                <View style={[styles.rowBetween, {backgroundColor: '#E8F6E8', height: 25}]}><Text
+                                    style={{fontSize: 12, color: '#666'}}>{item.bgname}</Text>
+                                </View>
+                                <Divider style={{backgroundColor: '#ddd'}}/>
+                                <View style={{padding: 10}}>
+                                    <Text style={{fontSize: 15, color: '#666'}}>变更仓库</Text>
+                                    <View style={styles.rowBetween}>
+                                        <View style={{
+                                            height: 32,
+                                            width: 140,
+                                            borderRadius: 2,
+                                            borderColor: '#ccc',
+                                            borderWidth: 1,
+                                            justifyContent: 'center',
+                                            alignItems: 'center',
+                                            marginTop: 10
+                                        }}>
+                                            <Text style={{fontSize: 15, color: '#999'}}>{item.from.ck}</Text>
+                                        </View>
+                                        <View style={{justifyContent: 'center', alignItems: 'center'}}>
+                                            <Text style={{fontSize: 15, color: '#999'}}>到</Text>
+                                            <Icon
+                                                name='long-arrow-right'
+                                                type='font-awesome'
+                                                color='#42BB55'
+                                            />
+                                        </View>
+                                        <View style={{
+                                            height: 32,
+                                            width: 140,
+                                            borderRadius: 2,
+                                            borderColor: '#ccc',
+                                            borderWidth: 1,
+                                            justifyContent: 'center',
+                                            alignItems: 'center',
+                                            marginTop: 10
+                                        }}>
+                                            <Text style={{fontSize: 15, color: '#999'}}>{item.to.ck}</Text>
+                                        </View>
+                                    </View>
+                                </View>
+                                <Divider style={{backgroundColor: '#ddd'}}/>
+                                <View style={{padding: 10}}>
+                                    <Text style={{fontSize: 15, color: '#666'}}>变更后库存</Text>
+                                    <View style={[styles.rowBetween, {marginTop: 10}]}>
+                                        <View style={{
+                                            height: 53,
+                                            width: 140,
+                                            borderRadius: 2,
+                                            borderColor: '#ccc',
+                                            borderWidth: 1,
+                                            justifyContent: 'center',
+                                            alignItems: 'center',
+                                        }}>
+                                            <Text style={{fontSize: 15, color: '#999'}}>{item.from.ck}</Text>
+                                            <Text
+                                                style={{fontSize: 15, color: '#999', marginTop: 5}}>{item.after}件</Text>
+                                        </View>
+                                        <View style={{justifyContent: 'center', alignItems: 'center'}}>
+                                            <Text style={{fontSize: 15, color: '#999'}}>到</Text>
+                                            <Icon
+                                                name='long-arrow-right'
+                                                type='font-awesome'
+                                                color='#42BB55'
+                                            />
+                                        </View>
+                                        <View style={{
+                                            height: 53,
+                                            width: 140,
+                                            borderRadius: 2,
+                                            borderColor: '#ccc',
+                                            borderWidth: 1,
+                                            justifyContent: 'center',
+                                            alignItems: 'center',
+                                            marginTop: 10
+                                        }}>
+                                            <Text style={{fontSize: 15, color: '#999'}}>{item.to.ck}</Text>
+                                            <Text
+                                                style={{fontSize: 15, color: '#999', marginTop: 5}}>{item.after}件</Text>
+                                        </View>
+                                    </View>
+                                </View>
+                            </View>
+                        ))
+                    }
+                </View>
+            )
+        }
+    };
     _renderOperate = () => (
         <View style={styles.operate}>
             <TouchableOpacity style={styles.operateBox}>
@@ -94,7 +236,7 @@ class AuditCKBGDetailScreen extends WrapScreen {
                             <Divider style={{backgroundColor: '#ddd'}}/>
                             <View style={styles.rowBetween}>
                                 <Text style={[styles.text, {color: '#666'}]}>变更类型</Text>
-                                <Text style={styles.text}>{detail.type}</Text>
+                                <Text style={styles.text}>{detail.type === '0' ? '同仓变更' : '异仓变更'}</Text>
                             </View>
                             <Divider style={{backgroundColor: '#ddd'}}/>
                             <View style={styles.rowBetween}>
@@ -108,7 +250,7 @@ class AuditCKBGDetailScreen extends WrapScreen {
                             </View>
                         </View>
                         <View style={styles.content}>
-
+                            {this._renderContent(detail.type, detail.list)}
                         </View>
                     </ScrollView>
                     {this.state.status === '0' && this._renderOperate()}
@@ -166,7 +308,9 @@ const styles = Utils.PLStyle({
         width: Utils.sw,
         flexDirection: 'row',
         backgroundColor: 'white',
-        alignItems: 'center'
+        alignItems: 'center',
+        borderWidth: 1,
+        borderColor: '#ddd'
     },
     operateBox: {
         flex: 1,
