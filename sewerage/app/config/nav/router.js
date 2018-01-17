@@ -91,9 +91,16 @@ const Navigator = StackNavigator(
         ...Inspections,
         ...Audit
     }, {
-        navigationOptions: {
-            header: null,
-        }
+        navigationOptions: ({navigation,screenProps}) => ({  
+            header:null, 
+            gesturesEnabled:(()=>{//可以通过this.props.navigation.setParams重新设置gesturesEnabled值
+                if(navigation.state.params && navigation.state.params.gesturesEnabled !== undefined){
+                    return navigation.state.params.gesturesEnabled
+                }else{
+                    return true
+                }
+            })(),
+        })
     }
 )
 
