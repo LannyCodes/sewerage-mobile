@@ -52,6 +52,15 @@ const Inspections = {
  */
 const Maintenance = {};
 /**
+ *  审核
+ */
+const Audit = {
+    AuditCKBGDetail: {screen: Modules.AuditCKBGDetailScreen},
+    AuditGZGDDetail: {screen: Modules.AuditGZGDDetailScreen},
+    AuditXJDetail: {screen: Modules.AuditXJDetailScreen},
+    AuditWBDetail: {screen: Modules.AuditWBDetailScreen},
+};
+/**
  * 任务
  */
 const Task = {
@@ -79,7 +88,8 @@ const Navigator = StackNavigator(
         ...Maintenance,
         ...Task,
         ...Fault,
-        ...Inspections
+        ...Inspections,
+        ...Audit
     }, {
         navigationOptions: {
             header: null,

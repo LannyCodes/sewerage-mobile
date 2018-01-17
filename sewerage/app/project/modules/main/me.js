@@ -5,6 +5,7 @@ import {
 } from 'react-native';
 import {WrapScreen} from "../wrap";
 import * as Utils from "../../../core/utils/common";
+import Urls from "../../../config/api/urls";
 
 class MeScreen extends WrapScreen {
 
@@ -20,7 +21,11 @@ class MeScreen extends WrapScreen {
             <View>
                 <Text>Me</Text>
                 <TouchableOpacity onPress={() => {
-                   Utils.exitApp(this);
+                    // Utils.exitApp(this);
+                    let params = {'pageIndex': 1, 'pageSize': 10};
+                    Utils.fetch(self, Urls.Login.inspection, params, 'get').then(data => {
+                        console.log(data);
+                    });
                 }}>
                     <Text>退出</Text>
                 </TouchableOpacity>

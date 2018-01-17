@@ -35,9 +35,29 @@ class AuditManagementScreen extends WrapScreen {
     }
 
     componentDidMount() {
-        this.store.dispatch(Actions.request(this,Urls.Audit.getAuditList));
+        this.store.dispatch(Actions.request(this, Urls.Audit.getAuditList));
     }
 
+    _enterDetail = (type, status) => {
+        let detail = '';
+        switch (type) {
+            case '0':
+                detail = 'AuditGZGDDetail';
+                break;
+            case '1':
+                detail = 'AuditCKBGDetail';
+                break;
+            case '2':
+                detail = 'AuditXJDetail';
+                break;
+            case '3':
+                detail = 'AuditWBDetail';
+                break;
+        }
+        this.props.navigation.navigate(detail, {
+            status: status
+        });
+    };
 
     _renderCardStatus = (status) => {
         let st = {text: '待审核', color: '#FAA346', backgroundColor: '#FEF5EB'};
@@ -47,7 +67,7 @@ class AuditManagementScreen extends WrapScreen {
         else if (status === '3') st = {text: '已废弃', color: '#FF6E61', backgroundColor: '#FFE2DF'};
         return (
             <View style={[styles.cardStatus, {backgroundColor: st.backgroundColor}]}>
-                <Text style={{color: st.color}}>{st.text}</Text>
+                <Text style={{color: st.color, fontSize: 12}}>{st.text}</Text>
             </View>
         )
     };
@@ -55,7 +75,7 @@ class AuditManagementScreen extends WrapScreen {
     _renderItem = ({item}) => (
         <TouchableOpacity style={styles.cardItem}
                           onPress={() => {
-
+                              this._enterDetail(item.type, item.status);
                           }}
         >
             <View style={styles.row}>
@@ -150,7 +170,7 @@ const styles = Utils.PLStyle({
         justifyContent: 'center',
         alignItems: 'center',
         height: 22,
-        width: 60,
+        width: 50,
         borderRadius: 20
     }
 })
@@ -170,7 +190,7 @@ const filterArray = [
         }, {
             name: '已驳回',
             value: '33',
-        },{
+        }, {
             name: '已废弃',
             value: '44',
         }]
