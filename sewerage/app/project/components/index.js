@@ -10,3 +10,4 @@ export * from './GridView';
 export * from './ImagePickerGrids';  // 九宫格拍照 TODO
 export * from './checkBox';
 export * from './submitBtn';
+export * from './dialog';

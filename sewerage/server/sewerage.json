@@ -204,107 +204,107 @@
     }
   },
   {
-    "url":"/app/statistics/inspection",
-    "method":"post",
+    "url": "/app/statistics/inspection",
+    "method": "post",
     "response": {
       "code":0,
       "message":"",
       "data":[
         {
-          "name":"巡检完成数",
-          "number":400
+          "name": "巡检完成数",
+          "number": 400
         },
         {
-          "name":"巡检未完成数",
-          "number":300
+          "name": "巡检未完成数",
+          "number": 300
         },
         {
-          "name":"故障数量",
-          "number":540
+          "name": "故障数量",
+          "number": 540
         },
         {
-          "name":"工单数量",
-          "number":201
+          "name": "工单数量",
+          "number": 201
         },
         {
-          "name":"已经解决工单",
-          "number":313
+          "name": "已经解决工单",
+          "number": 313
         },
         {
-          "name":"未解决工单",
-          "number":422
+          "name": "未解决工单",
+          "number": 422
         },
         {
-          "name":"额外测试",
-          "number":422
+          "name": "额外测试",
+          "number": 422
         }
       ]
     }
   },
   {
-    "url":"/app/statistics/maintenance",
-    "method":"post",
+    "url": "/app/statistics/maintenance",
+    "method": "post",
     "response": {
       "code":0,
       "message":"",
       "data":[
         {
-          "name":"巡检完成数",
-          "number":400
+          "name": "巡检完成数",
+          "number": 400
         },
         {
-          "name":"巡检未完成数",
-          "number":300
+          "name": "巡检未完成数",
+          "number": 300
         },
         {
-          "name":"故障数量",
-          "number":540
+          "name": "故障数量",
+          "number": 540
         },
         {
-          "name":"工单数量",
-          "number":201
+          "name": "工单数量",
+          "number": 201
         },
         {
-          "name":"已经解决工单",
-          "number":313
+          "name": "已经解决工单",
+          "number": 313
         },
         {
-          "name":"未解决工单",
-          "number":422
+          "name": "未解决工单",
+          "number": 422
         }
       ]
     }
   },
   {
-    "url":"/app/statistics/station",
-    "method":"post",
+    "url": "/app/statistics/station",
+    "method": "post",
     "response": {
       "code":0,
       "message":"",
       "data":[
         {
-          "name":"巡检完成数",
-          "number":400
+          "name": "巡检完成数",
+          "number": 400
         },
         {
-          "name":"巡检未完成数",
-          "number":300
+          "name": "巡检未完成数",
+          "number": 300
         },
         {
-          "name":"故障数量",
-          "number":540
+          "name": "故障数量",
+          "number": 540
         },
         {
-          "name":"工单数量",
-          "number":201
+          "name": "工单数量",
+          "number": 201
         },
         {
-          "name":"已经解决工单",
-          "number":313
+          "name": "已经解决工单",
+          "number": 313
         },
         {
-          "name":"未解决工单",
-          "number":422
+          "name": "未解决工单",
+          "number": 422
         }
       ]
     }
@@ -432,19 +432,37 @@
         "id": "INFORE11991",
         "startTime": "2017-06-30 12:00",
         "fqperson": "王宝强",
-        "type": "不同仓库变更",
+        "type": "1",
         "auditPerson": "宋喆",
         "reason": "湖南宁乡经济技术开发区污水处理厂采用较为先进的污水处理工艺五段式A/A/O-A+二沉池+微絮凝池+V型滤池+CIO2消毒，其设计规模为5万立方米/日，所以我们要变更他。",
         "list": [
           {
-            "bjname": "二向箔",
+            "bgname": "二向箔",
+            "ck": "仓库A",
             "size": "100",
-            "after": "10000"
+            "after": "10000",
+            "from": {
+              "ck": "仓库A",
+              "after": "1000"
+            },
+            "to": {
+              "ck": "仓库B",
+              "after": "1200"
+            }
           },
           {
-            "bjname": "离子加速器",
+            "bgname": "离子加速器",
+            "ck": "仓库B",
             "size": "10",
-            "after": "990"
+            "after": "990",
+            "from": {
+              "ck": "仓库B",
+              "after": "1000"
+            },
+            "to": {
+              "ck": "仓库C",
+              "after": "1200"
+            }
           }
         ]
       }

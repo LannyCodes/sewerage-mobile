@@ -8,7 +8,7 @@ import * as Actions from "../../redux/actions";
 import {Status} from "../../../config/api/api.config";
 import {ErrorPage, Loading} from "../../components";
 import {ScrollView, Text, TouchableOpacity, View} from "react-native";
-import {Avatar, Divider, Icon} from "react-native-elements";
+import {Divider} from "react-native-elements";
 
 class AuditGZGDDetailScreen extends WrapScreen {
 
@@ -62,8 +62,47 @@ class AuditGZGDDetailScreen extends WrapScreen {
             </TouchableOpacity>
         </View>
     )
-
-
+    _renderContent = (list) => {
+        return (
+            <View>
+                <View style={[styles.rowBetween, {justifyContent: 'flex-start'}]}>
+                    <View style={{backgroundColor: '#42BB55', width: 3, height: 16}}/>
+                    <Text style={{fontSize: 15, color: '#666', marginLeft: 10}}>故障清单</Text>
+                </View>
+                {
+                    list.map((item, i) => (
+                        //         "deviceName": "二向箔设备一号",
+                        //     "fault": "一号一体机设备电机损坏，测试结果显示断路，水泵运转一号一体机设备点击损坏，测试结果显示断路，反正是坏了。",
+                        // "source": "巡检",
+                        // "type": "机械故障
+                        <View key={i}>
+                            <View style={[styles.rowBetween, {backgroundColor: '#E8F6E8', height: 25}]}><Text
+                                style={{fontSize: 12, color: '#666'}}>清单{i + 1}</Text></View>
+                            <View style={{padding: 10}}>
+                                <Text style={{fontSize: 15, color: '#666'}}>{item.deviceName}</Text>
+                                <Text style={{
+                                    fontSize: 15,
+                                    color: '#333',
+                                    marginTop: 11,
+                                    lineHeight: 20
+                                }}>{item.fault}</Text>
+                            </View>
+                            <Divider style={{backgroundColor: '#ddd'}}/>
+                            <View style={styles.rowBetween}>
+                                <Text style={{fontSize: 15, color: '#666'}}>故障来源</Text>
+                                <Text style={{fontSize: 15, color: '#333'}}>{item.source}</Text>
+                            </View>
+                            <Divider style={{backgroundColor: '#ddd'}}/>
+                            <View style={styles.rowBetween}>
+                                <Text style={{fontSize: 15, color: '#666'}}>故障类型</Text>
+                                <Text style={{fontSize: 15, color: '#333'}}>{item.type}</Text>
+                            </View>
+                        </View>
+                    ))
+                }
+            </View>
+        )
+    }
     _keyExtractor = (item, index) => index;
 
     _render() {
@@ -105,7 +144,7 @@ class AuditGZGDDetailScreen extends WrapScreen {
                             </View>
                         </View>
                         <View style={styles.content}>
-
+                            {this._renderContent(detail.list)}
                         </View>
                     </ScrollView>
                     {this.state.status === '0' && this._renderOperate()}
@@ -175,7 +214,9 @@ const styles = Utils.PLStyle({
         width: Utils.sw,
         flexDirection: 'row',
         backgroundColor: 'white',
-        alignItems: 'center'
+        alignItems: 'center',
+        borderWidth: 1,
+        borderColor: '#ddd'
     },
     operateBox: {
         flex: 1,
