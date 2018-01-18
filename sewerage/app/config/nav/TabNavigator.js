@@ -61,7 +61,7 @@ const TabNav = TabNavigator(
         lazy: true, //懒加载
         tabBarOptions: {
             activeBackgroundColor: 'white',
-            activeTintColor: '#29a1f7',
+            activeTintColor: '#42BD56',
             inactiveBackgroundColor: 'white',
             inactiveTintColor: '#999999',
             style: {

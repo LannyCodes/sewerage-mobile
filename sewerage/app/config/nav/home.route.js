@@ -1,33 +1,35 @@
+import * as Assets from '../../project/assets'
+
 export const homeModules = [
     {
         name: '巡检管理',
         router: 'InspectionManagement',
-        color: 'red',
+        img: Assets.Home.xj,
     },
     {
         name: '维保管理',
         router: 'MaintenanceManagement',
-        color: 'orange',
+        img: Assets.Home.wb,
     },
     {
         name: '审核管理',
         router: 'AuditManagement',
-        color: 'yellow'
+        img: Assets.Home.sh,
     },
     {
         name: '数据统计',
         router: 'DataStatistics',
-        color: 'green'
+        img: Assets.Home.sj,
     },
     {
         name: '设备查询',
         router: 'DeviceQuery',
-        color: 'blue'
+        img: Assets.Home.sb,
     },
     {
         name: '故障工单',
         router: 'FaultList',
-        color: 'black'
+        img: Assets.Home.gz,
     },
 ];
 
