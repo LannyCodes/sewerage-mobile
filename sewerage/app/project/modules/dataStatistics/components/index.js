@@ -1,5 +1,7 @@
 import DataStatisticsView from './DataStatisticsView'
+import ChartView from './ChartView'
 
 module.exports = {
-    DataStatisticsView: DataStatisticsView
+    DataStatisticsView: DataStatisticsView,
+    ChartView: ChartView
 }

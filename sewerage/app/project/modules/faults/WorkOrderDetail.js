@@ -32,7 +32,7 @@ class WorkOrderDetailScreen extends WrapScreen {
         this.props.navigation.navigate('DealWorkOrder');
     }
 
-    _imageClick=()=>{
+    _imageClick = () => {
 
     }
 
@@ -107,11 +107,26 @@ class WorkOrderDetailScreen extends WrapScreen {
     }
 
     //审核记录cell
-    _renderAuditRecordCell = (item, index) => {
+    _renderAuditRecordCell = (item, index, items) => {
         return (
-            <View>
-                <View></View>
-                <View></View>
+            <View style={styles.arContainer}>
+                <View style={styles.arLeft}>
+                    <View style={[styles.arLeftLine, { backgroundColor: index === 0 ? 'transparent' : '#d8d8d8' }]} />
+                    {
+                        index === 0 || index === items.length - 1 ? <View style={styles.arDot} /> : <View/>
+                    }
+                    <View style={[styles.arLeftLine, { backgroundColor: index === items.length - 1 ? 'transparent' : '#d8d8d8' }]} />
+                </View>
+                <View style={styles.arMsg}>
+                    <Text style={[styles.arText, { fontSize: 14 }]}>审核驳回，没有处理好</Text>
+                    <View style={styles.arFoot}>
+                        <Text style={styles.arText}>审核人：</Text>
+                        <Text style={styles.arText}>2017-03-29 15:32</Text>
+                    </View>
+                    {
+                        index < items.length - 1 ? <View style={styles.divider} /> : <View/>
+                    }
+                </View>
             </View>
         )
     }
@@ -127,8 +142,9 @@ class WorkOrderDetailScreen extends WrapScreen {
                 <View style={styles.divider} />
                 <View>
                     {
-                        ['a', 'b', 'c', 'd'].map((item, index) => {
-                            return this._renderAuditRecordCell()
+                        ['a', 'b', 'c', 'd'].map((item, index, items) => {
+                            console.log(items);
+                            return this._renderAuditRecordCell(item, index, items)
                         })
                     }
                 </View>
@@ -152,12 +168,12 @@ class WorkOrderDetailScreen extends WrapScreen {
                         <Text style={[styles.headerFootText, { color: '#333333', marginBottom: 11, marginTop: 14 }]}>湖南宁乡经济技术开发区污水处理厂采用较为先进的污水处理工艺五段式A/A/O-A/O+二沉池+微絮凝池+V型滤池+ClO2消毒， 其设计规模为5万立方米/日</Text>
                     </View>
                     <GridView
-                        imgs={[{uri: "https://s3.amazonaws.com/uifaces/faces/twitter/brynn/128.jpg"},{uri: "https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg"},{uri: "https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg"}]}
-                        containerStyle={{marginBottom:20}}
+                        imgs={[{ uri: "https://s3.amazonaws.com/uifaces/faces/twitter/brynn/128.jpg" }, { uri: "https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg" }, { uri: "https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg" }]}
+                        containerStyle={{ marginBottom: 20 }}
                         columns={4}
                         marginLeft={10}
                         marginRight={10}
-                        gridClick={this._imageClick}/>
+                        gridClick={this._imageClick} />
                 </View>
                 <View style={styles.divider} />
                 {
@@ -286,7 +302,40 @@ const styles = Utils.PLStyle({
         marginBottom: 10
     },
     //审核记录
-    auditRecordContainer: {
+    arContainer: {
         flexDirection: "row"
+    },
+    arLeft: {
+        alignItems: 'center',
+        width: 40,
+    },
+    arLeftLine: {
+        backgroundColor: '#d8d8d8',
+        width: 1,
+        flex: 1,
+    },
+    arDot: {
+        width: 9,
+        height: 9,
+        borderWidth: 1,
+        borderColor: "#d8d8d8",
+        borderRadius: 25,
+        backgroundColor: '#d8d8d8',
+    },
+    arMsg: {
+        flex:1,
+        paddingTop: 20,
+        // paddingBottom:12,
+        paddingRight: 10,
+    },
+    arText: {
+        color: '#999999',
+        fontSize: 12,
+    },
+    arFoot: {
+        flexDirection: 'row',
+        marginTop: 10,
+        marginBottom: 20,
+        justifyContent: 'space-between'
     }
 });

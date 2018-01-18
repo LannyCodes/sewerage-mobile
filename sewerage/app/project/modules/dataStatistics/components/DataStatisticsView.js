@@ -16,6 +16,7 @@ import * as Utils from '../../../../core/utils';
 import Echarts from '../../../components/echarts';
 import { Icon } from 'react-native-elements';
 import Orientation from 'react-native-orientation';
+import ChartView from './ChartView';
 const screenWidth = Dimensions.get('window').width;
 const screenHeight = Dimensions.get('window').height;
 const pixel = PixelRatio.get();
@@ -242,38 +243,45 @@ export default class DataStatisticsView extends Component {
 
     _renderChartView() {
         return (
-            <View style={[styles.chartView]}>
-                <View style={styles.chartHeader}>
-                    <Text style={styles.chartHeaderTitle}>故障数量</Text>
-                    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                        <Icon
-                            size={18}
-                            name={'chevron-left'}
-                            type='feather'
-                            color={'#979797'}
-                            onPress={this.props._onLeftYearPress}
-                        />
-                        <Text style={styles.chartHeaderYear}>2017年</Text>
-                        <Icon
-                            size={18}
-                            name={'chevron-right'}
-                            type='feather'
-                            color={'#979797'}
-                            onPress={this.props._onRightYearPress}
-                        />
-                    </View>
-                    <TouchableOpacity
-                        style={{ position: 'absolute', right: 15 }}
-                        activeOpacity={1}
-                        onPress={this._turnOrientation}>
-                        <Text>扩大</Text>
-                    </TouchableOpacity>
-                </View>
-                <Echarts
-                    height={screenHeight - 332}
+            <View style={{marginTop: 9,paddingTop: 20,backgroundColor:'#ffffff'}}>
+                <ChartView 
+                    height={screenHeight-332}
                     width={screenWidth}
-                    option={this._echartOption()} />
+                    expand={this.props.expandFunc.bind(this,this._echartOption())}
+                    echartOption={this._echartOption()}/>
             </View>
+            // <View style={[styles.chartView]}>
+            //     <View style={styles.chartHeader}>
+            //         <Text style={styles.chartHeaderTitle}>故障数量</Text>
+            //         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+            //             <Icon
+            //                 size={18}
+            //                 name={'chevron-left'}
+            //                 type='feather'
+            //                 color={'#979797'}
+            //                 onPress={this.props._onLeftYearPress}
+            //             />
+            //             <Text style={styles.chartHeaderYear}>2017年</Text>
+            //             <Icon
+            //                 size={18}
+            //                 name={'chevron-right'}
+            //                 type='feather'
+            //                 color={'#979797'}
+            //                 onPress={this.props._onRightYearPress}
+            //             />
+            //         </View>
+            //         <TouchableOpacity
+            //             style={{ position: 'absolute', right: 15 }}
+            //             activeOpacity={1}
+            //             onPress={this._turnOrientation}>
+            //             <Text>扩大</Text>
+            //         </TouchableOpacity>
+            //     </View>
+            //     <Echarts
+            //         height={screenHeight - 332}
+            //         width={screenWidth}
+            //         option={this._echartOption()} />
+            // </View>
         )
     }
 
@@ -288,7 +296,7 @@ export default class DataStatisticsView extends Component {
             //         option={this._echartOption()}
             //     /> */}
             // </ScrollView>
-            <View style={{position:'absolute'}}>
+            <View>
                 {
                     this._renderHeaderView()
                 }
@@ -296,6 +304,7 @@ export default class DataStatisticsView extends Component {
                     this._renderChartView()
                 }
             </View>
+            
         )
     }
 }

@@ -3,6 +3,7 @@ import {
     View,
     Text,
     FlatList,
+    TextInput,
     TouchableOpacity
 } from 'react-native';
 import { SearchBar, Divider, Icon, Avatar } from 'react-native-elements';
@@ -83,6 +84,10 @@ class DeviceQueryScreen extends WrapScreen {
         this.props.navigation.navigate('DeviceDetail')
     }
 
+    _searchConfirm=(event)=>{
+        console.log(event.nativeEvent.text);
+    }
+
     //渲染单行
     _renderItem = ({item,index}) => {
         return (
@@ -141,25 +146,16 @@ class DeviceQueryScreen extends WrapScreen {
 
                         </View>
                     </View>
-                    <SearchBar
-                        containerStyle={styles.searchBar}
-                        inputStyle={{
-                            backgroundColor: '#ffffff',
-                            borderWidth: 1,
-                            borderColor: "#e6e6ea",
-                            height: 36,
-                            fontSize: 14,
-                        }}
-                        icon={{
-                            color: '#8E8E93',
-                            style: {
-                                fontSize: 20,
-                                fontWeight: "bold",
-
-                            }
-                        }}
-                        placeholder='搜索'
-                    />
+                    <View style={styles.searchBarContainer}>
+                        <View></View>
+                        <TextInput
+                            style={styles.searchBar}
+                            placeholder="搜索"
+                            placeholderTextColor="#97979b"
+                            onSubmitEditing={this._searchConfirm}
+                            returnKeyType="search"
+                            />
+                    </View>
                 </View>
                 <Divider style={{ backgroundColor: '#e0e0e0' }} />
                 <FlatList
@@ -213,10 +209,20 @@ const styles = Utils.PLStyle({
         color: '#323232',
         lineHeight: 24,
     },
+    searchBarContainer: {
+      flexDirection:'row',
+      height:36,
+      marginLeft:10,
+      marginRight:10,
+      borderColor:'#e6e6ea',
+      borderWidth:0.5,
+      borderRadius:4,
+      backgroundColor:'#ffffff',
+    },
     searchBar: {
-        backgroundColor: '#f9f9f9',
-        borderTopWidth: 0,
-        borderBottomWidth: 0,
+        flex:1,
+        fontSize:14,
+        color:"#333333",
     },
     //
     listItem: {

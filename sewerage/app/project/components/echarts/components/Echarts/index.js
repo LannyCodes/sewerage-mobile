@@ -10,6 +10,10 @@ export default class App extends Component {
         }
     }
 
+    reload=()=>{
+        this.refs['chart'].reload();
+    }
+
     render() {
         let source;
         if (__DEV__) {
