@@ -56,7 +56,7 @@ const TabNav = TabNavigator(
     {
         tabBarPosition: 'bottom', // 设置tabBar的位置
         tabBarComponent: TabBarBottom,
-        swipeEnabled: true, //是否允许在标签之间进行滑动
+        swipeEnabled: false, //是否允许在标签之间进行滑动
         animationEnabled: false, //是否在更改标签时显示动画。
         lazy: true, //懒加载
         tabBarOptions: {
