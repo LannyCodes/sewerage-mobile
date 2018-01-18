@@ -10,6 +10,10 @@ import {WrapScreen} from "../wrap";
 import {homeModules} from '../../../config/nav/home.route'
 import {Divider} from "react-native-elements";
 import * as Assets from '../../assets'
+import {Carousel} from "teaset";
+import PercentageCircle from 'react-native-percentage-circle';
+
+const circleColor = [['#CAE387', '#FFDC00', '#999EF7', '#0281FF'], ['#FF5646', '#FF7E00', '#8BC7FF', '#76DDAC']];
 
 class WorkScreen extends WrapScreen {
     constructor(props) {
@@ -17,7 +21,17 @@ class WorkScreen extends WrapScreen {
         this.header = 'none';
         this.state = {
             currentIndex: 0,
-        }
+            parameters: [
+                {type: 'COD', size: '52', symbol: 'mg/l'},
+                {type: '氨氮', size: '71', symbol: 'mg/l'},
+                {type: '总氮', size: '52', symbol: 'mg/l'},
+                {type: '总磷', size: '52', symbol: 'mg/l'},
+                {type: 'SS', size: '51', symbol: 'mg/l'},
+                {type: 'PH', size: '54', symbol: ''},
+                {type: '温度', size: '52', symbol: '°C'},
+                {type: '流量', size: '55', symbol: 'mg/l'}
+            ]
+        };
     }
 
     _onQrSuccess = (result) => {
@@ -29,6 +43,7 @@ class WorkScreen extends WrapScreen {
 
     _render() {
         const modules = _.chunk(homeModules, 3); // 将HomeModule 每三个分成一个数组
+        const parameters = _.chunk(this.state.parameters, 4); // 将HomeModule 每三个分成一个数组
         return (
             <View style={styles.container}>
                 <View style={styles.headContainer}>
@@ -54,8 +69,48 @@ class WorkScreen extends WrapScreen {
                                 <Text style={styles.safeText}>水质监测</Text>
                             </View>
                         </View>
-                        <View style={styles.swipeContent}>
-                        </View>
+                        <Carousel
+                            carousel={false}
+                            style={styles.swipeContent}
+                            control={
+                                <Carousel.Control
+                                    style={{alignItems: 'center'}}
+                                    dot={
+                                        <View style={styles.dot}/>
+                                    }
+                                    activeDot={
+                                        <View style={[styles.dot, {
+                                            backgroundColor: '#42BB55'
+                                        }]}/>
+                                    }
+                                />
+                            }
+                        >
+                            {
+                                parameters.map((item, i) => (
+                                        <View style={styles.paramsStyle} key={i}>
+                                            {item.map((sim, j) => (
+                                                <View style={styles.paramsItem} key={j}>
+                                                    <PercentageCircle radius={33} percent={parseInt(sim.size)}
+                                                                      color={circleColor[i][j]}
+                                                                      bgcolor={'#EBEBEB'}
+                                                                      borderWidth={6}
+                                                    >
+                                                        <Text>{sim.size}</Text>
+                                                        {sim.symbol !== '' && <Text>{sim.symbol}</Text>}
+                                                    </PercentageCircle>
+                                                    <Text style={{
+                                                        color: '#333',
+                                                        fontSize: 13,
+                                                        marginTop: 10
+                                                    }}>{sim.type}</Text>
+                                                </View>
+                                            ))}
+                                        </View>
+                                    )
+                                )
+                            }
+                        </Carousel>
                     </View>
                 </View>
                 <View style={styles.configContainer}>
@@ -106,7 +161,7 @@ const styles = Utils.PLStyle({
         backgroundColor: '#F9FBFD'
     },
     headContainer: {
-        flex: 1.5,
+        flex: 1.6,
         backgroundColor: '#42BD56'
     },
     optTitle: {
@@ -132,7 +187,7 @@ const styles = Utils.PLStyle({
     cardContainer: {
         marginLeft: 15,
         marginRight: 15,
-        height: 140,
+        height: 162,
         backgroundColor: 'white',
         marginTop: 50,
         borderColor: '#DCE8C8',
@@ -164,9 +219,24 @@ const styles = Utils.PLStyle({
         marginTop: 5
     },
     swipeContent: {
-        backgroundColor: 'red',
         flex: 1,
-        marginTop: 24
+        marginTop: 20
+    },
+    dot: {
+        backgroundColor: '#D8D8D8',
+        width: 20,
+        height: 2,
+        marginLeft: 2,
+        marginRight: 2
+    },
+    paramsStyle: {
+        flex: 1,
+        flexDirection: 'row'
+    },
+    paramsItem: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center'
     },
     configContainer: {
         flex: 1,
