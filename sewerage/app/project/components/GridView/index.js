@@ -19,12 +19,8 @@ const screenWidth = Dimensions.get('window').width
 export class GridView extends Component {
     constructor(props) {
         super(props)
-        this._gridWidth = Math.floor((this.props.width + this.props.gridMargin - this.props.marginLeft - this.props.marginRight) / this.props.columns * 10) / 10 - this.props.gridMargin;
+        this._gridWidth = Math.floor((this.props.width - this.props.gridMargin) / this.props.columns * 10) / 10 - this.props.gridMargin;
         this.columns = this.props.columns;
-        this.totalCount = this.props.imgs.length;
-        if (this.props.isShowAdd) {
-            this.totalCount++;
-        }
     }
 
     static propTypes = {
@@ -36,8 +32,6 @@ export class GridView extends Component {
         addGrid: PropTypes.func, //增加按钮点击事件
         resizeMode: PropTypes.string,
         gridMargin: PropTypes.number,
-        marginLeft: PropTypes.number,//定义外围左右的margin
-        marginRight: PropTypes.number,
         isShowAdd: PropTypes.bool,//是否展示增加的按钮
         showDelete: PropTypes.any,//展示删除按钮
         deleteClick: PropTypes.func,
@@ -47,13 +41,17 @@ export class GridView extends Component {
         imgs:[],
         width: screenWidth,
         columns: 3,
-        resizeMode: 'contain',
+        resizeMode: 'cover',
         gridMargin: 10,
         marginLeft: 0,
         marginRight: 0,
         isShowAdd: false,
         showDelete: false,
     };
+
+    _totalCount () {
+        return this.props.isShowAdd ? this.props.imgs.length + 1 : this.props.imgs
+    }
 
     _gridClick = (item, index) => {
         if (typeof (this.props.gridClick) === 'function') {
@@ -68,27 +66,29 @@ export class GridView extends Component {
     }
 
     _getGridStyle = (index) => {
+        let totalCount = this._totalCount()
         let isFirstRow = index < this.columns //第一行
-        let isLastRow = index >= this.totalCount - this.totalCount % this.columns //最后一行
-        // let isFirstColumn = (index + 1) % this.columns === 1 //第一列
+        let isLastRow = index >= totalCount - totalCount % this.columns //最后一行
+        let isFirstColumn = (index + 1) % this.columns === 1 //第一列
         let isLastColumn = (index + 1) % this.columns === 0 //最后一列
         return {
             width: this._gridWidth,
             height: this._gridWidth,
-            marginTop: isFirstRow ? 0 : this.props.gridMargin,
-            marginRight: isLastColumn ? 0 : this.props.gridMargin,
+            // marginTop: isFirstRow ? 0 : this.props.gridMargin,
+            marginLeft: isFirstColumn ? this.props.gridMargin : 0,
+            marginRight: this.props.gridMargin,
             marginBottom: isLastRow ? 0 : this.props.gridMargin,
         }
     }
 
     _deleteClick = (item, index) => {
         if (typeof (this.props.deleteClick) === 'function') {
-            this.props.deleteClick();
+            this.props.deleteClick(item,index);
         }
     }
 
     _renderAddButton = () => {
-        let gridStyle = this._getGridStyle(this.totalCount - 1);
+        let gridStyle = this._getGridStyle(this._totalCount() - 1);
         return (
             <TouchableOpacity
                 activeOpacity={1}
@@ -121,7 +121,7 @@ export class GridView extends Component {
                     this.props.showDelete ? <TouchableOpacity
                         activeOpacity={1}
                         style={styles.deleteButton}
-                        onPress={this._deleteClick}>
+                        onPress={this._deleteClick.bind(this,item,index)}>
                         <Text style={styles.deleteX}>×</Text>
                     </TouchableOpacity> : <View/>
                 }
@@ -131,7 +131,6 @@ export class GridView extends Component {
     }
 
     render() {
-        console.log(this.props.children)
         return (
             <View style={[styles.container, this.props.containerStyle, {
                 marginLeft: this.props.marginLeft,

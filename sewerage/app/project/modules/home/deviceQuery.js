@@ -1,20 +1,23 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import {
     View,
     Text,
     FlatList,
     TouchableOpacity
 } from 'react-native';
-import {SearchBar, Divider, Icon, Avatar} from 'react-native-elements';
+import { SearchBar, Divider, Icon, Avatar } from 'react-native-elements';
 import * as Utils from "../../../core/utils";
-import {WrapScreen} from "../wrap";
-import {ListFilter} from '../../components';
+import { WrapScreen } from "../wrap";
+import { ListFilter } from '../../components';
+import * as Actions from "../../redux/actions";
+import { connect } from "react-redux";
+import Urls from "../../../config/api/urls";
 
 const filterArray = [
     {
         title: '类型',
         keyName: 'ssb',
-        multipleChoice:false,
+        multipleChoice: false,
         data: [{
             name: '类型一',
             value: '11',
@@ -29,7 +32,7 @@ const filterArray = [
     {
         title: '规格',
         keyName: 'aab',
-        multipleChoice:true,
+        multipleChoice: true,
         data: [{
             name: '规格一',
             value: '11',
@@ -47,7 +50,7 @@ const filterArray = [
     {
         title: '规格',
         keyName: 'ccs',
-        multipleChoice:false,
+        multipleChoice: false,
         data: [{
             name: '规格一',
             value: '11',
@@ -58,7 +61,7 @@ const filterArray = [
     }
 ];
 
-export default class DeviceQueryScreen extends WrapScreen {
+class DeviceQueryScreen extends WrapScreen {
 
     constructor(props) {
         super(props);
@@ -68,27 +71,40 @@ export default class DeviceQueryScreen extends WrapScreen {
         }
     }
 
-    _keyExtractor = (item, index) => item.id;
+    componentDidMount(){
+        this.store.dispatch(Actions.request(this,Urls.device.deviceList));
+    }
+
+    _keyExtractor = (item, index) => index;
+
+    //action
+
+    _itemClick=(item,index)=>{
+        this.props.navigation.navigate('DeviceDetail')
+    }
 
     //渲染单行
-    _renderItem = () => {
+    _renderItem = ({item,index}) => {
         return (
-            <View style={styles.listItem}>
+            <TouchableOpacity
+                activeOpacity={1}
+                style={styles.listItem}
+                onPress={this._itemClick.bind(item,index)}>
                 <Avatar
                     width={50}
                     height={50}
-                    title="CWL"
+                    source={{url:item.avatar}}
                     rounded
                     containerStyle={styles.listAvatar}
                 />
                 <View style={styles.listItemMsg}>
                     <View style={styles.listItemTitleContainer}>
-                        <Text style={styles.listItemName}>渗滤液设备名称</Text>
-                        <Text style={styles.listItemNumbering}>ZL-SLY-021-212</Text>
+                        <Text style={styles.listItemName}>{item.title}</Text>
+                        <Text style={styles.listItemNumbering}>{item.deviceCode}</Text>
                     </View>
-                    <Text style={styles.listItemContent}>所属厂站：湖南</Text>
+                    <Text style={styles.listItemContent}>所属厂站：{item.station}</Text>
                 </View>
-            </View>
+            </TouchableOpacity>
         )
     }
 
@@ -111,18 +127,18 @@ export default class DeviceQueryScreen extends WrapScreen {
                             />
                             <Text style={styles.navigatorTitle}>设备查询</Text>
                             <Icon
-                                style={{ marginRight:10 }}
+                                style={{ marginRight: 10 }}
                                 size={18}
                                 name={'filter'}
                                 type='feather'
-                                color={this.state.isFilterShow ? '#42BD56' :"#666"}
+                                color={this.state.isFilterShow ? '#42BD56' : "#666"}
                                 onPress={() => {
                                     self.setState({
                                         isFilterShow: !self.state.isFilterShow
                                     })
                                 }}
                             />
-                            
+
                         </View>
                     </View>
                     <SearchBar
@@ -145,9 +161,9 @@ export default class DeviceQueryScreen extends WrapScreen {
                         placeholder='搜索'
                     />
                 </View>
-                <Divider style={{backgroundColor: '#e0e0e0'}}/>
+                <Divider style={{ backgroundColor: '#e0e0e0' }} />
                 <FlatList
-                    data={['s', 's', 'd', 'd', 'd', 'd']}
+                    data={this.props.deviceList}
                     keyExtractor={this._keyExtractor}
                     renderItem={this._renderItem}
                 />
@@ -156,7 +172,7 @@ export default class DeviceQueryScreen extends WrapScreen {
                     filterArray={filterArray}
                     maskerClick={() => {
                         this.setState({
-                            isFilterShow:false,
+                            isFilterShow: false,
                         })
                     }}
                 /> : <View />}
@@ -164,6 +180,14 @@ export default class DeviceQueryScreen extends WrapScreen {
         )
     }
 }
+
+function mapStateToProps(state){
+    return {
+        deviceList:state.device.getDeviceList,
+    }
+}
+
+export default connect(mapStateToProps)(DeviceQueryScreen);
 
 const styles = Utils.PLStyle({
     container: {
@@ -179,8 +203,8 @@ const styles = Utils.PLStyle({
     },
     navigator: {
         marginTop: 32,
-        paddingLeft:10,
-        paddingRight:10,
+        paddingLeft: 10,
+        paddingRight: 10,
         flexDirection: 'row',
         justifyContent: 'space-between',
     },
@@ -199,7 +223,7 @@ const styles = Utils.PLStyle({
         flexDirection: 'row',
         height: 75,
         alignItems: 'center',
-        backgroundColor:'#ffffff',
+        backgroundColor: '#ffffff',
     },
     listAvatar: {
         marginLeft: 20,

@@ -49,7 +49,9 @@ const post = (context, url, body, dispatch) => {
         .then((response) => {
                 exec(url, response, dispatch)
             }
-        );
+        ).catch(err=>{
+            console.log(err);
+        });
 };
 
 const exec = (url, response, dispatch) => {

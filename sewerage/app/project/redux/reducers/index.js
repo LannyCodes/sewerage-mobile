@@ -6,6 +6,7 @@ import Inspections from './inspections'
 import faults from './faults';
 import Task from './task';
 import dataStatistics from './dataStatistics';
+import device from './device';
 
 let MainReducer = combineReducers({
     Common,
@@ -14,7 +15,8 @@ let MainReducer = combineReducers({
     Maintenance,
     faults,
     Task,
-    dataStatistics
+    dataStatistics,
+    device,
 });
 
 module.exports = MainReducer;

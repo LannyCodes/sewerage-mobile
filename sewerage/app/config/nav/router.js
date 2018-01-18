@@ -78,6 +78,10 @@ const Fault = {
     DealWorkOrder: {screen: Modules.DealWorkOrderScreen},
 };
 
+const Device = {
+    DeviceDetail: {screen: Modules.DeviceDetailScreen},
+}
+
 const Navigator = StackNavigator(
     {
         // ...Splash,
@@ -89,7 +93,8 @@ const Navigator = StackNavigator(
         ...Task,
         ...Fault,
         ...Inspections,
-        ...Audit
+        ...Audit,
+        ...Device,
     }, {
         navigationOptions: ({navigation, screenProps}) => ({
             header: null,

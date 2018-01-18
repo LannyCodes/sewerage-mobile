@@ -31,6 +31,10 @@ const Urls = {
         inspectionStatistics:'/app/statistics/inspection',
         maintenanceStatistics:'/app/statistics/maintenance',
         stationStatistics:'/app/statistics/station',
+    },
+    device: {
+        deviceList: '/app/device/list',
+        deviceDetail: '/app/device/detail',
     }
 };
 export default Urls
