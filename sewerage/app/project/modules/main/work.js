@@ -46,108 +46,111 @@ class WorkScreen extends WrapScreen {
         const parameters = _.chunk(this.state.parameters, 4); // 将HomeModule 每三个分成一个数组
         return (
             <View style={styles.container}>
-                <View style={styles.headContainer}>
-                    <View style={styles.optTitle}>
-                        <View style={{
-                            flexDirection: 'row'
-                        }}>
-                            <Image source={Assets.Home.location}/>
-                            <Text style={styles.optText}>宁乡县污水处理厂</Text>
-                            <Image source={Assets.Home.arrowDown}/>
-                        </View>
-                        <Image source={Assets.Home.scan} style={styles.icon}/>
-                    </View>
-                    <View style={{paddingLeft: 15, marginTop: 20}}>
-                        <Text style={{color: 'white', fontSize: 22}}>正常</Text>
-                        <Text style={{color: 'white', fontSize: 12, marginTop: 10}}>运行状态</Text>
-                    </View>
-                    <View style={styles.cardContainer}>
-                        <View style={[styles.center, {flexDirection: 'column'}]}>
-                            <Image source={Assets.Home.circle} style={styles.circle}/>
-                            <View style={styles.safeContent}>
-                                <Image source={Assets.Home.circleSafe}/>
-                                <Text style={styles.safeText}>水质监测</Text>
+                <View style={styles.container}>
+                    <Image source={Assets.Home.bg} style={styles.bg}/>
+                    <View style={styles.headContainer}>
+                        <View style={styles.optTitle}>
+                            <View style={{
+                                flexDirection: 'row'
+                            }}>
+                                <Image source={Assets.Home.location}/>
+                                <Text style={styles.optText}>宁乡县污水处理厂</Text>
+                                <Image source={Assets.Home.arrowDown}/>
                             </View>
+                            <Image source={Assets.Home.scan} style={styles.icon}/>
                         </View>
-                        <Carousel
-                            carousel={false}
-                            style={styles.swipeContent}
-                            control={
-                                <Carousel.Control
-                                    style={{alignItems: 'center'}}
-                                    dot={
-                                        <View style={styles.dot}/>
-                                    }
-                                    activeDot={
-                                        <View style={[styles.dot, {
-                                            backgroundColor: '#42BB55'
-                                        }]}/>
-                                    }
-                                />
-                            }
-                        >
-                            {
-                                parameters.map((item, i) => (
-                                        <View style={styles.paramsStyle} key={i}>
-                                            {item.map((sim, j) => (
-                                                <View style={styles.paramsItem} key={j}>
-                                                    <PercentageCircle radius={33} percent={parseInt(sim.size)}
-                                                                      color={circleColor[i][j]}
-                                                                      bgcolor={'#EBEBEB'}
-                                                                      borderWidth={6}
-                                                    >
-                                                        <Text>{sim.size}</Text>
-                                                        {sim.symbol !== '' && <Text>{sim.symbol}</Text>}
-                                                    </PercentageCircle>
-                                                    <Text style={{
-                                                        color: '#333',
-                                                        fontSize: 13,
-                                                        marginTop: 10
-                                                    }}>{sim.type}</Text>
-                                                </View>
-                                            ))}
-                                        </View>
-                                    )
-                                )
-                            }
-                        </Carousel>
-                    </View>
-                </View>
-                <View style={styles.configContainer}>
-                    <View style={styles.configTitle}>
-                        <View style={{
-                            width: 3,
-                            height: 16,
-                            backgroundColor: '#42BB55'
-                        }}/>
-                        <Text style={{
-                            fontSize: 14,
-                            color: '#666',
-                            marginLeft: 5
-                        }}>常用工具</Text>
-                    </View>
-                    <Divider style={{backgroundColor: '#E5E5E5'}}/>
-                    {modules.map((item, index) => {
-                        return (
-                            <View style={{flex: 1,}}>
-                                <View style={styles.configItemRow} key={index}>
-                                    {
-                                        item.map((module, i) => {
-                                            return (
-                                                <TouchableOpacity
-                                                    style={styles.configItem} key={i}
-                                                    onPress={() => this.props.navigation.navigate(module.router)}>
-                                                    <Image source={module.img}/>
-                                                    <Text style={styles.configText}>{module.name}</Text>
-                                                </TouchableOpacity>
-                                            )
-                                        })
-                                    }
+                        <View style={{paddingLeft: 15, marginTop: 20}}>
+                            <Text style={{color: 'white', fontSize: 22}}>正常</Text>
+                            <Text style={{color: 'white', fontSize: 12, marginTop: 10}}>运行状态</Text>
+                        </View>
+                        <View style={styles.cardContainer}>
+                            <View style={[styles.center, {flexDirection: 'column'}]}>
+                                <Image source={Assets.Home.circle} style={styles.circle}/>
+                                <View style={styles.safeContent}>
+                                    <Image source={Assets.Home.circleSafe}/>
+                                    <Text style={styles.safeText}>水质监测</Text>
                                 </View>
-                                <Divider style={{backgroundColor: '#E5E5E5'}}/>
                             </View>
-                        )
-                    })}
+                            <Carousel
+                                carousel={false}
+                                style={styles.swipeContent}
+                                control={
+                                    <Carousel.Control
+                                        style={{alignItems: 'center'}}
+                                        dot={
+                                            <View style={styles.dot}/>
+                                        }
+                                        activeDot={
+                                            <View style={[styles.dot, {
+                                                backgroundColor: '#42BB55'
+                                            }]}/>
+                                        }
+                                    />
+                                }
+                            >
+                                {
+                                    parameters.map((item, i) => (
+                                            <View style={styles.paramsStyle} key={i}>
+                                                {item.map((sim, j) => (
+                                                    <View style={styles.paramsItem} key={j}>
+                                                        <PercentageCircle radius={33} percent={parseInt(sim.size)}
+                                                                          color={circleColor[i][j]}
+                                                                          bgcolor={'#EBEBEB'}
+                                                                          borderWidth={6}
+                                                        >
+                                                            <Text>{sim.size}</Text>
+                                                            {sim.symbol !== '' && <Text>{sim.symbol}</Text>}
+                                                        </PercentageCircle>
+                                                        <Text style={{
+                                                            color: '#333',
+                                                            fontSize: 13,
+                                                            marginTop: 10
+                                                        }}>{sim.type}</Text>
+                                                    </View>
+                                                ))}
+                                            </View>
+                                        )
+                                    )
+                                }
+                            </Carousel>
+                        </View>
+                    </View>
+                    <View style={styles.configContainer}>
+                        <View style={styles.configTitle}>
+                            <View style={{
+                                width: 3,
+                                height: 16,
+                                backgroundColor: '#42BB55'
+                            }}/>
+                            <Text style={{
+                                fontSize: 14,
+                                color: '#666',
+                                marginLeft: 5
+                            }}>常用工具</Text>
+                        </View>
+                        <Divider style={{backgroundColor: '#E5E5E5'}}/>
+                        {modules.map((item, index) => {
+                            return (
+                                <View style={{flex: 1,}}>
+                                    <View style={styles.configItemRow} key={index}>
+                                        {
+                                            item.map((module, i) => {
+                                                return (
+                                                    <TouchableOpacity
+                                                        style={styles.configItem} key={i}
+                                                        onPress={() => this.props.navigation.navigate(module.router)}>
+                                                        <Image source={module.img}/>
+                                                        <Text style={styles.configText}>{module.name}</Text>
+                                                    </TouchableOpacity>
+                                                )
+                                            })
+                                        }
+                                    </View>
+                                    <Divider style={{backgroundColor: '#E5E5E5'}}/>
+                                </View>
+                            )
+                        })}
+                    </View>
                 </View>
             </View>
         );
@@ -160,9 +163,14 @@ const styles = Utils.PLStyle({
         flex: 1,
         backgroundColor: '#F9FBFD'
     },
+    bg: {
+        width: Utils.sw,
+        height: Utils.sw,
+    },
     headContainer: {
         flex: 1.6,
-        backgroundColor: '#42BD56'
+        marginTop: -Utils.sw,
+        backgroundColor: 'transparent'
     },
     optTitle: {
         marginTop: 50,
@@ -187,7 +195,7 @@ const styles = Utils.PLStyle({
     cardContainer: {
         marginLeft: 15,
         marginRight: 15,
-        height: 162,
+        height: 168,
         backgroundColor: 'white',
         marginTop: 50,
         borderColor: '#DCE8C8',

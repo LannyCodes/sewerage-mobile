@@ -2,6 +2,7 @@
  * 首页图标
  */
 const Home = {
+    bg:require('./images/icon_home_bg.png'),
     work: require('./images/icon_work.png'),
     work_selected: require('./images/icon_work_selected.png'),
     message: require('./images/icon_message.png'),
