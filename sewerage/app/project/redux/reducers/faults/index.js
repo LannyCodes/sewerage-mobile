@@ -4,7 +4,7 @@ import Urls from "../../../../config/api/urls";
 let faultsList = []
 const getFaultsList = (state=[],action)=>{
     if(action.type === Urls.faults.faultList){
-        faultsList = action.data;//应该做判断
+        faultsList = action.data.list;//应该做判断
         return faultsList
     }
     return faultsList
@@ -13,7 +13,7 @@ const getFaultsList = (state=[],action)=>{
 let workOrders = []
 const getWorkOrder = (state=[],action)=>{
     if(action.type === Urls.faults.workOrder){
-        workOrders = action.data;
+        workOrders = action.data.list;
         return workOrders
     }
     return workOrders;

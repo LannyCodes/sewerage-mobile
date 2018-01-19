@@ -95,8 +95,8 @@ class FaultListScreen extends WrapScreen {
     }
 
     componentDidMount() {
-        this.store.dispatch(Actions.request(this, Urls.faults.faultList));
-        this.store.dispatch(Actions.request(this, Urls.faults.workOrder));
+        this.store.dispatch(Actions.request(this, Urls.faults.faultList,{asdf:''},'get'));
+        this.store.dispatch(Actions.request(this, Urls.faults.workOrder,{asf:''},'get'));
     }
 
     _keyExtractor = (item, index) => item.id;
@@ -149,9 +149,15 @@ class FaultListScreen extends WrapScreen {
                 renderItem={({ item, index }) => {
                     let data = item
                     if (type === 'faultsList') {
-                        data.title = item.name
+                        data.title = item.EQUIPMENT_NAME;
+                        data.content = item.BREAKDOWN_DESCRIBE;
+                        data.person = item.CREATE_USER;
+                        data.time = item.CREATE_TIME;
                     } else {
-                        data.title = item.orderCode
+                        data.title = item.BREAK_NUMBER;
+                        data.content = item.DESCRIBE;
+                        data.person = item.USER_NAME;
+                        data.time = item.CREATE_TIME
                     }
                     return <ListCell
                         item={data}

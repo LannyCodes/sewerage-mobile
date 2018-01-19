@@ -21,7 +21,7 @@ const get = (context, url, body, dispatch) => {
     Object.assign(header, {
         Authorization: _USERTOKEN_
     });
-    api(config.WebServerUrl).post(url, body)
+    api(config.WebServerUrl).get(url, body)
         .then((response) => {
                 exec(url, response, dispatch)
             }

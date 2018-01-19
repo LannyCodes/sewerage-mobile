@@ -23,8 +23,8 @@ const Urls = {
         getMaintenanceList: '/app/maintenance/list', // 获取维保列表
     },
     faults: {
-        faultList: '/app/fault/list',//故障清单
-        workOrder: '/app/fault/workOrder',//故障工单
+        faultList: '/api/breakdown/list',//故障清单
+        workOrder: '/api/breakdownbill/list',//故障工单
         faultDetail: '/app/fault/listDetail',//故障清单详情
     },
     statistics: {

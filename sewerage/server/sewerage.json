@@ -117,71 +117,77 @@
     }
   },
   {
-    "url": "/app/fault/workOrder",
-    "method": "post",
+    "url": "/api/breakdownbill/list",
+    "method": "get",
     "response": {
       "code": 0,
       "msg": "",
-      "data": [
-        {
-          "orderCode": "GZGD-01-11",
-          "status": "1",
-          "content": "人间大炮一级准备",
-          "person": "炮姐",
-          "time": "2017-09-03 15:20"
-        },
-        {
-          "orderCode": "GZGD-01-11",
-          "status": "0",
-          "content": "人间大炮一级准备",
-          "person": "炮姐",
-          "time": "2017-09-03 15:20"
-        },
-        {
-          "orderCode": "GZGD-01-11",
-          "status": "3",
-          "content": "阿姆斯特朗回旋加速喷气式阿姆斯特朗炮",
-          "person": "银时",
-          "time": "2017-09-03 15:20"
-        }
-      ]
+      "data": {
+        "totalCount": 3,
+        "list": [{
+            "BREAK_NUMBER": "GZGD-01-11",
+            "STATUS": "1",
+            "DESCRIBE": "人间大炮一级准备",
+            "USER_NAME": "炮姐",
+            "CREATE_TIME": "2017-09-03 15:20"
+          },
+          {
+            "BREAK_NUMBER": "GZGD-01-11",
+            "STATUS": "0",
+            "DESCRIBE": "人间大炮一级准备",
+            "USER_NAME": "炮姐",
+            "CREATE_TIME": "2017-09-03 15:20"
+          },
+          {
+            "BREAK_NUMBER": "GZGD-01-11",
+            "STATUS": "2",
+            "DESCRIBE": "阿姆斯特朗回旋加速喷气式阿姆斯特朗炮",
+            "USER_NAME": "银时",
+            "CREATE_TIME": "2017-09-03 15:20"
+          }
+        ]
+      }
     }
   },
   {
-    "url": "/app/fault/list",
-    "method": "post",
+    "url": "/api/breakdown/list",
+    "method": "get",
     "response": {
       "code": 0,
       "msg": "",
-      "data": [
-        {
-          "id": 0,
-          "name": "人间大炮",
-          "status": "1",
-          "level": "2",
-          "content": "人间大炮一级准备",
-          "person": "炮姐",
-          "time": "2017-09-03 15:20"
+      "data": {
+        "totalCount":3,
+        "list":[{
+          "ID": 0,
+          "EQUIPMENT_NAME": "人间大炮",
+          "TYPE": "1",
+          "RANK": "2",
+          "BREAKDOWN_DESCRIBE": "人间大炮一级准备",
+          "CREATE_USER": "炮姐",
+          "CREATE_TIME": "2017-09-03 15:20",
+          "HANDLE_WAY":"发射出去",
+          "STATION_NAME":"002"
         },
         {
-          "id": 1,
-          "name": "阿姆斯特朗炮",
-          "status": "0",
-          "level": "3",
-          "content": "阿姆斯特朗回旋加速喷气式阿姆斯特朗炮",
-          "person": "银时",
-          "time": "2017-09-03 15:20"
+          "ID": 1,
+          "EQUIPMENT_NAME": "阿姆斯特朗炮",
+          "TYPE": "0",
+          "RANK": "3",
+          "BREAKDOWN_DESCRIBE": "阿姆斯特朗回旋加速喷气式阿姆斯特朗炮",
+          "CREATE_USER": "银时",
+          "CREATE_TIME": "2017-09-03 15:20"
         },
         {
-          "id": 2,
-          "name": "人间大炮",
-          "status": "1",
-          "level": "1",
-          "content": "人间大炮一级准备",
-          "person": "炮姐",
-          "time": "2017-09-03 15:20"
+          "ID": 2,
+          "EQUIPMENT_NAME": "人间大炮",
+          "TYPE": "1",
+          "RANK": "1",
+          "BREAKDOWN_DESCRIBE": "人间大炮一级准备",
+          "CREATE_USER": "炮姐",
+          "CREATE_TIME": "2017-09-03 15:20"
         }
       ]
+      }
     }
   },
   {
