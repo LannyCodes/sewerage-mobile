@@ -47,7 +47,7 @@ export async function loginSubmit(self) {
     Utils.fetch(self, Urls.Login.login, params).then((data) => {
         // 保存登录状态 --- 只保存token到localStorage
         storage.save({
-            key: USER_KEY,
+            key: USER_KEY.USER_STAGE_KEY,
             data: {
                 userId: data.user.userId,
                 token: data.token

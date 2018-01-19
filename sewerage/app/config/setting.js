@@ -16,15 +16,20 @@ const GLOB = {
     _USERTOKEN_: ''
 };
 
+
 /**
  * 用户信息key:用户storage存取数据
- * @type {{USERSTAGE_KEY: string}}
+ * @type {{USER_STAGE_KEY: string, USER_INFO_KEY: string}}
  */
-const USER_KEY = 'USERSTATEKEY'
+const USER_KEY = {
+    USER_STAGE_KEY: 'USERSTATEKEY',
+    USER_INFO_KEY: 'USERINFOKEY'
+}
+
 
 if (__DEV__) {
     Object.assign(config, {
-        WebServerUrl: "http://192.168.39.103:10086",
+        WebServerUrl: "http://localhost:10086",
         // WebServerUrl: "http://192.168.31.100:8089",
     })
 } else {
