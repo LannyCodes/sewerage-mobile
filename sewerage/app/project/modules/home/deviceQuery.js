@@ -147,7 +147,13 @@ class DeviceQueryScreen extends WrapScreen {
                         </View>
                     </View>
                     <View style={styles.searchBarContainer}>
-                        <View></View>
+                        <View style={{justifyContent:'center',alignItems:'center',width:30}}>
+                            <Icon
+                                name="ios-search-outline"
+                                type="ionicon"
+                                color="#8E8E93"
+                                size={20}/>
+                        </View>
                         <TextInput
                             style={styles.searchBar}
                             placeholder="搜索"

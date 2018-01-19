@@ -3,6 +3,7 @@ import {
     View,
     Text,
     FlatList,
+    RefreshControl,
     TouchableOpacity,
 } from 'react-native';
 import { Divider, Icon } from 'react-native-elements';
@@ -14,7 +15,7 @@ import * as Actions from "../../redux/actions";
 import { connect } from "react-redux";
 import Urls from "../../../config/api/urls";
 import PropTypes from 'prop-types';
-import { ListFilter,TagLabel } from '../../components';
+import { ListFilter, TagLabel } from '../../components';
 
 // import {FaultDetailScreen, WorkOrderDetailScreen} from '../dataStatistics';
 
@@ -44,7 +45,7 @@ class ListCell extends Component {
                     <Text style={styles.cellTitle}>{this.data.title}</Text>
                     <View style={styles.cellTagContainer}>
                         <TagLabel>II级</TagLabel>
-                        <TagLabel containerStyle={{marginLeft:10}}>处理中</TagLabel>
+                        <TagLabel containerStyle={{ marginLeft: 10 }}>处理中</TagLabel>
                     </View>
                 </View>
                 <View style={styles.cellContentContainer}>
@@ -85,6 +86,7 @@ class FaultListScreen extends WrapScreen {
         }
         this.state = {
             isFilterShow: false,
+            isRefreshing: false,
         }
     }
 
@@ -93,18 +95,22 @@ class FaultListScreen extends WrapScreen {
     }
 
     componentDidMount() {
-        this.store.dispatch(Actions.request(this,Urls.faults.faultList));
-        this.store.dispatch(Actions.request(this,Urls.faults.workOrder));
+        this.store.dispatch(Actions.request(this, Urls.faults.faultList));
+        this.store.dispatch(Actions.request(this, Urls.faults.workOrder));
     }
 
     _keyExtractor = (item, index) => item.id;
 
     _cellClicked = (type) => {
-        if(type === 'faultsList'){
+        if (type === 'faultsList') {
             this.props.navigation.navigate('FaultDetail');
-        }else{
+        } else {
             this.props.navigation.navigate('WorkOrderDetail');
         }
+    }
+
+    _onRefresh = () => {
+
     }
 
     _filterReset = (data) => {
@@ -122,6 +128,15 @@ class FaultListScreen extends WrapScreen {
     _renderList(type, tabLabel, data) {
         return (
             <FlatList
+                refreshControl={
+                    <RefreshControl
+                        refreshing={this.state.isRefreshing}
+                        onRefresh={() => this._onRefresh()}
+                        tintColor="#3ca8fe"
+                        colors={['#3ca8fe']}
+                        progressBackgroundColor="#f1f1f1"
+                    />
+                }
                 style={{ flex: 1 }}
                 keyExtractor={this._keyExtractor}
                 tabLabel={tabLabel}
@@ -141,7 +156,7 @@ class FaultListScreen extends WrapScreen {
                     return <ListCell
                         item={data}
                         index={index}
-                        clickFunc={this._cellClicked.bind(this,type)} />
+                        clickFunc={this._cellClicked.bind(this, type)} />
                 }}
             />
         )
@@ -173,13 +188,13 @@ class FaultListScreen extends WrapScreen {
                 </ScrollableTabView>
                 {/* 在筛选出现的时候挡住scrolltabbar */}
                 {this.state.isFilterShow === true ? <TouchableOpacity
-                    style={styles.scrollTabBarMasker} 
+                    style={styles.scrollTabBarMasker}
                     activeOpacity={1}
-                    onPress={()=>{
+                    onPress={() => {
                         this.setState({
-                            isFilterShow:false,
+                            isFilterShow: false,
                         })
-                    }}/> : <View />}
+                    }} /> : <View />}
                 {this.state.isFilterShow === true ? <ListFilter
                     containerStyles={{ top: 50 }}
                     filterArray={filterArray}
@@ -212,10 +227,10 @@ const styles = Utils.PLStyle({
         backgroundColor: '#f3f3f3',
     },
     scrollTabBarMasker: {
-        height:50,
-        width:'100%',
-        position:'absolute',
-        top:0,
+        height: 50,
+        width: '100%',
+        position: 'absolute',
+        top: 0,
         // backgroundColor:'red',
     },
     //ListCell
