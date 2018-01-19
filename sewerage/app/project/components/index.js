@@ -11,3 +11,4 @@ export * from './ImagePickerGrids';  // 九宫格拍照 TODO
 export * from './checkBox';
 export * from './submitBtn';
 export * from './dialog';
+export * from './PicturesPreview';//类微信图片预览，滑动，缩放

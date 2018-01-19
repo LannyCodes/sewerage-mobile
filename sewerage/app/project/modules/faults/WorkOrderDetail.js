@@ -6,6 +6,7 @@ import React, { Component } from 'react'
 import {
     View,
     Text,
+    Modal,
     FlatList,
     ScrollView,
     Dimensions,
@@ -14,7 +15,7 @@ import {
 import { WrapScreen } from '../wrap';
 import { Avatar } from 'react-native-elements';
 import * as Utils from '../../../core/utils';
-import { GridView, TagLabel } from '../../components';
+import { GridView, TagLabel, PicturesPreview } from '../../components';
 
 const screenWidth = Dimensions.get('window').width;
 
@@ -24,6 +25,9 @@ class WorkOrderDetailScreen extends WrapScreen {
         this.header = {
             title: '故障工单详情'
         };
+        this.state={
+            showPreview:false,
+        }
     };
 
     _keyExtractor = (item, index) => item.id;
@@ -33,7 +37,7 @@ class WorkOrderDetailScreen extends WrapScreen {
     }
 
     _imageClick = () => {
-
+        this._pp.showPreview()
     }
 
     _renderListHeader = () => {
@@ -168,11 +172,9 @@ class WorkOrderDetailScreen extends WrapScreen {
                         <Text style={[styles.headerFootText, { color: '#333333', marginBottom: 11, marginTop: 14 }]}>湖南宁乡经济技术开发区污水处理厂采用较为先进的污水处理工艺五段式A/A/O-A/O+二沉池+微絮凝池+V型滤池+ClO2消毒， 其设计规模为5万立方米/日</Text>
                     </View>
                     <GridView
-                        imgs={[{ uri: "https://s3.amazonaws.com/uifaces/faces/twitter/brynn/128.jpg" }, { uri: "https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg" }, { uri: "https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg" }]}
+                        imgs={[{ uri: "https://s3.amazonaws.com/uifaces/faces/twitter/brynn/128.jpg" }, { uri: "https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg" }, { uri: "https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg" },{ uri: "https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg" },]}
                         containerStyle={{ marginBottom: 20 }}
                         columns={4}
-                        marginLeft={10}
-                        marginRight={10}
                         gridClick={this._imageClick} />
                 </View>
                 <View style={styles.divider} />
@@ -200,10 +202,18 @@ class WorkOrderDetailScreen extends WrapScreen {
                     onPress={this._dealWorkOrder}>
                     <Text style={styles.buttonText}>处理</Text>
                 </TouchableOpacity>
+                {/* <Modal visible={this.state.showPreview}>
+                    <ImageViewer imageUrls={images}/>
+                </Modal> */}
+                <PicturesPreview
+                    ref={pp=>this._pp = pp}
+                    images={images}/>
             </View>
         );
     };
 };
+
+const images = [{ url: "https://s3.amazonaws.com/uifaces/faces/twitter/brynn/128.jpg" }, { url: "https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg" }, { url: "https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg" },{ url: "https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg" }]
 
 export default WorkOrderDetailScreen;
 

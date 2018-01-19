@@ -24,7 +24,7 @@ const USER_KEY = 'USERSTATEKEY'
 
 if (__DEV__) {
     Object.assign(config, {
-        WebServerUrl: "http://192.168.39.204:10086",
+        WebServerUrl: "http://192.168.39.103:10086",
         // WebServerUrl: "http://192.168.31.100:8089",
     })
 } else {
