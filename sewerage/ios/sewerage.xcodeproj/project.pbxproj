@@ -52,6 +52,7 @@
 		BC551205C7E0487AB0C6374E /* SimpleLineIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F55D984B457C4C379E79B734 /* SimpleLineIcons.ttf */; };
 		EA5650F7F4024BD99CEF0DC8 /* Ionicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 86155D04006A48458336B28F /* Ionicons.ttf */; };
 		EC11CBFC53CE4281B45E2DCE /* Foundation.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 75D143056B1D4F28BF61512C /* Foundation.ttf */; };
+		F25C99BC20119CB700F4B6D5 /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F25C99BB20119CB700F4B6D5 /* RootViewController.m */; };
 		F25DCD2B200F4C5200EF61AA /* QBImagePicker.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F25DCD29200F4C5200EF61AA /* QBImagePicker.framework */; };
 		F25DCD2C200F4C5200EF61AA /* RSKImageCropper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F25DCD2A200F4C5200EF61AA /* RSKImageCropper.framework */; };
 		F25DCD70200F4F9700EF61AA /* QBImagePicker.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F25DCD29200F4C5200EF61AA /* QBImagePicker.framework */; };
@@ -421,6 +422,8 @@
 		C9F4201CB4983F84731A455E /* Pods-sewerage.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-sewerage.release.xcconfig"; path = "Pods/Target Support Files/Pods-sewerage/Pods-sewerage.release.xcconfig"; sourceTree = "<group>"; };
 		CD4A07AD89EE4D2481A2FAD2 /* libRNVectorIcons.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNVectorIcons.a; sourceTree = "<group>"; };
 		DB1ACE729C624897BFCD6D30 /* MaterialIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/MaterialIcons.ttf"; sourceTree = "<group>"; };
+		F25C99BA20119CB700F4B6D5 /* RootViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RootViewController.h; sourceTree = "<group>"; };
+		F25C99BB20119CB700F4B6D5 /* RootViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RootViewController.m; sourceTree = "<group>"; };
 		F25DCD29200F4C5200EF61AA /* QBImagePicker.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QBImagePicker.framework; path = ImageCropPickerSDK/QBImagePicker.framework; sourceTree = "<group>"; };
 		F25DCD2A200F4C5200EF61AA /* RSKImageCropper.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RSKImageCropper.framework; path = ImageCropPickerSDK/RSKImageCropper.framework; sourceTree = "<group>"; };
 		F26CDD5620031032008F49F5 /* RCTCamera.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTCamera.xcodeproj; path = "../node_modules/react-native-camera/ios/RCTCamera.xcodeproj"; sourceTree = "<group>"; };
@@ -576,6 +579,8 @@
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
+				F25C99BA20119CB700F4B6D5 /* RootViewController.h */,
+				F25C99BB20119CB700F4B6D5 /* RootViewController.m */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				13B07FB11A68108700A75B9A /* LaunchScreen.xib */,
@@ -1405,6 +1410,7 @@
 			files = (
 				13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
+				F25C99BC20119CB700F4B6D5 /* RootViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

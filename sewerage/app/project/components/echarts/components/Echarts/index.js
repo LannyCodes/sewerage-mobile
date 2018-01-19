@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { WebView, View, StyleSheet } from 'react-native';
+import { WebView, View, StyleSheet,ActivityIndicator } from 'react-native';
 import renderChart from './renderChart';
 // import echarts from './echarts.min';
 
@@ -27,6 +27,14 @@ export default class App extends Component {
                     ref="chart"
                     scrollEnabled={false}
                     injectedJavaScript={renderChart(this.props)}
+                    startInLoadingState={true}
+                    renderLoading={()=>{
+                        return (
+                            <View style={{flex:1,justifyContent:'center',alignItems:'center'}}>
+                                <ActivityIndicator size='small'/>
+                            </View>
+                        )
+                    }}
                     style={{
                         height: this.props.height || 400,
                     }}

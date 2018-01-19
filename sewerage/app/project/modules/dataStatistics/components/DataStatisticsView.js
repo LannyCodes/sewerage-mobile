@@ -38,52 +38,49 @@ export default class DataStatisticsView extends Component {
         dataType: PropTypes.string,
     };
 
-    _echartOption = () => {
+    _echartOption = (grid) => {
         let axisColor = '#E9E9E9'
         return {
             tooltip: {
                 //设置悬浮框
                 triggerOn: 'none',
                 position: function (pt) {
-                    return [pt[0], 130];
+                    return [pt[0], 65];
                 },
                 alwaysShowContent: true,
                 textStyle: {
                     color: '#999999',
-                    fontSize: 30,
+                    fontSize: 15,
                 },
                 confine: true,
                 backgroundColor: '#ffffff',
-                padding: 10 * pixel,
+                padding: 10,
                 formatter: '时间:2017年10月<br/>故障:{c0}',//TODO:需要做设置
                 extraCssText: 'box-shadow: 0 4px 8px 0px #CBE0CE;'
             },
-            grid: {
-                right: 50,
-                bottom: 150,
-            },
+            grid: grid,
             xAxis: [
                 {
                     type: 'category',
                     axisTick: {//X轴刻度设置
                         alignWithLabel: true,
-                        length: 10 * pixel,
+                        length: 10,
                         lineStyle: {
                             color: axisColor,
-                            width: 1 * pixel,
+                            width: 1,
                         }
                     },
                     axisLine: {
                         onZero: false,
                         lineStyle: {
                             color: axisColor,
-                            width: 1 * pixel,
+                            width: 1,
                         }
                     },
                     axisLabel: {
                         margin: 16 * pixel,
                         textStyle: {
-                            fontSize: 10 * pixel,
+                            fontSize: 10,
                             color: '#6a6a6a'
                         }
                     },
@@ -117,16 +114,16 @@ export default class DataStatisticsView extends Component {
                         show: false,
                     },
                     axisLabel: {
-                        margin: 12 * pixel,
+                        margin: 12,
                         textStyle: {
-                            fontSize: 10 * pixel,
+                            fontSize: 10,
                             color: '#6a6a6a'
                         }
                     },
                     splitLine: {//分割线
                         lineStyle: {
                             color: axisColor,
-                            width: 1 * pixel
+                            width: 1
                         }
                     }
                 }
@@ -247,41 +244,9 @@ export default class DataStatisticsView extends Component {
                 <ChartView 
                     height={screenHeight-332}
                     width={screenWidth}
-                    expand={this.props.expandFunc.bind(this,this._echartOption())}
-                    echartOption={this._echartOption()}/>
+                    expand={this.props.expandFunc.bind(this,this._echartOption({top:20,right:25,bottom:75}))}
+                    echartOption={this._echartOption({top:20,right:20,bottom:75})}/>
             </View>
-            // <View style={[styles.chartView]}>
-            //     <View style={styles.chartHeader}>
-            //         <Text style={styles.chartHeaderTitle}>故障数量</Text>
-            //         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-            //             <Icon
-            //                 size={18}
-            //                 name={'chevron-left'}
-            //                 type='feather'
-            //                 color={'#979797'}
-            //                 onPress={this.props._onLeftYearPress}
-            //             />
-            //             <Text style={styles.chartHeaderYear}>2017年</Text>
-            //             <Icon
-            //                 size={18}
-            //                 name={'chevron-right'}
-            //                 type='feather'
-            //                 color={'#979797'}
-            //                 onPress={this.props._onRightYearPress}
-            //             />
-            //         </View>
-            //         <TouchableOpacity
-            //             style={{ position: 'absolute', right: 15 }}
-            //             activeOpacity={1}
-            //             onPress={this._turnOrientation}>
-            //             <Text>扩大</Text>
-            //         </TouchableOpacity>
-            //     </View>
-            //     <Echarts
-            //         height={screenHeight - 332}
-            //         width={screenWidth}
-            //         option={this._echartOption()} />
-            // </View>
         )
     }
 

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import {
     View,
     Text,
+    StatusBar,
     Dimensions,
     PixelRatio,
 } from 'react-native';
@@ -28,6 +29,7 @@ class DataStatisticsScreen extends WrapScreen {
             this.state = {
                 option: {},
                 isExpand: false,
+                statusBarHidden:false,
             }
     }
 
@@ -45,7 +47,12 @@ class DataStatisticsScreen extends WrapScreen {
             option: option,
             isExpand:true,
         })
-        this._turnOrientation()
+        // this._turnOrientation()
+        StatusBar.setHidden(true);
+        this.props.navigation.setParams({
+            gesturesEnabled:false,
+            // statusBarHidden:true,
+        })
     }
 
     _turnOrientation = () => {
@@ -59,23 +66,29 @@ class DataStatisticsScreen extends WrapScreen {
     }
 
     _unExpand=()=>{
-        this._turnOrientation()
+        // this._turnOrientation()
         this.setState({
             isExpand:false,
         })
-        this._chartView.reload()
+        StatusBar.setHidden(false);
+        this.props.navigation.setParams({
+            gesturesEnabled:true,
+            // statusBarHidden:false,
+        })
+        // this._chartView.reload()
     }
 
     _render() {
+        const offset = (screenHeight-screenWidth)/2
         return (
             <View style={{ flex: 1, }}>
                 {
                     this.state.isExpand ?
-                        <View style={{ position: 'absolute', zIndex: 99999, top: -70, paddingTop: 20, backgroundColor: '#ffffff' }}>
+                        <View style={{ position: 'absolute', zIndex: 99999, top: -70, paddingTop: 20, backgroundColor: '#ffffff',transform:[{rotateZ:'90deg'},{translate:[offset,offset]}] }}>
                             <ChartView
                                 ref={chartView => this._chartView = chartView}
-                                height={screenHeight}
-                                width={screenWidth}
+                                height={screenWidth-38}
+                                width={screenHeight}
                                 expand={this._unExpand}
                                 echartOption={this.state.option} />
                         </View> :
@@ -103,11 +116,13 @@ class DataStatisticsScreen extends WrapScreen {
                     <DataStatisticsView
                         tabLabel="维保统计"
                         data={this.props.maintenanceDatas}
-                        navigation={this.props.navigation} />
+                        navigation={this.props.navigation}
+                        expandFunc={this._expandFunc} />
                     <DataStatisticsView
                         tabLabel="厂站统计"
                         data={this.props.stationDatas}
-                        navigation={this.props.navigation} />
+                        navigation={this.props.navigation}
+                        expandFunc={this._expandFunc} />
                 </ScrollableTabView>
             </View>
         )

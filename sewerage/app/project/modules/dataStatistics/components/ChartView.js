@@ -21,7 +21,7 @@ class ChartView extends Component {
     }
 
     reload=()=>{
-        console.log('hahahaha')
+        this._echarts.reload();
     }
 
     render() {
@@ -54,8 +54,9 @@ class ChartView extends Component {
                     </TouchableOpacity>
                 </View>
                 <Echarts
+                    ref={echarts => this._echarts = echarts}
                     height={this.props.height}
-                    width={this.props.height}
+                    width={this.props.width}
                     option={this.props.echartOption} />
             </View>
         )
@@ -67,6 +68,7 @@ export default ChartView
 const styles = Utils.PLStyle({
     chartView: {
         backgroundColor: '#ffffff',
+        // flex:1,
     },
     chartHeader: {
         flexDirection: 'row',

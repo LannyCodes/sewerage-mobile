@@ -4,9 +4,12 @@ import {PixelRatio} from 'react-native';
 
 export default function renderChart(props) {
   let height = props.height || 400;
-  height = height * PixelRatio.get();
+  height = height;
   return `
-    document.getElementById('main').style.height = "${height}pt";
+    // console.log('hahahahaha');
+    console.log(document.documentElement.clientHeight);
+    console.log(window.innerHeight);
+    document.getElementById('main').style.height = "${height}px";
     var myChart = echarts.init(document.getElementById('main'));
     myChart.setOption(${toString(props.option)});
   `
