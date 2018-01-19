@@ -7,7 +7,7 @@
     View,
     Modal
  } from "react-native"
-//  import PropTypes from 'prop-types';
+ import PropTypes from 'prop-types';
  import ImageViewer from 'react-native-image-zoom-viewer';
 
  export class PicturesPreview extends Component {
