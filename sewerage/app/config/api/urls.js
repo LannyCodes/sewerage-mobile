@@ -35,6 +35,9 @@ const Urls = {
     device: {
         deviceList: '/app/device/list',
         deviceDetail: '/app/device/detail',
+    },
+    User:{
+        userInfo:'/app/user/info'
     }
 };
 export default Urls

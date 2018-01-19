@@ -26,7 +26,7 @@ export class WrapScreen extends Component {
             title: '',
         };
         storage.load({
-            key: USER_KEY
+            key: USER_KEY.USER_STAGE_KEY
         }).then(data => {
             if (!_.isNull(data.token)) {
                 _USERTOKEN_ = data.token;

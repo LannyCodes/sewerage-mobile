@@ -16,11 +16,16 @@ const GLOB = {
     _USERTOKEN_: ''
 };
 
+
 /**
  * 用户信息key:用户storage存取数据
- * @type {{USERSTAGE_KEY: string}}
+ * @type {{USER_STAGE_KEY: string, USER_INFO_KEY: string}}
  */
-const USER_KEY = 'USERSTATEKEY'
+const USER_KEY = {
+    USER_STAGE_KEY: 'USERSTATEKEY',
+    USER_INFO_KEY: 'USERINFOKEY'
+}
+
 
 if (__DEV__) {
     Object.assign(config, {

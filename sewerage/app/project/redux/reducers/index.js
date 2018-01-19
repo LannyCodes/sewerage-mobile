@@ -7,6 +7,7 @@ import faults from './faults';
 import Task from './task';
 import dataStatistics from './dataStatistics';
 import device from './device';
+import Me from './me';
 
 let MainReducer = combineReducers({
     Common,
@@ -17,6 +18,7 @@ let MainReducer = combineReducers({
     Task,
     dataStatistics,
     device,
+    Me
 });
 
 module.exports = MainReducer;

@@ -5,7 +5,6 @@ import Toast from "teaset/components/Toast/Toast";
 import * as Utils from "../index";
 import _ from 'lodash'
 
-
 export const fetch = (context, url, body, fn: string) => {
     return new Promise((resolve, reject) => {
         if (!_.isNull(fn) && fn === 'get') {

@@ -57,7 +57,11 @@ class WorkScreen extends WrapScreen {
                                 <Text style={styles.optText}>宁乡县污水处理厂</Text>
                                 <Image source={Assets.Home.arrowDown}/>
                             </View>
-                            <Image source={Assets.Home.scan} style={styles.icon}/>
+                            <TouchableOpacity onPress={() => this.props.navigation.navigate('Qr', {
+                                onSuccess: this._onQrSuccess
+                            })}>
+                                <Image source={Assets.Home.scan} style={styles.icon}/>
+                            </TouchableOpacity>
                         </View>
                         <View style={{paddingLeft: 15, marginTop: 20}}>
                             <Text style={{color: 'white', fontSize: 22}}>正常</Text>
@@ -93,13 +97,14 @@ class WorkScreen extends WrapScreen {
                                             <View style={styles.paramsStyle} key={i}>
                                                 {item.map((sim, j) => (
                                                     <View style={styles.paramsItem} key={j}>
-                                                        <PercentageCircle radius={33} percent={parseInt(sim.size)}
+                                                        <PercentageCircle radius={35} percent={parseInt(sim.size)}
                                                                           color={circleColor[i][j]}
                                                                           bgcolor={'#EBEBEB'}
-                                                                          borderWidth={6}
+                                                                          borderWidth={7}
                                                         >
-                                                            <Text>{sim.size}</Text>
-                                                            {sim.symbol !== '' && <Text>{sim.symbol}</Text>}
+                                                            <Text style={styles.paramsSizeText}>{sim.size}</Text>
+                                                            {sim.symbol !== '' &&
+                                                            <Text style={styles.paramsSymbolText}>{sim.symbol}</Text>}
                                                         </PercentageCircle>
                                                         <Text style={{
                                                             color: '#333',
@@ -131,7 +136,7 @@ class WorkScreen extends WrapScreen {
                         <Divider style={{backgroundColor: '#E5E5E5'}}/>
                         {modules.map((item, index) => {
                             return (
-                                <View style={{flex: 1,}}>
+                                <View style={{flex: 1,}} key={index}>
                                     <View style={styles.configItemRow} key={index}>
                                         {
                                             item.map((module, i) => {
@@ -195,7 +200,7 @@ const styles = Utils.PLStyle({
     cardContainer: {
         marginLeft: 15,
         marginRight: 15,
-        height: 168,
+        height: '50%',
         backgroundColor: 'white',
         marginTop: 50,
         borderColor: '#DCE8C8',
@@ -228,7 +233,7 @@ const styles = Utils.PLStyle({
     },
     swipeContent: {
         flex: 1,
-        marginTop: 20
+        marginTop: 10
     },
     dot: {
         backgroundColor: '#D8D8D8',
@@ -245,6 +250,18 @@ const styles = Utils.PLStyle({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center'
+    },
+    paramsSizeText: {
+        fontStyle: 'italic',
+        fontWeight: 'bold',
+        color: '#333',
+        fontSize: 20
+    },
+    paramsSymbolText: {
+        fontStyle: 'italic',
+        fontWeight: 'bold',
+        color: '#999',
+        fontSize: 10
     },
     configContainer: {
         flex: 1,

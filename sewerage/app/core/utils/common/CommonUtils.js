@@ -32,7 +32,10 @@ export const isFastExecute = () => {
 
 export const exitApp = (context)=>{
     storage.remove({
-        key: USER_KEY
+        key: USER_KEY.USER_STAGE_KEY
+    });
+    storage.remove({
+        key: USER_KEY.USER_INFO_KEY
     });
     _USERTOKEN_ = '';
     Utils.resetNavigation(context.props.navigation, 'Login')

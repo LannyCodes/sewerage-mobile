@@ -2,7 +2,7 @@
  * 首页图标
  */
 const Home = {
-    bg:require('./images/icon_home_bg.png'),
+    bg: require('./images/icon_home_bg.png'),
     work: require('./images/icon_work.png'),
     work_selected: require('./images/icon_work_selected.png'),
     message: require('./images/icon_message.png'),
@@ -19,7 +19,7 @@ const Home = {
     arrowDown: require('./images/icon_arrow_down.png'),
     scan: require('./images/icon_scan.png'),
     circle: require('./images/icon_circle.png'),
-    circleSafe:require('./images/icon_circle_safe.png')
+    circleSafe: require('./images/icon_circle_safe.png')
 };
 
 const Login = {
@@ -27,7 +27,16 @@ const Login = {
     invalid: require('./images/icon_invalid.png')
 }
 
+const Me = {
+    tel: require('./images/icon_me_tel.png'),
+    email: require('./images/icon_me_email.png'),
+    pwd: require('./images/icon_me_xg.png'),
+    about: require('./images/icon_me_message.png'),
+}
+
+
 export {
     Home,
-    Login
+    Login,
+    Me
 }

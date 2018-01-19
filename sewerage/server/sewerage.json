@@ -213,9 +213,9 @@
     "url": "/app/statistics/inspection",
     "method": "post",
     "response": {
-      "code":0,
-      "message":"",
-      "data":[
+      "code": 0,
+      "message": "",
+      "data": [
         {
           "name": "巡检完成数",
           "number": 400
@@ -251,9 +251,9 @@
     "url": "/app/statistics/maintenance",
     "method": "post",
     "response": {
-      "code":0,
-      "message":"",
-      "data":[
+      "code": 0,
+      "message": "",
+      "data": [
         {
           "name": "巡检完成数",
           "number": 400
@@ -285,9 +285,9 @@
     "url": "/app/statistics/station",
     "method": "post",
     "response": {
-      "code":0,
-      "message":"",
-      "data":[
+      "code": 0,
+      "message": "",
+      "data": [
         {
           "name": "巡检完成数",
           "number": 400
@@ -550,77 +550,98 @@
     }
   },
   {
-    "url":"/app/device/list",
+    "url": "/app/device/list",
     "method": "post",
     "response": {
-      "code":0,
-      "msg":"",
+      "code": 0,
+      "msg": "",
       "data": {
-        "list":[{
-            "id":0,
-            "title":"渗滤液设备名称",
-            "deviceCode":"ZL-SLY-021-212",
-            "station":"湖南",
-            "avatar":"https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg"
+        "list": [
+          {
+            "id": 0,
+            "title": "渗滤液设备名称",
+            "deviceCode": "ZL-SLY-021-212",
+            "station": "湖南",
+            "avatar": "https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg"
           },
           {
-            "id":1,
-            "title":"渗滤液设备名称",
-            "deviceCode":"ZL-SLY-021-212",
-            "station":"湖南",
-            "avatar":"https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg"
-          },{
-            "id":2,
-            "title":"渗滤液设备名称",
-            "deviceCode":"ZL-SLY-021-212",
-            "station":"湖南",
-            "avatar":"https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg"
-          },{
-            "id":3,
-            "title":"渗滤液设备名称",
-            "deviceCode":"ZL-SLY-021-212",
-            "station":"湖南",
-            "avatar":"https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg"
-          },{
-            "id":4,
-            "title":"渗滤液设备名称",
-            "deviceCode":"ZL-SLY-021-212",
-            "station":"湖南",
-            "avatar":"https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg"
-          },{
-            "id":5,
-            "title":"渗滤液设备名称",
-            "deviceCode":"ZL-SLY-021-212",
-            "station":"湖南",
-            "avatar":"https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg"
-          },{
-            "id":6,
-            "title":"渗滤液设备名称",
-            "deviceCode":"ZL-SLY-021-212",
-            "station":"湖南",
-            "avatar":"https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg"
-          }]
+            "id": 1,
+            "title": "渗滤液设备名称",
+            "deviceCode": "ZL-SLY-021-212",
+            "station": "湖南",
+            "avatar": "https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg"
+          },
+          {
+            "id": 2,
+            "title": "渗滤液设备名称",
+            "deviceCode": "ZL-SLY-021-212",
+            "station": "湖南",
+            "avatar": "https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg"
+          },
+          {
+            "id": 3,
+            "title": "渗滤液设备名称",
+            "deviceCode": "ZL-SLY-021-212",
+            "station": "湖南",
+            "avatar": "https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg"
+          },
+          {
+            "id": 4,
+            "title": "渗滤液设备名称",
+            "deviceCode": "ZL-SLY-021-212",
+            "station": "湖南",
+            "avatar": "https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg"
+          },
+          {
+            "id": 5,
+            "title": "渗滤液设备名称",
+            "deviceCode": "ZL-SLY-021-212",
+            "station": "湖南",
+            "avatar": "https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg"
+          },
+          {
+            "id": 6,
+            "title": "渗滤液设备名称",
+            "deviceCode": "ZL-SLY-021-212",
+            "station": "湖南",
+            "avatar": "https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg"
+          }
+        ]
       }
     }
   },
   {
-    "url":"/app/device/detail",
+    "url": "/app/device/detail",
     "method": "post",
     "response": {
-      "code":0,
-      "msg":"",
-      "data":{
-        "name":"齐木楠雄",
-        "station":"日本",
-        "deviceCode":"ZL-SLY-021-212",
-        "deviceType":"动画",
-        "deviceModel":"lala",
-        "supplier":"爱奇艺",
-        "factory":"东电",
-        "nature":"搞笑",
-        "manufactureDate":"2017-09-03 15:20",
-        "scrappedDate":"2017-09-03 15:20",
-        "operator":"爱奇艺"
+      "code": 0,
+      "msg": "",
+      "data": {
+        "name": "齐木楠雄",
+        "station": "日本",
+        "deviceCode": "ZL-SLY-021-212",
+        "deviceType": "动画",
+        "deviceModel": "lala",
+        "supplier": "爱奇艺",
+        "factory": "东电",
+        "nature": "搞笑",
+        "manufactureDate": "2017-09-03 15:20",
+        "scrappedDate": "2017-09-03 15:20",
+        "operator": "爱奇艺"
+      }
+    }
+  },
+  {
+    "url": "/app/user/info",
+    "method": "post",
+    "response": {
+      "code": 0,
+      "msg": "成功",
+      "data": {
+        "nickName": "超级管理员",
+        "mobile": "15919910301",
+        "email": "123456@qq.com",
+        "organizeName": "中联环境"
       }
     }
   }

@@ -31,7 +31,7 @@ const Main = {
 const Common = {
     Bridge: {screen: Modules.BridgeScreen},
     Qr: {screen: QrScan},
-}
+};
 
 const Home = {
     AuditManagement: {screen: Modules.AuditManagementScreen},
