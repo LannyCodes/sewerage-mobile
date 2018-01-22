@@ -66,24 +66,21 @@ const filterArray = [
     }
 ];
 
-//示例
-const initailArray = [{
-    keyName:'ssb',//单选
-    value:'1'
-},{
-    keyName:'aab',//多选
-    value:['1','2']
-}]
+//示例key:value
+const initail = {'ssb':'1'}
 
 export class ListFilter extends React.PureComponent {
 
     constructor(props) {
         super(props);
         let initailState = {}
-        if(this.props.initailArray != undefined){
-            this.props.initailArray.map((item,index)=>{
-                let value = typeof(item.value) === 'array' ? JSON.stringify(item.value) : item.value;
-                initailState[item.keyName] = value;
+        if(this.props.initails != undefined && typeof(this.props.initails) === 'object'){
+            // this.props.initailArray.map((item,index)=>{
+            //     let value = typeof(item.value) === 'array' ? JSON.stringify(item.value) : item.value;
+            //     initailState[item.keyName] = value;
+            // })
+            _.mapKeys(this.props.initails,(value,key)=>{
+                initailState[key] = value;
             })
         }
         this.state = {
@@ -104,7 +101,7 @@ export class ListFilter extends React.PureComponent {
         unselectedColor: PropTypes.string,
         selectedTextColor: PropTypes.string,
         unselectedTextColor: PropTypes.string,
-        initailArray: PropTypes.array,//初始化选中，规格看示例
+        initails: PropTypes.object,//初始化选中，规格看示例
     };
 
     static defaultProps = {
