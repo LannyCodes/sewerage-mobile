@@ -52,13 +52,7 @@ export class KHeader extends Component {
                 <Header
                     backgroundColor={'white'}
                     leftComponent={
-                        <Icon
-                            size={24}
-                            name={'chevron-left'}
-                            type='feather'
-                            color={'#42BB55'}
-                            onPress={this.props.onLeftPress}
-                        />
+                        this._renderLeft(header)
                     }
                     centerComponent={{ text: t, style: { fontSize: 17, color: '#666' } }}
                     rightComponent={
@@ -68,6 +62,24 @@ export class KHeader extends Component {
             )
         }
     };
+
+    _renderLeft = (header) => {
+        let left;
+        if (this.isNoLeft(header)) {
+            left = <Icon
+                size={24}
+                name={'chevron-left'}
+                type='feather'
+                color={'#42BB55'}
+                onPress={this.props.onLeftPress}
+            />
+        } else {
+            if(header.left.none){
+                left = (<View style={{width:18}}/>)
+            }
+        }
+        return left
+    }
 
     _renderRight(header) {
         let right;
@@ -91,7 +103,7 @@ export class KHeader extends Component {
                         size={18}
                         name={header.right.icon}
                         type={header.right.type}
-                        color={'#42BB55'}
+                        color={_.isNull(header.right.color) ? '#42BB55' : header.right.color}
                         onPress={header.right.onPress}
                     />
                 )
@@ -110,6 +122,10 @@ export class KHeader extends Component {
 
     isNoRight = (header) => {
         return !(_.has(header, 'right') || _.isNull(header.right))
+    }
+
+    isNoLeft = (header) => {
+        return !(_.has(header, 'left') || _.isNull(header.left));
     }
 
     isNoTitle = (header) => {
