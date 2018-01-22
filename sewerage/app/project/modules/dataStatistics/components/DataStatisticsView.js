@@ -17,6 +17,7 @@ import Echarts from '../../../components/echarts';
 import { Icon } from 'react-native-elements';
 import Orientation from 'react-native-orientation';
 import ChartView from './ChartView';
+import { PageControl } from '../../../components';
 const screenWidth = Dimensions.get('window').width;
 const screenHeight = Dimensions.get('window').height;
 const pixel = PixelRatio.get();
@@ -30,8 +31,8 @@ export default class DataStatisticsView extends Component {
         }
     }
 
-    componentDidMount(){
-        
+    componentDidMount() {
+
     }
 
     static propTypes = {
@@ -151,13 +152,22 @@ export default class DataStatisticsView extends Component {
     }
 
     _turnOrientation = () => {
-        Orientation.getOrientation((err,orientation)=>{
-            if(orientation === 'PORTRAIT'){
+        Orientation.getOrientation((err, orientation) => {
+            if (orientation === 'PORTRAIT') {
                 Orientation.lockToLandscapeRight();
-            }else{
+            } else {
                 Orientation.lockToPortrait();
             }
         })
+    }
+    
+    _onAnimationEnd = (e) => {
+        var offSetX = e.nativeEvent.contentOffset.x;
+        var currentPage = offSetX / screenWidth;
+        if(this.props.data.length>6){
+            this._pageControl.setIndex(currentPage);
+        }
+
     }
 
     // actions
@@ -222,30 +232,45 @@ export default class DataStatisticsView extends Component {
             index += 6;
         }
         return (
-            <ScrollView
-                ref={scrollView => this._headerScrollView = scrollView}
-                bounces={false}
-                pagingEnabled={true}
-                horizontal={true}
-                showsHorizontalScrollIndicator={false}
-                style={styles.headerScrollView}>
+            <View>
+                <ScrollView
+                    ref={scrollView => this._headerScrollView = scrollView}
+                    bounces={false}
+                    pagingEnabled={true}
+                    horizontal={true}
+                    showsHorizontalScrollIndicator={false}
+                    style={styles.headerScrollView}
+                    onMomentumScrollEnd={(e)=>{
+                        this._onAnimationEnd(e)
+                    }}>
+                    {
+                        pageArray.map((item, index) => {
+                            return this._renderHeaderPage(item, index)
+                        })
+                    }
+                </ScrollView>
                 {
-                    pageArray.map((item, index) => {
-                        return this._renderHeaderPage(item, index)
-                    })
+                    this.props.data.length > 6 ? <PageControl
+                    style={{
+                        bottom: 8,
+                        position: 'absolute',
+                    }}
+                    color='#e7e7e7'
+                    selectedColor='#42bb55'
+                    ref={(pageControl) => { this._pageControl = pageControl }} /> : <View/>
                 }
-            </ScrollView>
+            </View>
         )
     }
 
     _renderChartView() {
         return (
-            <View style={{marginTop: 9,paddingTop: 20,backgroundColor:'#ffffff'}}>
-                <ChartView 
-                    height={screenHeight-332}
+            <View style={{ marginTop: 9, paddingTop: 20, backgroundColor: '#ffffff' }}>
+                <ChartView
+                    height={screenHeight - 332}
                     width={screenWidth}
-                    expand={this.props.expandFunc.bind(this,this._echartOption({top:20,right:25,bottom:75}))}
-                    echartOption={this._echartOption({top:20,right:20,bottom:75})}/>
+                    expand={this.props.expandFunc.bind(this, this._echartOption({ top: 20, right: 25, bottom: 75 }))}
+                    echartOption={this._echartOption({ top: 20, right: 20, bottom: 75 })} />
             </View>
         )
     }
@@ -269,7 +294,7 @@ export default class DataStatisticsView extends Component {
                     this._renderChartView()
                 }
             </View>
-            
+
         )
     }
 }
