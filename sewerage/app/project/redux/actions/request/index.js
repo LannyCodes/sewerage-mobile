@@ -29,29 +29,28 @@ const get = (context, url, body, dispatch) => {
 }
 
 const post = (context, url, body, dispatch) => {
-    if (!body) {
-        body = {};
-    }
     Object.assign(header, {
         Authorization: _USERTOKEN_
     });
-    let formData = new FormData();
-    for (let prop in body) {
-        if (Array.isArray(body[prop])) {
-            for (let value of body[prop]) {
-                formData.append(prop, value);
+    let formData = null;
+    if (body) {
+        for (let prop in body) {
+            if (Array.isArray(body[prop])) {
+                for (let value of body[prop]) {
+                    formData.append(prop, value);
+                }
+            } else {
+                formData.append(prop, body[prop]);
             }
-        } else {
-            formData.append(prop, body[prop]);
         }
     }
-    api(config.WebServerUrl).post(url, formData)
+    api(config.WebServerUrl).post(url, formData && {})
         .then((response) => {
                 exec(url, response, dispatch)
             }
-        ).catch(err=>{
-            console.log(err);
-        });
+        ).catch(err => {
+        console.log(err);
+    });
 };
 
 const exec = (url, response, dispatch) => {

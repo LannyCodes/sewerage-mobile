@@ -85,7 +85,7 @@ const Device = {
 const Navigator = StackNavigator(
     {
         // ...Splash,
-        ...Common,
+        // ...Common,
         ...Main,
         ...Login,
         ...Home,
