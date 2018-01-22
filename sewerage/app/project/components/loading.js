@@ -13,6 +13,9 @@ export const Loading = {
             return true;
         }
     },
+    isLoading(isLoad){
+        isLoad ? this.showCustom() : this.hideCustom();
+    },
     showCustom() {
         Loading.customKey = Toast.show({
             text: '正在加载中',

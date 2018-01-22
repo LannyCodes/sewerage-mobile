@@ -1,7 +1,9 @@
 import 'core-js'
 
 const REQUEST = {
-    REQUEST_STATUS: Symbol()
+    REQUEST_STATUS: Symbol(),
+    FETCH_START:'FETCH_START',
+    REQUEST_ERROR:'REQUEST_ERROR',
 };
 
 const USER = {

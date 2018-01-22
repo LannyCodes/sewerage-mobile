@@ -2,15 +2,22 @@ import React from 'react';
 import {
     View,
     Text,
-    StyleSheet
-    // Button,
+    StyleSheet,
+    FlatList,
+    Image,
+    TouchableOpacity,
 } from 'react-native';
-import {WrapScreen} from "../wrap";
-import Camera from 'react-native-camera';
+import { WrapScreen } from "../wrap";
 
 class MessageScreen extends WrapScreen {
     constructor(props) {
         super(props);
+        this.header = {
+            title: '消息',
+            left: {
+                none: true,
+            }
+        }
     }
 
     _onBarCodeRead = (e) => {
@@ -18,16 +25,44 @@ class MessageScreen extends WrapScreen {
             "Type: " + e.type + "\nData: " + e.data)
     }
 
+    _keyExtractor = (item, index) => index
+
+    _itemClick=(item,index) => {
+        console.log('itemClick')
+    }
+
+    _renderItem = (item,index) => {
+        return (
+            <TouchableOpacity 
+                style={styles.itemContainer}
+                activeOpacity={1}
+                onPress={this._itemClick}>
+                <View style={{ borderWidth: 1, borderColor: 'transparent', borderRadius: 8, backgroundColor: "#42BB55", width: 40, height: 40 }} />
+                <View style={styles.itemMsg}>
+                    <View style={styles.itemTitle}>
+                        <Text style={styles.itemTitleText}>巡检任务通知</Text>
+                        <Text style={[styles.itemTitleText, { fontSize: 12 }]}>2017-09-30</Text>
+                    </View>
+                    <Text 
+                        style={styles.itemContent}
+                        numberOfLines={1}>
+                        固废处理事业部工作任务管理系统正式启用
+                    </Text>
+                </View>
+            </TouchableOpacity>
+        )
+    }
+
     _render() {
         return (
-            <View style={styles.container}>
-                <Camera
-                    style={styles.camera}
-                    ref={(cam) => {
-                        this.camera = cam;
-                    }}
-                    onBarCodeRead={this._onBarCodeRead.bind(this)}/>
-            </View>
+            <FlatList
+                data={['q', 'w', 'c']}
+                keyExtractor={this._keyExtractor}
+                renderItem={this._renderItem}
+                ItemSeparatorComponent={()=>{
+                    return <View style={{backgroundColor:'#e5e5e5',height:0.5,flex:1,marginLeft:20}}/>
+                }}
+            />
         )
     }
 }
@@ -38,8 +73,29 @@ const styles = StyleSheet.create({
         flex: 1,
         flexDirection: 'row',
     },
-    camera: {
-        flex: 1,
-        backgroundColor: 'red',
+    itemContainer: {
+        flexDirection: 'row',
+        paddingLeft: 15,
+        paddingRight:15,
+        paddingTop: 17,
+        paddingBottom: 16,
+        backgroundColor:'#ffffff',
+    },
+    itemMsg: {
+        flex:1,
+        marginLeft:10,
+    },
+    itemTitle: {
+        flexDirection:'row',
+        justifyContent: 'space-between',
+        marginBottom:9,
+    },
+    itemTitleText: {
+        color: '#666666',
+        fontSize: 14,
+    },
+    itemContent: {
+        color: '#333333',
+        fontSize: 14,
     }
 })

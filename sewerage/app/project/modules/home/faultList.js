@@ -15,7 +15,7 @@ import * as Actions from "../../redux/actions";
 import { connect } from "react-redux";
 import Urls from "../../../config/api/urls";
 import PropTypes from 'prop-types';
-import { ListFilter, TagLabel } from '../../components';
+import { ListFilter, TagLabel, Loading } from '../../components';
 
 // import {FaultDetailScreen, WorkOrderDetailScreen} from '../dataStatistics';
 
@@ -72,11 +72,19 @@ class FaultListScreen extends WrapScreen {
 
     constructor(props) {
         super(props);
+        this.state = {
+            isFilterShow: false,
+            isRefreshing: false,
+            workderFilter: {},
+            faultFilter: {},
+            currentTab: 0,
+        }
         this.header = {
             title: "故障处理",
             right: {
                 icon: 'filter',
                 type: 'feather',
+                color: this.state.isFilterShow ? '#42BD56' : '#666666',
                 onPress: () => {
                     this.setState({
                         isFilterShow: !this.state.isFilterShow
@@ -84,19 +92,11 @@ class FaultListScreen extends WrapScreen {
                 }
             }
         }
-        this.state = {
-            isFilterShow: false,
-            isRefreshing: false,
-        }
-    }
-
-    static defaultProps = {
-
     }
 
     componentDidMount() {
-        this.store.dispatch(Actions.request(this, Urls.faults.faultList,{asdf:''},'get'));
-        this.store.dispatch(Actions.request(this, Urls.faults.workOrder,{asf:''},'get'));
+        this.store.dispatch(Actions.request(this, Urls.faults.faultList, { asdf: '' }, 'get'));
+        this.store.dispatch(Actions.request(this, Urls.faults.workOrder, { asf: '' }, 'get'));
     }
 
     _keyExtractor = (item, index) => item.id;
@@ -118,11 +118,22 @@ class FaultListScreen extends WrapScreen {
     }
 
     _filterConfirm = (data) => {
+        let filter = {};
+        this.state.currentTab ? filter.faultFilter = data : filter.workderFilter = data;
+        this.setState({
+            isFilterShow: false,
+            ...filter,
+        })
+    }
 
+    _filterInitails = () => {
+        return this.state.currentTab === 0 ? this.state.workderFilter : this.state.faultFilter
     }
 
     _tabChanged = ({ i }) => {
-
+        this.setState({
+            currentTab: i
+        })
     }
 
     _renderList(type, tabLabel, data) {
@@ -132,8 +143,8 @@ class FaultListScreen extends WrapScreen {
                     <RefreshControl
                         refreshing={this.state.isRefreshing}
                         onRefresh={() => this._onRefresh()}
-                        tintColor="#3ca8fe"
-                        colors={['#3ca8fe']}
+                        tintColor="#42BD56"
+                        colors={['#42BD56']}
                         progressBackgroundColor="#f1f1f1"
                     />
                 }
@@ -169,6 +180,7 @@ class FaultListScreen extends WrapScreen {
     }
 
     _render() {
+        // if(!Loading.checkData(this.props.faultsList)) return;
         return (
             <View style={styles.container}>
                 <ScrollableTabView
@@ -201,11 +213,13 @@ class FaultListScreen extends WrapScreen {
                             isFilterShow: false,
                         })
                     }} /> : <View />}
+                {/* 筛选组件 */}
                 {this.state.isFilterShow === true ? <ListFilter
                     containerStyles={{ top: 50 }}
                     filterArray={filterArray}
                     reset={this._filterReset}
                     confirm={this._filterConfirm}
+                    initails={this._filterInitails()}
                     maskerClick={() => {
                         this.setState({
                             isFilterShow: false,
@@ -298,13 +312,16 @@ const filterArray = [
         // multipleChoice: true,
         data: [{
             name: '待处理',
+            value: '0',
+        }, {
+            name: '正在处理',
             value: '1',
         }, {
-            name: '已完成',
+            name: '现场处理',
             value: '2',
         }, {
-            name: '废弃',
-            value: '3',
+            name: '处理完成',
+            value: '3'
         }]
     }
 ]

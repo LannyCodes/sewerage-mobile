@@ -4,12 +4,13 @@ import {
     Text,
     FlatList,
     TextInput,
-    TouchableOpacity
+    TouchableOpacity,
+    RefreshControl
 } from 'react-native';
 import { SearchBar, Divider, Icon, Avatar } from 'react-native-elements';
 import * as Utils from "../../../core/utils";
 import { WrapScreen } from "../wrap";
-import { ListFilter } from '../../components';
+import { ListFilter, Loading, SWRefreshControl,SWFlatList } from '../../components';
 import * as Actions from "../../redux/actions";
 import { connect } from "react-redux";
 import Urls from "../../../config/api/urls";
@@ -88,6 +89,14 @@ class DeviceQueryScreen extends WrapScreen {
         console.log(event.nativeEvent.text);
     }
 
+    _onRefresh=()=>{
+        console.log('refresh');
+    }
+
+    _pullUp=()=>{
+        console.log('hahahah')
+    }
+
     //渲染单行
     _renderItem = ({item,index}) => {
         return (
@@ -115,6 +124,12 @@ class DeviceQueryScreen extends WrapScreen {
 
     _render() {
         let self = this
+        // if(!Loading.isLoading(this.props.isFetching))return
+        if(this.props.isFetching){
+            console.log(this.props.deviceList)
+        }else{
+            console.log(this.props.deviceList)
+        }
         return (
             <View style={styles.container}>
                 <View style={styles.header}>
@@ -164,10 +179,18 @@ class DeviceQueryScreen extends WrapScreen {
                     </View>
                 </View>
                 <Divider style={{ backgroundColor: '#e0e0e0' }} />
-                <FlatList
+                <SWFlatList
+                    // refreshControl={
+                    //     <SWRefreshControl 
+                    //         refreshing={this.props.isFetching}
+                    //         onRefresh={this._onRefresh}/>
+                    // }
+                    refreshing={this.props.isFetching}
+                    onRefresh={this._onRefresh}
                     data={this.props.deviceList}
                     keyExtractor={this._keyExtractor}
                     renderItem={this._renderItem}
+                    pullUp={this._pullUp}
                 />
                 {this.state.isFilterShow === true ? <ListFilter
                     containerStyles={{ top: 121 }}
@@ -185,7 +208,8 @@ class DeviceQueryScreen extends WrapScreen {
 
 function mapStateToProps(state){
     return {
-        deviceList:state.device.getDeviceList,
+        deviceList:state.device.getDeviceList.deviceList,
+        isFetching:state.device.getDeviceList.isFetching,
     }
 }
 

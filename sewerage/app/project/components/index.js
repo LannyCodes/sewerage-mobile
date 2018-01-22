@@ -12,3 +12,4 @@ export * from './checkBox';
 export * from './submitBtn';
 export * from './dialog';
 export * from './PicturesPreview';//类微信图片预览，滑动，缩放
+export * from './SWFlatList'; //封装了上下拉刷新的FlatList

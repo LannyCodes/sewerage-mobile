@@ -75,10 +75,6 @@ export class ListFilter extends React.PureComponent {
         super(props);
         let initailState = {}
         if(this.props.initails != undefined && typeof(this.props.initails) === 'object'){
-            // this.props.initailArray.map((item,index)=>{
-            //     let value = typeof(item.value) === 'array' ? JSON.stringify(item.value) : item.value;
-            //     initailState[item.keyName] = value;
-            // })
             _.mapKeys(this.props.initails,(value,key)=>{
                 initailState[key] = value;
             })

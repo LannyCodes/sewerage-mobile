@@ -1,7 +1,7 @@
 import ActionType from "../../actionType";
-import {config, USER_KEY} from "../../../../config/setting";
+import { config, USER_KEY } from "../../../../config/setting";
 import api from "../../../../config/api/api";
-import {SUCCESS_CODE, TOKEN_ERROR_CODE, Status, header} from "../../../../config/api/api.config";
+import { SUCCESS_CODE, TOKEN_ERROR_CODE, Status, header } from "../../../../config/api/api.config";
 import Toast from "teaset/components/Toast/Toast";
 import * as Utils from "../../../../core/utils";
 import _ from 'lodash'
@@ -23,8 +23,8 @@ const get = (context, url, body, dispatch) => {
     });
     api(config.WebServerUrl).get(url, body)
         .then((response) => {
-                exec(url, response, dispatch)
-            }
+            exec(url, response, dispatch)
+        }
         );
 }
 
@@ -44,18 +44,21 @@ const post = (context, url, body, dispatch) => {
             }
         }
     }
+    dispatch({
+        type: url + ActionType.FETCH_START,
+    })
     api(config.WebServerUrl).post(url, formData && {})
         .then((response) => {
-                exec(url, response, dispatch)
-            }
+            exec(url, response, dispatch)
+        }
         ).catch(err => {
-        console.log(err);
-    });
+            console.log(err);
+        });
 };
 
 const exec = (url, response, dispatch) => {
     console.log(response)
-    const {status} = response;
+    const { status } = response;
     if (response.ok) {
         if (response.status && status === 200) {
             if (parseInt(response.data.code) === SUCCESS_CODE) {
@@ -70,14 +73,20 @@ const exec = (url, response, dispatch) => {
                     type: ActionType.REQUEST_STATUS,
                     data: Status.TOKEN_FAIL
                 });
+                dispatch({
+                    type: url + ActionType.REQUEST_ERROR
+                })
                 Toast.message('token失效，请重新登录。')
                 Utils.exitApp(context)
             } else {
                 // 请求有问题
                 Toast.message('请求失败,请稍后重试。')
+                // dispatch({
+                //     type: ActionType.REQUEST_STATUS,
+                //     data: Status.FAIL
+                // })
                 dispatch({
-                    type: ActionType.REQUEST_STATUS,
-                    data: Status.FAIL
+                    type: url + ActionType.REQUEST_ERROR
                 })
             }
         }
