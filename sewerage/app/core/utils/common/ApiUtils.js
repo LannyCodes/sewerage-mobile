@@ -30,23 +30,23 @@ const get = (context, url, body, resolve, reject) => {
 };
 
 const post = (context, url, body, resolve, reject) => {
-    if (!body) {
-        body = {};
-    }
+    let formData = null;
     Object.assign(header, {
         Authorization: _USERTOKEN_
     });
-    let formData = new FormData();
-    for (let prop in body) {
-        if (Array.isArray(body[prop])) {
-            for (let value of body[prop]) {
-                formData.append(prop, value);
+    if (body) {
+        formData = new FormData();
+        for (let prop in body) {
+            if (Array.isArray(body[prop])) {
+                for (let value of body[prop]) {
+                    formData.append(prop, value);
+                }
+            } else {
+                formData.append(prop, body[prop]);
             }
-        } else {
-            formData.append(prop, body[prop]);
         }
     }
-    api(config.WebServerUrl).post(url, formData)
+    api(config.WebServerUrl).post(url, formData && {})
         .then((response) => {
                 exec(response, resolve);
             }

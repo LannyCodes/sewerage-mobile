@@ -29,7 +29,7 @@ const USER_KEY = {
 
 if (__DEV__) {
     Object.assign(config, {
-        WebServerUrl: "http://localhost:10086",
+        WebServerUrl: "http://192.168.39.29:10086",
         // WebServerUrl: "http://192.168.31.100:8089",
     })
 } else {

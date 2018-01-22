@@ -41,6 +41,61 @@ class WorkScreen extends WrapScreen {
         })
     };
 
+    _renderDot = (index, children) => {
+        return (
+            <View style={{
+                justifyContent: 'center',
+                flexDirection: 'row',
+                alignItems: 'center',
+                flex: 1
+            }}>
+                {index === 1 ? children.reverse() : children}
+            </View>
+        )
+    }
+
+    _renderCard = (parameters) => (
+        <View style={styles.cardContainer}>
+            <Carousel
+                carousel={false}
+                style={styles.swipeContent}
+            >
+                {
+                    parameters.map((item, i) => (
+                            <View style={styles.paramsContainerStyle}>
+                                <View style={styles.paramsStyle} key={i}>
+                                    {item.map((sim, j) => (
+                                        <View style={styles.paramsItem} key={j}>
+                                            <PercentageCircle radius={33} percent={parseInt(sim.size)}
+                                                              color={circleColor[i][j]}
+                                                              bgcolor={'#EBEBEB'}
+                                                              borderWidth={7}>
+                                                <Text style={styles.paramsSizeText}>{sim.size}</Text>
+                                                {sim.symbol !== '' &&
+                                                <Text style={styles.paramsSymbolText}>{sim.symbol}</Text>}
+                                            </PercentageCircle>
+                                            <Text style={{
+                                                color: '#333',
+                                                fontSize: 13,
+                                                marginTop: 10
+                                            }}>{sim.type}</Text>
+                                        </View>
+                                    ))}
+                                </View>
+                                {this._renderDot(i, [
+                                    <View style={[styles.dot, {
+                                        backgroundColor: '#42BB55'
+                                    }]}/>,
+                                    <View style={styles.dot}/>
+                                ])}
+                            </View>
+                        )
+                    )
+                }
+            </Carousel>
+        </View>
+    );
+
     _render() {
         const modules = _.chunk(homeModules, 3); // 将HomeModule 每三个分成一个数组
         const parameters = _.chunk(this.state.parameters, 4); // 将HomeModule 每三个分成一个数组
@@ -67,57 +122,13 @@ class WorkScreen extends WrapScreen {
                             <Text style={{color: 'white', fontSize: 22}}>正常</Text>
                             <Text style={{color: 'white', fontSize: 12, marginTop: 10}}>运行状态</Text>
                         </View>
-                        <View style={styles.cardContainer}>
-                            <View style={[styles.center, {flexDirection: 'column'}]}>
-                                <Image source={Assets.Home.circle} style={styles.circle}/>
-                                <View style={styles.safeContent}>
-                                    <Image source={Assets.Home.circleSafe}/>
-                                    <Text style={styles.safeText}>水质监测</Text>
-                                </View>
+                        {this._renderCard(parameters)}
+                        <View style={styles.safeContainer}>
+                            <Image source={Assets.Home.circle} style={styles.circle}/>
+                            <View style={styles.safeContent}>
+                                <Image source={Assets.Home.circleSafe}/>
+                                <Text style={styles.safeText}>水质监测</Text>
                             </View>
-                            <Carousel
-                                carousel={false}
-                                style={styles.swipeContent}
-                                control={
-                                    <Carousel.Control
-                                        style={{alignItems: 'center'}}
-                                        dot={
-                                            <View style={styles.dot}/>
-                                        }
-                                        activeDot={
-                                            <View style={[styles.dot, {
-                                                backgroundColor: '#42BB55'
-                                            }]}/>
-                                        }
-                                    />
-                                }
-                            >
-                                {
-                                    parameters.map((item, i) => (
-                                            <View style={styles.paramsStyle} key={i}>
-                                                {item.map((sim, j) => (
-                                                    <View style={styles.paramsItem} key={j}>
-                                                        <PercentageCircle radius={35} percent={parseInt(sim.size)}
-                                                                          color={circleColor[i][j]}
-                                                                          bgcolor={'#EBEBEB'}
-                                                                          borderWidth={7}
-                                                        >
-                                                            <Text style={styles.paramsSizeText}>{sim.size}</Text>
-                                                            {sim.symbol !== '' &&
-                                                            <Text style={styles.paramsSymbolText}>{sim.symbol}</Text>}
-                                                        </PercentageCircle>
-                                                        <Text style={{
-                                                            color: '#333',
-                                                            fontSize: 13,
-                                                            marginTop: 10
-                                                        }}>{sim.type}</Text>
-                                                    </View>
-                                                ))}
-                                            </View>
-                                        )
-                                    )
-                                }
-                            </Carousel>
                         </View>
                     </View>
                     <View style={styles.configContainer}>
@@ -173,7 +184,12 @@ const styles = Utils.PLStyle({
         height: Utils.sw,
     },
     headContainer: {
-        flex: 1.6,
+        android: {
+            flex: 1.8,
+        },
+        ios: {
+            flex: 1.6
+        },
         marginTop: -Utils.sw,
         backgroundColor: 'transparent'
     },
@@ -200,14 +216,29 @@ const styles = Utils.PLStyle({
     cardContainer: {
         marginLeft: 15,
         marginRight: 15,
-        height: '50%',
         backgroundColor: 'white',
-        marginTop: 50,
+        android: {
+            marginTop: 44,
+        },
+        ios: {
+            marginTop: 50,
+        },
+        height: Utils.sh * 0.26,
         borderColor: '#DCE8C8',
         borderWidth: 1,
         borderRadius: 5,
         flexDirection: 'column',
         padding: 2
+    },
+    safeContainer: {
+        position: 'absolute',
+        left: (Utils.sw - 80) / 2,
+        android: {
+            marginTop: 200
+        },
+        ios: {
+            marginTop: 190
+        }
     },
     center: {
         flexDirection: 'row',
@@ -219,7 +250,6 @@ const styles = Utils.PLStyle({
         height: 80,
         marginTop: -40,
         borderRadius: 40,
-        backgroundColor: 'white',
     },
     safeContent: {
         alignItems: 'center',
@@ -233,7 +263,6 @@ const styles = Utils.PLStyle({
     },
     swipeContent: {
         flex: 1,
-        marginTop: 10
     },
     dot: {
         backgroundColor: '#D8D8D8',
@@ -242,14 +271,18 @@ const styles = Utils.PLStyle({
         marginLeft: 2,
         marginRight: 2
     },
+    paramsContainerStyle: {
+        flex: 1
+    },
     paramsStyle: {
-        flex: 1,
-        flexDirection: 'row'
+        flexDirection: 'row',
+        marginTop: 40
     },
     paramsItem: {
         flex: 1,
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
+        marginTop: 6
     },
     paramsSizeText: {
         fontStyle: 'italic',
