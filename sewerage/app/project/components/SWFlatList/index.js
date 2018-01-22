@@ -26,7 +26,7 @@ export class SWFlatList extends Component {
                         colors={['#42BD56']}
                         progressBackgroundColor="#f1f1f1"
                     />
-                }
+                }    
                 onRefresh={null}
                 onEndReached={this.props.pullUp}
                 onEndReachedThreshold={0.1}

@@ -8,6 +8,7 @@ import {
     TouchableOpacity,
 } from 'react-native';
 import { WrapScreen } from "../wrap";
+import {SWFlatList} from '../../components';
 
 class MessageScreen extends WrapScreen {
     constructor(props) {
@@ -55,10 +56,11 @@ class MessageScreen extends WrapScreen {
 
     _render() {
         return (
-            <FlatList
+            <SWFlatList
                 data={['q', 'w', 'c']}
                 keyExtractor={this._keyExtractor}
                 renderItem={this._renderItem}
+                ListHeaderComponent={<View style={{height:10,backgroundColor:'#f1f1f1'}}/>}
                 ItemSeparatorComponent={()=>{
                     return <View style={{backgroundColor:'#e5e5e5',height:0.5,flex:1,marginLeft:20}}/>
                 }}

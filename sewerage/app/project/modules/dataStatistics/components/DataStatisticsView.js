@@ -41,7 +41,9 @@ export default class DataStatisticsView extends Component {
 
     _echartOption = (grid) => {
         let axisColor = '#E9E9E9'
+        let colors = ['#1AAD19'];
         return {
+            color:colors,
             tooltip: {
                 //设置悬浮框
                 triggerOn: 'none',
@@ -135,7 +137,7 @@ export default class DataStatisticsView extends Component {
                     type: 'line',
                     smooth: true,
                     lineStyle: {
-                        color: '#1AAD19',
+                        color: colors[0],
                         width: 2,
                     },
                     data: [3.9, 5.9, 11.1, 18.7, 48.3, 69.2, 231.6, 46.6, 55.4, 18.4, 10.3, 0.7]
