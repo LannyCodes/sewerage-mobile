@@ -91,11 +91,11 @@ class DeviceQueryScreen extends WrapScreen {
     }
 
     _onRefresh=()=>{
-        console.log('refresh');
+        
     }
 
     _pullUp=()=>{
-        console.log('hahahah')
+        
     }
 
     //渲染单行
@@ -181,11 +181,6 @@ class DeviceQueryScreen extends WrapScreen {
                 </View>
                 <Divider style={{ backgroundColor: '#e0e0e0' }} />
                 <SWFlatList
-                    // refreshControl={
-                    //     <SWRefreshControl 
-                    //         refreshing={this.props.isFetching}
-                    //         onRefresh={this._onRefresh}/>
-                    // }
                     refreshing={this.props.isFetching}
                     onRefresh={this._onRefresh}
                     data={this.props.deviceList}

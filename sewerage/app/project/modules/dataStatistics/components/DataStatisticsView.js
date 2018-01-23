@@ -6,6 +6,7 @@ import React, { Component } from 'react'
 import {
     View,
     Text,
+    Image,
     ScrollView,
     Dimensions,
     PixelRatio,
@@ -18,6 +19,8 @@ import { Icon } from 'react-native-elements';
 import Orientation from 'react-native-orientation';
 import ChartView from './ChartView';
 import { PageControl } from '../../../components';
+import * as Assets from '../../../assets';
+
 const screenWidth = Dimensions.get('window').width;
 const screenHeight = Dimensions.get('window').height;
 const pixel = PixelRatio.get();
@@ -197,9 +200,9 @@ export default class DataStatisticsView extends Component {
                 onPress={this._cellClicked.bind(this, item, index, pageIndex)}
                 style={[styles.headerCell, { height: 83, width: this.headerCellWidth, flexDirection: 'row' }]}>
                 <View>
-                    <View style={{ alignItems: 'center' }}>
+                    <View style={{ alignItems: 'center',flexDirection:'row' }}>
                         <Text style={[styles.headerNumber, { color: this.state.cellIndex === totalIndex ? '#42BB55' : '#333333' }]}>{item.number}</Text>
-                        <View></View>
+                        <Image source={Assets.Data.alert} resizeMode="cover"/>
                     </View>
                     <Text style={[styles.headerName, { color: this.state.cellIndex === totalIndex ? '#42BB55' : '#b9b9b9' }]}>{item.name}</Text>
                 </View>

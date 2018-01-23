@@ -2,9 +2,8 @@ import { combineReducers } from 'redux';
 import Urls from "../../../../config/api/urls";
 import ActionType from '../../actionType';
 
-
+let deviceList = [];
 const getDeviceList = (state = [], action) => {
-    let deviceList = [];
     let isFetching = false;
     let url = Urls.device.deviceList;
     switch (action.type) {
@@ -20,16 +19,11 @@ const getDeviceList = (state = [], action) => {
             isFetching = false;
             break;
     }
-    // if (action.type === Urls.device.deviceList) {
-    //     deviceList = action.data.list;
-    // }
     return {
         deviceList: deviceList,
         isFetching: isFetching,
     };
 }
-
-
 
 let deviceDetail = {}
 const getDeviceDetail = (state = [], action) => {

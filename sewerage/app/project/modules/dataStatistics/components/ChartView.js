@@ -6,12 +6,15 @@ import React, { Component } from 'react'
 import {
     View,
     Text,
+    Image,
     Dimensions,
     TouchableOpacity,
 } from "react-native"
 import * as Utils from '../../../../core/utils';
 import Echarts from '../../../components/echarts';
 import { Icon } from 'react-native-elements';
+import * as Assets from '../../../assets';
+
 const screenHeight = Dimensions.get('window').height;
 const screenWidth = Dimensions.get('window').width;
 
@@ -23,6 +26,10 @@ class ChartView extends Component {
     reload=()=>{
         this._echarts.reload();
     }
+
+    static defaultProps = {
+        vertical:true
+    };
 
     render() {
         return (
@@ -47,10 +54,10 @@ class ChartView extends Component {
                         />
                     </View>
                     <TouchableOpacity
-                        style={{ position: 'absolute', right: 15 }}
+                        style={{ position: 'absolute', right: 20 }}
                         activeOpacity={1}
                         onPress={this.props.expand}>
-                        <Text>扩大</Text>
+                        <Image source={this.props.vertical?Assets.Data.expand:Assets.Data.shrink} resizeMode='cover' style={{width:13,height:13}}/>
                     </TouchableOpacity>
                 </View>
                 <Echarts

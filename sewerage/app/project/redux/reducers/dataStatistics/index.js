@@ -4,8 +4,6 @@ import Urls from "../../../../config/api/urls";
 let inspectionStatistics = [];
 const getInspectionDatas = (state = [], action) => {
     if (action.type === Urls.statistics.inspectionStatistics) {
-        console.log('action');
-        console.log(action);
         if(action.data){
             inspectionStatistics = action.data;
             return inspectionStatistics

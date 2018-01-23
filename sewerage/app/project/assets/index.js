@@ -36,9 +36,21 @@ const Me = {
     company:require('./images/icon_me_company.png'),
 }
 
+//数据统计
+const Data = {
+    expand: require('./images/icon_expand.png'),
+    shrink: require('./images/icon_shrink.png'),
+    alert: require('./images/icon_alert.png')
+}
+
+const Components = {
+    checked: require('./images/icon_filter_checked.png'),
+}
 
 export {
     Home,
     Login,
-    Me
+    Me,
+    Data,
+    Components,
 }

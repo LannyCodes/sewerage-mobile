@@ -6,12 +6,14 @@ import React, { Component } from 'react'
 import {
     View,
     Text,
+    Image,
     TouchableOpacity,
     Dimensions,
 } from "react-native"
 import { Button } from 'react-native-elements';
 import PropTypes from 'prop-types';
 import * as Util from '../../core/utils';
+import * as Assets from '../assets';
 import _ from 'lodash';
 const screenWidth = Dimensions.get('window').width;
 
@@ -197,6 +199,9 @@ export class ListFilter extends React.PureComponent {
                                     style={[styles.item, { width: this._containerWidth / 3, backgroundColor: isSelected ? this.props.selectedColor : this.props.unselectedColor }]}
                                     onPress={this._itemClick.bind(this, item1.value, item.keyName, index)}
                                     activeOpacity={1}>
+                                    {
+                                        isSelected ? <Image source={Assets.Components.checked} resizeMethod="cover"/> : <View/>
+                                    }
                                     <Text style={[styles.itemText, { color: isSelected ? this.props.selectedTextColor : this.props.unselectedTextColor }]}
                                         activeOpacity={1}>{item1.name}</Text>
                                 </TouchableOpacity>
@@ -269,6 +274,7 @@ const styles = Util.PLStyle({
         backgroundColor: '#fafafa',
     },
     item: {
+        flexDirection:'row',
         backgroundColor: '#ffffff',
         height: 47,
         justifyContent: 'center',
@@ -280,6 +286,7 @@ const styles = Util.PLStyle({
         color: '#404040',
         fontSize: 14,
         flexDirection: 'row',
+        marginLeft:6
     },
     buttonStyle: {
         flex: 1,

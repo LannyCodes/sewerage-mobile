@@ -15,7 +15,9 @@ import * as Actions from "../../redux/actions";
 import { connect } from "react-redux";
 import Urls from "../../../config/api/urls";
 import PropTypes from 'prop-types';
-import { ListFilter, TagLabel, Loading } from '../../components';
+import { ListFilter, TagLabel, Loading, SWFlatList } from '../../components';
+import { StatusHelper } from '../faults/utils';
+import _ from 'lodash'
 
 // import {FaultDetailScreen, WorkOrderDetailScreen} from '../dataStatistics';
 
@@ -36,6 +38,7 @@ class ListCell extends Component {
     }
 
     render() {
+        let { perform, text } = StatusHelper.getRankPerform(this.data.rank);
         return (
             <TouchableOpacity
                 style={styles.cellContainer}
@@ -44,7 +47,9 @@ class ListCell extends Component {
                 <View style={styles.cellHeader}>
                     <Text style={styles.cellTitle}>{this.data.title}</Text>
                     <View style={styles.cellTagContainer}>
-                        <TagLabel>II级</TagLabel>
+                        {
+                            _.isUndefined(this.data.rank) ? <View /> : <TagLabel backgroundColor={perform.backgroundColor} fontColor={perform.color}>{text}</TagLabel>
+                        }
                         <TagLabel containerStyle={{ marginLeft: 10 }}>处理中</TagLabel>
                     </View>
                 </View>
@@ -82,8 +87,8 @@ class FaultListScreen extends WrapScreen {
     }
 
     componentDidMount() {
-        this.store.dispatch(Actions.request(this, Urls.faults.faultList, { asdf: '' }, 'get'));
-        this.store.dispatch(Actions.request(this, Urls.faults.workOrder, { asf: '' }, 'get'));
+        this._refreshFaultList();
+        this._refreshWorkOrders();
     }
 
     _header = () => {
@@ -92,13 +97,13 @@ class FaultListScreen extends WrapScreen {
             right: {
                 icon: 'filter',
                 type: 'feather',
-                color: this.state.isFilterShow ? '#42BD56' : '#666666',
+                color: this.state.isFilterShow || (this.state.currentTab === 0 && Object.keys(this.state.workderFilter).length > 0) || (this.state.currentTab === 1 && Object.keys(this.state.faultFilter).length > 0) ? '#42BD56' : '#666666',
                 onPress: this._rightHeaderClick,
             }
         }
     }
 
-    _keyExtractor = (item, index) => item.id;
+    _keyExtractor = (item, index) => item.index;
 
     _cellClicked = (type) => {
         if (type === 'faultsList') {
@@ -114,8 +119,41 @@ class FaultListScreen extends WrapScreen {
         })
     }
 
-    _onRefresh = () => {
+    //清单
+    _refreshFaultList = () => {
+        let params = {
+            pageIndex: 1,
+            pageSize: 15,
+        }
+        this._requestFaultsList(params);
+    }
 
+    _requestFaultsList = (params) => {
+        this.store.dispatch(Actions.get(this, Urls.faults.faultList, params));
+    }
+
+    //清单列表上拉刷新
+    _faultsListPullUp = () => {
+        // this._requestFaultsList(this.props.faultsListRequest.body);
+    }
+
+    //工单
+    _refreshWorkOrders = () => {
+        let params = {
+            pageIndex: 1,
+            pageSize: 15,
+        }
+        this._requestWorkorders(params);
+    }
+
+    _requestWorkorders = (params) => {
+        this.store.dispatch(Actions.get(this, Urls.faults.workOrder));
+    }
+
+    //工单列表上拉刷新
+    _workorderPullUp = () => {
+        // this._requestFaultsList(this.props.workOrderRequest.body);
+        // console.log('hahaahah')
     }
 
     _filterReset = (data) => {
@@ -142,17 +180,23 @@ class FaultListScreen extends WrapScreen {
     }
 
     _renderList(type, tabLabel, data) {
+        let refreshing;
+        let onRefresh;
+        let pullUp;
+        if (type === 'faultsList') {
+            refreshing = this.props.faultsListRequest.isFetching;
+            onRefresh = this._refreshFaultList;
+            pullUp = this._faultsListPullUp;
+        } else {
+            refreshing = this.props.workOrderRequest.isFetching;
+            onRefresh = this._refreshWorkOrders;
+            pullUp = this._workorderPullUp;
+        }
         return (
-            <FlatList
-                refreshControl={
-                    <RefreshControl
-                        refreshing={this.state.isRefreshing}
-                        onRefresh={() => this._onRefresh()}
-                        tintColor="#42BD56"
-                        colors={['#42BD56']}
-                        progressBackgroundColor="#f1f1f1"
-                    />
-                }
+            <SWFlatList
+                refreshing={refreshing}
+                onRefresh={onRefresh}
+                pullUp={pullUp}
                 style={{ flex: 1 }}
                 keyExtractor={this._keyExtractor}
                 tabLabel={tabLabel}
@@ -169,11 +213,12 @@ class FaultListScreen extends WrapScreen {
                         data.content = item.BREAKDOWN_DESCRIBE;
                         data.person = item.CREATE_USER;
                         data.time = item.CREATE_TIME;
+                        data.rank = item.RANK;
                     } else {
                         data.title = item.BREAK_NUMBER;
                         data.content = item.DESCRIBE;
                         data.person = item.USER_NAME;
-                        data.time = item.CREATE_TIME
+                        data.time = item.CREATE_TIME;
                     }
                     return <ListCell
                         item={data}
@@ -203,10 +248,10 @@ class FaultListScreen extends WrapScreen {
                         />
                     }>
                     {
-                        this._renderList('workOrder', '故障工单', this.props.workOrders)
+                        this._renderList('workOrder', '故障工单', this.props.workOrderRequest.workOrders)
                     }
                     {
-                        this._renderList('faultsList', '故障清单', this.props.faultsList)
+                        this._renderList('faultsList', '故障清单', this.props.faultsListRequest.faultsList)
                     }
                 </ScrollableTabView>
                 {/* 在筛选出现的时候挡住scrolltabbar */}
@@ -238,8 +283,8 @@ class FaultListScreen extends WrapScreen {
 
 function mapStateToProps(state) {
     return {
-        faultsList: state.faults.getFaultsList,
-        workOrders: state.faults.getWorkOrder,
+        faultsListRequest: state.faults.faultsListRequest,
+        workOrderRequest: state.faults.workOrderRequest,
     }
 }
 

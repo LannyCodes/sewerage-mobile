@@ -93,6 +93,7 @@ class DataStatisticsScreen extends WrapScreen {
                                 height={screenWidth - 38}
                                 width={screenHeight}
                                 expand={this._unExpand}
+                                vertical={false}
                                 echartOption={this.state.option} />
                         </View> :
                         <View />

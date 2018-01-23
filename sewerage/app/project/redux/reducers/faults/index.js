@@ -1,27 +1,79 @@
-import {combineReducers} from 'redux';
+import { combineReducers } from 'redux';
 import Urls from "../../../../config/api/urls";
+import ActionType from '../../actionType';
+import _ from 'lodash';
 
-let faultsList = []
-const getFaultsList = (state=[],action)=>{
-    if(action.type === Urls.faults.faultList){
-        faultsList = action.data.list;//应该做判断
-        return faultsList
+const faultsListRequest = (state, action) => {
+    state = state || {
+        isFetching: false,
+        faultsList: [],
+        body: action.body,
     }
-    return faultsList
+    let url = Urls.faults.faultList
+    switch (action.type) {
+        case url + ActionType.FETCH_START:
+            return {
+                ...state,
+                isFetching: true,
+            }
+        case url:
+            let body = action.body;
+            if (action.data.list.length > 0) {
+                body.pageIndex = body.pageIndex + 1;
+            }
+            return {
+                ...state,
+                isFetching: false,
+                faultsList: action.data.list,
+                body: body,
+            }
+        case url + ActionType.REQUEST_ERROR:
+            return {
+                ...state,
+                isFetching: false,
+            }
+        default:
+            return state
+    }
 }
 
-let workOrders = []
-const getWorkOrder = (state=[],action)=>{
-    if(action.type === Urls.faults.workOrder){
-        workOrders = action.data.list;
-        return workOrders
+const workOrderRequest = (state = [], action) => {
+    state = state || {
+        isFetching: false,
+        workOrders: [],
+        body: action.body,
     }
-    return workOrders;
+    let url = Urls.faults.workOrder
+    switch (action.type) {
+        case url + ActionType.FETCH_START:
+            return {
+                ...state,
+                isFetching: true,
+            }
+        case url:
+            let body = action.body;
+            if (action.data.list.length > 0) {
+                body.pageIndex = body.pageIndex + 1;
+            }
+            return {
+                ...state,
+                isFetching: false,
+                workOrders: action.data.list,
+                body:body,
+            }
+        case url + ActionType.REQUEST_ERROR:
+            return {
+                ...state,
+                isFetching: false,
+            }
+        default:
+            return state
+    }
 }
 
 let faultDetail = {}
-const getFaultDetail = (state=[],action) => {
-    if(action.type === Urls.faults.faultDetail){
+const getFaultDetail = (state = [], action) => {
+    if (action.type === Urls.faults.faultDetail) {
         faultDetail = action.data;
         return faultDetail;
     }
@@ -29,7 +81,7 @@ const getFaultDetail = (state=[],action) => {
 }
 
 export default combineReducers({
-    getFaultsList,
-    getWorkOrder,
+    faultsListRequest,
+    workOrderRequest,
     getFaultDetail
 })

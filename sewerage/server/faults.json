@@ -43,7 +43,7 @@
                         "ID": 0,
                         "EQUIPMENT_NAME": "人间大炮",
                         "TYPE": "1",
-                        "RANK": "2",
+                        "RANK": "0",
                         "BREAKDOWN_DESCRIBE": "人间大炮一级准备",
                         "CREATE_USER": "炮姐",
                         "CREATE_TIME": "2017-09-03 15:20",
@@ -54,7 +54,7 @@
                         "ID": 1,
                         "EQUIPMENT_NAME": "阿姆斯特朗炮",
                         "TYPE": "0",
-                        "RANK": "3",
+                        "RANK": "2",
                         "BREAKDOWN_DESCRIBE": "阿姆斯特朗回旋加速喷气式阿姆斯特朗炮",
                         "CREATE_USER": "银时",
                         "CREATE_TIME": "2017-09-03 15:20"
