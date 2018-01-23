@@ -46,7 +46,7 @@ const post = (context, url, body, resolve, reject) => {
             }
         }
     }
-    api(config.WebServerUrl).post(url, formData && {})
+    api(config.WebServerUrl).post(url, formData || {})
         .then((response) => {
                 exec(response, resolve);
             }

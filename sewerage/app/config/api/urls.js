@@ -5,7 +5,7 @@ const Urls = {
         inspection: '/api/inspectiontask/list',
     },
     Inspections: {
-        getTaskList: '/app/inspection/list', // 获取巡检列表，
+        getTaskList: '/api/inspectiontask/list', // 获取巡检列表， get
         getInspectionDetail: '/app/inspection/inspectionDetail', // 获取巡检任务详情
     },
     Task: {

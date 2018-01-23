@@ -6,6 +6,7 @@ import * as Utils from "../../../core/utils";
 import _ from 'lodash'
 import Urls from "../../../config/api/urls";
 import {USER_KEY} from "../../../config/setting"
+import md5 from 'md5'
 
 export function checkOtp(self) {
     if (Utils.isTel(self.state.inputPhoneNum)) {
@@ -43,7 +44,7 @@ export function submitOtp(self) {
 export async function loginSubmit(self) {
     let username = self.state.inputPhoneAndEmail;
     let password = self.state.inputPwd;
-    let params = {'loginName': username, 'pwd': '14e1b600b1fd579f47433b88e8d85291'};
+    let params = {'loginName': username, 'pwd': md5(md5(password))};
     Utils.fetch(self, Urls.Login.login, params).then((data) => {
         // 保存登录状态 --- 只保存token到localStorage
         storage.save({

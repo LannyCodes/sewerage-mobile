@@ -27,13 +27,14 @@ class InspectionManagementScreen extends WrapScreen {
     }
 
     componentDidMount() {
-        this.store.dispatch(Actions.request(this,Urls.Inspections.getTaskList));
+        let params = {pageIndex: 1, pageSize: 10};
+        this.store.dispatch(Actions.request(this, Urls.Inspections.getTaskList, params, 'get'));
     }
 
     _renderCardStatus = (status) => {
         let st = {text: '待执行', color: '#47A9EB', backgroundColor: '#ECF6FD'};
-        if (status === '0') st = {text: '待执行', color: '#47A9EB', backgroundColor: '#ECF6FD'};
-        else if (status === '1') st = {text: '执行中', color: '#FAA346', backgroundColor: '#FEF5EB'};
+        if (status === 0) st = {text: '待执行', color: '#47A9EB', backgroundColor: '#ECF6FD'};
+        else if (status === 1) st = {text: '执行中', color: '#FAA346', backgroundColor: '#FEF5EB'};
         else st = {text: '已完成', color: '#1AAD19', backgroundColor: '#E8F6E8'};
         return (
             <View style={[styles.cardStatus, {backgroundColor: st.backgroundColor}]}>
@@ -46,28 +47,28 @@ class InspectionManagementScreen extends WrapScreen {
         <TouchableOpacity style={styles.cardItem}
                           onPress={() => {
                               this.props.navigation.navigate('InspectionDetail')
-                          }}
-        >
+                          }}>
             <View style={styles.row}>
-                <Text style={styles.cardTitle}>{item.title}</Text>
-                {this._renderCardStatus(item.status)}
+                <Text style={styles.cardTitle}>{item.NAME} {item.TASK_NUMBER}</Text>
+                {this._renderCardStatus(item.STATUS)}
             </View>
-            <Text style={styles.cardContent}>{item.content}</Text>
+            <Text style={styles.cardContent}>{item.EQUIPMENT_NAMES}</Text>
             <View style={[styles.row, {marginTop: 10}]}>
-                <Text style={styles.cardPerson}>{item.person}</Text>
-                <Text style={styles.cardTime}>{item.time}</Text>
+                <Text style={styles.cardPerson}>{item.USER_NAME}</Text>
+                <Text style={styles.cardTime}>{item.VALID_TIME}</Text>
             </View>
         </TouchableOpacity>
     );
 
     _render() {
         if (this.props.requestStatus === Status.SUCCESS) {
-            if(!Loading.checkData(this.props.inspectionList)) return;
-            if (this.props.inspectionList.length > 0) {
+            console.log(this.props.inspectionList)
+            if (!Loading.checkData(this.props.inspectionList)) return;
+            if (this.props.inspectionList.list.length > 0) {
                 return (
                     <View style={{flex: 1}}>
                         <FlatList
-                            data={this.props.inspectionList}
+                            data={this.props.inspectionList.list}
                             keyExtractor={this._keyExtractor}
                             renderItem={this._renderItem}
                         />

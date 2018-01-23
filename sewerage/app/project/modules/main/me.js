@@ -44,15 +44,21 @@ class MeScreen extends WrapScreen {
         let user = this.props.user || this.state.user;
         return (
             <View style={styles.container}>
-                <Image source={Assets.Home.bg} style={styles.bg}/>
+                <Image source={Assets.Me.bg} style={styles.bg}/>
                 <View style={styles.content}>
                     <View style={styles.header}>
                         <Image style={styles.headerImg}
                                source={{uri: "https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg"}}/>
                         <Text style={styles.headerText}>{user.nickName}</Text>
                     </View>
-                    <View style={{backgroundColor: 'white'}}>
-                        <View style={[styles.row, styles.lineContent]}>
+                    <View style={[styles.row, styles.lineContent, {marginTop: -18, backgroundColor: 'transparent'}]}>
+                        <View style={styles.row}>
+                            <Image source={Assets.Me.company} style={styles.icon}/>
+                            <Text style={[styles.text, {color: '#cccccc'}]}>{user.organizeName}</Text>
+                        </View>
+                    </View>
+                    <View style={{backgroundColor: '#F3F3F3'}}>
+                        <View style={[styles.row, styles.lineContent, {marginTop: 12}]}>
                             <View style={styles.row}>
                                 <Image source={Assets.Me.tel} style={styles.icon}/>
                                 <Text style={styles.text}>电话</Text>
@@ -114,6 +120,8 @@ class MeScreen extends WrapScreen {
                             </View>
                         </View>
                     </View>
+                </View>
+                <View style={{flex: 1, backgroundColor: '#F3F3F3'}}>
                     <TouchableOpacity style={styles.exit} onPress={() => {
                         Utils.exitApp(this)
                     }}>
@@ -136,23 +144,24 @@ export default connect(mapStateToProps)(MeScreen);
 const styles = Utils.PLStyle({
     container: {
         flex: 1,
+        backgroundColor: 'white'
     },
     bg: {
         width: Utils.sw,
-        height: Utils.sw,
+        height: Utils.sw * 260 / 357,
     },
     row: {
         flexDirection: 'row',
         alignItems: 'center'
     },
     content: {
-        marginTop: -Utils.sw,
+        marginTop: -Utils.sw * 260 / 357,
         backgroundColor: 'transparent'
     },
     header: {
         justifyContent: 'center',
         alignItems: 'center',
-        height: Utils.sw - 100,
+        height: Utils.sw * 260 / 357,
     },
     headerImg: {
         width: 80,
@@ -167,10 +176,11 @@ const styles = Utils.PLStyle({
         marginTop: 10
     },
     lineContent: {
-        height: 44,
+        height: 50,
         paddingLeft: 15,
         paddingRight: 15,
-        justifyContent: 'space-between'
+        justifyContent: 'space-between',
+        backgroundColor: 'white'
     },
     icon: {
         width: 20,

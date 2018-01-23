@@ -32,6 +32,8 @@ const Me = {
     email: require('./images/icon_me_email.png'),
     pwd: require('./images/icon_me_xg.png'),
     about: require('./images/icon_me_message.png'),
+    bg: require('./images/icon_me_bg.png'),
+    company:require('./images/icon_me_company.png'),
 }
 
 

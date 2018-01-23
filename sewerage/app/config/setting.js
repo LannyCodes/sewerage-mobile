@@ -29,11 +29,13 @@ const USER_KEY = {
 
 if (__DEV__) {
     Object.assign(config, {
-        WebServerUrl: "http://192.168.39.79:10086",
-        // WebServerUrl: "http://192.168.31.100:8089",
+        // WebServerUrl: "http://192.168.39.29:10086",
+        WebServerUrl: "http://192.168.31.239:8089",
     })
 } else {
-    Object.assign(config, {});
+    Object.assign(config, {
+        WebServerUrl: "http://192.168.31.239:10086",
+    });
 }
 
 export {config, GLOB, USER_KEY}
