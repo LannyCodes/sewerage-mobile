@@ -6,8 +6,10 @@ import {
 import * as Utils from '../../../core/utils'
 import PropTypes from 'prop-types'
 import * as Assets from '../../assets'
+import ImageCropPicker from 'react-native-image-crop-picker';
 import ImagePicker from 'react-native-image-picker';
 import {PictureOverlay} from "../PictureOverlay";
+import Urls from "../../../config/api/urls";
 
 const PICKER_HOLDER = "PICKER_HOLDER";
 const HOLDER_IMG = {uri: PICKER_HOLDER};
@@ -33,10 +35,6 @@ export class GridImagePicker extends Component {
         cols: 3,
         images: []
     };
-
-    componentWillReceiveProps(newProps) {
-        console.log(newProps.images)
-    }
 
     _selectPhotoTapped = () => {
         let me = this;
@@ -71,7 +69,26 @@ export class GridImagePicker extends Component {
                     console.log('User tapped custom button: ', response.customButton);
                 }
                 else {
-                    me.props.onPhotoTapped(response);
+                    console.log(response);
+                    ImageCropPicker.openCropper({
+                        path: response.uri,
+                        width: 300,
+                        height: 300,
+                        includeBase64: true
+                    }).then(image => {
+                        let file = {uri: image.path, type: 'multipart/form-data', name: response.fileName};
+                        let params = {'file': file};
+                        Utils.fetch(this, Urls.Common.fileUpload, params).then((data) => { // 调用上传图片接口
+                            let saveParams = {'files': `[{'FILE_SIZE':${data.FILE_SIZE},'FILE_NAME':'${data.FILE_NAME}','FILE_TYPE':'${data.FILE_TYPE}','FILE_PATH':'${data.FILE_PATH}'}]`};
+                            console.log(saveParams)
+                            Utils.fetch(this, Urls.Common.fileSave, saveParams).then((data) => { // 调用上传图片接口
+                                console.log(data) // 调用保存文件接口
+                                me.props.onPhotoTapped(response,data);
+                            });
+                        });
+                    }).catch(e => {
+                        console.log('User cancelled photo picker：' + e);
+                    });
                 }
             });
         } catch (exception) {

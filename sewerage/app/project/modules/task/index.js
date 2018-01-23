@@ -1,7 +1,7 @@
 import tasks from './tasks';
-import maintenanceDetail from './maintenanceDetail';
-import maintenanceUpload from './maintenanceUpload';
+import taskDetail from './taskDetail';
+import taskUpload from './taskUpload';
 
 export const TaskListScreen = tasks;
-export const TaskMaintenanceDetailScreen = maintenanceDetail;
-export const TaskMaintenanceUploadScreen = maintenanceUpload;
+export const TaskDetailScreen = taskDetail;
+export const TaskUploadScreen = taskUpload;

@@ -65,8 +65,8 @@ const Audit = {
  */
 const Task = {
     TaskList: {screen: Modules.TaskListScreen},
-    TaskMaintenanceDetail: {screen: Modules.TaskMaintenanceDetailScreen},
-    TaskMaintenanceUpload: {screen: Modules.TaskMaintenanceUploadScreen},
+    TaskDetail: {screen: Modules.TaskDetailScreen},
+    TaskUpload: {screen: Modules.TaskUploadScreen},
 }
 
 /**

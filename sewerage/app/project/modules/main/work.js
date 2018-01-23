@@ -39,7 +39,7 @@ class WorkScreen extends WrapScreen {
     _onQrSuccess = (result) => {
         // 进入维保页面
         this.props.navigation.navigate('TaskList', {
-            qrData: result
+            qrData: '11E80005DBC9EC4D943D230B848AE364'
         })
     };
 
@@ -114,9 +114,12 @@ class WorkScreen extends WrapScreen {
                                 <Text style={styles.optText}>宁乡县污水处理厂</Text>
                                 <Image source={Assets.Home.arrowDown}/>
                             </View>
-                            <TouchableOpacity onPress={() => this.props.navigation.navigate('Qr', {
-                                onSuccess: this._onQrSuccess
-                            })}>
+                            <TouchableOpacity onPress={() =>
+                                // this.props.navigation.navigate('Qr', {
+                                //     onSuccess: this._onQrSuccess
+                                // })
+                                this._onQrSuccess()
+                            }>
                                 <Image source={Assets.Home.scan} style={styles.icon}/>
                             </TouchableOpacity>
                         </View>
@@ -150,7 +153,7 @@ class WorkScreen extends WrapScreen {
                         {modules.map((item, index) => {
                             return (
                                 <View style={{flex: 1,}} key={index}>
-                                    <View style={styles.configItemRow} key={index}>
+                                    <View style={styles.configItemRow}>
                                         {
                                             item.map((module, i) => {
                                                 return (

@@ -26,7 +26,7 @@ const getFetch = (context, url, body, dispatch) => {
     })
     api(config.WebServerUrl).get(url, body)
         .then((response) => {
-            exec(url, response,body, dispatch)
+            exec(context,url, response,body, dispatch)
         }
         );
 }
@@ -37,6 +37,7 @@ const postFetch = (context, url, body, dispatch) => {
     });
     let formData = null;
     if (body) {
+        formData = new FormData();
         for (let prop in body) {
             if (Array.isArray(body[prop])) {
                 for (let value of body[prop]) {
@@ -52,16 +53,16 @@ const postFetch = (context, url, body, dispatch) => {
     dispatch({
         type: url + ActionType.FETCH_START,
     })
-    api(config.WebServerUrl).post(url, formData && {})
+    api(config.WebServerUrl).post(url, formData || {})
         .then((response) => {
-            exec(url, response, body, dispatch)
+            exec(context,url, response, body, dispatch)
         }
         ).catch(err => {
             console.log(err);
         });
 };
 
-const exec = (url, response, body, dispatch) => {
+const exec = (context,url, response, body, dispatch) => {
     console.log(response)
     const { status } = response;
     if (response.ok) {
@@ -74,31 +75,32 @@ const exec = (url, response, body, dispatch) => {
                 })
             } else if (parseInt(response.data.code) === TOKEN_ERROR_CODE) {
                 // 这里处理token异常
-                console.log('token exception');
                 dispatch({
                     type: ActionType.REQUEST_STATUS,
                     data: Status.TOKEN_FAIL
                 });
                 dispatch({
-                    type: url + ActionType.REQUEST_ERROR
-                })
-                Toast.message('token失效，请重新登录。')
+                    type: url + ActionType.REQUEST_ERROR  // type : url + ERROR—CODE 用于特定module里的reducer进行处理
+                }, {
+                    type: ActionType.REQUEST_ERROR, // 在common里统一处理
+                    data: Status.TOKEN_FAIL
+                });
+                Toast.message('token失效，请重新登录。');
                 Utils.exitApp(context)
             } else {
                 // 请求有问题
-                Toast.message('请求失败,请稍后重试。')
-                // dispatch({
-                //     type: ActionType.REQUEST_STATUS,
-                //     data: Status.FAIL
-                // })
+                Toast.message('请求失败,请稍后重试。');
                 dispatch({
-                    type: url + ActionType.REQUEST_ERROR
+                    type: url + ActionType.REQUEST_ERROR,
+                }, {
+                    type: ActionType.REQUEST_ERROR,
+                    data: Status.FAIL
                 })
             }
         }
     } else {
         // 请求有问题
-        Toast.message('请求失败,请稍后重试。')
+        Toast.message('请求失败,请稍后重试。');
         dispatch({
             type: ActionType.REQUEST_STATUS,
             data: Status.FAIL

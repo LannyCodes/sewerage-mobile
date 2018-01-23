@@ -5,37 +5,77 @@ import * as Utils from "../../../core/utils";
 import {ScrollView, Text, TextInput, TouchableOpacity, View} from "react-native";
 import {Divider, Icon} from "react-native-elements";
 import {GridImagePicker} from "../../components";
+import Urls from "../../../config/api/urls";
+import * as Actions from "../../redux/actions";
 
-class TaskMaintenanceUploadScreen extends WrapScreen {
+let imageIds0 = [];
+let imageIds1 = [];
 
+class TaskUploadScreen extends WrapScreen {
     constructor(props) {
         super(props);
-        const {state, goBack} = this.props.navigation;
+        this.taskUploadFun = ['inspectiontaskDeal', 'maintenancetaskDeal'];
+
         this.state = {
-            selectedIndex: 1,
-            typeIndex: null,
-            levelIndex: null,
+            selectedIndex: 0,
+            typeIndex0: 0,
+            typeIndex1: 0,
+            rankIndex0: 0,
+            rankIndex1: 0,
             s1Text: '',
+            s2Text: '',
+            s3Text: '',
             uploadImages0: [],
             uploadImages1: [],
+            dealText0: '',
+            dealText1: ''
         }
     }
 
-    _header=()=>{
+    _header = () => {
+        const {state, goBack} = this.props.navigation;
+        let type = state.params.type;
         return {
-            title: "巡检内容",
+            title: ['巡检内容', '维保内容'][type],
             right: {
                 icon: 'save',
                 type: 'feather',
                 onPress: () => {
-                    state.params.onComplete({
-                        errorId: state.params.errorId,
-                        errorStatus: '不能正常运行'
+                    let params = null;
+                    if (this.state.selectedIndex === 0) {
+                        //正常
+                        params = {
+                            'DESCRIBE': this.state.s1Text,
+                            'HANDLE_TYPE': 0,
+                        }
+                    } else if (this.state.selectedIndex === 1) {
+                        params = {
+                            'BREAKDOWN_DESCRIBE': this.state.s2Text,
+                            'HANDLE_TYPE': 1, // 故障能处理
+                            'TYPE': this.state.typeIndex0,
+                            'RANK': this.state.rankIndex0,
+                            'HANDLE_WAY': this.state.dealText0,
+                            'ATTACHMENT_IDS': imageIds0.join(",")
+                        }
+                    } else if (this.state.selectedIndex === 2) {
+                        params = {
+                            'BREAKDOWN_DESCRIBE': this.state.s3Text,
+                            'HANDLE_TYPE': 2, // 故障能处理
+                            'TYPE': this.state.typeIndex1,
+                            'RANK': this.state.rankIndex1,
+                            'HANDLE_WAY': this.state.dealText1,
+                            'ATTACHMENT_IDS': imageIds1.join(",")
+                        }
+                    }
+                    Object.assign(params, state.params.itemParams);
+                    console.log(params);
+                    Utils.fetch(this, Urls.Task[this.taskUploadFun[type]], params).then((data) => {
+                        state.params.onComplete();
+                        goBack();
                     });
-                    goBack();
                 }
             }
-        };
+        }
     }
 
     _getSelectedStyle = (index) => {
@@ -82,9 +122,11 @@ class TaskMaintenanceUploadScreen extends WrapScreen {
         return style;
     };
 
-    _getBtnRadioStyle = (index, type) => {
+    _getBtnRadioStyle = (index, status, type) => {
         let style;
-        let i = type === 'type' ? this.state.typeIndex : this.state.levelIndex;
+        let typeIndex = ['typeIndex0', 'typeIndex1'];
+        let rankIndex = ['rankIndex0', 'rankIndex1'];
+        let i = type === 'type' ? this.state[typeIndex[status]] : this.state[rankIndex[status]];
         if (i === index) {
             style = {
                 container: {
@@ -129,6 +171,11 @@ class TaskMaintenanceUploadScreen extends WrapScreen {
     }
 
     _renderMulti = (status /*0:故障能处理，1：故障不能处理*/, typeGroup: Array, levelGroup: Array) => {
+        let inputType = ['s2Text', 's3Text'];
+        let typeIndex = ['typeIndex0', 'typeIndex1'];
+        let rankIndex = ['rankIndex0', 'rankIndex1'];
+        let dealText = ['dealText0', 'dealText1'];
+        let imageIds = [imageIds0, imageIds1];
         return (
             <ScrollView>
                 <Text style={styles.groupTitle}>故障描述</Text>
@@ -137,19 +184,19 @@ class TaskMaintenanceUploadScreen extends WrapScreen {
                         placeholder={'请输入巡检反馈（若无可不填）'}
                         multiline={true}
                         style={styles.textInput}
-                        onChangeText={(text) => this.setState({s1Text: text})}
-                        value={this.state.text}
+                        onChangeText={(text) => this.setState({[inputType[status]]: text})}
+                        value={this.state[inputType[status]]}
                     />
                 </View>
                 <Text style={styles.groupTitle}>故障类型</Text>
                 <View style={{flexDirection: 'row', height: 32}}>
                     {
                         typeGroup.map((item, i) => {
-                            const s = this._getBtnRadioStyle(i, 'type');
+                            const s = this._getBtnRadioStyle(i, status, 'type');
                             return (
                                 <TouchableOpacity style={s.container} key={i} onPress={() => {
                                     this.setState({
-                                        typeIndex: i
+                                        [typeIndex[status]]: i
                                     })
                                 }}>
                                     <Text style={s.text}>{item}</Text>
@@ -162,11 +209,11 @@ class TaskMaintenanceUploadScreen extends WrapScreen {
                 <View style={{flexDirection: 'row', height: 32}}>
                     {
                         levelGroup.map((item, i) => {
-                            const s = this._getBtnRadioStyle(i);
+                            const s = this._getBtnRadioStyle(i, status);
                             return (
                                 <TouchableOpacity style={s.container} key={i} onPress={() => {
                                     this.setState({
-                                        levelIndex: i
+                                        [rankIndex[status]]: i
                                     })
                                 }}>
                                     <Text style={s.text}>{item}</Text>
@@ -181,16 +228,18 @@ class TaskMaintenanceUploadScreen extends WrapScreen {
                         placeholder={'请输入处理方式（若无可不填）'}
                         multiline={true}
                         style={styles.textInput}
-                        onChangeText={(text) => this.setState({s1Text: text})}
-                        value={this.state.text}
+                        onChangeText={(text) => this.setState({[dealText[status]]: text})}
+                        value={this.state[dealText[status]]}
                     />
                 </View>
                 <GridImagePicker
                     cols={4}
-                    onPhotoTapped={(picture) => {
+                    onPhotoTapped={(picture, imageId) => {
+                        console.log(imageId)
                         let source = {uri: picture.uri};
                         let images = status === 0 ? this.state.uploadImages0 : this.state.uploadImages1;
                         images.push(source);
+                        imageIds[status].push(imageId);
                         let check = status === 0 ? "uploadImages0" : "uploadImages1";
                         this.setState({
                             [check]: images
@@ -268,7 +317,7 @@ function mapStateToProps(state) {
     return {}
 }
 
-export default connect(mapStateToProps)(TaskMaintenanceUploadScreen);
+export default connect(mapStateToProps)(TaskUploadScreen);
 
 const styles = Utils.PLStyle({
     container: {

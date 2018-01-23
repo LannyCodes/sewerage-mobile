@@ -21,7 +21,8 @@ class TaskListScreen extends WrapScreen {
 
     componentDidMount() {
         const {qrData} = this.props.navigation.state.params || ''; // 获取参数
-        this.store.dispatch(Actions.request(this,Urls.Task.getTaskList, {params: qrData})); // 请求
+        let params = {'EQUIPMENT_ID': qrData};
+        this.store.dispatch(Actions.request(this, Urls.Task.getTaskList, params)); // 请求
     }
 
     _header=()=>{
@@ -34,8 +35,8 @@ class TaskListScreen extends WrapScreen {
 
     _renderCardStatus = (status) => {
         let st = {text: '待执行', color: '#47A9EB', backgroundColor: '#ECF6FD'};
-        if (status === '0') st = {text: '待执行', color: '#47A9EB', backgroundColor: '#ECF6FD'};
-        else if (status === '1') st = {text: '执行中', color: '#FAA346', backgroundColor: '#FEF5EB'};
+        if (status === 0) st = {text: '待执行', color: '#47A9EB', backgroundColor: '#ECF6FD'};
+        else if (status === 1) st = {text: '执行中', color: '#FAA346', backgroundColor: '#FEF5EB'};
         else st = {text: '已完成', color: '#1AAD19', backgroundColor: '#E8F6E8'};
         return (
             <View style={[styles.cardStatus, {backgroundColor: st.backgroundColor}]}>
@@ -44,26 +45,34 @@ class TaskListScreen extends WrapScreen {
         )
     };
 
-    _renderItem = ({item}) => (
-        <TouchableOpacity style={styles.cardItem}
-                          onPress={() => {
-                              this.props.navigation.navigate('TaskMaintenanceDetail')
-                          }}
-        >
-            <View style={styles.row}>
-                <Text style={styles.cardTitle}>{item.title}</Text>
-                {this._renderCardStatus(item.status)}
-            </View>
-            <Text style={styles.cardContent}>{item.content}</Text>
-            <View style={[styles.row, {marginTop: 10}]}>
-                <Text style={styles.cardPerson}>{item.person}</Text>
-                <Text style={styles.cardTime}>{item.time}</Text>
-            </View>
-        </TouchableOpacity>
-    );
+    _renderItem = ({item}) => {
+        let type = ['巡检人物', '维保任务'];
+        return (
+            <TouchableOpacity style={styles.cardItem}
+                              onPress={() => {
+                                  this.props.navigation.navigate('TaskDetail', {
+                                      ITEM_ID: item.ITEM_ID,
+                                      type: item.TYPE
+                                  })
+                              }}
+            >
+                <View style={styles.row}>
+                    <Text style={styles.cardTitle}>{item.TASK_NUMBER}</Text>
+                    {this._renderCardStatus(item.STATUS)}
+                </View>
+                <Text style={styles.cardContent}>{item.EQUIPMENT_NAMES}</Text>
+                <Text style={styles.cardContent}>{type[item.TYPE]}</Text>
+                <View style={[styles.row, {marginTop: 10}]}>
+                    <Text style={styles.cardPerson}>{item.USER_NAME}</Text>
+                    <Text style={styles.cardTime}>{item.VALID_TIME}</Text>
+                </View>
+            </TouchableOpacity>
+        )
+    };
 
     _render() {
         if (this.props.requestStatus === Status.SUCCESS) {
+            console.log(this.props.tasks)
             if (!Loading.checkData(this.props.tasks)) return;
             if (this.props.tasks.length > 0) {
                 return (

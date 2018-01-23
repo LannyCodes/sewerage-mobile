@@ -29,12 +29,13 @@ const USER_KEY = {
 
 if (__DEV__) {
     Object.assign(config, {
-        WebServerUrl: "http://192.168.39.159:10086",
-        // WebServerUrl: "http://192.168.31.239:8089",
+        // WebServerUrl: "http://192.168.39.215:10086",
+        // WebServerUrl: "http://192.168.31.239:8089", // dandan
+        WebServerUrl: "http://192.168.37.6:8450", // 服务器
     })
 } else {
     Object.assign(config, {
-        WebServerUrl: "http://192.168.31.239:10086",
+        WebServerUrl: "http://192.168.31.239:8089",
     });
 }
 

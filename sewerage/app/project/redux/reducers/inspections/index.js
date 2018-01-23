@@ -11,7 +11,7 @@ const getTaskList = (state = [], action) => {
 };
 
 
-let inspectionDetail = null;// 缓存请求数据
+let inspectionDetail = null; // 缓存请求数据
 const getInspectionDetail = (state = [], action) => {
     if (action.type === Urls.Inspections.getInspectionDetail) {
         inspectionDetail = action.data

@@ -34,14 +34,14 @@ const sure = (content, onSure, onCancel) => (
             <Divider style={{backgroundColor: '#ddd'}}/>
             <View style={{flex: 1, flexDirection: 'row'}}>
                 <TouchableOpacity style={{flex: 1, justifyContent: 'center', alignItems: 'center'}} onPress={() => {
-                    onCancel();
+                    onCancel && onCancel();
                     Dialog.hide();
                 }}>
                     <Text style={{fontSize: 16, color: '#666'}}>取消</Text>
                 </TouchableOpacity>
                 <View style={{width: 1, height: '100%', backgroundColor: '#ddd'}}/>
                 <TouchableOpacity style={{flex: 1, justifyContent: 'center', alignItems: 'center'}} onPress={() => {
-                    onSure(input);
+                    onSure&&onSure();
                     Dialog.hide();
                 }}>
                     <Text style={{fontSize: 16, color: '#4ECC80'}}>确定</Text>
@@ -85,7 +85,8 @@ const input = (content, placeholder, onSure, onCancel) => {
                 <Divider style={{backgroundColor: '#ddd'}}/>
                 <View style={{flex: 1, flexDirection: 'row'}}>
                     <TouchableOpacity style={{flex: 1, justifyContent: 'center', alignItems: 'center'}} onPress={() => {
-                        onCancel();
+
+                        onCancel && onCancel();
                         Dialog.hide();
                     }}>
                         <Text style={{fontSize: 16, color: '#666'}}>取消</Text>

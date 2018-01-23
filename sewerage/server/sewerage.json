@@ -377,27 +377,35 @@
     }
   },
   {
-    "url": "/app/task/list",
+    "url": "/api/home/scan",
     "method": "post",
     "response": {
       "code": 0,
       "msg": "",
       "data": [
         {
-          "title": "宁乡污水处理厂水月巡检任务",
-          "content": "巡检宁乡市经济开发区一号场站，其中区安监项目包含一体机设备，进水口监控设备，出水口监控设备。",
-          "person": "PG-ONE",
-          "time": "2017-09-03 15:20",
-          "status": "0",
-          "type": "0"
+          "EQUIPMENT_NAMES": "002,渗滤液设备",
+          "STATUS": 0,
+          "TASK_NUMBER": "3011552200",
+          "VALID_TIME": "2018-01-17 09:19:30",
+          "USER_ID": "11E7F9B3F7BE1097AE38192A4CB03053",
+          "ITEM_ID": "11E7FA5B4D5F2B5DABCBAF19A0DFDFBD",
+          "PLAN_ID": "11E7FA5B40B0676AABCBAF19A0DFDFBD",
+          "ID": "11E7FA5B4D5C1E1CABCBAF19A0DFDFBD",
+          "USER_NAME": "刘烨",
+          "TYPE": 0
         },
         {
-          "title": "宁乡污水处理厂水月维保任务",
-          "content": "巡检宁乡市经济开发区一号场站，其中区安监项目包含一体机设备，进水口监控设备，出水口监控设备。",
-          "person": "李小璐",
-          "time": "2017-09-03 15:20",
-          "status": "0",
-          "type": "1"
+          "EQUIPMENT_NAMES": "002,渗滤液设备",
+          "STATUS": 0,
+          "TASK_NUMBER": "401100",
+          "VALID_TIME": "2018-01-16 19:27:49",
+          "USER_ID": "11E7F9B3F7BE1097AE38192A4CB03053",
+          "ITEM_ID": "11E7F9E71E459E5B9CBFD55140058EDE",
+          "PLAN_ID": "11E7F9E6C32CD92A84C475FC8640B565",
+          "ID": "11E7F9E71E41318A9CBFD55140058EDE",
+          "USER_NAME": "刘烨",
+          "TYPE": 1
         }
       ]
     }
@@ -441,51 +449,107 @@
     }
   },
   {
-    "url": "/app/task/maintenanceDetail",
+    "url": "/api/inspectiontaskItem",
     "method": "post",
     "response": {
       "code": 0,
-      "msg": "",
-      "data": {
-        "title": "宁乡污水处理厂月维保任务",
-        "endTime": "2017-06-30 12:00",
-        "device": "二向箔发射装置",
-        "xjperson": "王宝强",
-        "auditPerson": "宋喆",
-        "company": "唱啥中联环境设备运营有限公司",
-        "taskDes": "湖南宁乡经济技术开发区污水处理厂采用较为先进的污水处理工艺五段式A/A/O-A+二沉池+微絮凝池+V型滤池+CIO2消毒，其设计规模为5万立方米/日。",
-        "unDo": [
-          "格栅是否正常运行",
-          "提升泵是否正常运行",
-          "自清洗过滤器是否正常运行"
+      "msg": "成功",
+      "data":  {
+        "VALID_TIME": "2018-01-24 14:28:17",
+        "USER_ID": "11E7F9B3F7BE1097AE38192A4CB03053",
+        "USER_NAME": "刘烨",
+        "STATION_ID": "11E7E52D873313EDBFCC91E0EC1FB7DC",
+        "STATION_NAME": "厂站三",
+        "CONTENTS": [
+          {
+            "STATUS": 0,
+            "ID": "11E8000699022B99943D230B848AE364",
+            "CONTENT": "箱体是否漏水"
+          },
+          {
+            "STATUS": 0,
+            "ID": "11E800069903D94A943D230B848AE364",
+            "CONTENT": "单体设备负压是否超高"
+          },
+          {
+            "STATUS": 0,
+            "ID": "11E80006990511CB943D230B848AE364",
+            "CONTENT": "单体设备是否达到设定流量"
+          },
+          {
+            "STATUS": 0,
+            "ID": "11E800069906233C943D230B848AE364",
+            "CONTENT": "单体设备是否正常运行"
+          },
+          {
+            "STATUS": 0,
+            "ID": "11E8000699075BBD943D230B848AE364",
+            "CONTENT": "管道是否堵塞"
+          },
+          {
+            "STATUS": 0,
+            "ID": "11E8000699086D2E943D230B848AE364",
+            "CONTENT": "自清洗过滤器是否正常运行"
+          },
+          {
+            "STATUS": 0,
+            "ID": "11E800069909CCBF943D230B848AE364",
+            "CONTENT": "提升泵是否正常运行"
+          },
+          {
+            "STATUS": 0,
+            "ID": "11E80006990B0540943D230B848AE364",
+            "CONTENT": "新增的巡检内容0122101035"
+          }
         ],
-        "do": [
-          "发射系统是否正常运行",
-          "点火装置是否正常运行"
-        ]
+        "STATUS": 0,
+        "TASK_NUMBER": "302018012314281700",
+        "EQUIPMENT_NAME": "嘉伟制造",
+        "ID": "11E8000698FF1E58943D230B848AE364",
+        "TASK_ID": "11E8000698FC5F37943D230B848AE364",
+        "COMPANY_ID": "11E7E48AF5B09735B418057D9106F500",
+        "EQUIPMENT_ID": "11E80005DBC9EC4D943D230B848AE364"
       }
     }
   },
   {
-    "url": "/app/inspection/inspectionDetail",
-    "method": "post",
+    "url": "/api/inspectiontask/detail",
+    "method": "get",
     "response": {
       "code": 0,
       "msg": "",
       "data": {
-        "title": "宁乡污水处理厂月巡检任务",
-        "endTime": "2017-06-30 12:00",
-        "device": "二向箔发射装置",
-        "xjperson": "王宝强",
-        "auditPerson": "宋喆",
-        "company": "唱啥中联环境设备运营有限公司",
-        "taskDes": "湖南宁乡经济技术开发区污水处理厂采用较为先进的污水处理工艺五段式A/A/O-A+二沉池+微絮凝池+V型滤池+CIO2消毒，其设计规模为5万立方米/日。",
-        "xjContent": [
-          "格栅是否正常运行",
-          "提升泵是否正常运行",
-          "自清洗过滤器是否正常运行",
-          "箱体是否漏水"
-        ]
+        "VALID_TIME": "2018-01-23 16:59:53",
+        "USER_ID": "11E7F9B3F7BE1097AE38192A4CB03053",
+        "EXE_USER_NAME": "刘烨",
+        "PLAN_ID": "11E7FC2DD79EDD1682B2E77001C4DA38",
+        "UPDATE_TIME": "2018-01-22 16:59:53",
+        "PLAN_NAME": "简单试一个",
+        "ITEMS": [
+          {
+            "EQUIPMENT_NAME": "渗滤液设备",
+            "ITEM_CONTENTS": [
+              {
+                "STATUS": 0,
+                "ID": "11E7FF529CA6D68DADD559CF87FF267A",
+                "CONTENT": "管道是否堵塞"
+              },
+              {
+                "STATUS": 0,
+                "ID": "11E7FF529CA85D2EADD559CF87FF267A",
+                "CONTENT": "单体设备是否正常运行"
+              }
+            ],
+            "STATION_NAME": "002"
+          }
+        ],
+        "STATUS": 0,
+        "TASK_NUMBER": "302018012216595300",
+        "CHECK_USER_NAME": "吴茂丹",
+        "ID": "11E7FF529CA0E31BADD559CF87FF267A",
+        "CREATE_TIME": "2018-01-22 16:59:53",
+        "DESCRIBE": "简单试一个",
+        "COMPANY_ID": "11E7E48AF5B09735B418057D9106F500"
       }
     }
   },

@@ -17,9 +17,14 @@ class InspectionManagementScreen extends WrapScreen {
 
     constructor(props) {
         super(props);
+        this.header = {
+            title: "巡检任务",
+        };
+
         this.state = {
             isFilterShow: false
         }
+
     }
 
     componentDidMount() {
@@ -48,7 +53,9 @@ class InspectionManagementScreen extends WrapScreen {
     _renderItem = ({item}) => (
         <TouchableOpacity style={styles.cardItem}
                           onPress={() => {
-                              this.props.navigation.navigate('InspectionDetail')
+                              this.props.navigation.navigate('InspectionDetail', {
+                                  id: item.ID
+                              })
                           }}>
             <View style={styles.row}>
                 <Text style={styles.cardTitle}>{item.NAME} {item.TASK_NUMBER}</Text>
