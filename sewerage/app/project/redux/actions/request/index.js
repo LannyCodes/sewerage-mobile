@@ -26,7 +26,7 @@ const getFetch = (context, url, body, dispatch) => {
     })
     api(config.WebServerUrl).get(url, body)
         .then((response) => {
-            exec(url, response, dispatch)
+            exec(url, response,body, dispatch)
         }
         );
 }
@@ -46,20 +46,22 @@ const postFetch = (context, url, body, dispatch) => {
                 formData.append(prop, body[prop]);
             }
         }
+    } else {
+        body = {}
     }
     dispatch({
         type: url + ActionType.FETCH_START,
     })
     api(config.WebServerUrl).post(url, formData && {})
         .then((response) => {
-            exec(url, response, dispatch)
+            exec(url, response, body, dispatch)
         }
         ).catch(err => {
             console.log(err);
         });
 };
 
-const exec = (url, response, dispatch) => {
+const exec = (url, response, body, dispatch) => {
     console.log(response)
     const { status } = response;
     if (response.ok) {
@@ -67,7 +69,8 @@ const exec = (url, response, dispatch) => {
             if (parseInt(response.data.code) === SUCCESS_CODE) {
                 dispatch({
                     type: url,
-                    data: response.data.data
+                    data: response.data.data,
+                    body: body,
                 })
             } else if (parseInt(response.data.code) === TOKEN_ERROR_CODE) {
                 // 这里处理token异常
