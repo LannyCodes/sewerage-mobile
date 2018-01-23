@@ -34,6 +34,8 @@ class WorkScreen extends WrapScreen {
         };
     }
 
+    _header=()=>'none';
+
     _onQrSuccess = (result) => {
         // 进入维保页面
         this.props.navigation.navigate('TaskList', {

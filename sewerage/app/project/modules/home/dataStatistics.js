@@ -23,14 +23,11 @@ class DataStatisticsScreen extends WrapScreen {
 
     constructor(props) {
         super(props);
-        this.header = {
-            title: "数据统计",
-        },
-            this.state = {
-                option: {},
-                isExpand: false,
-                statusBarHidden:false,
-            }
+        this.state = {
+            option: {},
+            isExpand: false,
+            statusBarHidden: false,
+        }
     }
 
     componentDidMount() {
@@ -39,55 +36,61 @@ class DataStatisticsScreen extends WrapScreen {
         this.store.dispatch(Actions.request(this, Urls.statistics.stationStatistics));
     }
 
+    _header = () => {
+        return {
+            title: "数据统计",
+        }
+    }
+
     //func 
 
-    _expandFunc=(option )=> {
+    _expandFunc = (option) => {
         console.log('_expandFunc');
         this.setState({
             option: option,
-            isExpand:true,
+            isExpand: true,
         })
         // this._turnOrientation()
         StatusBar.setHidden(true);
         this.props.navigation.setParams({
-            gesturesEnabled:false,
+            gesturesEnabled: false,
             // statusBarHidden:true,
         })
     }
 
     _turnOrientation = () => {
-        Orientation.getOrientation((err,orientation)=>{
-            if(orientation === 'PORTRAIT'){
+        Orientation.getOrientation((err, orientation) => {
+            if (orientation === 'PORTRAIT') {
                 Orientation.lockToLandscapeRight();
-            }else{
+            } else {
                 Orientation.lockToPortrait();
             }
         })
     }
 
-    _unExpand=()=>{
+    _unExpand = () => {
         // this._turnOrientation()
         this.setState({
-            isExpand:false,
+            isExpand: false,
         })
         StatusBar.setHidden(false);
         this.props.navigation.setParams({
-            gesturesEnabled:true,
+            gesturesEnabled: true,
             // statusBarHidden:false,
         })
         // this._chartView.reload()
     }
 
     _render() {
-        const offset = (screenHeight-screenWidth)/2
+        const offset = (screenHeight - screenWidth) / 2
         return (
             <View style={{ flex: 1, }}>
                 {
                     this.state.isExpand ?
-                        <View style={{ position: 'absolute', zIndex: 99999, top: -70, paddingTop: 20, backgroundColor: '#ffffff',transform:[{rotateZ:'90deg'},{translate:[offset,offset]}] }}>
+                        <View style={{ position: 'absolute', zIndex: 99999, top: -70, paddingTop: 20, backgroundColor: '#ffffff', transform: [{ rotateZ: '90deg' }, { translate: [offset, offset] }] }}>
                             <ChartView
                                 ref={chartView => this._chartView = chartView}
-                                height={screenWidth-38}
+                                height={screenWidth - 38}
                                 width={screenHeight}
                                 expand={this._unExpand}
                                 echartOption={this.state.option} />

@@ -14,9 +14,6 @@ class AuditCKBGDetailScreen extends WrapScreen {
 
     constructor(props) {
         super(props);
-        this.header = {
-            title: "仓库变更审核详情",
-        };
         this.state = {
             status: '0' //this.props.navigation.state.params.status
         }
@@ -24,6 +21,12 @@ class AuditCKBGDetailScreen extends WrapScreen {
 
     componentDidMount() {
         this.store.dispatch(Actions.request(this, Urls.Audit.getAuditDetail1)); // 请求
+    }
+
+    _header=()=>{
+        return {
+            title: "仓库变更审核详情",
+        };
     }
 
     _renderCardStatus = (status) => {

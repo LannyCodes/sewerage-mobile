@@ -11,7 +11,18 @@ class TaskMaintenanceUploadScreen extends WrapScreen {
     constructor(props) {
         super(props);
         const {state, goBack} = this.props.navigation;
-        this.header = {
+        this.state = {
+            selectedIndex: 1,
+            typeIndex: null,
+            levelIndex: null,
+            s1Text: '',
+            uploadImages0: [],
+            uploadImages1: [],
+        }
+    }
+
+    _header=()=>{
+        return {
             title: "巡检内容",
             right: {
                 icon: 'save',
@@ -25,14 +36,6 @@ class TaskMaintenanceUploadScreen extends WrapScreen {
                 }
             }
         };
-        this.state = {
-            selectedIndex: 1,
-            typeIndex: null,
-            levelIndex: null,
-            s1Text: '',
-            uploadImages0: [],
-            uploadImages1: [],
-        }
     }
 
     _getSelectedStyle = (index) => {

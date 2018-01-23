@@ -79,24 +79,23 @@ class FaultListScreen extends WrapScreen {
             faultFilter: {},
             currentTab: 0,
         }
-        this.header = {
-            title: "故障处理",
-            right: {
-                icon: 'filter',
-                type: 'feather',
-                color: this.state.isFilterShow ? '#42BD56' : '#666666',
-                onPress: () => {
-                    this.setState({
-                        isFilterShow: !this.state.isFilterShow
-                    })
-                }
-            }
-        }
     }
 
     componentDidMount() {
         this.store.dispatch(Actions.request(this, Urls.faults.faultList, { asdf: '' }, 'get'));
         this.store.dispatch(Actions.request(this, Urls.faults.workOrder, { asf: '' }, 'get'));
+    }
+
+    _header = () => {
+        return {
+            title: "故障处理",
+            right: {
+                icon: 'filter',
+                type: 'feather',
+                color: this.state.isFilterShow ? '#42BD56' : '#666666',
+                onPress: this._rightHeaderClick,
+            }
+        }
     }
 
     _keyExtractor = (item, index) => item.id;
@@ -107,6 +106,12 @@ class FaultListScreen extends WrapScreen {
         } else {
             this.props.navigation.navigate('WorkOrderDetail');
         }
+    }
+
+    _rightHeaderClick = () => {
+        this.setState({
+            isFilterShow: !this.state.isFilterShow
+        })
     }
 
     _onRefresh = () => {

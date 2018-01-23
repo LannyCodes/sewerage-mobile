@@ -1,10 +1,10 @@
 import React from "react";
-import {Component} from 'react'
-import {View} from "react-native";
+import { Component } from 'react'
+import { View } from "react-native";
 import _ from 'lodash'
 import * as Utils from "../../core/utils/index";
-import {USER_KEY} from '../../config/setting'
-import {KHeader} from "../components";
+import { USER_KEY } from '../../config/setting'
+import { KHeader } from "../components";
 import Orientation from 'react-native-orientation';
 import store from '../redux/store/configStore'
 
@@ -22,9 +22,6 @@ export class WrapScreen extends Component {
         super(props);
         this.store = store;
         this.routeName = this.getCurrentRouteName();
-        this.header = {
-            title: '',
-        };
         storage.load({
             key: USER_KEY.USER_STAGE_KEY
         }).then(data => {
@@ -38,13 +35,19 @@ export class WrapScreen extends Component {
         })
     }
 
+    _header = () => {
+        return {
+            title: '',
+        }
+    }
+
     render() {
         let t = this.getCurrentRouteName();
         return (
             <View style={styles.container}>
-                <KHeader header={this.header} title={t} onLeftPress={() => {
+                <KHeader header={this._header()} title={t} onLeftPress={() => {
                     this.props.navigation.goBack()
-                }}/>
+                }} />
                 {this._render()}
             </View>
         )

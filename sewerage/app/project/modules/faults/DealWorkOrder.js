@@ -17,7 +17,13 @@ const screenWidth = Dimensions.get('window').width;
 class DealWorkOrderScreen extends WrapScreen {
     constructor(props) {
         super(props)
-        this.header = {
+        this.state = {
+            imgs: [{ uri: "https://s3.amazonaws.com/uifaces/faces/twitter/brynn/128.jpg" }, { uri: "https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg" }, { uri: "https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg" }]
+        }
+    }
+
+    _header = () => {
+        return {
             title: '故障工单处理',
             right: {
                 text: '提交',
@@ -26,9 +32,6 @@ class DealWorkOrderScreen extends WrapScreen {
                 onPress: this._submit
             }
         };
-        this.state={
-            imgs:[{uri: "https://s3.amazonaws.com/uifaces/faces/twitter/brynn/128.jpg"},{uri: "https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg"},{uri: "https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg"}]
-        }
     }
 
     //func
@@ -37,11 +40,11 @@ class DealWorkOrderScreen extends WrapScreen {
         console.log('haha')
     }
 
-    _imageAdd=(source)=>{
+    _imageAdd = (source) => {
         let imgs = this.state.imgs;
-        imgs.push({uri:source.uri});
+        imgs.push({ uri: source.uri });
         this.setState({
-            imgs:imgs
+            imgs: imgs
         })
     }
 
@@ -86,11 +89,11 @@ class DealWorkOrderScreen extends WrapScreen {
         }
     }
 
-    _deleteImage=(item,index)=>{
+    _deleteImage = (item, index) => {
         let imgs = this.state.imgs;
-        imgs.splice(index,1);
+        imgs.splice(index, 1);
         this.setState({
-            imgs:imgs
+            imgs: imgs
         })
     }
 
@@ -105,14 +108,14 @@ class DealWorkOrderScreen extends WrapScreen {
                         placeholder="请输入巡检反馈（若无可不填）" />
                 </View>
                 <GridView
-                    containerStyle={{marginTop:20}}
+                    containerStyle={{ marginTop: 20 }}
                     columns={4}
                     isShowAdd={true}
                     showDelete={true}
                     imgs={this.state.imgs}
                     addGrid={this._imagePick}
                     deleteClick={this._deleteImage}
-                    // addGrid={this._imagePick}
+                // addGrid={this._imagePick}
                 />
             </View>
         )

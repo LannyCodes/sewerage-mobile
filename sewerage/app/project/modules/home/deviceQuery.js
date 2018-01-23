@@ -67,7 +67,6 @@ class DeviceQueryScreen extends WrapScreen {
 
     constructor(props) {
         super(props);
-        this.header = 'none'
         this.state = {
             isFilterShow: false
         }
@@ -76,6 +75,8 @@ class DeviceQueryScreen extends WrapScreen {
     componentDidMount(){
         this.store.dispatch(Actions.request(this,Urls.device.deviceList));
     }
+
+    _header=()=>'none'
 
     _keyExtractor = (item, index) => index;
 

@@ -22,13 +22,16 @@ const screenWidth = Dimensions.get('window').width;
 class WorkOrderDetailScreen extends WrapScreen {
     constructor(props) {
         super(props);
-        this.header = {
-            title: '故障工单详情'
-        };
         this.state={
             showPreview:false,
         }
     };
+
+    _header=()=>{
+        return {
+            title: '故障工单详情'
+        };
+    }
 
     _keyExtractor = (item, index) => item.id;
 

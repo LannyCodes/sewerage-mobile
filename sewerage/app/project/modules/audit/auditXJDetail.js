@@ -14,9 +14,6 @@ class AuditXJDetailScreen extends WrapScreen {
 
     constructor(props) {
         super(props);
-        this.header = {
-            title: "巡检审核详情",
-        };
         this.state = {
             status: this.props.navigation.state.params.status
         }
@@ -26,6 +23,11 @@ class AuditXJDetailScreen extends WrapScreen {
         this.store.dispatch(Actions.request(this, Urls.Audit.getAuditDetail2)); // 请求
     }
 
+    _header=()=>{
+        return {
+            title: "巡检审核详情",
+        };
+    }
 
     _keyExtractor = (item, index) => index;
 

@@ -1,15 +1,15 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import {
     View,
     Text, TouchableOpacity, FlatList,
 } from 'react-native';
-import {WrapScreen} from "../wrap";
+import { WrapScreen } from "../wrap";
 import * as Utils from "../../../core/utils";
 import * as Actions from "../../redux/actions";
-import {connect} from "react-redux";
+import { connect } from "react-redux";
 import Urls from "../../../config/api/urls";
-import {DefaultPage, ErrorPage, ListFilter, Loading} from "../../components";
-import {Status} from "../../../config/api/api.config";
+import { DefaultPage, ErrorPage, ListFilter, Loading } from "../../components";
+import { Status } from "../../../config/api/api.config";
 
 class AuditManagementScreen extends WrapScreen {
 
@@ -17,7 +17,17 @@ class AuditManagementScreen extends WrapScreen {
 
     constructor(props) {
         super(props);
-        this.header = {
+        this.state = {
+            isFilterShow: false
+        }
+    }
+
+    componentDidMount() {
+        this.store.dispatch(Actions.request(this, Urls.Audit.getAuditList));
+    }
+
+    _header = () => {
+        return {
             title: "审核管理",
             right: {
                 icon: 'filter',
@@ -29,13 +39,6 @@ class AuditManagementScreen extends WrapScreen {
                 }
             }
         }
-        this.state = {
-            isFilterShow: false
-        }
-    }
-
-    componentDidMount() {
-        this.store.dispatch(Actions.request(this, Urls.Audit.getAuditList));
     }
 
     _enterDetail = (type, status) => {
@@ -60,30 +63,30 @@ class AuditManagementScreen extends WrapScreen {
     };
 
     _renderCardStatus = (status) => {
-        let st = {text: '待审核', color: '#FAA346', backgroundColor: '#FEF5EB'};
-        if (status === '0') st = {text: '待审核', color: '#FAA346', backgroundColor: '#FEF5EB'};
-        else if (status === '1') st = {text: '已通过', color: '#1AAD19', backgroundColor: '#E8F6E8'};
-        else if (status === '2') st = {text: '已驳回', color: '#47A9EB', backgroundColor: '#ECF6FD'};
-        else if (status === '3') st = {text: '已废弃', color: '#FF6E61', backgroundColor: '#FFE2DF'};
+        let st = { text: '待审核', color: '#FAA346', backgroundColor: '#FEF5EB' };
+        if (status === '0') st = { text: '待审核', color: '#FAA346', backgroundColor: '#FEF5EB' };
+        else if (status === '1') st = { text: '已通过', color: '#1AAD19', backgroundColor: '#E8F6E8' };
+        else if (status === '2') st = { text: '已驳回', color: '#47A9EB', backgroundColor: '#ECF6FD' };
+        else if (status === '3') st = { text: '已废弃', color: '#FF6E61', backgroundColor: '#FFE2DF' };
         return (
-            <View style={[styles.cardStatus, {backgroundColor: st.backgroundColor}]}>
-                <Text style={{color: st.color, fontSize: 12}}>{st.text}</Text>
+            <View style={[styles.cardStatus, { backgroundColor: st.backgroundColor }]}>
+                <Text style={{ color: st.color, fontSize: 12 }}>{st.text}</Text>
             </View>
         )
     };
 
-    _renderItem = ({item}) => (
+    _renderItem = ({ item }) => (
         <TouchableOpacity style={styles.cardItem}
-                          onPress={() => {
-                              this._enterDetail(item.type, item.status);
-                          }}
+            onPress={() => {
+                this._enterDetail(item.type, item.status);
+            }}
         >
             <View style={styles.row}>
                 <Text style={styles.cardTitle}>{item.title}</Text>
                 {this._renderCardStatus(item.status)}
             </View>
             <Text style={styles.cardContent}>{item.content}</Text>
-            <View style={[styles.row, {marginTop: 10}]}>
+            <View style={[styles.row, { marginTop: 10 }]}>
                 <Text style={styles.cardPerson}>{item.person}</Text>
                 <Text style={styles.cardTime}>{item.time}</Text>
             </View>
@@ -95,7 +98,7 @@ class AuditManagementScreen extends WrapScreen {
             if (!Loading.checkData(this.props.auditList)) return;
             if (this.props.auditList.length > 0) {
                 return (
-                    <View style={{flex: 1}}>
+                    <View style={{ flex: 1 }}>
                         <FlatList
                             data={this.props.auditList}
                             keyExtractor={this._keyExtractor}
@@ -103,24 +106,24 @@ class AuditManagementScreen extends WrapScreen {
                         />
                         {this.state.isFilterShow === true ?
                             <ListFilter
-                                containerStyles={{top: 0}}
+                                containerStyles={{ top: 0 }}
                                 filterArray={filterArray}
                                 maskerClick={() => {
                                     this.setState({
                                         isFilterShow: false,
                                     })
                                 }}
-                            /> : <View/>}
+                            /> : <View />}
                     </View>
                 )
             } else {
                 return (
-                    <DefaultPage content={'暂无审核任务'}/>
+                    <DefaultPage content={'暂无审核任务'} />
                 )
             }
         } else if (this.props.requestStatus === Status.FAIL) {
             return (
-                <ErrorPage/>
+                <ErrorPage />
             )
         }
     }

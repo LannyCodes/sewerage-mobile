@@ -1,33 +1,37 @@
 import React from 'react';
 
-import {WrapScreen} from "../wrap";
-import {connect} from "react-redux";
+import { WrapScreen } from "../wrap";
+import { connect } from "react-redux";
 import * as Utils from "../../../core/utils";
 import Urls from "../../../config/api/urls";
 import * as Actions from "../../redux/actions";
-import {Status} from "../../../config/api/api.config";
-import {ErrorPage, Loading} from "../../components";
-import {FlatList, ScrollView, Text, TouchableOpacity, View} from "react-native";
-import {Avatar, Divider, Icon} from "react-native-elements";
+import { Status } from "../../../config/api/api.config";
+import { ErrorPage, Loading } from "../../components";
+import { FlatList, ScrollView, Text, TouchableOpacity, View } from "react-native";
+import { Avatar, Divider, Icon } from "react-native-elements";
 
 class InspectionDetailScreen extends WrapScreen {
 
     constructor(props) {
         super(props);
-        this.header = {
-            title: "任务详情",
-        };
+
     }
 
     componentDidMount() {
         this.store.dispatch(Actions.request(this, Urls.Inspections.getInspectionDetail)); // 请求
     }
 
+    _header = () => {
+        return {
+            title: '任务详情',
+        }
+    }
+
     _keyExtractor = (item, index) => index;
 
-    _renderItem = ({item}) => (
-        <View style={{padding: 10}}>
-            <Text style={[styles.text, {marginLeft: 5}]}>{item}</Text>
+    _renderItem = ({ item }) => (
+        <View style={{ padding: 10 }}>
+            <Text style={[styles.text, { marginLeft: 5 }]}>{item}</Text>
         </View>
     );
 
@@ -44,37 +48,37 @@ class InspectionDetailScreen extends WrapScreen {
                                 <Avatar
                                     medium
                                     rounded
-                                    source={{uri: "https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg"}}
+                                    source={{ uri: "https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg" }}
                                     activeOpacity={0.7}
                                 />
-                                <View style={{justifyContent: 'space-around', alignItems: 'center', marginLeft: 20}}>
-                                    <Text style={[styles.text, {fontSize: 16}]}>{detail.title}</Text>
+                                <View style={{ justifyContent: 'space-around', alignItems: 'center', marginLeft: 20 }}>
+                                    <Text style={[styles.text, { fontSize: 16 }]}>{detail.title}</Text>
                                     <Text
-                                        style={[styles.text, {fontSize: 14, marginTop: 5}]}>截止时间：{detail.endTime}</Text>
+                                        style={[styles.text, { fontSize: 14, marginTop: 5 }]}>截止时间：{detail.endTime}</Text>
                                 </View>
                             </View>
                             <View style={styles.tip}>
                                 <Text style={styles.tipText}>执行中</Text>
                             </View>
                         </View>
-                        <Divider style={{backgroundColor: '#ddd'}}/>
+                        <Divider style={{ backgroundColor: '#ddd' }} />
                         <View style={styles.rowBetween}>
-                            <Text style={[styles.text, {color: '#666'}]}>设备</Text>
+                            <Text style={[styles.text, { color: '#666' }]}>设备</Text>
                             <Text style={styles.text}>{detail.device}</Text>
                         </View>
-                        <Divider style={{backgroundColor: '#ddd'}}/>
+                        <Divider style={{ backgroundColor: '#ddd' }} />
                         <View style={styles.rowBetween}>
-                            <Text style={[styles.text, {color: '#666'}]}>巡检人</Text>
+                            <Text style={[styles.text, { color: '#666' }]}>巡检人</Text>
                             <Text style={styles.text}>{detail.xjperson}</Text>
                         </View>
-                        <Divider style={{backgroundColor: '#ddd'}}/>
+                        <Divider style={{ backgroundColor: '#ddd' }} />
                         <View style={styles.rowBetween}>
-                            <Text style={[styles.text, {color: '#666'}]}>运营公司</Text>
+                            <Text style={[styles.text, { color: '#666' }]}>运营公司</Text>
                             <Text style={styles.text}>{detail.company}</Text>
                         </View>
-                        <Divider style={{backgroundColor: '#ddd'}}/>
-                        <View style={{padding: 10}}>
-                            <Text style={[styles.text, {color: '#666', marginBottom: 8}]}>任务描述</Text>
+                        <Divider style={{ backgroundColor: '#ddd' }} />
+                        <View style={{ padding: 10 }}>
+                            <Text style={[styles.text, { color: '#666', marginBottom: 8 }]}>任务描述</Text>
                             <Text style={styles.text}>{detail.taskDes}</Text>
                         </View>
                     </View>
@@ -82,13 +86,13 @@ class InspectionDetailScreen extends WrapScreen {
                         <View style={styles.contentTitle}>
                             <Text>巡检内容</Text>
                         </View>
-                        <Divider style={{backgroundColor: '#ddd'}}/>
+                        <Divider style={{ backgroundColor: '#ddd' }} />
                         <FlatList
                             data={detail.xjContent}
                             keyExtractor={this._keyExtractor}
                             renderItem={this._renderItem}
                             ItemSeparatorComponent={() => (
-                                <Divider style={{backgroundColor: '#ddd'}}/>
+                                <Divider style={{ backgroundColor: '#ddd' }} />
                             )}
                         />
                     </View>
@@ -96,7 +100,7 @@ class InspectionDetailScreen extends WrapScreen {
             )
         } else if (this.props.requestStatus === Status.FAIL) {
             return (
-                <ErrorPage/>
+                <ErrorPage />
             )
         }
     }

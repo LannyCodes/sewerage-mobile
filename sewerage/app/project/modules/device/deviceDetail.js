@@ -17,13 +17,16 @@ import Urls from "../../../config/api/urls";
 class DeviceDetailScreen extends WrapScreen {
     constructor(props) {
         super(props)
-        this.header = {
-            title: "设备详情",
-        }
     }
 
-    componentDidMount(){
-        this.store.dispatch(Actions.request(this,Urls.device.deviceDetail));
+    componentDidMount() {
+        this.store.dispatch(Actions.request(this, Urls.device.deviceDetail));
+    }
+
+    _header = () => {
+        return {
+            title: "设备详情",
+        }
     }
 
     _render() {
@@ -58,9 +61,9 @@ class DeviceDetailScreen extends WrapScreen {
                     <View style={styles.contentCell}>
                         <Text style={styles.cellText}>设备型号</Text>
                         <Text style={[styles.cellText, { color: '#333333' }]}>{deviceDetail.deviceModel}</Text>
-                    </View>                    
+                    </View>
                 </View>
-                <View style={[styles.container,{marginTop:11}]}>
+                <View style={[styles.container, { marginTop: 11 }]}>
                     <View style={styles.contentCell}>
                         <Text style={styles.cellText}>供应商</Text>
                         <Text style={[styles.cellText, { color: '#333333' }]}>{deviceDetail.supplier}</Text>
@@ -74,9 +77,9 @@ class DeviceDetailScreen extends WrapScreen {
                     <View style={styles.contentCell}>
                         <Text style={styles.cellText}>生产厂家</Text>
                         <Text style={[styles.cellText, { color: '#333333' }]}>{deviceDetail.factory}</Text>
-                    </View>                    
+                    </View>
                 </View>
-                <View style={[styles.container,{marginTop:11}]}>
+                <View style={[styles.container, { marginTop: 11 }]}>
                     <View style={styles.contentCell}>
                         <Text style={styles.cellText}>出厂日期</Text>
                         <Text style={[styles.cellText, { color: '#333333' }]}>{deviceDetail.manufactureDate}</Text>
@@ -90,16 +93,16 @@ class DeviceDetailScreen extends WrapScreen {
                     <View style={styles.contentCell}>
                         <Text style={styles.cellText}>所属运营商</Text>
                         <Text style={[styles.cellText, { color: '#333333' }]}>{deviceDetail.operator}</Text>
-                    </View>                    
+                    </View>
                 </View>
             </ScrollView >
         )
     }
 }
 
-function mapStateToProps(state){
+function mapStateToProps(state) {
     return {
-        deviceDetail:state.device.getDeviceDetail,
+        deviceDetail: state.device.getDeviceDetail,
     }
 }
 

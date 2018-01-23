@@ -14,9 +14,6 @@ class AuditWBDetailScreen extends WrapScreen {
 
     constructor(props) {
         super(props);
-        this.header = {
-            title: "维保审核详情",
-        };
         this.state = {
             status: this.props.navigation.state.params.status
         }
@@ -24,6 +21,12 @@ class AuditWBDetailScreen extends WrapScreen {
 
     componentDidMount() {
         this.store.dispatch(Actions.request(this, Urls.Audit.getAuditDetail3)); // 请求
+    }
+
+    _header=()=>{
+        return {
+            title: "维保审核详情",
+        };
     }
 
     _renderCardStatus = (status) => {

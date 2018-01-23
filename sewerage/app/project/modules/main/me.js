@@ -16,7 +16,6 @@ class MeScreen extends WrapScreen {
 
     constructor(props) {
         super(props);
-        this.header = 'none';
         this.state = {
             user: {
                 nickName: '',
@@ -27,6 +26,7 @@ class MeScreen extends WrapScreen {
         }
     }
 
+    _header=()=>'none';
 
     componentDidMount() {
         let me = this;

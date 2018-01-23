@@ -8,12 +8,15 @@ import {
     TouchableOpacity,
 } from 'react-native';
 import { WrapScreen } from "../wrap";
-import {SWFlatList} from '../../components';
+import { SWFlatList } from '../../components';
 
 class MessageScreen extends WrapScreen {
     constructor(props) {
         super(props);
-        this.header = {
+    }
+
+    _header = () => {
+        return {
             title: '消息',
             left: {
                 none: true,
@@ -28,13 +31,13 @@ class MessageScreen extends WrapScreen {
 
     _keyExtractor = (item, index) => index
 
-    _itemClick=(item,index) => {
+    _itemClick = (item, index) => {
         console.log('itemClick')
     }
 
-    _renderItem = (item,index) => {
+    _renderItem = (item, index) => {
         return (
-            <TouchableOpacity 
+            <TouchableOpacity
                 style={styles.itemContainer}
                 activeOpacity={1}
                 onPress={this._itemClick}>
@@ -44,7 +47,7 @@ class MessageScreen extends WrapScreen {
                         <Text style={styles.itemTitleText}>巡检任务通知</Text>
                         <Text style={[styles.itemTitleText, { fontSize: 12 }]}>2017-09-30</Text>
                     </View>
-                    <Text 
+                    <Text
                         style={styles.itemContent}
                         numberOfLines={1}>
                         固废处理事业部工作任务管理系统正式启用
@@ -60,9 +63,9 @@ class MessageScreen extends WrapScreen {
                 data={['q', 'w', 'c']}
                 keyExtractor={this._keyExtractor}
                 renderItem={this._renderItem}
-                ListHeaderComponent={<View style={{height:10,backgroundColor:'#f1f1f1'}}/>}
-                ItemSeparatorComponent={()=>{
-                    return <View style={{backgroundColor:'#e5e5e5',height:0.5,flex:1,marginLeft:20}}/>
+                ListHeaderComponent={<View style={{ height: 10, backgroundColor: '#f1f1f1' }} />}
+                ItemSeparatorComponent={() => {
+                    return <View style={{ backgroundColor: '#e5e5e5', height: 0.5, flex: 1, marginLeft: 20 }} />
                 }}
             />
         )
@@ -78,19 +81,19 @@ const styles = StyleSheet.create({
     itemContainer: {
         flexDirection: 'row',
         paddingLeft: 15,
-        paddingRight:15,
+        paddingRight: 15,
         paddingTop: 17,
         paddingBottom: 16,
-        backgroundColor:'#ffffff',
+        backgroundColor: '#ffffff',
     },
     itemMsg: {
-        flex:1,
-        marginLeft:10,
+        flex: 1,
+        marginLeft: 10,
     },
     itemTitle: {
-        flexDirection:'row',
+        flexDirection: 'row',
         justifyContent: 'space-between',
-        marginBottom:9,
+        marginBottom: 9,
     },
     itemTitleText: {
         color: '#666666',

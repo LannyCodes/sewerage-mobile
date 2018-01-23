@@ -1,14 +1,14 @@
 import React from 'react';
 
-import {WrapScreen} from "../wrap";
-import {connect} from "react-redux";
+import { WrapScreen } from "../wrap";
+import { connect } from "react-redux";
 import * as Utils from "../../../core/utils";
 import Urls from "../../../config/api/urls";
 import * as Actions from "../../redux/actions";
-import {Status} from "../../../config/api/api.config";
-import {ErrorPage, Loading} from "../../components";
-import {FlatList, ScrollView, Text, TouchableOpacity, View} from "react-native";
-import {Avatar, Divider, Icon} from "react-native-elements";
+import { Status } from "../../../config/api/api.config";
+import { ErrorPage, Loading } from "../../components";
+import { FlatList, ScrollView, Text, TouchableOpacity, View } from "react-native";
+import { Avatar, Divider, Icon } from "react-native-elements";
 import _ from 'lodash'
 
 class TaskMaintenanceDetailScreen extends WrapScreen {
@@ -16,9 +16,6 @@ class TaskMaintenanceDetailScreen extends WrapScreen {
     constructor(props) {
         super(props);
         console.log(this.props.maintenanceTaskDetail)
-        this.header = {
-            title: "任务详情",
-        };
         this.state = {
             undoList: [],
             doList: [],
@@ -26,7 +23,13 @@ class TaskMaintenanceDetailScreen extends WrapScreen {
     }
 
     componentDidMount() {
-        this.store.dispatch(Actions.request(this,Urls.Task.getMaintenanceTaskDetail)); // 请求
+        this.store.dispatch(Actions.request(this, Urls.Task.getMaintenanceTaskDetail)); // 请求
+    }
+
+    _header = () => {
+        return {
+            title: "任务详情",
+        };
     }
 
     componentWillReceiveProps(nextProps) {
@@ -40,7 +43,7 @@ class TaskMaintenanceDetailScreen extends WrapScreen {
 
     _keyExtractor = (item, index) => index;
 
-    _renderUndoItem = ({item}) => (
+    _renderUndoItem = ({ item }) => (
         <TouchableOpacity style={styles.doItemContent} onPress={() => {
             this.props.navigation.navigate('TaskMaintenanceUpload', {
                 errorId: item,
@@ -58,7 +61,7 @@ class TaskMaintenanceDetailScreen extends WrapScreen {
                     this._moveUndo(item);
                 }}
             />
-            <Text style={[styles.text, {marginLeft: 5}]}>{item}</Text>
+            <Text style={[styles.text, { marginLeft: 5 }]}>{item}</Text>
         </TouchableOpacity>
     );
     _moveUndo = (item) => {
@@ -73,23 +76,23 @@ class TaskMaintenanceDetailScreen extends WrapScreen {
         this.state.doList.push(item);
     }
 
-    _renderDoItem = ({item}) => (
+    _renderDoItem = ({ item }) => (
         <View style={styles.doItemContent}>
-            <Text style={[styles.text, {marginLeft: 5}]}>{item}</Text>
+            <Text style={[styles.text, { marginLeft: 5 }]}>{item}</Text>
         </View>
     );
 
     _renderUndo = () => (
         <View>
-            <View style={{backgroundColor: '#FEF5EE', height: 25, justifyContent: 'center'}}>
-                <Text style={{color: '#666', fontSize: 12, marginLeft: 10}}>未完成</Text>
+            <View style={{ backgroundColor: '#FEF5EE', height: 25, justifyContent: 'center' }}>
+                <Text style={{ color: '#666', fontSize: 12, marginLeft: 10 }}>未完成</Text>
             </View>
             <FlatList
                 data={this.state.undoList}
                 keyExtractor={this._keyExtractor}
                 renderItem={this._renderUndoItem}
                 ItemSeparatorComponent={() => (
-                    <Divider style={{backgroundColor: '#ddd'}}/>
+                    <Divider style={{ backgroundColor: '#ddd' }} />
                 )}
             />
         </View>
@@ -97,15 +100,15 @@ class TaskMaintenanceDetailScreen extends WrapScreen {
 
     _renderDo = () => (
         <View>
-            <View style={{backgroundColor: '#E8F6E8', height: 25, justifyContent: 'center'}}>
-                <Text style={{color: '#666', fontSize: 12, marginLeft: 10}}>已完成</Text>
+            <View style={{ backgroundColor: '#E8F6E8', height: 25, justifyContent: 'center' }}>
+                <Text style={{ color: '#666', fontSize: 12, marginLeft: 10 }}>已完成</Text>
             </View>
             <FlatList
                 data={this.state.doList}
                 keyExtractor={this._keyExtractor}
                 renderItem={this._renderDoItem}
                 ItemSeparatorComponent={() => (
-                    <Divider style={{backgroundColor: '#ddd'}}/>
+                    <Divider style={{ backgroundColor: '#ddd' }} />
                 )}
             />
         </View>
@@ -123,37 +126,37 @@ class TaskMaintenanceDetailScreen extends WrapScreen {
                                 <Avatar
                                     medium
                                     rounded
-                                    source={{uri: "https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg"}}
+                                    source={{ uri: "https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg" }}
                                     activeOpacity={0.7}
                                 />
-                                <View style={{justifyContent: 'space-around', alignItems: 'center', marginLeft: 20}}>
-                                    <Text style={[styles.text, {fontSize: 16}]}>{detail.title}</Text>
+                                <View style={{ justifyContent: 'space-around', alignItems: 'center', marginLeft: 20 }}>
+                                    <Text style={[styles.text, { fontSize: 16 }]}>{detail.title}</Text>
                                     <Text
-                                        style={[styles.text, {fontSize: 14, marginTop: 5}]}>截止时间：{detail.endTime}</Text>
+                                        style={[styles.text, { fontSize: 14, marginTop: 5 }]}>截止时间：{detail.endTime}</Text>
                                 </View>
                             </View>
                             <View style={styles.tip}>
                                 <Text style={styles.tipText}>执行中</Text>
                             </View>
                         </View>
-                        <Divider style={{backgroundColor: '#ddd'}}/>
+                        <Divider style={{ backgroundColor: '#ddd' }} />
                         <View style={styles.rowBetween}>
-                            <Text style={[styles.text, {color: '#666'}]}>设备</Text>
+                            <Text style={[styles.text, { color: '#666' }]}>设备</Text>
                             <Text style={styles.text}>{detail.device}</Text>
                         </View>
-                        <Divider style={{backgroundColor: '#ddd'}}/>
+                        <Divider style={{ backgroundColor: '#ddd' }} />
                         <View style={styles.rowBetween}>
-                            <Text style={[styles.text, {color: '#666'}]}>巡检人</Text>
+                            <Text style={[styles.text, { color: '#666' }]}>巡检人</Text>
                             <Text style={styles.text}>{detail.xjperson}</Text>
                         </View>
-                        <Divider style={{backgroundColor: '#ddd'}}/>
+                        <Divider style={{ backgroundColor: '#ddd' }} />
                         <View style={styles.rowBetween}>
-                            <Text style={[styles.text, {color: '#666'}]}>运营公司</Text>
+                            <Text style={[styles.text, { color: '#666' }]}>运营公司</Text>
                             <Text style={styles.text}>{detail.company}</Text>
                         </View>
-                        <Divider style={{backgroundColor: '#ddd'}}/>
-                        <View style={{padding: 10}}>
-                            <Text style={[styles.text, {color: '#666', marginBottom: 8}]}>任务描述</Text>
+                        <Divider style={{ backgroundColor: '#ddd' }} />
+                        <View style={{ padding: 10 }}>
+                            <Text style={[styles.text, { color: '#666', marginBottom: 8 }]}>任务描述</Text>
                             <Text style={styles.text}>{detail.taskDes}</Text>
                         </View>
                     </View>
@@ -168,7 +171,7 @@ class TaskMaintenanceDetailScreen extends WrapScreen {
             )
         } else if (this.props.requestStatus === Status.FAIL) {
             return (
-                <ErrorPage/>
+                <ErrorPage />
             )
         }
     }

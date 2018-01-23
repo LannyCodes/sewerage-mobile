@@ -21,13 +21,16 @@ import Urls from "../../../config/api/urls";
 class FaultDetailScreen extends WrapScreen {
     constructor(props) {
         super(props)
-        this.header = {
-            title: "故障清单详情"
-        }
     }
 
     componentDidMount() {
         this.store.dispatch(Actions.request(this,Urls.faults.faultDetail))
+    }
+
+    _header=()=>{
+        return {
+            title: "故障清单详情"
+        }
     }
 
     _render() {

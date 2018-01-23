@@ -14,9 +14,6 @@ class AuditGZGDDetailScreen extends WrapScreen {
 
     constructor(props) {
         super(props);
-        this.header = {
-            title: "故障工单审核详情",
-        };
         this.state = {
             status: this.props.navigation.state.params.status
         }
@@ -24,6 +21,12 @@ class AuditGZGDDetailScreen extends WrapScreen {
 
     componentDidMount() {
         this.store.dispatch(Actions.request(this, Urls.Audit.getAuditDetail0)); // 请求
+    }
+
+    _header=()=>{
+        return {
+            title: "故障工单审核详情",
+        };
     }
 
     _renderCardStatus = (status) => {

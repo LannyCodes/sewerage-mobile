@@ -17,10 +17,6 @@ class InspectionManagementScreen extends WrapScreen {
 
     constructor(props) {
         super(props);
-        this.header = {
-            title: "巡检任务",
-        }
-
         this.state = {
             isFilterShow: false
         }
@@ -28,6 +24,12 @@ class InspectionManagementScreen extends WrapScreen {
 
     componentDidMount() {
         this.store.dispatch(Actions.request(this,Urls.Inspections.getTaskList));
+    }
+
+    _header=()=>{
+        return {
+            title: "巡检任务",
+        }
     }
 
     _renderCardStatus = (status) => {
