@@ -8,19 +8,22 @@ import _ from 'lodash'
 
 const fetchData = (context, url, body, dispatch, fn) => {
     if (!_.isNull(fn) && fn === 'get') {
-        get(context, url, body, dispatch);
+        getFetch(context, url, body, dispatch);
     } else {
-        post(context, url, body, dispatch);
+        postFetch(context, url, body, dispatch);
     }
 }
 
-const get = (context, url, body, dispatch) => {
+const getFetch = (context, url, body, dispatch) => {
     if (!body) {
         body = {};
     }
     Object.assign(header, {
         Authorization: _USERTOKEN_
     });
+    dispatch({
+        type: url + ActionType.FETCH_START,
+    })
     api(config.WebServerUrl).get(url, body)
         .then((response) => {
             exec(url, response, dispatch)
@@ -28,7 +31,7 @@ const get = (context, url, body, dispatch) => {
         );
 }
 
-const post = (context, url, body, dispatch) => {
+const postFetch = (context, url, body, dispatch) => {
     Object.assign(header, {
         Authorization: _USERTOKEN_
     });
@@ -100,6 +103,15 @@ const exec = (url, response, dispatch) => {
     }
 }
 
+export const get = (context, url, body) => (dispatch) => {
+    getFetch(context, url, body, dispatch);
+}
+
+export const post = (context, url, body) => (dispatch) => {
+    postFetch(context, url, body, dispatch);
+}
+
 export const request = (context, url, body, fn) => (dispatch) => {
+    body = typeof (body) === 'object' ? body : {};
     fetchData(context, url, body, dispatch, fn);
 };
