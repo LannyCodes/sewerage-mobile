@@ -33,7 +33,9 @@ if (__DEV__) {
         // WebServerUrl: "http://192.168.31.100:8089",
     })
 } else {
-    Object.assign(config, {});
+    Object.assign(config, {
+        WebServerUrl: "http://192.168.31.239:10086",
+    });
 }
 
 export {config, GLOB, USER_KEY}

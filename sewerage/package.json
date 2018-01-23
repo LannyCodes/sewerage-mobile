@@ -9,6 +9,7 @@
   "dependencies": {
     "apisauce": "^0.14.3",
     "lodash": "^4.17.4",
+    "md5": "^2.2.1",
     "prop-types": "^15.6.0",
     "react": "16.0.0",
     "react-native": "0.51.0",

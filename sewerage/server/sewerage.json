@@ -29,41 +29,100 @@
     }
   },
   {
-    "url": "/app/inspection/list",
-    "method": "post",
+    "url": "/api/inspectiontask/list",
+    "method": "get",
     "response": {
       "code": "0",
       "msg": "",
-      "data": [
-        {
-          "title": "宁乡污水处理厂水月巡检任务",
-          "content": "巡检宁乡市经济开发区一号场站，其中区安监项目包含一体机设备，进水口监控设备，出水口监控设备。",
-          "person": "PG-ONE",
-          "time": "2017-09-03 15:20",
-          "status": "0"
-        },
-        {
-          "title": "宁乡污水处理厂水月巡检任务",
-          "content": "巡检宁乡市经济开发区一号场站，其中区安监项目包含一体机设备，进水口监控设备，出水口监控设备。",
-          "person": "PG-ONE",
-          "time": "2017-09-03 15:20",
-          "status": "0"
-        },
-        {
-          "title": "宁乡污水处理厂水月巡检任务",
-          "content": "巡检宁乡市经济开发区一号场站，其中区安监项目包含一体机设备，进水口监控设备，出水口监控设备。",
-          "person": "李小路",
-          "time": "2017-09-03 15:20",
-          "status": "1"
-        },
-        {
-          "title": "宁乡污水处理厂水月巡检任务",
-          "content": "巡检宁乡市经济开发区一号场站，其中区安监项目包含一体机设备，进水口监控设备，出水口监控设备。",
-          "person": "贾乃亮",
-          "time": "2017-09-03 15:20",
-          "status": "2"
-        }
-      ]
+      "data": {
+        "totalCount": 6,
+        "list": [
+          {
+            "EQUIPMENT_NAMES": "渗滤液设备,",
+            "STATUS": 0,
+            "TASK_NUMBER": "302018012216595300",
+            "VALID_TIME": "2018-01-23 16:59:53",
+            "USER_ID": "11E7F9B3F7BE1097AE38192A4CB03053",
+            "PLAN_ID": "11E7FC2DD79EDD1682B2E77001C4DA38",
+            "ID": "11E7FF529CA0E31BADD559CF87FF267A",
+            "USER_NAME": "刘烨",
+            "ITEMS": 1,
+            "COMPANY_ID": "11E7E48AF5B09735B418057D9106F500",
+            "NAME": "简单试一个",
+            "ROW_ID": 1
+          },
+          {
+            "EQUIPMENT_NAMES": "一体机设备,",
+            "STATUS": 0,
+            "TASK_NUMBER": "302018012216432700",
+            "VALID_TIME": "2018-01-23 16:43:27",
+            "USER_ID": "11E7F9B3F7BE1097AE38192A4CB03053",
+            "PLAN_ID": "11E7FF503F72BD27ADD559CF87FF267A",
+            "ID": "11E7FF5050ECC4CFADD559CF87FF267A",
+            "USER_NAME": "刘烨",
+            "ITEMS": 1,
+            "COMPANY_ID": "11E7E48AF5B09735B418057D9106F500",
+            "NAME": "嘉伟测试01",
+            "ROW_ID": 2
+          },
+          {
+            "EQUIPMENT_NAMES": "渗滤液设备,",
+            "STATUS": 0,
+            "TASK_NUMBER": "302018012116595300",
+            "VALID_TIME": "2018-01-22 16:59:53",
+            "USER_ID": "11E7F9B3F7BE1097AE38192A4CB03053",
+            "PLAN_ID": "11E7FC2DD79EDD1682B2E77001C4DA38",
+            "ID": "11E7FE897239BB3B8A389F1DC3C6EE96",
+            "USER_NAME": "刘烨",
+            "ITEMS": 1,
+            "COMPANY_ID": "11E7E48AF5B09735B418057D9106F500",
+            "NAME": "简单试一个",
+            "ROW_ID": 3
+          },
+          {
+            "EQUIPMENT_NAMES": "渗滤液设备,",
+            "STATUS": 1,
+            "TASK_NUMBER": "302018012016595300",
+            "VALID_TIME": "2018-01-21 16:59:53",
+            "USER_ID": "11E7F9B3F7BE1097AE38192A4CB03053",
+            "PLAN_ID": "11E7FC2DD79EDD1682B2E77001C4DA38",
+            "ID": "11E7FDC047CCEDE68A389F1DC3C6EE96",
+            "USER_NAME": "刘烨",
+            "ITEMS": 1,
+            "COMPANY_ID": "11E7E48AF5B09735B418057D9106F500",
+            "NAME": "简单试一个",
+            "ROW_ID": 4
+          },
+          {
+            "EQUIPMENT_NAMES": "渗滤液设备,",
+            "STATUS": 1,
+            "TASK_NUMBER": "302018011916595300",
+            "VALID_TIME": "2018-01-20 16:59:53",
+            "USER_ID": "11E7F9B3F7BE1097AE38192A4CB03053",
+            "PLAN_ID": "11E7FC2DD79EDD1682B2E77001C4DA38",
+            "ID": "11E7FCF71D6550749CD651B221F09A3E",
+            "USER_NAME": "刘烨",
+            "ITEMS": 1,
+            "COMPANY_ID": "11E7E48AF5B09735B418057D9106F500",
+            "NAME": "简单试一个",
+            "ROW_ID": 5
+          },
+          {
+            "EQUIPMENT_NAMES": "渗滤液设备,",
+            "STATUS": 0,
+            "TASK_NUMBER": "302018011816595400",
+            "VALID_TIME": "2018-01-19 16:59:54",
+            "USER_ID": "11E7F9B3F7BE1097AE38192A4CB03053",
+            "PLAN_ID": "11E7FC2DD79EDD1682B2E77001C4DA38",
+            "ID": "11E7FC2DF3478D6382B2E77001C4DA38",
+            "USER_NAME": "刘烨",
+            "ITEMS": 1,
+            "COMPANY_ID": "11E7E48AF5B09735B418057D9106F500",
+            "NAME": "简单试一个",
+            "ROW_ID": 6
+          }
+        ]
+      }
     }
   },
   {
@@ -114,6 +173,101 @@
           "type": "1"
         }
       ]
+    }
+  },
+  {
+    "url": "/api/breakdownbill/list",
+    "method": "get",
+    "response": {
+      "code": 0,
+      "msg": "",
+      "data": {
+        "totalCount": 3,
+        "list": [
+          {
+            "BREAK_NUMBER": "GZGD-01-11",
+            "STATUS": "1",
+            "DESCRIBE": "人间大炮一级准备",
+            "USER_NAME": "炮姐",
+            "CREATE_TIME": "2017-09-03 15:20"
+          },
+          {
+            "BREAK_NUMBER": "GZGD-01-11",
+            "STATUS": "0",
+            "DESCRIBE": "人间大炮一级准备",
+            "USER_NAME": "炮姐",
+            "CREATE_TIME": "2017-09-03 15:20"
+          },
+          {
+            "BREAK_NUMBER": "GZGD-01-11",
+            "STATUS": "2",
+            "DESCRIBE": "阿姆斯特朗回旋加速喷气式阿姆斯特朗炮",
+            "USER_NAME": "银时",
+            "CREATE_TIME": "2017-09-03 15:20"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "url": "/api/breakdown/list",
+    "method": "get",
+    "response": {
+      "code": 0,
+      "msg": "",
+      "data": {
+        "totalCount": 3,
+        "list": [
+          {
+            "ID": 0,
+            "EQUIPMENT_NAME": "人间大炮",
+            "TYPE": "1",
+            "RANK": "2",
+            "BREAKDOWN_DESCRIBE": "人间大炮一级准备",
+            "CREATE_USER": "炮姐",
+            "CREATE_TIME": "2017-09-03 15:20",
+            "HANDLE_WAY": "发射出去",
+            "STATION_NAME": "002"
+          },
+          {
+            "ID": 1,
+            "EQUIPMENT_NAME": "阿姆斯特朗炮",
+            "TYPE": "0",
+            "RANK": "3",
+            "BREAKDOWN_DESCRIBE": "阿姆斯特朗回旋加速喷气式阿姆斯特朗炮",
+            "CREATE_USER": "银时",
+            "CREATE_TIME": "2017-09-03 15:20"
+          },
+          {
+            "ID": 2,
+            "EQUIPMENT_NAME": "人间大炮",
+            "TYPE": "1",
+            "RANK": "1",
+            "BREAKDOWN_DESCRIBE": "人间大炮一级准备",
+            "CREATE_USER": "炮姐",
+            "CREATE_TIME": "2017-09-03 15:20"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "url": "/app/fault/listDetail",
+    "method": "post",
+    "response": {
+      "code": 0,
+      "msg": "",
+      "data": {
+        "name": "紫罗兰的永恒花园",
+        "status": "1",
+        "time": "2017-09-03 15:20",
+        "reportPerson": "京阿尼",
+        "faultFrom": "维保",
+        "faultType": "机械故障",
+        "level": "1",
+        "description": "湖南宁乡经济技术开发区污水处理厂采用较为先进的污水处理工艺五段式A/A/O-A/O+二沉池+微絮凝池+V型滤池+ClO2消毒， 其设计规模为5万立方米/日",
+        "dealway": "湖南宁乡经济技术开发区污水处理厂采用较为先进的污水处理工艺五段式A/A/O-A/O+二沉池+微絮凝池+V型滤池+ClO2消毒， 其设计规模为5万立方米/日"
+      }
     }
   },
   {
