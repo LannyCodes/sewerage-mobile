@@ -92,19 +92,20 @@ class DeviceQueryScreen extends WrapScreen {
     }
 
     _onRefresh=()=>{
-
+        
     }
 
     _pullUp=()=>{
-        let self = this;
-        this.setState({
-            pullingUp:true,
-        })
-        setTimeout(() => {
-            self.setState({
-                pullingUp:false,
-            })
-        }, 4000);
+        
+        // let self = this;
+        // this.setState({
+        //     pullingUp:true,
+        // })
+        // setTimeout(() => {
+        //     self.setState({
+        //         pullingUp:false,
+        //     })
+        // }, 1500);
     }
 
     //渲染单行
