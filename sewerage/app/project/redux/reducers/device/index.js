@@ -2,27 +2,38 @@ import { combineReducers } from 'redux';
 import Urls from "../../../../config/api/urls";
 import ActionType from '../../actionType';
 
-let deviceList = [];
-const getDeviceList = (state = [], action) => {
-    let isFetching = false;
+const deviceListRequest = (state, action) => {
+    state = state || {
+        list: [],
+        isFetching: false,
+        body: action.body,
+    }
     let url = Urls.device.deviceList;
     switch (action.type) {
         case url + ActionType.FETCH_START:
-            isFetching = true;
-            break;
+            return {
+                ...state,
+                isFetching: true,
+            }
         case url:
-            deviceList = action.data.list;
+            let body = action.body;
+            if (action.data.list.length > 0) {
+                body.pageIndex = body.pageIndex + 1;
+            }
+            return {
+                ...state,
+                isFetching: false,
+                list: action.data.list,
+                body: body,
+            }
         case url + ActionType.REQUEST_ERROR:
-            isFetching = false;
-            break
+            return {
+                ...state,
+                isFetching: false,
+            }
         default:
-            isFetching = false;
-            break;
+            return state
     }
-    return {
-        deviceList: deviceList,
-        isFetching: isFetching,
-    };
 }
 
 let deviceDetail = {}
@@ -34,6 +45,6 @@ const getDeviceDetail = (state = [], action) => {
 }
 
 export default combineReducers({
-    getDeviceList,
+    deviceListRequest,
     getDeviceDetail,
 })

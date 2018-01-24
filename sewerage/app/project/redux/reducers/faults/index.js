@@ -6,7 +6,7 @@ import _ from 'lodash';
 const faultsListRequest = (state, action) => {
     state = state || {
         isFetching: false,
-        faultsList: [],
+        list: [],
         body: action.body,
     }
     let url = Urls.faults.faultList
@@ -24,7 +24,7 @@ const faultsListRequest = (state, action) => {
             return {
                 ...state,
                 isFetching: false,
-                faultsList: action.data.list,
+                list: action.data.list,
                 body: body,
             }
         case url + ActionType.REQUEST_ERROR:
@@ -40,7 +40,7 @@ const faultsListRequest = (state, action) => {
 const workOrderRequest = (state = [], action) => {
     state = state || {
         isFetching: false,
-        workOrders: [],
+        list: [],
         body: action.body,
     }
     let url = Urls.faults.workOrder
@@ -58,7 +58,7 @@ const workOrderRequest = (state = [], action) => {
             return {
                 ...state,
                 isFetching: false,
-                workOrders: action.data.list,
+                list: action.data.list,
                 body:body,
             }
         case url + ActionType.REQUEST_ERROR:

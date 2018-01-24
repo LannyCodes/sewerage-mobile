@@ -69,19 +69,18 @@ class DeviceQueryScreen extends WrapScreen {
         super(props);
         this.state = {
             isFilterShow: false,
-            pullingUp: false,
         }
+        this.isPullDown = false;
+        this.isPullUp = false;
     }
 
     componentDidMount(){
-        this.store.dispatch(Actions.request(this,Urls.device.deviceList));
+        this._onRefresh();
     }
 
     _header=()=>'none'
 
     _keyExtractor = (item, index) => index;
-
-    //action
 
     _itemClick=(item,index)=>{
         this.props.navigation.navigate('DeviceDetail')
@@ -92,20 +91,18 @@ class DeviceQueryScreen extends WrapScreen {
     }
 
     _onRefresh=()=>{
-        
+        this.isPullDown = true;
+        let param = {
+            pageIndex:1,
+            pageSize:15,
+        }
+        this.store.dispatch(Actions.post(this,Urls.device.deviceList,param));
     }
 
     _pullUp=()=>{
-        
-        // let self = this;
-        // this.setState({
-        //     pullingUp:true,
-        // })
-        // setTimeout(() => {
-        //     self.setState({
-        //         pullingUp:false,
-        //     })
-        // }, 1500);
+
+        this.isPullUp = true;
+        this.store.dispatch(Actions.post(this,Urls.device.deviceList,this.props.deviceListRequest.body));
     }
 
     //渲染单行
@@ -136,10 +133,10 @@ class DeviceQueryScreen extends WrapScreen {
     _render() {
         let self = this
         // if(!Loading.isLoading(this.props.isFetching))return
-        if(this.props.isFetching){
-            console.log(this.props.deviceList)
+        if(this.props.deviceListRequest.isFetching){
+            console.log(this.props.deviceListRequest.list)
         }else{
-            console.log(this.props.deviceList)
+            console.log(this.props.deviceListRequest.list)
         }
         return (
             <View style={styles.container}>
@@ -191,12 +188,12 @@ class DeviceQueryScreen extends WrapScreen {
                 </View>
                 <Divider style={{ backgroundColor: '#e0e0e0' }} />
                 <SWFlatList
-                    refreshing={this.props.isFetching}
+                    refreshing={this.props.deviceListRequest.isFetching && this.isPullDown}
                     onRefresh={this._onRefresh}
-                    data={this.props.deviceList}
+                    data={this.props.deviceListRequest.list}
                     keyExtractor={this._keyExtractor}
                     renderItem={this._renderItem}
-                    pullingUp={this.state.pullingUp}
+                    pullingUp={this.props.deviceListRequest.isFetching && this.isPullUp}
                     pullUp={this._pullUp}
                 />
                 {this.state.isFilterShow === true ? <ListFilter
@@ -215,8 +212,7 @@ class DeviceQueryScreen extends WrapScreen {
 
 function mapStateToProps(state){
     return {
-        deviceList:state.device.getDeviceList.deviceList,
-        isFetching:state.device.getDeviceList.isFetching,
+        deviceListRequest:state.device.deviceListRequest,
     }
 }
 
