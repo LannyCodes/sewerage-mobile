@@ -92,42 +92,16 @@ class TaskDetailScreen extends WrapScreen {
                         });
                     }}
                 />
+                <Text style={[styles.text, {marginLeft: 5}]}>{item.CONTENT}</Text>
             </TouchableOpacity>
         )
     };
 
-    _renderDoItem = ({item, index}) => {
-        let color = ['#eeeeee', '#FFAE32', '#42BB55', '#2384E8'];// 0未巡检 1异常 2正常3未确定
-        return (
-            <View>
-                <TouchableOpacity style={styles.doItemContent} onPress={() => {
-                    let params = {'ID': item.ID};
-                    Utils.fetch(this, Urls.Task[this.dealDetailFun[this.type]], params).then((data) => {
-                        console.log(data)
-                        if (item.STATUS === 2) {
-                            // 正常 弹出popup
-
-                        } else {
-                            // 异常 进入异常详情页面
-                            this.props.navigation.navigate('TaskDealDetail', {
-                                data: data
-                            });
-                        }
-                    });
-                }}>
-                    <Icon
-                        size={18}
-                        name={'check-square'}
-                        type='feather'
-                        color={color[item.STATUS]} // 0未巡检 1异常 2正常 3未确定
-                    />
-                    <Text style={[styles.text, {marginLeft: 5}]}>{item.CONTENT}</Text>
-
-                </TouchableOpacity>
-                {this.state.discribe && i === index && <Text>{this.state.discribe}</Text>}
-            </View>
-        )
-    };
+    _renderDoItem = ({item}) => (
+        <View style={styles.doItemContent}>
+            <Text style={[styles.text, {marginLeft: 5}]}>{item.CONTENT}</Text>
+        </View>
+    );
 
     _renderUndo = (undoList) => (
         <View>
