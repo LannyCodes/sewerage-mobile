@@ -34,7 +34,7 @@ class WorkScreen extends WrapScreen {
         };
     }
 
-    _header=()=>'none';
+    _header = () => 'none';
 
     _onQrSuccess = (result) => {
         // 进入维保页面
@@ -64,10 +64,10 @@ class WorkScreen extends WrapScreen {
             >
                 {
                     parameters.map((item, i) => (
-                            <View style={styles.paramsContainerStyle}>
-                                <View style={styles.paramsStyle} key={i}>
+                            <View style={styles.paramsContainerStyle} key={'CarouselContainer' + i}>
+                                <View style={styles.paramsStyle}>
                                     {item.map((sim, j) => (
-                                        <View style={styles.paramsItem} key={j}>
+                                        <View style={styles.paramsItem} key={'CarouselContent' + j}>
                                             <PercentageCircle radius={33} percent={parseInt(sim.size)}
                                                               color={circleColor[i][j]}
                                                               bgcolor={'#EBEBEB'}
@@ -84,12 +84,7 @@ class WorkScreen extends WrapScreen {
                                         </View>
                                     ))}
                                 </View>
-                                {this._renderDot(i, [
-                                    <View style={[styles.dot, {
-                                        backgroundColor: '#42BB55'
-                                    }]}/>,
-                                    <View style={styles.dot}/>
-                                ])}
+
                             </View>
                         )
                     )

@@ -17,10 +17,6 @@ class InspectionManagementScreen extends WrapScreen {
 
     constructor(props) {
         super(props);
-        this.header = {
-            title: "巡检任务",
-        };
-
         this.state = {
             isFilterShow: false
         }
@@ -45,7 +41,7 @@ class InspectionManagementScreen extends WrapScreen {
         else st = {text: '已完成', color: '#1AAD19', backgroundColor: '#E8F6E8'};
         return (
             <View style={[styles.cardStatus, {backgroundColor: st.backgroundColor}]}>
-                <Text style={{color: st.color}}>{st.text}</Text>
+                <Text style={{color: st.color, fontSize: 12}}>{st.text}</Text>
             </View>
         )
     };
@@ -151,7 +147,7 @@ const styles = Utils.PLStyle({
         justifyContent: 'center',
         alignItems: 'center',
         height: 22,
-        width: 60,
+        width: 50,
         borderRadius: 20
     }
 })

@@ -6,7 +6,6 @@ import {ScrollView, Text, TextInput, TouchableOpacity, View} from "react-native"
 import {Divider, Icon} from "react-native-elements";
 import {GridImagePicker} from "../../components";
 import Urls from "../../../config/api/urls";
-import * as Actions from "../../redux/actions";
 
 let imageIds0 = [];
 let imageIds1 = [];
@@ -76,7 +75,7 @@ class TaskUploadScreen extends WrapScreen {
                 }
             }
         }
-    }
+    };
 
     _getSelectedStyle = (index) => {
         let style;

@@ -1,17 +1,28 @@
 import {combineReducers} from 'redux';
 import Urls from "../../../../config/api/urls";
 
-let maintenanceList = null; // 维保列表数据
-const getMaintenanceList= (state = [], action) => {
-    if (action.type === Urls.Maintenance.getMaintenanceList) {
-        maintenanceList = action.data;
-        return maintenanceList
+let taskList = null // 缓存请求数据
+const getTaskList = (state = [], action) => {
+    if (action.type === Urls.Maintenance.getTaskList) {
+        taskList = action.data
+        return taskList
     }
-    return maintenanceList
+    return taskList
+};
+
+
+let maintenanceDetail = null; // 缓存请求数据
+const getMaintenanceDetail = (state = [], action) => {
+    if (action.type === Urls.Maintenance.getMaintenanceDetail) {
+        maintenanceDetail = action.data
+        return maintenanceDetail
+    }
+    return maintenanceDetail
 };
 
 
 export default combineReducers({
-    getMaintenanceList
+    getTaskList,
+    getMaintenanceDetail
 });
 

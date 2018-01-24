@@ -25,7 +25,7 @@ class TaskListScreen extends WrapScreen {
         this.store.dispatch(Actions.request(this, Urls.Task.getTaskList, params)); // 请求
     }
 
-    _header=()=>{
+    _header = () => {
         return {
             title: "任务选择",
         }
@@ -40,7 +40,7 @@ class TaskListScreen extends WrapScreen {
         else st = {text: '已完成', color: '#1AAD19', backgroundColor: '#E8F6E8'};
         return (
             <View style={[styles.cardStatus, {backgroundColor: st.backgroundColor}]}>
-                <Text style={{color: st.color}}>{st.text}</Text>
+                <Text style={{color: st.color, fontSize: 12}}>{st.text}</Text>
             </View>
         )
     };
@@ -52,10 +52,14 @@ class TaskListScreen extends WrapScreen {
                               onPress={() => {
                                   this.props.navigation.navigate('TaskDetail', {
                                       ITEM_ID: item.ITEM_ID,
-                                      type: item.TYPE
+                                      type: item.TYPE,
+                                      onComplete: () => {
+                                          const {qrData} = this.props.navigation.state.params || ''; // 获取参数
+                                          let params = {'EQUIPMENT_ID': qrData};
+                                          this.store.dispatch(Actions.request(this, Urls.Task.getTaskList, params)); // 请求
+                                      }
                                   })
-                              }}
-            >
+                              }}>
                 <View style={styles.row}>
                     <Text style={styles.cardTitle}>{item.TASK_NUMBER}</Text>
                     {this._renderCardStatus(item.STATUS)}
@@ -142,7 +146,7 @@ const styles = Utils.PLStyle({
         justifyContent: 'center',
         alignItems: 'center',
         height: 22,
-        width: 60,
+        width: 50,
         borderRadius: 20
     }
 })
