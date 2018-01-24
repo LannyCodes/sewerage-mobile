@@ -68,7 +68,8 @@ class DeviceQueryScreen extends WrapScreen {
     constructor(props) {
         super(props);
         this.state = {
-            isFilterShow: false
+            isFilterShow: false,
+            pullingUp: false,
         }
     }
 
@@ -91,11 +92,19 @@ class DeviceQueryScreen extends WrapScreen {
     }
 
     _onRefresh=()=>{
-        
+
     }
 
     _pullUp=()=>{
-        
+        let self = this;
+        this.setState({
+            pullingUp:true,
+        })
+        setTimeout(() => {
+            self.setState({
+                pullingUp:false,
+            })
+        }, 4000);
     }
 
     //渲染单行
@@ -186,6 +195,7 @@ class DeviceQueryScreen extends WrapScreen {
                     data={this.props.deviceList}
                     keyExtractor={this._keyExtractor}
                     renderItem={this._renderItem}
+                    pullingUp={this.state.pullingUp}
                     pullUp={this._pullUp}
                 />
                 {this.state.isFilterShow === true ? <ListFilter
