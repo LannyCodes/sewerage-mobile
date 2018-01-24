@@ -18,7 +18,8 @@ class InspectionDetailScreen extends WrapScreen {
     }
 
     componentDidMount() {
-        this.store.dispatch(Actions.request(this, Urls.Inspections.getInspectionDetail)); // 请求
+        let params = {ID: this.props.navigation.state.params.id};
+        this.store.dispatch(Actions.request(this, Urls.Inspections.getInspectionDetail, params, 'get')); // 请求
     }
 
     _header = () => {
@@ -29,11 +30,34 @@ class InspectionDetailScreen extends WrapScreen {
 
     _keyExtractor = (item, index) => index;
 
-    _renderItem = ({ item }) => (
-        <View style={{ padding: 10 }}>
-            <Text style={[styles.text, { marginLeft: 5 }]}>{item}</Text>
+    _renderItem = ({item}) => (
+        <View>
+            <View style={[styles.rowBetween, {height: 30}]}>
+                <Text style={{color: '#666', fontSize: 15}}>{item.EQUIPMENT_NAME}</Text>
+            </View>
+            {item.ITEM_CONTENTS.map((item, i) => {
+                let status = ['未巡检', '异常', '正常', '未确定'];
+                return (
+                    <View key={i} style={[styles.rowBetween,{height:30}]}>
+                        <Text style={{color: '#999', fontSize: 13}}>{item.CONTENT} - {status[item.STATUS]}</Text>
+                    </View>
+                )
+            })}
         </View>
     );
+
+    _renderCardStatus = (status) => {
+        let st = {text: '待执行', color: '#47A9EB', backgroundColor: '#ECF6FD'};
+        if (status === 0) st = {text: '待执行', color: '#47A9EB', backgroundColor: '#ECF6FD'};
+        else if (status === 1) st = {text: '执行中', color: '#FAA346', backgroundColor: '#FEF5EB'};
+        else st = {text: '已完成', color: '#1AAD19', backgroundColor: '#E8F6E8'};
+        return (
+            <View style={[styles.cardStatus, {backgroundColor: st.backgroundColor}]}>
+                <Text style={{color: st.color}}>{st.text}</Text>
+            </View>
+        )
+    };
+
 
     _render() {
         const detail = this.props.inspectionDetail;
@@ -48,51 +72,48 @@ class InspectionDetailScreen extends WrapScreen {
                                 <Avatar
                                     medium
                                     rounded
-                                    source={{ uri: "https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg" }}
+                                    source={{uri: "https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg"}}
                                     activeOpacity={0.7}
                                 />
-                                <View style={{ justifyContent: 'space-around', alignItems: 'center', marginLeft: 20 }}>
-                                    <Text style={[styles.text, { fontSize: 16 }]}>{detail.title}</Text>
+                                <View
+                                    style={{justifyContent: 'space-around', alignItems: 'flex-start', marginLeft: 20}}>
+                                    <Text style={[styles.text, {fontSize: 16}]}>{detail.TASK_NUMBER}</Text>
                                     <Text
-                                        style={[styles.text, { fontSize: 14, marginTop: 5 }]}>截止时间：{detail.endTime}</Text>
+                                        style={[styles.text, {
+                                            fontSize: 14,
+                                            marginTop: 5
+                                        }]}>截止时间：{detail.VALID_TIME}</Text>
                                 </View>
                             </View>
-                            <View style={styles.tip}>
-                                <Text style={styles.tipText}>执行中</Text>
-                            </View>
+                            {this._renderCardStatus(detail.STATUS)}
                         </View>
-                        <Divider style={{ backgroundColor: '#ddd' }} />
+                        <Divider style={{backgroundColor: '#ddd'}}/>
                         <View style={styles.rowBetween}>
-                            <Text style={[styles.text, { color: '#666' }]}>设备</Text>
-                            <Text style={styles.text}>{detail.device}</Text>
+                            <Text style={[styles.text, {color: '#666'}]}>巡检人</Text>
+                            <Text style={styles.text}>{detail.EXE_USER_NAME}</Text>
                         </View>
-                        <Divider style={{ backgroundColor: '#ddd' }} />
+                        <Divider style={{backgroundColor: '#ddd'}}/>
                         <View style={styles.rowBetween}>
-                            <Text style={[styles.text, { color: '#666' }]}>巡检人</Text>
-                            <Text style={styles.text}>{detail.xjperson}</Text>
+                            <Text style={[styles.text, {color: '#666'}]}>审核人</Text>
+                            <Text style={styles.text}>{detail.CHECK_USER_NAME}</Text>
                         </View>
-                        <Divider style={{ backgroundColor: '#ddd' }} />
+                        <Divider style={{backgroundColor: '#ddd'}}/>
                         <View style={styles.rowBetween}>
-                            <Text style={[styles.text, { color: '#666' }]}>运营公司</Text>
-                            <Text style={styles.text}>{detail.company}</Text>
-                        </View>
-                        <Divider style={{ backgroundColor: '#ddd' }} />
-                        <View style={{ padding: 10 }}>
-                            <Text style={[styles.text, { color: '#666', marginBottom: 8 }]}>任务描述</Text>
-                            <Text style={styles.text}>{detail.taskDes}</Text>
+                            <Text style={[styles.text, {color: '#666'}]}>运营公司</Text>
+                            <Text style={styles.text}>{detail.COMPANY_ID}</Text>
                         </View>
                     </View>
                     <View style={styles.content}>
                         <View style={styles.contentTitle}>
                             <Text>巡检内容</Text>
                         </View>
-                        <Divider style={{ backgroundColor: '#ddd' }} />
+                        <Divider style={{backgroundColor: '#ddd'}}/>
                         <FlatList
-                            data={detail.xjContent}
+                            data={detail.ITEMS}
                             keyExtractor={this._keyExtractor}
                             renderItem={this._renderItem}
                             ItemSeparatorComponent={() => (
-                                <Divider style={{ backgroundColor: '#ddd' }} />
+                                <Divider style={{backgroundColor: '#ddd'}}/>
                             )}
                         />
                     </View>
@@ -100,7 +121,7 @@ class InspectionDetailScreen extends WrapScreen {
             )
         } else if (this.props.requestStatus === Status.FAIL) {
             return (
-                <ErrorPage />
+                <ErrorPage/>
             )
         }
     }
@@ -122,6 +143,13 @@ const styles = Utils.PLStyle({
     },
     detail: {
         backgroundColor: 'white'
+    },
+    cardStatus: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        height: 22,
+        width: 60,
+        borderRadius: 20
     },
     text: {
         color: '#333333',
@@ -167,6 +195,7 @@ const styles = Utils.PLStyle({
         alignItems: 'center',
         height: 44,
         paddingLeft: 10
-    }
+    },
+
 
 })

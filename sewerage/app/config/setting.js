@@ -34,7 +34,7 @@ if (__DEV__) {
     })
 } else {
     Object.assign(config, {
-        WebServerUrl: "http://192.168.31.239:10086",
+        WebServerUrl: "http://192.168.31.239:8089",
     });
 }
 

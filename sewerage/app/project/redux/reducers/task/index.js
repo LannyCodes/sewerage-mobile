@@ -10,9 +10,8 @@ const getTaskList = (state = [], action) => {
     return taskList
 };
 
-
-let maintenanceTaskDetail = null; // 维保任务详情
 const getMaintenanceTaskDetail = (state = [], action) => {
+    let maintenanceTaskDetail = null; // 扫码 维保任务详情
     if (action.type === Urls.Task.getMaintenanceTaskDetail) {
         maintenanceTaskDetail = action.data;
         return maintenanceTaskDetail
@@ -20,8 +19,18 @@ const getMaintenanceTaskDetail = (state = [], action) => {
     return maintenanceTaskDetail
 };
 
+const getInspectionTaskDetail = (state = [], action) => {
+    let inspectionTaskDetail = null; // 扫码 巡检任务详情
+    if (action.type === Urls.Task.getInspectionTaskDetail) {
+        inspectionTaskDetail = action.data;
+        return inspectionTaskDetail
+    }
+    return inspectionTaskDetail
+};
+
 export default combineReducers({
     getTaskList,
-    getMaintenanceTaskDetail
+    getMaintenanceTaskDetail,
+    getInspectionTaskDetail
 });
 

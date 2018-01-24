@@ -1,4 +1,8 @@
 const Urls = {
+    Common: {
+        fileUpload: '/api/file/upload',
+        fileSave: '/api/file',
+    },
     Login: {
         login: '/api/user/login',
         otp: '/app/login/otp',
@@ -6,11 +10,14 @@ const Urls = {
     },
     Inspections: {
         getTaskList: '/api/inspectiontask/list', // 获取巡检列表， get
-        getInspectionDetail: '/app/inspection/inspectionDetail', // 获取巡检任务详情
+        getInspectionDetail: '/api/inspectiontask/detail', // 获取巡检任务详情
     },
     Task: {
-        getTaskList: '/app/task/list', // 获取任务列表
-        getMaintenanceTaskDetail: '/app/task/maintenanceDetail', // 获取维保任务详情
+        getTaskList: '/api/home/scan', // 扫码-获取任务列表
+        getInspectionTaskDetail: '/api/inspectiontaskItem', // 扫码 获取巡检任务详情
+        getMaintenanceTaskDetail: '/api/maintenancetaskItem', // 扫码 获取维保任务详情
+        inspectiontaskDeal: '/api/inspectiontaskItem/deal', // 巡检内容处理
+        maintenancetaskDeal: '/api/maintenancetaskItem/deal' // 维保内容处理
     },
     Audit: {
         getAuditList: '/app/audit/list', // 获取巡检列表,
@@ -28,16 +35,16 @@ const Urls = {
         faultDetail: '/app/fault/listDetail',//故障清单详情
     },
     statistics: {
-        inspectionStatistics:'/app/statistics/inspection',
-        maintenanceStatistics:'/app/statistics/maintenance',
-        stationStatistics:'/app/statistics/station',
+        inspectionStatistics: '/app/statistics/inspection',
+        maintenanceStatistics: '/app/statistics/maintenance',
+        stationStatistics: '/app/statistics/station',
     },
     device: {
         deviceList: '/app/device/list',
         deviceDetail: '/app/device/detail',
     },
-    User:{
-        userInfo:'/app/user/info'
+    User: {
+        userInfo: '/app/user/info'
     }
 };
 export default Urls

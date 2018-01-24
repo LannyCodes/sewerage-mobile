@@ -24,7 +24,7 @@ const get = (context, url, body, resolve, reject) => {
     });
     api(config.WebServerUrl).get(url, body)
         .then((response) => {
-                exec(response, resolve);
+                exec(context, response, resolve);
             }
         );
 };
@@ -48,13 +48,14 @@ const post = (context, url, body, resolve, reject) => {
     }
     api(config.WebServerUrl).post(url, formData || {})
         .then((response) => {
-                exec(response, resolve);
+                console.log(response)
+                exec(context, response, resolve);
             }
         );
 };
 
 
-const exec = (response, resolve) => {
+const exec = (context, response, resolve) => {
     const {status} = response;
     if (response.ok) {
         if (response.status && status === 200) {
