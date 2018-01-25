@@ -18,20 +18,33 @@ class InspectionManagementScreen extends WrapScreen {
     constructor(props) {
         super(props);
         this.state = {
-            isFilterShow: false
+            isFilterShow: false,
         }
-
+        this.pullingFlag = ''
     }
 
     componentDidMount() {
-        let params = { pageIndex: 1, pageSize: 10 };
-        this.store.dispatch(Actions.request(this, Urls.Inspections.getTaskList, params, 'get'));
+        this._refresh()
     }
 
     _header = () => {
         return {
             title: "巡检任务",
         }
+    }
+
+    _refresh = () => {
+        this.pullingFlag = 'refresh'
+        let params = {
+            pageIndex: 1,
+            pageSize: 10,
+        }
+        this.store.dispatch(Actions.get(this, Urls.Inspections.getTaskList, params));
+    }
+
+    _pullUp = () => {
+        this.pullingFlag = 'pullup'
+        this.store.dispatch(Actions.get(this, Urls.Inspections.getTaskList, this.props.taskListRequest.body));
     }
 
     _renderCardStatus = (status) => {
@@ -65,27 +78,23 @@ class InspectionManagementScreen extends WrapScreen {
         </TouchableOpacity>
     );
 
+
+
     _render() {
         if (this.props.requestStatus === Status.SUCCESS) {
-            console.log(this.props.inspectionList)
-            if (!Loading.checkData(this.props.inspectionList)) return;
-            if (this.props.inspectionList.list.length > 0) {
+            if (!Loading.checkData(this.props.taskListRequest.list)) return;
+            if (this.props.taskListRequest.list.length > 0) {
                 return (
                     <View style={{ flex: 1 }}>
                         <SWFlatList
-                            // refreshing={true}
-                            onRefresh={() => { }}
-                            data={this.props.inspectionList.list}
+                            refreshing={this.props.taskListRequest.isFetching && this.pullingFlag === 'refresh'}
+                            onRefresh={this._refresh}
+                            data={this.props.taskListRequest.list}
                             keyExtractor={this._keyExtractor}
                             renderItem={this._renderItem}
-                            pullingUp={true}
-                            pullUp={() => { }}
+                            pullingUp={this.props.taskListRequest.isFetching && this.pullingFlag === 'pullup'}
+                            pullUp={this._pullUp}
                         />
-                        {/* <FlatList
-                            data={this.props.inspectionList.list}
-                            keyExtractor={this._keyExtractor}
-                            renderItem={this._renderItem}
-                        /> */}
                         {this.state.isFilterShow === true ?
                             <ListFilter
                                 containerStyles={{ top: 0 }}
@@ -114,7 +123,7 @@ class InspectionManagementScreen extends WrapScreen {
 //make this component available to the app
 function mapStateToProps(state) {
     return {
-        inspectionList: state.Inspections.getTaskList,
+        taskListRequest: state.Inspections.taskListRequest,
         requestStatus: state.Common.requestStatus
     }
 }
