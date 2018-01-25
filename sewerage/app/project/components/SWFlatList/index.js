@@ -17,11 +17,11 @@ export class SWFlatList extends Component {
     constructor(props) {
         super(props)
         // this.containerHeight = 0;
-        this.contentHeight = 0
         this.offset = 0
 
         this.state = {
             containerHeight:0,
+            contentHeight:0,
         }
     }
 
@@ -53,7 +53,7 @@ export class SWFlatList extends Component {
     //内容超出scrollview的距离
     outDistance = () => {
         //大于零，说明有内容在界面外
-        let outDistance = this.contentHeight - this.state.containerHeight;
+        let outDistance = this.state.contentHeight - this.state.containerHeight;
         // return outDistance
         return outDistance > 0 ? outDistance : 0;
     }
@@ -76,6 +76,7 @@ export class SWFlatList extends Component {
     }
 
     _onLayout = (event) => {
+        console.log('_onLayout')
         this.setState({
             containerHeight: event.nativeEvent.layout.height
         })
@@ -83,7 +84,9 @@ export class SWFlatList extends Component {
     }
 
     _onContentSizeChange = (contentWidth, contentHeight) => {
-        this.contentHeight = contentHeight;
+        this.setState({
+            contentHeight:contentHeight,
+        })
     }
 
     _onScrollEndDrag = () => {
@@ -108,12 +111,12 @@ export class SWFlatList extends Component {
     }
 
     _isContentTooShort= () => {
-        return this.state.containerHeight - this.contentHeight - this.props.reachedThreshold > 0
+        return this.state.containerHeight - this.state.contentHeight - this.props.reachedThreshold > 0
     }
 
     _marginTop=()=>{
         if(this._isContentTooShort()) {
-            return this.contentHeight;
+            return this.state.contentHeight;
         }else{
             console.log(this.state.containerHeight - this.props.reachedThreshold)
             return this.state.containerHeight - this.props.reachedThreshold;
