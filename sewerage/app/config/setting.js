@@ -29,8 +29,10 @@ const USER_KEY = {
 
 if (__DEV__) {
     Object.assign(config, {
-        WebServerUrl: "http://192.168.39.202:10086",
-        // WebServerUrl: "http://192.168.31.239:8089",
+        // WebServerUrl: "http://192.168.39.215:10086",
+        // WebServerUrl: "http://192.168.31.239:8089", // dandan
+        WebServerUrl: "http://192.168.37.6:8450", // 服务器
+        ImageServer: "http://192.168.37.6:8470/",//图片请求地址 （与后台字段拼接得到完整url）
     })
 } else {
     Object.assign(config, {

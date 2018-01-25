@@ -84,7 +84,12 @@ class WorkScreen extends WrapScreen {
                                         </View>
                                     ))}
                                 </View>
-
+                                {this._renderDot(i, [
+                                    <View style={[styles.dot, {
+                                        backgroundColor: '#42BB55'
+                                    }]}/>,
+                                    <View style={styles.dot}/>
+                                ])}
                             </View>
                         )
                     )

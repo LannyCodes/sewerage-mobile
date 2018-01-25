@@ -9,7 +9,7 @@ import { connect } from 'react-redux';
 import * as Actions from '../../redux/actions'
 import Urls from "../../../config/api/urls";
 import { Status } from "../../../config/api/api.config";
-import { DefaultPage, ErrorPage, ListFilter, Loading,SWFlatList } from "../../components";
+import { DefaultPage, ErrorPage, ListFilter, Loading, SWFlatList } from "../../components";
 
 class InspectionManagementScreen extends WrapScreen {
 
@@ -40,8 +40,8 @@ class InspectionManagementScreen extends WrapScreen {
         else if (status === 1) st = { text: '执行中', color: '#FAA346', backgroundColor: '#FEF5EB' };
         else st = { text: '已完成', color: '#1AAD19', backgroundColor: '#E8F6E8' };
         return (
-            <View style={[styles.cardStatus, {backgroundColor: st.backgroundColor}]}>
-                <Text style={{color: st.color, fontSize: 12}}>{st.text}</Text>
+            <View style={[styles.cardStatus, { backgroundColor: st.backgroundColor }]}>
+                <Text style={{ color: st.color, fontSize: 12 }}>{st.text}</Text>
             </View>
         )
     };
@@ -74,12 +74,12 @@ class InspectionManagementScreen extends WrapScreen {
                     <View style={{ flex: 1 }}>
                         <SWFlatList
                             // refreshing={true}
-                            onRefresh={()=>{}}
+                            onRefresh={() => { }}
                             data={this.props.inspectionList.list}
                             keyExtractor={this._keyExtractor}
                             renderItem={this._renderItem}
                             pullingUp={true}
-                            pullUp={()=>{}}
+                            pullUp={() => { }}
                         />
                         {/* <FlatList
                             data={this.props.inspectionList.list}
