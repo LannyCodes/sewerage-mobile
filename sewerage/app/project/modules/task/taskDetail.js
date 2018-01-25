@@ -10,20 +10,16 @@ import {Dialog, ErrorPage, Loading} from "../../components";
 import {FlatList, ScrollView, Text, TouchableOpacity, View} from "react-native";
 import {Avatar, Divider, Icon} from "react-native-elements";
 import _ from 'lodash'
-import {USER_KEY} from "../../../config/setting";
-import {Toast} from "teaset";
 
 class TaskDetailScreen extends WrapScreen {
 
     constructor(props) {
         super(props);
         this.taskDetail = ['getInspectionTaskDetail', 'getMaintenanceTaskDetail'];
+        this.dealFun = ['inspectiontaskDeal', 'maintenancetaskDeal'];
+        this.dealDetailFun = ['inspectiontaskDealDetail', 'maintenancetaskDealDetail'];
         this.headerTitle = ['巡检任务详情', '维保任务详情'];
         this.type = 0;
-        this.state = {
-            undoList: [],
-            doList: [],
-        }
     }
 
     componentDidMount() {
@@ -32,20 +28,27 @@ class TaskDetailScreen extends WrapScreen {
         this.store.dispatch(Actions.request(this, Urls.Task[this.taskDetail[this.type]], params)); // 请求
     }
 
-    componentWillReceiveProps(nextProps) {
-        if (nextProps) {
-            this.setState({
-                undoList: [], // 未巡检  status - 0
-                doList: [] // 已巡检
-            })
-        }
-    }
-
     _header = () => {
         return {
             title: this.headerTitle[this.type],
+            onLeftPress: () => {
+                this.props.navigation.state.params.onComplete();
+                return false
+            }
         }
-    }
+    };
+
+    _renderCardStatus = (status) => {
+        let st = {text: '待执行', color: '#47A9EB', backgroundColor: '#ECF6FD'};
+        if (status === 0) st = {text: '待执行', color: '#47A9EB', backgroundColor: '#ECF6FD'};
+        else if (status === 1) st = {text: '执行中', color: '#FAA346', backgroundColor: '#FEF5EB'};
+        else st = {text: '已完成', color: '#1AAD19', backgroundColor: '#E8F6E8'};
+        return (
+            <View style={[styles.cardStatus, {backgroundColor: st.backgroundColor}]}>
+                <Text style={{color: st.color, fontSize: 12}}>{st.text}</Text>
+            </View>
+        )
+    };
 
     _keyExtractor = (item, index) => index;
 
@@ -56,7 +59,7 @@ class TaskDetailScreen extends WrapScreen {
             'TASK_ID': this.props[this.taskDetail[this.type]].TASK_ID,
             'COMPANY_ID': this.props[this.taskDetail[this.type]].COMPANY_ID
         };
-        let dialogText = ['巡检','维保'];
+        let dialogText = ['巡检', '维保'];
         return (
             <TouchableOpacity style={styles.doItemContent} onPress={() => {
                 this.props.navigation.navigate('TaskUpload', {
@@ -76,13 +79,13 @@ class TaskDetailScreen extends WrapScreen {
                         Dialog.showInput(`${dialogText[this.type]}正常`, `请输入${dialogText[this.type]}反馈（若无可不填）`, (input) => {
                             let params = {
                                 'ITEM_CONTENT_ID': item.ID, // 巡检内容id
-                                'ITEM_ID': this.props.taskDetail.ID, //巡检点id
-                                'TASK_ID': this.props.taskDetail.TASK_ID,
+                                'ITEM_ID': this.props[this.taskDetail[this.type]].ID, //巡检点id
+                                'TASK_ID': this.props[this.taskDetail[this.type]].TASK_ID,
+                                'COMPANY_ID': this.props[this.taskDetail[this.type]].COMPANY_ID,
                                 'DESCRIBE': input,
                                 'HANDLE_TYPE': 0,
-                                'COMPANY_ID': this.props.taskDetail.COMPANY_ID
                             };
-                            Utils.fetch(this, Urls.Task.deal, params).then((data) => {
+                            Utils.fetch(this, Urls.Task[this.dealFun[this.type]], params).then((data) => {
                                 let params = {'ITEM_ID': this.props.navigation.state.params.ITEM_ID};
                                 this.store.dispatch(Actions.request(this, Urls.Task[this.taskDetail[this.type]], params));
                             });
@@ -164,9 +167,12 @@ class TaskDetailScreen extends WrapScreen {
                                         }]}>截止时间：{detail.VALID_TIME}</Text>
                                 </View>
                             </View>
-                            <View style={styles.tip}>
-                                <Text style={styles.tipText}>执行中</Text>
-                            </View>
+                            {this._renderCardStatus(detail.STATUS)}
+                        </View>
+                        <Divider style={{backgroundColor: '#ddd'}}/>
+                        <View style={styles.rowBetween}>
+                            <Text style={[styles.text, {color: '#666'}]}>场站名称</Text>
+                            <Text style={styles.text}>{detail.STATION_NAME}</Text>
                         </View>
                         <Divider style={{backgroundColor: '#ddd'}}/>
                         <View style={styles.rowBetween}>
@@ -177,11 +183,6 @@ class TaskDetailScreen extends WrapScreen {
                         <View style={styles.rowBetween}>
                             <Text style={[styles.text, {color: '#666'}]}>巡检人</Text>
                             <Text style={styles.text}>{detail.USER_NAME}</Text>
-                        </View>
-                        <Divider style={{backgroundColor: '#ddd'}}/>
-                        <View style={styles.rowBetween}>
-                            <Text style={[styles.text, {color: '#666'}]}>场站名称</Text>
-                            <Text style={styles.text}>{detail.STATION_NAME}</Text>
                         </View>
                     </View>
                     <View style={styles.content}>
@@ -263,6 +264,12 @@ const styles = Utils.PLStyle({
         alignItems: 'center',
         height: 44,
         paddingLeft: 10
+    },
+    cardStatus: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        height: 22,
+        width: 50,
+        borderRadius: 20
     }
-
-})
+});

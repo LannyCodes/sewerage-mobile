@@ -7,10 +7,10 @@ import Urls from "../../../config/api/urls";
 import * as Actions from "../../redux/actions";
 import {Status} from "../../../config/api/api.config";
 import {ErrorPage, Loading} from "../../components";
-import {FlatList, ScrollView, Text, TouchableOpacity, View} from "react-native";
+import {FlatList, ScrollView, Text, View} from "react-native";
 import {Avatar, Divider, Icon} from "react-native-elements";
 
-class InspectionDetailScreen extends WrapScreen {
+class MaintenanceDetailScreen extends WrapScreen {
 
     constructor(props) {
         super(props);
@@ -19,12 +19,12 @@ class InspectionDetailScreen extends WrapScreen {
 
     componentDidMount() {
         let params = {ID: this.props.navigation.state.params.id};
-        this.store.dispatch(Actions.request(this, Urls.Inspections.getInspectionDetail, params, 'get')); // 请求
+        this.store.dispatch(Actions.request(this, Urls.Maintenance.getMaintenanceDetail, params, 'get')); // 请求
     }
 
     _header = () => {
         return {
-            title: '巡检任务详情',
+            title: '维保任务详情',
         }
     }
 
@@ -36,7 +36,7 @@ class InspectionDetailScreen extends WrapScreen {
                 <Text style={{color: '#666', fontSize: 15}}>{item.EQUIPMENT_NAME}</Text>
             </View>
             {item.ITEM_CONTENTS.map((item, i) => {
-                let status = ['未巡检', '异常', '正常', '未确定'];
+                let status = ['未维保', '异常', '正常', '未确定'];
                 return (
                     <View key={i} style={[styles.rowBetween, {height: 30}]}>
                         <Text style={{color: '#999', fontSize: 13}}>{item.CONTENT} - {status[item.STATUS]}</Text>
@@ -60,7 +60,7 @@ class InspectionDetailScreen extends WrapScreen {
 
 
     _render() {
-        const detail = this.props.inspectionDetail;
+        const detail = this.props.maintenanceDetail;
         console.log(this.props.requestStatus)
         if (this.props.requestStatus === Status.SUCCESS) {
             if (!Loading.checkData(detail)) return;
@@ -94,7 +94,7 @@ class InspectionDetailScreen extends WrapScreen {
                         </View>
                         <Divider style={{backgroundColor: '#ddd'}}/>
                         <View style={styles.rowBetween}>
-                            <Text style={[styles.text, {color: '#666'}]}>巡检人</Text>
+                            <Text style={[styles.text, {color: '#666'}]}>维保人</Text>
                             <Text style={styles.text}>{detail.EXE_USER_NAME}</Text>
                         </View>
                         <Divider style={{backgroundColor: '#ddd'}}/>
@@ -105,7 +105,7 @@ class InspectionDetailScreen extends WrapScreen {
                     </View>
                     <View style={styles.content}>
                         <View style={styles.contentTitle}>
-                            <Text>巡检内容</Text>
+                            <Text>维保内容</Text>
                         </View>
                         <Divider style={{backgroundColor: '#ddd'}}/>
                         <FlatList
@@ -129,12 +129,12 @@ class InspectionDetailScreen extends WrapScreen {
 
 function mapStateToProps(state) {
     return {
-        inspectionDetail: state.Inspections.getInspectionDetail,
+        maintenanceDetail: state.Maintenance.getMaintenanceDetail,
         requestStatus: state.Common.requestStatus
     }
 }
 
-export default connect(mapStateToProps)(InspectionDetailScreen);
+export default connect(mapStateToProps)(MaintenanceDetailScreen);
 
 
 const styles = Utils.PLStyle({

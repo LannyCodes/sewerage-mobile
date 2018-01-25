@@ -50,7 +50,9 @@ const Inspections = {
 /**
  *  维保
  */
-const Maintenance = {};
+const Maintenance = {
+    MaintenanceDetail: {screen: Modules.MaintenanceDetailScreen}
+};
 /**
  *  审核
  */
@@ -67,6 +69,7 @@ const Task = {
     TaskList: {screen: Modules.TaskListScreen},
     TaskDetail: {screen: Modules.TaskDetailScreen},
     TaskUpload: {screen: Modules.TaskUploadScreen},
+    TaskDealDetail: {screen: Modules.TaskDealDetailScreen},
 }
 
 /**
