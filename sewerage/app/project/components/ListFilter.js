@@ -142,7 +142,7 @@ export class ListFilter extends React.PureComponent {
             })
         })
         if (typeof (this.props.reset) === 'function') {
-            this.props.reset(this.state);
+            this.props.reset({});
         }
     }
 
