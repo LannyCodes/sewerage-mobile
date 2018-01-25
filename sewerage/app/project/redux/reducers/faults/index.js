@@ -18,13 +18,20 @@ const faultsListRequest = (state, action) => {
             }
         case url:
             let body = action.body;
-            if (action.data.list.length > 0) {
+            let list = [];
+            if(body.pageIndex === 1){
+                list = action.data.list
+            }else{
+                list = state.list.concat(action.data.list || []);
+            }
+            if (action.data.list !== null && action.data.list.length > 0) {
                 body.pageIndex = body.pageIndex + 1;
             }
+            
             return {
                 ...state,
                 isFetching: false,
-                list: action.data.list,
+                list: list,
                 body: body,
             }
         case url + ActionType.REQUEST_ERROR:
@@ -52,7 +59,13 @@ const workOrderRequest = (state = [], action) => {
             }
         case url:
             let body = action.body;
-            if (action.data.list.length > 0) {
+            let list = [];
+            if(body.pageIndex === 1){
+                list = action.data.list
+            }else{
+                list = state.list.concat(action.data.list || []);
+            }
+            if (action.data.list !== null && action.data.list.length > 0) {
                 body.pageIndex = body.pageIndex + 1;
             }
             return {

@@ -16,21 +16,38 @@ import { WrapScreen } from '../wrap';
 import { Avatar } from 'react-native-elements';
 import * as Utils from '../../../core/utils';
 import { GridView, TagLabel, PicturesPreview } from '../../components';
+import Urls from "../../../config/api/urls";
 
 const screenWidth = Dimensions.get('window').width;
 
 class WorkOrderDetailScreen extends WrapScreen {
     constructor(props) {
         super(props);
-        this.state={
-            showPreview:false,
+        this.state = {
+            showPreview: false,
+            details: {},
         }
     };
 
-    _header=()=>{
+    _header = () => {
         return {
             title: '故障工单详情'
         };
+    }
+
+    componentDidMount() {
+        
+    }
+
+    getDetail = async () => {
+        try {
+            let details = await Utils.get(this, Urls.faults.workOrderDetail)
+            this.setState({
+                details: details,
+            })
+        } catch (err) {
+
+        }
     }
 
     _keyExtractor = (item, index) => item.id;
@@ -120,7 +137,7 @@ class WorkOrderDetailScreen extends WrapScreen {
                 <View style={styles.arLeft}>
                     <View style={[styles.arLeftLine, { backgroundColor: index === 0 ? 'transparent' : '#d8d8d8' }]} />
                     {
-                        index === 0 || index === items.length - 1 ? <View style={styles.arDot} /> : <View/>
+                        index === 0 || index === items.length - 1 ? <View style={styles.arDot} /> : <View />
                     }
                     <View style={[styles.arLeftLine, { backgroundColor: index === items.length - 1 ? 'transparent' : '#d8d8d8' }]} />
                 </View>
@@ -131,7 +148,7 @@ class WorkOrderDetailScreen extends WrapScreen {
                         <Text style={styles.arText}>2017-03-29 15:32</Text>
                     </View>
                     {
-                        index < items.length - 1 ? <View style={styles.divider} /> : <View/>
+                        index < items.length - 1 ? <View style={styles.divider} /> : <View />
                     }
                 </View>
             </View>
@@ -175,7 +192,7 @@ class WorkOrderDetailScreen extends WrapScreen {
                         <Text style={[styles.headerFootText, { color: '#333333', marginBottom: 11, marginTop: 14 }]}>湖南宁乡经济技术开发区污水处理厂采用较为先进的污水处理工艺五段式A/A/O-A/O+二沉池+微絮凝池+V型滤池+ClO2消毒， 其设计规模为5万立方米/日</Text>
                     </View>
                     <GridView
-                        imgs={[{ uri: "https://s3.amazonaws.com/uifaces/faces/twitter/brynn/128.jpg" }, { uri: "https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg" }, { uri: "https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg" },{ uri: "https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg" },]}
+                        imgs={[{ uri: "https://s3.amazonaws.com/uifaces/faces/twitter/brynn/128.jpg" }, { uri: "https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg" }, { uri: "https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg" }, { uri: "https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg" },]}
                         containerStyle={{ marginBottom: 20 }}
                         columns={4}
                         gridClick={this._imageClick} />
@@ -209,14 +226,14 @@ class WorkOrderDetailScreen extends WrapScreen {
                     <ImageViewer imageUrls={images}/>
                 </Modal> */}
                 <PicturesPreview
-                    ref={pp=>this._pp = pp}
-                    images={images}/>
+                    ref={pp => this._pp = pp}
+                    images={images} />
             </View>
         );
     };
 };
 
-const images = [{ url: "https://s3.amazonaws.com/uifaces/faces/twitter/brynn/128.jpg" }, { url: "https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg" }, { url: "https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg" },{ url: "https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg" }]
+const images = [{ url: "https://s3.amazonaws.com/uifaces/faces/twitter/brynn/128.jpg" }, { url: "https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg" }, { url: "https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg" }, { url: "https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg" }]
 
 export default WorkOrderDetailScreen;
 
@@ -336,7 +353,7 @@ const styles = Utils.PLStyle({
         backgroundColor: '#d8d8d8',
     },
     arMsg: {
-        flex:1,
+        flex: 1,
         paddingTop: 20,
         // paddingBottom:12,
         paddingRight: 10,

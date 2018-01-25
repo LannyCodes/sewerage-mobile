@@ -17,14 +17,11 @@ import {TagLabel} from '../../components'
 import * as Actions from "../../redux/actions";
 import { connect } from "react-redux";
 import Urls from "../../../config/api/urls";
+import {StatusHelper} from './utils';
 
 class FaultDetailScreen extends WrapScreen {
     constructor(props) {
         super(props)
-    }
-
-    componentDidMount() {
-        this.store.dispatch(Actions.request(this,Urls.faults.faultDetail))
     }
 
     _header=()=>{
@@ -34,7 +31,7 @@ class FaultDetailScreen extends WrapScreen {
     }
 
     _render() {
-        let faultDetail = this.props.faultDetail
+        const {faultDetail} = this.props.navigation.state.params || ''
         return (
             <ScrollView
                 style={styles.scrollView}
@@ -43,42 +40,42 @@ class FaultDetailScreen extends WrapScreen {
                 <View style={styles.container}>
                     <View style={styles.header}>
                         <View style={styles.headerTitle}>
-                            <Text style={styles.headerText}>{faultDetail.name}</Text>
+                            <Text style={styles.headerText}>{faultDetail.EQUIPMENT_NAME}</Text>
                             <TagLabel>处理中</TagLabel>
                         </View>
                         <Text style={styles.headerFootText}>
                             发起时间：
-                            <Text>{faultDetail.time}</Text>
+                            <Text>{faultDetail.CREATE_TIME}</Text>
                         </Text>
                     </View>
                     <View style={styles.divider}/>
                     <View style={styles.contentCell}>
                         <Text style={styles.cellText}>上报人</Text>
-                        <Text style={[styles.cellText,{color:'#333333'}]}>{faultDetail.reportPerson}</Text>
+                        <Text style={[styles.cellText,{color:'#333333'}]}>{faultDetail.CREATE_USER}</Text>
                     </View>
                     <View style={styles.divider}/>
                     <View style={styles.contentCell}>
                         <Text style={styles.cellText}>故障来源</Text>
-                        <Text style={[styles.cellText,{color:'#333333'}]}>{faultDetail.faultFrom}</Text>
+                        <Text style={[styles.cellText,{color:'#333333'}]}>{StatusHelper.getBreakdownSource(faultDetail.BREAKDOWN_SOURCE)}</Text>
                     </View>
                     <View style={styles.divider}/>
                     <View style={styles.contentCell}>
                         <Text style={styles.cellText}>故障类型</Text>
-                        <Text style={[styles.cellText,{color:'#333333'}]}>{faultDetail.faultType}</Text>
+                        <Text style={[styles.cellText,{color:'#333333'}]}>{StatusHelper.getBreakdownType(faultDetail.TYPE)}</Text>
                     </View>
                     <View style={styles.divider}/>
                     <View style={styles.contentCell}>
                         <Text style={styles.cellText}>故障等级</Text>
-                        <Text style={[styles.cellText,{color:'#333333'}]}>{faultDetail.level}</Text>
+                        <Text style={[styles.cellText,{color:'#333333'}]}>{StatusHelper.getRankPerform(faultDetail.RANK).text}</Text>
                     </View>
                     <View style={styles.divider}/>
                     <View>
                         <Text style={[styles.cellText,{marginTop:14,marginBottom:14}]}>故障描述</Text>
-                        <Text style={[styles.cellText,{color:'#333333',marginBottom:14}]}>{faultDetail.description}</Text>
+                        <Text style={[styles.cellText,{color:'#333333',marginBottom:14}]}>{faultDetail.BREAKDOWN_DESCRIBE || ''}</Text>
                     </View>
                     <View>
                         <Text style={[styles.cellText,{marginTop:14,marginBottom:14}]}>处理方式</Text>
-                        <Text style={[styles.cellText,{color:'#333333',marginBottom:14}]}>{faultDetail.dealway}</Text>
+                        <Text style={[styles.cellText,{color:'#333333',marginBottom:14}]}>{faultDetail.HANDLE_WAY || '无'}</Text>
                     </View>
                 </View>
             </ScrollView >
@@ -86,13 +83,7 @@ class FaultDetailScreen extends WrapScreen {
     }
 }
 
-function mapStateToProps(state){
-    return {
-        faultDetail:state.faults.getFaultDetail
-    }
-}
-
-export default connect(mapStateToProps)(FaultDetailScreen);
+export default FaultDetailScreen
 
 const styles = Utils.PLStyle({
     scrollView: {

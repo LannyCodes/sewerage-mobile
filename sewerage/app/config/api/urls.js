@@ -35,6 +35,7 @@ const Urls = {
     faults: {
         faultList: '/api/breakdown/list',//故障清单
         workOrder: '/api/breakdownbill/list',//故障工单
+        workOrderDetail:'/api/breakdownbill',//故障工单详情
         faultDetail: '/app/fault/listDetail',//故障清单详情
     },
     statistics: {

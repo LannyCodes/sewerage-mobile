@@ -82,7 +82,9 @@ export class ListFilter extends React.PureComponent {
             })
         }
         this.state = {
-            ...initailState,
+            container:{
+                ...initailState,
+            }
         }
     }
 
@@ -114,41 +116,60 @@ export class ListFilter extends React.PureComponent {
     };
 
     _itemClick = (value, keyName, keyIndex) => {
+        let container = this.state.container;
         if (this.props.filterArray[keyIndex].multipleChoice) {
             //允许多选
-            let arrayStr = this.state[keyName];
+            let arrayStr = this.state.container[keyName];
             let array = arrayStr === undefined ? [] : JSON.parse(arrayStr);
             let index = array.indexOf(value)
             index > -1 ? array.splice(index, 1) : array.push(value)
             arrayStr = JSON.stringify(array)
+            
+            // this.setState({
+            //     [keyName]: arrayStr,
+            // })
+            container[keyName] = arrayStr;
             this.setState({
-                [keyName]: arrayStr,
+                container:container,
             })
         } else {
             //单选
-            value = this.state[keyName] === value ? '' : value;
+            value = this.state.container[keyName] === value ? '' : value;
+            // this.setState({
+            //     [keyName]: value,
+            // })
             this.setState({
-                [keyName]: value,
+                container:{
+                    ...this.state.container,
+                    [keyName]:value
+                }
             })
         }
     }
 
     _reset = () => {
-        // this.setState({})
         this.props.filterArray.map((item,index)=>{
-            let test = this.state;
+            // if(item.multipleChoice){
+            //     this.setState({
+            //         [item.keyName]:'[]'
+            //     })
+            // }else{
+            //     this.setState({
+            //         [item.keyName]:''
+            //     })
+            // }
             this.setState({
-                [item.keyName]:'[]'
+                container:{}
             })
         })
         if (typeof (this.props.reset) === 'function') {
-            this.props.reset(this.state);
+            this.props.reset(this.state.container);
         }
     }
 
     _confirm = () => {
         if (typeof (this.props.confirm) === 'function') {
-            this.props.confirm(this.state)
+            this.props.confirm(this.state.container)
         }
     }
 
@@ -168,12 +189,12 @@ export class ListFilter extends React.PureComponent {
         let multipleChoice = this.props.filterArray[index].multipleChoice
         let toSelect = false
         if (multipleChoice) {
-            let arrayStr = this.state[keyName];
+            let arrayStr = this.state.container[keyName];
             let array = arrayStr === undefined ? [] : JSON.parse(arrayStr);
             let arrayIndex = array.indexOf(value);
             toSelect = arrayIndex > -1;
         } else {
-            toSelect = this.state[keyName] === value
+            toSelect = this.state.container[keyName] === value
         }
         return toSelect;
     }
