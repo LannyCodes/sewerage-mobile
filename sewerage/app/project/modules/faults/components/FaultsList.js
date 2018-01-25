@@ -20,28 +20,29 @@ export class FaultsList extends Component {
     }
 
     componentDidMount() {
-        this._refresh()
+        this.refresh()
     }
 
     componentWillReceiveProps(nextProps) {
-        if(nextProps.requestMsg.isFetching === false){
+        if (nextProps.requestMsg.isFetching === false) {
             this.isPullDown = false;
             this.isPullUp = false;
         }
     }
 
-    _cellClicked = (type) => {
+    _cellClicked = (type, item) => {
         if (type === 'faultsList') {
-            this.props.navigation.navigate('FaultDetail');
+            this.props.navigation.navigate('FaultDetail', { faultDetail: item });
         } else {
             this.props.navigation.navigate('WorkOrderDetail');
         }
     }
 
-    _refresh = () => {
+    refresh = () => {
         let params = {
             pageIndex: 1,
             pageSize: 15,
+            ...this.filter,
         }
         this.isPullDown = true;
         this.props.requestAction(params);
@@ -52,7 +53,7 @@ export class FaultsList extends Component {
         this.props.requestAction(this.props.requestMsg.body);
     }
 
-    _keyExtractor = (item, index) => item.index;
+    _keyExtractor = (item, index) => item.ID;
 
     render() {
         let type = this.props.type;
@@ -63,7 +64,7 @@ export class FaultsList extends Component {
             <SWFlatList
                 style={{ flex: 1 }}
                 refreshing={this.props.requestMsg.isFetching && this.isPullDown}
-                onRefresh={this._refresh}
+                onRefresh={this.refresh}
                 pullUp={this._pullUp}
                 pullingUp={this.props.requestMsg.isFetching && this.isPullUp}
                 keyExtractor={this._keyExtractor}
@@ -91,7 +92,7 @@ export class FaultsList extends Component {
                     return <ListCell
                         item={data}
                         index={index}
-                        clickFunc={this._cellClicked.bind(this, type)} />
+                        clickFunc={this._cellClicked.bind(this, type, item)} />
                 }}
             />
         )

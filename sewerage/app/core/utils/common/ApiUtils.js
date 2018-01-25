@@ -8,14 +8,26 @@ import _ from 'lodash'
 export const fetch = (context, url, body, fn: string) => {
     return new Promise((resolve, reject) => {
         if (!_.isNull(fn) && fn === 'get') {
-            get(context, url, body, resolve, reject);
+            getFetch(context, url, body, resolve, reject);
         } else {
-            post(context, url, body, resolve, reject);
+            postFetch(context, url, body, resolve, reject);
         }
     });
 };
 
-const get = (context, url, body, resolve, reject) => {
+export const get = (context, url ,body) => {
+    return new Promise((resolve,reject)=>{
+        getFetch(context,url,body,resolve,reject);
+    })
+}
+
+export const post = (context, url, body) => {
+    return new Promise((resolve,reject)=>{
+        getPost(context, url, body, resolve, reject);
+    })
+}
+
+const getFetch = (context, url, body, resolve, reject) => {
     if (!body) {
         body = {};
     }
@@ -29,7 +41,7 @@ const get = (context, url, body, resolve, reject) => {
         );
 };
 
-const post = (context, url, body, resolve, reject) => {
+const postFetch = (context, url, body, resolve, reject) => {
     let formData = null;
     Object.assign(header, {
         Authorization: _USERTOKEN_

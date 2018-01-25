@@ -26,7 +26,7 @@ const getFetch = (context, url, body, dispatch) => {
     })
     api(config.WebServerUrl).get(url, body)
         .then((response) => {
-            exec(context,url, response,body, dispatch)
+            exec(context, url, response, body, dispatch)
         }
         );
 }
@@ -55,14 +55,14 @@ const postFetch = (context, url, body, dispatch) => {
     })
     api(config.WebServerUrl).post(url, formData || {})
         .then((response) => {
-            exec(context,url, response, body, dispatch)
+            exec(context, url, response, body, dispatch)
         }
         ).catch(err => {
             console.log(err);
         });
 };
 
-const exec = (context,url, response, body, dispatch) => {
+const exec = (context, url, response, body, dispatch) => {
     console.log(response)
     const { status } = response;
     if (response.ok) {
@@ -82,9 +82,9 @@ const exec = (context,url, response, body, dispatch) => {
                 dispatch({
                     type: url + ActionType.REQUEST_ERROR  // type : url + ERROR—CODE 用于特定module里的reducer进行处理
                 }, {
-                    type: ActionType.REQUEST_ERROR, // 在common里统一处理
-                    data: Status.TOKEN_FAIL
-                });
+                        type: ActionType.REQUEST_ERROR, // 在common里统一处理
+                        data: Status.TOKEN_FAIL
+                    });
                 Toast.message('token失效，请重新登录。');
                 Utils.exitApp(context)
             } else {
@@ -93,15 +93,15 @@ const exec = (context,url, response, body, dispatch) => {
                 dispatch({
                     type: url + ActionType.REQUEST_ERROR,
                 }, {
-                    type: ActionType.REQUEST_ERROR,
-                    data: Status.FAIL
-                })
+                        type: ActionType.REQUEST_ERROR,
+                        data: Status.FAIL
+                    })
             }
         }
     } else {
         // 请求有问题
         Toast.message('请求失败,请稍后重试。');
-        dispatch({
+        dispatch({ type: url + ActionType.REQUEST_ERROR, }, {
             type: ActionType.REQUEST_STATUS,
             data: Status.FAIL
         })

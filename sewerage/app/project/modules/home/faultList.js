@@ -52,21 +52,44 @@ class FaultListScreen extends WrapScreen {
     }
 
     _requestWorkorders = (params) => {
-        this.store.dispatch(Actions.get(this, Urls.faults.workOrder));
+        // params = {
+        //     ...params,
+        //     ...this.state.workderFilter
+        // }
+        this.store.dispatch(Actions.get(this, Urls.faults.workOrder, params));
     }
 
     //筛选操作
     _filterReset = (data) => {
-
+        this.state.currentTab ? this.setState({
+            faultFilter:{}
+        }):this.setState({
+            workderFilter:{}
+        })
     }
 
     _filterConfirm = (data) => {
-        let filter = {};
-        this.state.currentTab ? filter.faultFilter = data : filter.workderFilter = data;
-        this.setState({
-            isFilterShow: false,
-            ...filter,
-        })
+        // let filter = {};
+        // this.state.currentTab ? filter.faultFilter = data : filter.workderFilter = data;
+        if(this.state.currentTab){//清单
+            // filter.faultFilter = data;
+            this.setState({
+                isFilterShow: false,
+                faultFilter:data,
+            })
+            this._faultsList.filter = data;
+            this._faultsList.refresh();
+        }else{//工单
+            // filter.workderFilter = data;
+            this.setState({
+                isFilterShow: false,
+                workderFilter:data,
+            })
+            tihs._workorderList.filter = data;
+            this._workorderList.refresh();
+        }
+        
+        
     }
 
     _filterInitails = () => {
@@ -100,16 +123,22 @@ class FaultListScreen extends WrapScreen {
                     <FaultsList
                         type='workOrder'
                         tabLabel='故障工单'
+                        ref={workorderList => this._workorderList = workorderList}
+                        // filter = {this.state.workderFilter}
                         navigation={this.props.navigation}
                         requestMsg={this.props.workOrderRequest}
-                        requestAction={this._requestWorkorders} />
+                        requestAction={this._requestWorkorders}
+                        />
                     {/* 故障清单 */}
                     <FaultsList
                         type='faultsList'
                         tabLabel='故障清单'
+                        // filter={this.state.faultFilter}
+                        ref={faultsList => this._faultsList = faultsList}
                         navigation={this.props.navigation}
                         requestMsg={this.props.faultsListRequest}
-                        requestAction={this._requestFaultsList} />
+                        requestAction={this._requestFaultsList} 
+                        />
 
                 </ScrollableTabView>
                 {/* 在筛选出现的时候挡住scrolltabbar */}
@@ -166,7 +195,7 @@ const styles = Utils.PLStyle({
 const filterArray = [
     {
         title: '状态',
-        keyName: 'status',
+        keyName: 'STATUS',
         // multipleChoice: true,
         data: [{
             name: '待处理',
