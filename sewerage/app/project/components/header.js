@@ -41,8 +41,8 @@ export class KHeader extends Component {
         else if (_.isString(header) && !_.isEqual(header, 'none')) {
             return (
                 <Header
-                    backgroundColor={'white'}
-                    centerComponent={{ text: header, style: { fontSize: 20, color: '#666' } }}
+                    backgroundColor={'#F9F9F9'}
+                    centerComponent={{ text: header, style: { fontSize: 20, color: '#323232' } }}
                 />
             )
         }
@@ -50,11 +50,11 @@ export class KHeader extends Component {
             let t = this.isNoTitle(header) ? title : header.title;
             return (
                 <Header
-                    backgroundColor={'white'}
+                    backgroundColor={'#F9F9F9'}
                     leftComponent={
                         this._renderLeft(header)
                     }
-                    centerComponent={{ text: t, style: { fontSize: 17, color: '#666' } }}
+                    centerComponent={{ text: t, style: { fontSize: 17, color: '#323232' } }}
                     rightComponent={
                         this._renderRight(header)
                     }

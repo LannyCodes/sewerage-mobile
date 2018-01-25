@@ -16,12 +16,13 @@ import * as Utils from '../../../core/utils';
 export class SWFlatList extends Component {
     constructor(props) {
         super(props)
-        this.containerHeight = 0;
+        // this.containerHeight = 0;
         this.contentHeight = 0
         this.offset = 0
-        // this.state = {
-        //     isPullingUp:false,
-        // }
+
+        this.state = {
+            containerHeight:0,
+        }
     }
 
     static propTypes = {
@@ -37,9 +38,9 @@ export class SWFlatList extends Component {
         reachedThreshold: 50,
     };
 
-    componentDidMount() {
-
-    }
+    // componentDidMount() {
+    //     console.log('componentDidMount');
+    // }
 
     componentWillReceiveProps(nextProps) {
         if (nextProps.pullingUp === false) {
@@ -52,7 +53,7 @@ export class SWFlatList extends Component {
     //内容超出scrollview的距离
     outDistance = () => {
         //大于零，说明有内容在界面外
-        let outDistance = this.contentHeight - this.containerHeight;
+        let outDistance = this.contentHeight - this.state.containerHeight;
         // return outDistance
         return outDistance > 0 ? outDistance : 0;
     }
@@ -75,7 +76,10 @@ export class SWFlatList extends Component {
     }
 
     _onLayout = (event) => {
-        this.containerHeight = event.nativeEvent.layout.height;
+        this.setState({
+            containerHeight: event.nativeEvent.layout.height
+        })
+        // this.state.containerHeight = event.nativeEvent.layout.height;
     }
 
     _onContentSizeChange = (contentWidth, contentHeight) => {
@@ -104,14 +108,15 @@ export class SWFlatList extends Component {
     }
 
     _isContentTooShort= () => {
-        return this.containerHeight - this.contentHeight - this.props.reachedThreshold > 0
+        return this.state.containerHeight - this.contentHeight - this.props.reachedThreshold > 0
     }
 
     _marginTop=()=>{
         if(this._isContentTooShort()) {
             return this.contentHeight;
         }else{
-            return this.containerHeight - this.props.reachedThreshold;
+            console.log(this.state.containerHeight - this.props.reachedThreshold)
+            return this.state.containerHeight - this.props.reachedThreshold;
         }
     }
 

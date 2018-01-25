@@ -24,15 +24,11 @@ class MessageScreen extends WrapScreen {
         }
     }
 
-    _onBarCodeRead = (e) => {
-        console.log("Barcode Found!",
-            "Type: " + e.type + "\nData: " + e.data)
-    }
-
     _keyExtractor = (item, index) => index
 
     _itemClick = (item, index) => {
-        console.log('itemClick')
+        console.log(item)
+        this.props.navigation.navigate('MessageDetail');
     }
 
     _renderItem = (item, index) => {
@@ -40,7 +36,7 @@ class MessageScreen extends WrapScreen {
             <TouchableOpacity
                 style={styles.itemContainer}
                 activeOpacity={1}
-                onPress={this._itemClick}>
+                onPress={this._itemClick.bind(this,item,index)}>
                 <View style={{ borderWidth: 1, borderColor: 'transparent', borderRadius: 8, backgroundColor: "#42BB55", width: 40, height: 40 }} />
                 <View style={styles.itemMsg}>
                     <View style={styles.itemTitle}>

@@ -3,13 +3,13 @@ import {
     View,
     Text, FlatList, TouchableOpacity,
 } from 'react-native';
-import {WrapScreen} from "../wrap";
+import { WrapScreen } from "../wrap";
 import * as Utils from "../../../core/utils";
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 import * as Actions from '../../redux/actions'
 import Urls from "../../../config/api/urls";
-import {Status} from "../../../config/api/api.config";
-import {DefaultPage, ErrorPage, ListFilter, Loading} from "../../components";
+import { Status } from "../../../config/api/api.config";
+import { DefaultPage, ErrorPage, ListFilter, Loading,SWFlatList } from "../../components";
 
 class InspectionManagementScreen extends WrapScreen {
 
@@ -28,41 +28,41 @@ class InspectionManagementScreen extends WrapScreen {
     }
 
     componentDidMount() {
-        let params = {pageIndex: 1, pageSize: 10};
+        let params = { pageIndex: 1, pageSize: 10 };
         this.store.dispatch(Actions.request(this, Urls.Inspections.getTaskList, params, 'get'));
     }
 
-    _header=()=>{
+    _header = () => {
         return {
             title: "巡检任务",
         }
     }
 
     _renderCardStatus = (status) => {
-        let st = {text: '待执行', color: '#47A9EB', backgroundColor: '#ECF6FD'};
-        if (status === 0) st = {text: '待执行', color: '#47A9EB', backgroundColor: '#ECF6FD'};
-        else if (status === 1) st = {text: '执行中', color: '#FAA346', backgroundColor: '#FEF5EB'};
-        else st = {text: '已完成', color: '#1AAD19', backgroundColor: '#E8F6E8'};
+        let st = { text: '待执行', color: '#47A9EB', backgroundColor: '#ECF6FD' };
+        if (status === 0) st = { text: '待执行', color: '#47A9EB', backgroundColor: '#ECF6FD' };
+        else if (status === 1) st = { text: '执行中', color: '#FAA346', backgroundColor: '#FEF5EB' };
+        else st = { text: '已完成', color: '#1AAD19', backgroundColor: '#E8F6E8' };
         return (
-            <View style={[styles.cardStatus, {backgroundColor: st.backgroundColor}]}>
-                <Text style={{color: st.color}}>{st.text}</Text>
+            <View style={[styles.cardStatus, { backgroundColor: st.backgroundColor }]}>
+                <Text style={{ color: st.color }}>{st.text}</Text>
             </View>
         )
     };
 
-    _renderItem = ({item}) => (
+    _renderItem = ({ item }) => (
         <TouchableOpacity style={styles.cardItem}
-                          onPress={() => {
-                              this.props.navigation.navigate('InspectionDetail', {
-                                  id: item.ID
-                              })
-                          }}>
+            onPress={() => {
+                this.props.navigation.navigate('InspectionDetail', {
+                    id: item.ID
+                })
+            }}>
             <View style={styles.row}>
                 <Text style={styles.cardTitle}>{item.NAME} {item.TASK_NUMBER}</Text>
                 {this._renderCardStatus(item.STATUS)}
             </View>
             <Text style={styles.cardContent}>{item.EQUIPMENT_NAMES}</Text>
-            <View style={[styles.row, {marginTop: 10}]}>
+            <View style={[styles.row, { marginTop: 10 }]}>
                 <Text style={styles.cardPerson}>{item.USER_NAME}</Text>
                 <Text style={styles.cardTime}>{item.VALID_TIME}</Text>
             </View>
@@ -75,32 +75,41 @@ class InspectionManagementScreen extends WrapScreen {
             if (!Loading.checkData(this.props.inspectionList)) return;
             if (this.props.inspectionList.list.length > 0) {
                 return (
-                    <View style={{flex: 1}}>
-                        <FlatList
+                    <View style={{ flex: 1 }}>
+                        <SWFlatList
+                            // refreshing={true}
+                            onRefresh={()=>{}}
                             data={this.props.inspectionList.list}
                             keyExtractor={this._keyExtractor}
                             renderItem={this._renderItem}
+                            pullingUp={true}
+                            pullUp={()=>{}}
                         />
+                        {/* <FlatList
+                            data={this.props.inspectionList.list}
+                            keyExtractor={this._keyExtractor}
+                            renderItem={this._renderItem}
+                        /> */}
                         {this.state.isFilterShow === true ?
                             <ListFilter
-                                containerStyles={{top: 0}}
+                                containerStyles={{ top: 0 }}
                                 filterArray={filterArray}
                                 maskerClick={() => {
                                     this.setState({
                                         isFilterShow: false,
                                     })
                                 }}
-                            /> : <View/>}
+                            /> : <View />}
                     </View>
                 )
             } else {
                 return (
-                    <DefaultPage content={'暂无巡检任务'}/>
+                    <DefaultPage content={'暂无巡检任务'} />
                 )
             }
         } else if (this.props.requestStatus === Status.FAIL) {
             return (
-                <ErrorPage/>
+                <ErrorPage />
             )
         }
     }

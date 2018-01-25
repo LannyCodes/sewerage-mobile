@@ -18,7 +18,7 @@ let MainReducer = combineReducers({
     Task,
     dataStatistics,
     device,
-    Me
+    Me,
 });
 
 module.exports = MainReducer;

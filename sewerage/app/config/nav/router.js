@@ -82,6 +82,10 @@ const Device = {
     DeviceDetail: {screen: Modules.DeviceDetailScreen},
 }
 
+const Message = {
+    MessageDetail: {screen: Modules.MessageDetailScreen},
+}
+
 const Navigator = StackNavigator(
     {
         // ...Splash,
@@ -95,6 +99,7 @@ const Navigator = StackNavigator(
         ...Inspections,
         ...Audit,
         ...Device,
+        ...Message,
     }, {
         navigationOptions: ({navigation, screenProps}) => ({
             header: null,
