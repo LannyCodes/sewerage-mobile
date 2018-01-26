@@ -33,6 +33,7 @@ export class ListCell extends Component {
 
     render() {
         let { perform, text } = StatusHelper.getRankPerform(this.data.rank);
+        let { statusPerform, statusText} = StatusHelper.getStatusPerform(this.data.STATUS);
         return (
             <TouchableOpacity
                 style={styles.cellContainer}
@@ -44,7 +45,7 @@ export class ListCell extends Component {
                         {
                             _.isUndefined(this.data.rank) ? <View /> : <TagLabel backgroundColor={perform.backgroundColor} fontColor={perform.color}>{text}</TagLabel>
                         }
-                        <TagLabel containerStyle={{ marginLeft: 10 }}>处理中</TagLabel>
+                        <TagLabel containerStyle={{ marginLeft: 10 }} backgroundColor={statusPerform.backgroundColor} fontColor={statusPerform.color}>{statusText}</TagLabel>
                     </View>
                 </View>
                 <View style={styles.cellContentContainer}>

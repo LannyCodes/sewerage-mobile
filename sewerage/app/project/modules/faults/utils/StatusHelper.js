@@ -1,27 +1,43 @@
 export const StatusHelper = {
     getStatusPerform(status) {
-        let perform = {
+        let statusPerform = {
             backgroundColor: '',
             color: '',
         }
+        let statusText = ''
         switch (status) {
             case 0:
-
+                statusPerform = {
+                    color: '#FF6E61',
+                    backgroundColor: '#ffe2df',
+                }
+                statusText = '待处理'
                 break;
             case 1:
+                statusPerform = {
+                    color: '#47A9EB',
+                    backgroundColor: '#ECF6FD',
+                }
+                statusText = '正在处理'
                 break;
             case 2:
+                statusPerform = {
+                    color: '#FAA346',
+                    backgroundColor: '#FEF5EB'
+                }
+                statusText = '现场处理';
                 break;
             case 3:
-                perform = {
-                    color:'#1AAD19',
+                statusPerform = {
+                    color: '#1AAD19',
                     backgroundColor: '#E8F6E8'
                 }
+                statusText = '处理完成';
                 break;
             default:
                 break;
         }
-        return perform;
+        return { statusPerform, statusText };
     },
     getRankPerform(rank) {
         let perform = {
@@ -32,8 +48,8 @@ export const StatusHelper = {
         switch (rank) {
             case 0:
                 perform = {
-                    backgroundColor:'#FFE2DF',
-                    color:'#FF6E61',
+                    backgroundColor: '#FFE2DF',
+                    color: '#FF6E61',
                 }
                 text = "I级"
                 break;
@@ -59,9 +75,9 @@ export const StatusHelper = {
             text,
         }
     },
-    getBreakdownSource(status){
+    getBreakdownSource(status) {
         let source = '';
-        switch(status){
+        switch (status) {
             case 0:
                 source = '巡检';
                 break;
@@ -76,7 +92,7 @@ export const StatusHelper = {
     },
     getBreakdownType(type) {
         let typeName = '';
-        switch(type) {
+        switch (type) {
             case 0:
                 typeName = '机械故障';
                 break;

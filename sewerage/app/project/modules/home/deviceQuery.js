@@ -5,7 +5,8 @@ import {
     FlatList,
     TextInput,
     TouchableOpacity,
-    RefreshControl
+    RefreshControl,
+    Dimensions,
 } from 'react-native';
 import { SearchBar, Divider, Icon, Avatar } from 'react-native-elements';
 import * as Utils from "../../../core/utils";
@@ -14,53 +15,27 @@ import { ListFilter, Loading, SWRefreshControl,SWFlatList } from '../../componen
 import * as Actions from "../../redux/actions";
 import { connect } from "react-redux";
 import Urls from "../../../config/api/urls";
+const screenWidth = Dimensions.get('window').width;
 
 const filterArray = [
     {
         title: '类型',
-        keyName: 'ssb',
+        keyName: 'TYPE',
         multipleChoice: false,
         data: [{
-            name: '类型一',
-            value: '11',
+            name: '普通设备',
+            value: '1',
         }, {
-            name: '类型二',
-            value: '22',
+            name: '一体机',
+            value: '2',
         }, {
-            name: '类型三',
-            value: '33',
+            name: '渗滤液设备',
+            value: '3',
+        }, {
+            name: '视频监控',
+            value: '4',
         }]
     },
-    {
-        title: '规格',
-        keyName: 'aab',
-        multipleChoice: true,
-        data: [{
-            name: '规格一',
-            value: '11',
-        }, {
-            name: '规格二',
-            value: '22',
-        }, {
-            name: '规格三',
-            value: '33',
-        }, {
-            name: '规格四',
-            value: '44',
-        }]
-    },
-    {
-        title: '规格',
-        keyName: 'ccs',
-        multipleChoice: false,
-        data: [{
-            name: '规格一',
-            value: '11',
-        }, {
-            name: '规格二',
-            value: '22',
-        }]
-    }
 ];
 
 class DeviceQueryScreen extends WrapScreen {
@@ -69,6 +44,7 @@ class DeviceQueryScreen extends WrapScreen {
         super(props);
         this.state = {
             isFilterShow: false,
+            filters:{},
         }
         this.isPullDown = false;
         this.isPullUp = false;
@@ -80,14 +56,15 @@ class DeviceQueryScreen extends WrapScreen {
 
     _header=()=>'none'
 
-    _keyExtractor = (item, index) => index;
+    _keyExtractor = (item, index) => item.ID;
 
     _itemClick=(item,index)=>{
-        this.props.navigation.navigate('DeviceDetail')
+        this.props.navigation.navigate('DeviceDetail',{deviceDetail:item})
     }
 
     _searchConfirm=(event)=>{
         console.log(event.nativeEvent.text);
+
     }
 
     _onRefresh=()=>{
@@ -95,14 +72,28 @@ class DeviceQueryScreen extends WrapScreen {
         let param = {
             pageIndex:1,
             pageSize:15,
+            ...this.state.filter
         }
-        this.store.dispatch(Actions.post(this,Urls.device.deviceList,param));
+        this.store.dispatch(Actions.get(this,Urls.device.deviceList,param));
     }
 
     _pullUp=()=>{
 
         this.isPullUp = true;
-        this.store.dispatch(Actions.post(this,Urls.device.deviceList,this.props.deviceListRequest.body));
+        this.store.dispatch(Actions.get(this,Urls.device.deviceList,this.props.deviceListRequest.body));
+    }
+
+    _filterConfirm=(data)=>{
+        this.setState({
+            filters:data,
+            isFilterShow:false,
+        })
+    }
+
+    _filterReset=()=>{
+        // this.setState({
+        //     filters:{},
+        // })
     }
 
     //渲染单行
@@ -111,7 +102,7 @@ class DeviceQueryScreen extends WrapScreen {
             <TouchableOpacity
                 activeOpacity={1}
                 style={styles.listItem}
-                onPress={this._itemClick.bind(item,index)}>
+                onPress={this._itemClick.bind(this,item,index)}>
                 <Avatar
                     width={50}
                     height={50}
@@ -121,10 +112,11 @@ class DeviceQueryScreen extends WrapScreen {
                 />
                 <View style={styles.listItemMsg}>
                     <View style={styles.listItemTitleContainer}>
-                        <Text style={styles.listItemName}>{item.title}</Text>
-                        <Text style={styles.listItemNumbering}>{item.deviceCode}</Text>
+                        <Text style={[styles.listItemName,{width:screenWidth-200}]}
+                            numberOfLines={1}>{item.NAME}</Text>
+                        <Text style={styles.listItemNumbering} numberOfLines={1}>{item.CODE}</Text>
                     </View>
-                    <Text style={styles.listItemContent}>所属厂站：{item.station}</Text>
+                    <Text style={styles.listItemContent} numberOfLines={1}>所属厂站：{item.STATION_NAME}</Text>
                 </View>
             </TouchableOpacity>
         )
@@ -183,6 +175,7 @@ class DeviceQueryScreen extends WrapScreen {
                             placeholderTextColor="#97979b"
                             onSubmitEditing={this._searchConfirm}
                             returnKeyType="search"
+                            underlineColorAndroid='transparent'
                             />
                     </View>
                 </View>
@@ -199,6 +192,9 @@ class DeviceQueryScreen extends WrapScreen {
                 {this.state.isFilterShow === true ? <ListFilter
                     containerStyles={{ top: 121 }}
                     filterArray={filterArray}
+                    reset={this._filterReset}
+                    confirm={this._filterConfirm}
+                    initails={this.state.filters}
                     maskerClick={() => {
                         this.setState({
                             isFilterShow: false,
@@ -256,6 +252,7 @@ const styles = Utils.PLStyle({
         flex:1,
         fontSize:14,
         color:"#333333",
+        height:36,
     },
     //
     listItem: {

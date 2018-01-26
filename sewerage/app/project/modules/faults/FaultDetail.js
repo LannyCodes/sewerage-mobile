@@ -32,6 +32,7 @@ class FaultDetailScreen extends WrapScreen {
 
     _render() {
         const {faultDetail} = this.props.navigation.state.params || ''
+        const {statusPerform ,statusText} = StatusHelper.getStatusPerform(faultDetail.STATUS);
         return (
             <ScrollView
                 style={styles.scrollView}
@@ -41,7 +42,7 @@ class FaultDetailScreen extends WrapScreen {
                     <View style={styles.header}>
                         <View style={styles.headerTitle}>
                             <Text style={styles.headerText}>{faultDetail.EQUIPMENT_NAME}</Text>
-                            <TagLabel>处理中</TagLabel>
+                            <TagLabel backgroundColor={statusPerform.backgroundColor} fontColor={statusPerform.color}>{statusText}</TagLabel>
                         </View>
                         <Text style={styles.headerFootText}>
                             发起时间：

@@ -61,11 +61,11 @@ class FaultListScreen extends WrapScreen {
 
     //筛选操作
     _filterReset = (data) => {
-        this.state.currentTab ? this.setState({
-            faultFilter:{}
-        }):this.setState({
-            workderFilter:{}
-        })
+        // this.state.currentTab ? this.setState({
+        //     faultFilter:{}
+        // }):this.setState({
+        //     workderFilter:{}
+        // })
     }
 
     _filterConfirm = (data) => {

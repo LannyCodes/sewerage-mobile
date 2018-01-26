@@ -105,7 +105,10 @@ class DealWorkOrderScreen extends WrapScreen {
                         ref={textInput => this._textInput = textInput}
                         style={styles.text}
                         multiline={true}
-                        placeholder="请输入巡检反馈（若无可不填）" />
+                        placeholder="请输入巡检反馈（若无可不填）" 
+                        // includeFontPadding={false}
+                        textAlignVertical='top'
+                        underlineColorAndroid="transparent"/>
                 </View>
                 <GridView
                     containerStyle={{ marginTop: 20 }}
