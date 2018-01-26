@@ -6,7 +6,9 @@ import React, { Component } from 'react'
 import {
     View,
     Text,
+    Platform,
     FlatList,
+    PanResponder,
     RefreshControl,
     ActivityIndicator,
 } from "react-native"
@@ -20,8 +22,9 @@ export class SWFlatList extends Component {
         this.offset = 0
 
         this.state = {
-            containerHeight:0,
-            contentHeight:0,
+            containerHeight: 0,
+            contentHeight: 0,
+            contentInsetBottom:0
         }
     }
 
@@ -38,9 +41,15 @@ export class SWFlatList extends Component {
         reachedThreshold: 50,
     };
 
-    // componentDidMount() {
-    //     console.log('componentDidMount');
-    // }
+    componentDidUpdate() {
+        // console.log('componentDidMount');
+        if(Platform.OS === 'android' && this.props.pullingUp === true){
+            this._flatList.scrollToEnd()
+        }
+    }
+
+    componentWillMount() {
+    }
 
     componentWillReceiveProps(nextProps) {
         if (nextProps.pullingUp === false) {
@@ -80,46 +89,61 @@ export class SWFlatList extends Component {
         this.setState({
             containerHeight: event.nativeEvent.layout.height
         })
-        // this.state.containerHeight = event.nativeEvent.layout.height;
     }
 
     _onContentSizeChange = (contentWidth, contentHeight) => {
         this.setState({
-            contentHeight:contentHeight,
+            contentHeight: contentHeight,
         })
     }
 
     _onScrollEndDrag = () => {
-        if (this.offset - this.outDistance() > this.props.reachedThreshold && !this.props.pullingUp) {
-            this.props.pullUp();
-            if(!this._isContentTooShort()){
-                this._flatList.scrollToOffset({ offset: this.outDistance() + this.props.reachedThreshold, animated: true })
+        console.log(this.offset);
+        if(Platform.OS === 'ios'){
+            if (this.offset - this.outDistance() > this.props.reachedThreshold && !this.props.pullingUp) {
+                this.props.pullUp();
+                if (!this._isContentTooShort()) {
+                    this._flatList.scrollToOffset({ offset: this.outDistance() + this.props.reachedThreshold, animated: true })
+                }
+            }
+            this._showPullControl();
+        }else{
+            if(this.offset - this.outDistance() === 0){
+                this.props.pullUp();
+
             }
         }
-        this._showPullControl();
     }
 
     _pullUpControl = () => {
         if (this.props.pullUpControl) {
             return this.props.pullUpControl
         } else {
-            return <View style={[styles.pullUpControl]}>
+            return <View style={[styles.pullUpControl,{height:this.props.reachedThreshold}]}>
                 <ActivityIndicator animating={true} color='#42BD56' size="small" />
                 {/* <Text>刷新中...</Text> */}
             </View>
         }
     }
 
-    _isContentTooShort= () => {
+    _isContentTooShort = () => {
         return this.state.containerHeight - this.state.contentHeight - this.props.reachedThreshold > 0
     }
 
-    _marginTop=()=>{
-        if(this._isContentTooShort()) {
+    _marginTop = () => {
+        if (this._isContentTooShort()) {
             return this.state.contentHeight;
-        }else{
+        } else {
             console.log(this.state.containerHeight - this.props.reachedThreshold)
             return this.state.containerHeight - this.props.reachedThreshold;
+        }
+    }
+
+    _ListFooterComponent = ()=>{
+        if(Platform.OS === 'android' && this.props.pullingUp){
+            return this._pullUpControl()
+        }else{
+            return <View/>
         }
     }
 
@@ -127,7 +151,7 @@ export class SWFlatList extends Component {
         return (
             <View style={{ flex: 1 }}>
                 {
-                    this.props.pullingUp ? <View style={{height:this.props.reachedThreshold,top:this._marginTop(),position:'absolute',left:0,right:0}}>
+                    Platform.OS === 'ios' && this.props.pullingUp ? <View style={{ height: this.props.reachedThreshold, top: this._marginTop(), position: 'absolute', left: 0, right: 0 }}>
                         {this._pullUpControl()}
                     </View> : <View />
                 }
@@ -144,6 +168,8 @@ export class SWFlatList extends Component {
                             progressBackgroundColor="#f1f1f1"
                         />
                     }
+                    contentInset={{bottom:this.state.contentInsetBottom}}
+                    scrollIndicatorInsets={{top:0,left:0,bottom:0,right:0}}
                     onLayout={this._onLayout}
                     onMomentumScrollStart={this._onMomentumScrollStart}
                     onMomentumScrollEnd={this._onMomentumScrollEnd}
@@ -152,6 +178,7 @@ export class SWFlatList extends Component {
                     onScrollEndDrag={this._onScrollEndDrag}
                     onTouchEnd={this._onTouchEnd}
                     onContentSizeChange={this._onContentSizeChange}
+                    ListFooterComponent={this._ListFooterComponent()}
                 />
             </View>
         )
@@ -160,7 +187,7 @@ export class SWFlatList extends Component {
 
 const styles = Utils.PLStyle({
     pullUpControl: {
-        flex:1,
+        flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
     }
