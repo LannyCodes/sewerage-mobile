@@ -9,10 +9,15 @@ import {
 } from 'react-native';
 import { WrapScreen } from "../wrap";
 import { SWFlatList } from '../../components';
+import * as Actions from "../../redux/actions";
+import { connect } from "react-redux";
+import Urls from "../../../config/api/urls";
 
 class MessageScreen extends WrapScreen {
     constructor(props) {
         super(props);
+        this.isPullDown = false;
+        this.isPullUp = false;
     }
 
     _header = () => {
@@ -24,11 +29,38 @@ class MessageScreen extends WrapScreen {
         }
     }
 
+    componentDidMount() {
+        this._onRefresh()
+    }
+
+    componentWillReceiveProps(nextProps) {
+        if(nextProps.messageRequest.isFetching === false) {
+            this.isPullDown = false;
+            this.isPullUp = false;
+        }
+    }
+
     _keyExtractor = (item, index) => index
 
     _itemClick = (item, index) => {
         console.log(item)
         this.props.navigation.navigate('MessageDetail');
+    }
+
+    _onRefresh=()=>{
+        let params = {
+            pageIndex:1,
+            pageSize:15,
+        }
+        this._requestMessageList(params);
+    }
+
+    _pullUp=()=>{
+        this._requestMessageList(this.props.messageRequest.body);
+    }
+
+    _requestMessageList=(param)=>{
+        this.store.dispatch(Actions.get(Urls.message.messageList,param));
     }
 
     _renderItem = (item, index) => {
@@ -56,7 +88,11 @@ class MessageScreen extends WrapScreen {
     _render() {
         return (
             <SWFlatList
-                data={['q', 'w', 'c']}
+                data={this.props.messageRequest.list}
+                refreshing={this.props.messageRequest.isFetching && this.isPullDown}
+                pullingUp = {this.props.messageRequest.isFetching && this.isPullUp}
+                pullUp={this._pullUp}
+                onRefresh={this._onRefresh}
                 keyExtractor={this._keyExtractor}
                 renderItem={this._renderItem}
                 ListHeaderComponent={<View style={{ height: 10, backgroundColor: '#f1f1f1' }} />}
@@ -68,7 +104,13 @@ class MessageScreen extends WrapScreen {
     }
 }
 
-export default MessageScreen
+function mapStateToProps(state) {
+    return {
+        messageRequest: state.message.messageRequest,
+    }
+}
+
+export default connect(mapStateToProps)(MessageScreen)
 const styles = StyleSheet.create({
     container: {
         flex: 1,

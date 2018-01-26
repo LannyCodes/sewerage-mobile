@@ -8,6 +8,7 @@ import Task from './task';
 import dataStatistics from './dataStatistics';
 import device from './device';
 import Me from './me';
+import Message from './message'
 
 let MainReducer = combineReducers({
     Common,
@@ -19,6 +20,7 @@ let MainReducer = combineReducers({
     dataStatistics,
     device,
     Me,
+    Message,
 });
 
 module.exports = MainReducer;

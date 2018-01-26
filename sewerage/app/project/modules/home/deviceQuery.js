@@ -54,6 +54,13 @@ class DeviceQueryScreen extends WrapScreen {
         this._onRefresh();
     }
 
+    componentWillReceiveProps(nextProps) {
+        if(nextProps.deviceListRequest.isFetching === false) {
+            this.isPullDown = false;
+            this.isPullUp = false;
+        }
+    }
+
     _header = () => 'none'
 
     _keyExtractor = (item, index) => item.ID;

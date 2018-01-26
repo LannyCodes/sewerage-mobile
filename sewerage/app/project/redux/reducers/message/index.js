@@ -1,14 +1,13 @@
 import { combineReducers } from 'redux';
 import Urls from "../../../../config/api/urls";
-import ActionType from '../../actionType';
 
-const deviceListRequest = (state, action) => {
+const messageRequest = (state, action) => {
     state = state || {
         list: [],
         isFetching: false,
         body: action.body,
     }
-    let url = Urls.device.deviceList;
+    let url = Urls.Message.messageList;
     switch (action.type) {
         case url + ActionType.FETCH_START:
             return {
@@ -42,15 +41,6 @@ const deviceListRequest = (state, action) => {
     }
 }
 
-let deviceDetail = {}
-const getDeviceDetail = (state = [], action) => {
-    if (action.type === Urls.device.deviceDetail) {
-        deviceDetail = action.data;
-    }
-    return deviceDetail;
-}
-
 export default combineReducers({
-    deviceListRequest,
-    getDeviceDetail,
+    messageRequest,
 })

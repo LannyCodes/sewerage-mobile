@@ -48,6 +48,10 @@ const Urls = {
     },
     User: {
         userInfo: '/app/user/info'
+    },
+    Message:{
+        messageList: '/api/message/list',
+        messageStatusUpdate:'/api/message',
     }
 };
 export default Urls
