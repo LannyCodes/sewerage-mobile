@@ -221,7 +221,7 @@ export class ListFilter extends React.PureComponent {
                                     onPress={this._itemClick.bind(this, item1.value, item.keyName, index)}
                                     activeOpacity={1}>
                                     {
-                                        isSelected ? <Image source={Assets.Components.checked} resizeMethod="cover"/> : <View/>
+                                        isSelected ? <Image source={Assets.Components.checked} resizeMode="cover"/> : <View/>
                                     }
                                     <Text style={[styles.itemText, { color: isSelected ? this.props.selectedTextColor : this.props.unselectedTextColor }]}
                                         activeOpacity={1}>{item1.name}</Text>
