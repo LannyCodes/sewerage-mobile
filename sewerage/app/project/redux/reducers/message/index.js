@@ -1,5 +1,6 @@
 import { combineReducers } from 'redux';
 import Urls from "../../../../config/api/urls";
+import ActionType from '../../actionType';
 
 const messageRequest = (state, action) => {
     state = state || {
