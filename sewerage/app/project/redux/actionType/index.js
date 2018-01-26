@@ -3,6 +3,7 @@ import 'core-js'
 const REQUEST = {
     REQUEST_STATUS: Symbol(),
     FETCH_START:'FETCH_START',
+    FETCH_END:'FETCH_END',
     REQUEST_ERROR:'REQUEST_ERROR',
 };
 

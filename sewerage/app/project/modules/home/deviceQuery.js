@@ -11,7 +11,7 @@ import {
 import { SearchBar, Divider, Icon, Avatar } from 'react-native-elements';
 import * as Utils from "../../../core/utils";
 import { WrapScreen } from "../wrap";
-import { ListFilter, Loading, SWRefreshControl,SWFlatList } from '../../components';
+import { ListFilter, Loading, SWRefreshControl, SWFlatList } from '../../components';
 import * as Actions from "../../redux/actions";
 import { connect } from "react-redux";
 import Urls from "../../../config/api/urls";
@@ -50,11 +50,11 @@ class DeviceQueryScreen extends WrapScreen {
         this.isPullUp = false;
     }
 
-    componentDidMount(){
+    componentDidMount() {
         this._onRefresh();
     }
 
-    _header=()=>'none'
+    _header = () => 'none'
 
     _keyExtractor = (item, index) => item.ID;
 
@@ -62,12 +62,12 @@ class DeviceQueryScreen extends WrapScreen {
         this.props.navigation.navigate('DeviceDetail',{deviceDetail:item})
     }
 
-    _searchConfirm=(event)=>{
+    _searchConfirm = (event) => {
         console.log(event.nativeEvent.text);
 
     }
 
-    _onRefresh=()=>{
+    _onRefresh = () => {
         this.isPullDown = true;
         let param = {
             pageIndex:1,
@@ -77,8 +77,7 @@ class DeviceQueryScreen extends WrapScreen {
         this.store.dispatch(Actions.get(this,Urls.device.deviceList,param));
     }
 
-    _pullUp=()=>{
-
+    _pullUp = () => {
         this.isPullUp = true;
         this.store.dispatch(Actions.get(this,Urls.device.deviceList,this.props.deviceListRequest.body));
     }
@@ -97,7 +96,7 @@ class DeviceQueryScreen extends WrapScreen {
     }
 
     //渲染单行
-    _renderItem = ({item,index}) => {
+    _renderItem = ({ item, index }) => {
         return (
             <TouchableOpacity
                 activeOpacity={1}
@@ -106,7 +105,7 @@ class DeviceQueryScreen extends WrapScreen {
                 <Avatar
                     width={50}
                     height={50}
-                    source={{url:item.avatar}}
+                    source={{ url: item.avatar }}
                     rounded
                     containerStyle={styles.listAvatar}
                 />
@@ -125,9 +124,9 @@ class DeviceQueryScreen extends WrapScreen {
     _render() {
         let self = this
         // if(!Loading.isLoading(this.props.isFetching))return
-        if(this.props.deviceListRequest.isFetching){
+        if (this.props.deviceListRequest.isFetching) {
             console.log(this.props.deviceListRequest.list)
-        }else{
+        } else {
             console.log(this.props.deviceListRequest.list)
         }
         return (
@@ -162,12 +161,12 @@ class DeviceQueryScreen extends WrapScreen {
                         </View>
                     </View>
                     <View style={styles.searchBarContainer}>
-                        <View style={{justifyContent:'center',alignItems:'center',width:30}}>
+                        <View style={{ justifyContent: 'center', alignItems: 'center', width: 30 }}>
                             <Icon
                                 name="ios-search-outline"
                                 type="ionicon"
                                 color="#8E8E93"
-                                size={20}/>
+                                size={20} />
                         </View>
                         <TextInput
                             style={styles.searchBar}
@@ -206,9 +205,9 @@ class DeviceQueryScreen extends WrapScreen {
     }
 }
 
-function mapStateToProps(state){
+function mapStateToProps(state) {
     return {
-        deviceListRequest:state.device.deviceListRequest,
+        deviceListRequest: state.device.deviceListRequest,
     }
 }
 
@@ -239,20 +238,26 @@ const styles = Utils.PLStyle({
         lineHeight: 24,
     },
     searchBarContainer: {
-      flexDirection:'row',
-      height:36,
-      marginLeft:10,
-      marginRight:10,
-      borderColor:'#e6e6ea',
-      borderWidth:0.5,
-      borderRadius:4,
-      backgroundColor:'#ffffff',
+        flexDirection: 'row',
+        height: 36,
+        marginLeft: 10,
+        marginRight: 10,
+        borderColor: '#e6e6ea',
+        borderWidth: 0.5,
+        borderRadius: 4,
+        backgroundColor: '#ffffff',
     },
     searchBar: {
+<<<<<<< HEAD
         flex:1,
         fontSize:14,
         color:"#333333",
         height:36,
+=======
+        flex: 1,
+        fontSize: 14,
+        color: "#333333",
+>>>>>>> 5b3f1ea897ad35977c34e0a59392e84b0d67aed2
     },
     //
     listItem: {

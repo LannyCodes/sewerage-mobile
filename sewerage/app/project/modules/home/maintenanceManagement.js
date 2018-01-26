@@ -3,13 +3,13 @@ import {
     View,
     Text, FlatList, TouchableOpacity,
 } from 'react-native';
-import {WrapScreen} from "../wrap";
+import { WrapScreen } from "../wrap";
 import * as Utils from "../../../core/utils";
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 import * as Actions from '../../redux/actions'
 import Urls from "../../../config/api/urls";
-import {Status} from "../../../config/api/api.config";
-import {DefaultPage, ErrorPage, ListFilter, Loading} from "../../components";
+import { Status } from "../../../config/api/api.config";
+import { DefaultPage, ErrorPage, ListFilter, Loading, SWFlatList } from "../../components";
 
 class MaintenanceManagementScreen extends WrapScreen {
 
@@ -20,12 +20,11 @@ class MaintenanceManagementScreen extends WrapScreen {
         this.state = {
             isFilterShow: false
         }
-
+        this.pullingFlag = ''
     }
 
     componentDidMount() {
-        let params = {pageIndex: 1, pageSize: 10};
-        this.store.dispatch(Actions.request(this, Urls.Maintenance.getTaskList, params, 'get'));
+        this._refresh();
     }
 
     _header = () => {
@@ -34,31 +33,46 @@ class MaintenanceManagementScreen extends WrapScreen {
         }
     }
 
+    _refresh = () => {
+        this.pullingFlag = 'refresh'
+        let params = {
+            pageIndex: 1,
+            pageSize: 10,
+        }
+        this.store.dispatch(Actions.get(this, Urls.Maintenance.getTaskList, params));
+    }
+
+
+    _pullUp = () => {
+        this.pullingFlag = 'pullup'
+        this.store.dispatch(Actions.get(this, Urls.Maintenance.getTaskList, this.props.taskListRequest.body));
+    }
+
     _renderCardStatus = (status) => {
-        let st = {text: '待执行', color: '#47A9EB', backgroundColor: '#ECF6FD'};
-        if (status === 0) st = {text: '待执行', color: '#47A9EB', backgroundColor: '#ECF6FD'};
-        else if (status === 1) st = {text: '执行中', color: '#FAA346', backgroundColor: '#FEF5EB'};
-        else st = {text: '已完成', color: '#1AAD19', backgroundColor: '#E8F6E8'};
+        let st = { text: '待执行', color: '#47A9EB', backgroundColor: '#ECF6FD' };
+        if (status === 0) st = { text: '待执行', color: '#47A9EB', backgroundColor: '#ECF6FD' };
+        else if (status === 1) st = { text: '执行中', color: '#FAA346', backgroundColor: '#FEF5EB' };
+        else st = { text: '已完成', color: '#1AAD19', backgroundColor: '#E8F6E8' };
         return (
-            <View style={[styles.cardStatus, {backgroundColor: st.backgroundColor}]}>
-                <Text style={{color: st.color, fontSize: 12}}>{st.text}</Text>
+            <View style={[styles.cardStatus, { backgroundColor: st.backgroundColor }]}>
+                <Text style={{ color: st.color, fontSize: 12 }}>{st.text}</Text>
             </View>
         )
     };
 
-    _renderItem = ({item}) => (
+    _renderItem = ({ item }) => (
         <TouchableOpacity style={styles.cardItem}
-                          onPress={() => {
-                              this.props.navigation.navigate('MaintenanceDetail', {
-                                  id: item.ID
-                              })
-                          }}>
+            onPress={() => {
+                this.props.navigation.navigate('MaintenanceDetail', {
+                    id: item.ID
+                })
+            }}>
             <View style={styles.row}>
                 <Text style={styles.cardTitle}>{item.NAME} {item.TASK_NUMBER}</Text>
                 {this._renderCardStatus(item.STATUS)}
             </View>
             <Text style={styles.cardContent}>{item.EQUIPMENT_NAMES}</Text>
-            <View style={[styles.row, {marginTop: 10}]}>
+            <View style={[styles.row, { marginTop: 10 }]}>
                 <Text style={styles.cardPerson}>{item.USER_NAME}</Text>
                 <Text style={styles.cardTime}>{item.VALID_TIME}</Text>
             </View>
@@ -67,36 +81,39 @@ class MaintenanceManagementScreen extends WrapScreen {
 
     _render() {
         if (this.props.requestStatus === Status.SUCCESS) {
-            console.log(this.props.maintenanceList)
-            if (!Loading.checkData(this.props.maintenanceList)) return;
-            if (this.props.maintenanceList.list.length > 0) {
+            if (!Loading.checkData(this.props.taskListRequest.list)) return;
+            if (this.props.taskListRequest.list.length > 0) {
                 return (
-                    <View style={{flex: 1}}>
-                        <FlatList
-                            data={this.props.maintenanceList.list}
+                    <View style={{ flex: 1 }}>
+                        <SWFlatList
+                            refreshing={this.props.taskListRequest.isFetching && this.pullingFlag === 'refresh'}
+                            onRefresh={this._refresh}
+                            data={this.props.taskListRequest.list}
                             keyExtractor={this._keyExtractor}
                             renderItem={this._renderItem}
+                            pullingUp={this.props.taskListRequest.isFetching && this.pullingFlag === 'pullup'}
+                            pullUp={this._pullUp}
                         />
                         {this.state.isFilterShow === true ?
                             <ListFilter
-                                containerStyles={{top: 0}}
+                                containerStyles={{ top: 0 }}
                                 filterArray={filterArray}
                                 maskerClick={() => {
                                     this.setState({
                                         isFilterShow: false,
                                     })
                                 }}
-                            /> : <View/>}
+                            /> : <View />}
                     </View>
                 )
             } else {
                 return (
-                    <DefaultPage content={'暂无维保任务'}/>
+                    <DefaultPage content={'暂无维保任务'} />
                 )
             }
         } else if (this.props.requestStatus === Status.FAIL) {
             return (
-                <ErrorPage/>
+                <ErrorPage />
             )
         }
     }
@@ -105,7 +122,7 @@ class MaintenanceManagementScreen extends WrapScreen {
 //make this component available to the app
 function mapStateToProps(state) {
     return {
-        maintenanceList: state.Maintenance.getTaskList,
+        taskListRequest: state.Maintenance.taskListRequest,
         requestStatus: state.Common.requestStatus
     }
 }
