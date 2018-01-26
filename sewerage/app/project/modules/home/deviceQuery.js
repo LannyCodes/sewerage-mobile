@@ -248,16 +248,10 @@ const styles = Utils.PLStyle({
         backgroundColor: '#ffffff',
     },
     searchBar: {
-<<<<<<< HEAD
         flex:1,
         fontSize:14,
         color:"#333333",
         height:36,
-=======
-        flex: 1,
-        fontSize: 14,
-        color: "#333333",
->>>>>>> 5b3f1ea897ad35977c34e0a59392e84b0d67aed2
     },
     //
     listItem: {
