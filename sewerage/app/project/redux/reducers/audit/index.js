@@ -1,56 +1,115 @@
-import {combineReducers} from 'redux';
+import { combineReducers } from 'redux';
 import Urls from "../../../../config/api/urls";
+import ActionType from '../../actionType'
 
-let auditList = null;
-const getAuditList = (state = [], action) => {
-    if (action.type === Urls.Audit.getAuditList) {
-        auditList = action.data
-        return auditList
+const waitAuditListRequest = (state = [], action) => {
+    state = state || {
+        list: [],
+        isFetching: false,
+        body: action.body,
     }
-    return auditList
+    let url = Urls.Audit.getWaitAuditList;
+    switch (action.type) {
+        case url + ActionType.FETCH_START:
+            return {
+                ...state,
+                isFetching: true,
+            }
+        case url:
+            let body = action.body;
+            let list = state.list;
+            if (action.data.list && action.data.list.length > 0) {
+                body.pageIndex = body.pageIndex + 1;
+                if (body.pageIndex === 2) {
+                    return {
+                        ...state,
+                        isFetching: false,
+                        list: action.data.list,
+                        body: body,
+                    }
+                }
+                return {
+                    ...state,
+                    isFetching: false,
+                    list: list ? list.concat(action.data.list) : action.data.list,
+                    body: body,
+                }
+            } else {
+                return {
+                    ...state,
+                    isFetching: false,
+                }
+            }
+        case url + ActionType.REQUEST_ERROR:
+            return {
+                ...state,
+                isFetching: false,
+            }
+        default:
+            return state
+    }
 };
 
-let auditGZGDDetail = null; // 故障工单审核详情
-const getAuditGZGDDetail = (state = [], action) => {
-    if (action.type === Urls.Audit.getAuditDetail0) {
-        auditGZGDDetail= action.data;
-        return auditGZGDDetail
+const doneAuditListRequest = (state = [], action) => {
+    state = state || {
+        list: [],
+        isFetching: false,
+        body: action.body,
     }
-    return auditGZGDDetail
+    let url = Urls.Audit.getDoneAuditList;
+    switch (action.type) {
+        case url + ActionType.FETCH_START:
+            return {
+                ...state,
+                isFetching: true,
+            }
+        case url:
+            let body = action.body;
+            let list = state.list;
+            if (action.data.list && action.data.list.length > 0) {
+                body.pageIndex = body.pageIndex + 1;
+                if (body.pageIndex === 2) {
+                    return {
+                        ...state,
+                        isFetching: false,
+                        list: action.data.list,
+                        body: body,
+                    }
+                }
+                return {
+                    ...state,
+                    isFetching: false,
+                    list: list ? list.concat(action.data.list) : action.data.list,
+                    body: body,
+                }
+            } else {
+                return {
+                    ...state,
+                    isFetching: false,
+                }
+            }
+        case url + ActionType.REQUEST_ERROR:
+            return {
+                ...state,
+                isFetching: false,
+            }
+        default:
+            return state
+    }
 };
 
-let auditCKBGDetail = null; // 故障工单审核详情
-const getAuditCKBGDetail = (state = [], action) => {
-    if (action.type === Urls.Audit.getAuditDetail1) {
-        auditCKBGDetail= action.data;
-        return auditCKBGDetail
+const getAuditDetail = (state = [], action) => {
+    let auditDetail = null
+    if (action.type === Urls.Audit.getAuditDetail) {
+        auditDetail = action.data;
+        return auditDetail
     }
-    return auditCKBGDetail
-};
-
-let auditXJDetail = null; // 故障工单审核详情
-const getAuditXJDetail = (state = [], action) => {
-    if (action.type === Urls.Audit.getAuditDetail2) {
-        auditXJDetail= action.data;
-        return auditXJDetail
-    }
-    return auditXJDetail
-};
-
-let auditWBDetail = null; // 故障工单审核详情
-const getAuditWBDetail = (state = [], action) => {
-    if (action.type === Urls.Audit.getAuditDetail3) {
-        auditWBDetail= action.data;
-        return auditWBDetail
-    }
-    return auditWBDetail
+    return auditDetail
 };
 
 export default combineReducers({
-    getAuditList,
-    getAuditGZGDDetail,
-    getAuditCKBGDetail,
-    getAuditXJDetail,
-    getAuditWBDetail
+    waitAuditListRequest,
+    doneAuditListRequest,
+    getAuditDetail
 });
 

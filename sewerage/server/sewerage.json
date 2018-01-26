@@ -1,5 +1,4 @@
-[
-  {
+[{
     "url": "/api/user/login",
     "method": "post",
     "response": {
@@ -36,8 +35,7 @@
       "msg": "",
       "data": {
         "totalCount": 6,
-        "list": [
-          {
+        "list": [{
             "EQUIPMENT_NAMES": "渗滤液设备,",
             "STATUS": 0,
             "TASK_NUMBER": "302018012216595300",
@@ -131,8 +129,7 @@
     "response": {
       "code": 0,
       "msg": "",
-      "data": [
-        {
+      "data": [{
           "title": "故障工单审核",
           "content": "巡检宁乡市经济开发区一号场站，其中区安监项目包含一体机设备，进水口监控设备，出水口监控设备。",
           "person": "PG-ONE",
@@ -183,8 +180,7 @@
       "msg": "",
       "data": {
         "totalCount": 3,
-        "list": [
-          {
+        "list": [{
             "BREAK_NUMBER": "GZGD-01-11",
             "STATUS": "1",
             "DESCRIBE": "人间大炮一级准备",
@@ -217,8 +213,7 @@
       "msg": "",
       "data": {
         "totalCount": 3,
-        "list": [
-          {
+        "list": [{
             "ID": 0,
             "EQUIPMENT_NAME": "人间大炮",
             "TYPE": "1",
@@ -276,8 +271,7 @@
     "response": {
       "code": 0,
       "message": "",
-      "data": [
-        {
+      "data": [{
           "name": "巡检完成数",
           "number": 400
         },
@@ -314,8 +308,7 @@
     "response": {
       "code": 0,
       "message": "",
-      "data": [
-        {
+      "data": [{
           "name": "巡检完成数",
           "number": 400
         },
@@ -348,8 +341,7 @@
     "response": {
       "code": 0,
       "message": "",
-      "data": [
-        {
+      "data": [{
           "name": "巡检完成数",
           "number": 400
         },
@@ -382,8 +374,7 @@
     "response": {
       "code": 0,
       "msg": "",
-      "data": [
-        {
+      "data": [{
           "EQUIPMENT_NAMES": "002,渗滤液设备",
           "STATUS": 0,
           "TASK_NUMBER": "3011552200",
@@ -416,8 +407,7 @@
     "response": {
       "code": 0,
       "msg": "",
-      "data": [
-        {
+      "data": [{
           "title": "宁乡污水处理厂水月巡检任务",
           "content": "巡检宁乡市经济开发区一号场站，其中区安监项目包含一体机设备，进水口监控设备，出水口监控设备。",
           "person": "PG-ONE",
@@ -454,14 +444,13 @@
     "response": {
       "code": 0,
       "msg": "成功",
-      "data":  {
+      "data": {
         "VALID_TIME": "2018-01-24 14:28:17",
         "USER_ID": "11E7F9B3F7BE1097AE38192A4CB03053",
         "USER_NAME": "刘烨",
         "STATION_ID": "11E7E52D873313EDBFCC91E0EC1FB7DC",
         "STATION_NAME": "厂站三",
-        "CONTENTS": [
-          {
+        "CONTENTS": [{
             "STATUS": 0,
             "ID": "11E8000699022B99943D230B848AE364",
             "CONTENT": "箱体是否漏水"
@@ -525,24 +514,21 @@
         "PLAN_ID": "11E7FC2DD79EDD1682B2E77001C4DA38",
         "UPDATE_TIME": "2018-01-22 16:59:53",
         "PLAN_NAME": "简单试一个",
-        "ITEMS": [
-          {
-            "EQUIPMENT_NAME": "渗滤液设备",
-            "ITEM_CONTENTS": [
-              {
-                "STATUS": 0,
-                "ID": "11E7FF529CA6D68DADD559CF87FF267A",
-                "CONTENT": "管道是否堵塞"
-              },
-              {
-                "STATUS": 0,
-                "ID": "11E7FF529CA85D2EADD559CF87FF267A",
-                "CONTENT": "单体设备是否正常运行"
-              }
-            ],
-            "STATION_NAME": "002"
-          }
-        ],
+        "ITEMS": [{
+          "EQUIPMENT_NAME": "渗滤液设备",
+          "ITEM_CONTENTS": [{
+              "STATUS": 0,
+              "ID": "11E7FF529CA6D68DADD559CF87FF267A",
+              "CONTENT": "管道是否堵塞"
+            },
+            {
+              "STATUS": 0,
+              "ID": "11E7FF529CA85D2EADD559CF87FF267A",
+              "CONTENT": "单体设备是否正常运行"
+            }
+          ],
+          "STATION_NAME": "002"
+        }],
         "STATUS": 0,
         "TASK_NUMBER": "302018012216595300",
         "CHECK_USER_NAME": "吴茂丹",
@@ -566,8 +552,7 @@
         "type": "1",
         "auditPerson": "宋喆",
         "reason": "湖南宁乡经济技术开发区污水处理厂采用较为先进的污水处理工艺五段式A/A/O-A+二沉池+微絮凝池+V型滤池+CIO2消毒，其设计规模为5万立方米/日，所以我们要变更他。",
-        "list": [
-          {
+        "list": [{
             "bgname": "二向箔",
             "ck": "仓库A",
             "size": "100",
@@ -611,8 +596,7 @@
         "fqperson": "王宝强",
         "auditPerson": "宋喆",
         "des": "湖南宁乡经济技术开发区污水处理厂采用较为先进的污水处理工艺五段式A/A/O-A+二沉池+微絮凝池+V型滤池+CIO2消毒，其设计规模为5万立方米/日，所以我们要变更他。",
-        "list": [
-          {
+        "list": [{
             "deviceName": "二向箔设备一号",
             "fault": "一号一体机设备电机损坏，测试结果显示断路，水泵运转一号一体机设备点击损坏，测试结果显示断路，反正是坏了。",
             "source": "巡检",
@@ -706,6 +690,70 @@
         "mobile": "15919910301",
         "email": "123456@qq.com",
         "organizeName": "中联环境"
+      }
+    }
+  },
+  {
+    "url": "/api/businessProcess/waitTaskList",
+    "method": "get",
+    "response": {
+      "code": 0,
+      "msg": "成功",
+      "data": {
+        "totalCount": 2,
+        "list": [{
+            "STATUS": 0,
+            "PROCESS_INST_ID": "285011",
+            "CREATE_USER": "超级管理员",
+            "THEME": "嘉伟测试02",
+            "PROCESS_TYPE": "inspection_plan_process",
+            "ID": "11E7FF5FC4083E7AB597A79148AAA3D9",
+            "CREATE_TIME": "2018-01-22 18:34:04",
+            "ROW_ID": 1
+          },
+          {
+            "STATUS": 0,
+            "PROCESS_INST_ID": "195011",
+            "CREATE_USER": "刘烨",
+            "THEME": "111111",
+            "PROCESS_TYPE": "inspection_plan_process",
+            "ID": "11E7FCC6CFE848418A389F1DC3C6EE96",
+            "CREATE_TIME": "2018-01-19 11:14:29",
+            "ROW_ID": 2
+          }
+        ]
+      }
+    }
+  },
+  {
+    "url": "/api/businessProcess/doneTaskList",
+    "method": "get",
+    "response": {
+      "code": 0,
+      "msg": "成功",
+      "data": {
+        "totalCount": 2,
+        "list": [{
+            "STATUS": 0,
+            "PROCESS_INST_ID": "195011",
+            "CREATE_USER": "刘烨",
+            "THEME": "111111",
+            "PROCESS_TYPE": "inspection_plan_process",
+            "ID": "11E7FCC6CFE848418A389F1DC3C6EE96",
+            "CREATE_TIME": "2018-01-19 11:14:29",
+            "ROW_ID": 1
+          },
+          {
+            "STATUS": 3,
+            "PROCESS_INST_ID": "105009",
+            "CREATE_USER": "刘烨",
+            "THEME": "故障工单",
+            "PROCESS_TYPE": "breakdown_bill_process",
+            "ID": "11E7FC0F412B3945A8E679255029E712",
+            "CREATE_TIME": "2018-01-18 13:28:14",
+            "ROW_ID": 2
+          }
+        ]
       }
     }
   }

@@ -81,16 +81,15 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         height: Utils.sh,
         width: Utils.sw,
-        backgroundColor: 'black',
-        opacity: 0.2
+        backgroundColor: 'transparent'
     },
     rectangle: {
         height: 250,
         width: 250,
         borderWidth: 2,
         borderColor: '#1AAD19',
-        backgroundColor: 'white',
-        alignItems: 'center'
+        alignItems: 'center',
+        backgroundColor: 'transparent'
     },
     tip: {
         fontSize: 14,

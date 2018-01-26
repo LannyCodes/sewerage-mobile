@@ -1,4 +1,4 @@
-import {StackNavigator} from 'react-navigation';
+import { StackNavigator } from 'react-navigation';
 import * as Modules from '../../project/modules';
 import TabNav from "./TabNavigator";
 import QrScan from "../../project/components/qrScan";
@@ -14,9 +14,9 @@ const Splash = {
 };
 
 const Login = {
-    Login: {screen: Modules.LoginlScreen},
-    Vertify: {screen: Modules.VertifyScreen},
-    Modify: {screen: Modules.ModifyScreen},
+    Login: { screen: Modules.LoginlScreen },
+    Vertify: { screen: Modules.VertifyScreen },
+    Modify: { screen: Modules.ModifyScreen },
 };
 
 
@@ -25,68 +25,65 @@ const Login = {
  * @type {{Main: {screen: TabNav}}}
  */
 const Main = {
-    Main: {screen: TabNav}
+    Main: { screen: TabNav }
 };
 
 const Common = {
-    Bridge: {screen: Modules.BridgeScreen},
-    Qr: {screen: QrScan},
+    Bridge: { screen: Modules.BridgeScreen },
+    Qr: { screen: QrScan },
 };
 
 const Home = {
-    AuditManagement: {screen: Modules.AuditManagementScreen},
-    DataStatistics: {screen: Modules.DataStatisticsScreen},
-    DeviceQuery: {screen: Modules.DeviceQueryScreen},
-    FaultList: {screen: Modules.FaultListScreen},
-    InspectionManagement: {screen: Modules.InspectionManagementScreen},
-    MaintenanceManagement: {screen: Modules.MaintenanceManagementScreen}
+    AuditManagement: { screen: Modules.AuditManagementScreen },
+    DataStatistics: { screen: Modules.DataStatisticsScreen },
+    DeviceQuery: { screen: Modules.DeviceQueryScreen },
+    FaultList: { screen: Modules.FaultListScreen },
+    InspectionManagement: { screen: Modules.InspectionManagementScreen },
+    MaintenanceManagement: { screen: Modules.MaintenanceManagementScreen }
 };
 /**
  *  巡检
  */
 const Inspections = {
-    InspectionDetail: {screen: Modules.InspectionDetailScreen}
+    InspectionDetail: { screen: Modules.InspectionDetailScreen }
 };
 /**
  *  维保
  */
 const Maintenance = {
-    MaintenanceDetail: {screen: Modules.MaintenanceDetailScreen}
+    MaintenanceDetail: { screen: Modules.MaintenanceDetailScreen }
 };
 /**
  *  审核
  */
 const Audit = {
-    AuditCKBGDetail: {screen: Modules.AuditCKBGDetailScreen},
-    AuditGZGDDetail: {screen: Modules.AuditGZGDDetailScreen},
-    AuditXJDetail: {screen: Modules.AuditXJDetailScreen},
-    AuditWBDetail: {screen: Modules.AuditWBDetailScreen},
+    AuditDetail: { screen: Modules.AuditDetailScreen },
 };
 /**
  * 任务
  */
 const Task = {
-    TaskList: {screen: Modules.TaskListScreen},
-    TaskDetail: {screen: Modules.TaskDetailScreen},
-    TaskUpload: {screen: Modules.TaskUploadScreen},
-    TaskDealDetail: {screen: Modules.TaskDealDetailScreen},
+    TaskList: { screen: Modules.TaskListScreen },
+    TaskDetail: { screen: Modules.TaskDetailScreen },
+    TaskUpload: { screen: Modules.TaskUploadScreen },
+    TaskDealDetail: { screen: Modules.TaskDealDetailScreen },
 }
 
 /**
  * 故障
  */
 const Fault = {
-    FaultDetail: {screen: Modules.FaultDetailScreen},
-    WorkOrderDetail: {screen: Modules.WorkOrderDetailScreen},
-    DealWorkOrder: {screen: Modules.DealWorkOrderScreen},
+    FaultDetail: { screen: Modules.FaultDetailScreen },
+    WorkOrderDetail: { screen: Modules.WorkOrderDetailScreen },
+    DealWorkOrder: { screen: Modules.DealWorkOrderScreen },
 };
 
 const Device = {
-    DeviceDetail: {screen: Modules.DeviceDetailScreen},
+    DeviceDetail: { screen: Modules.DeviceDetailScreen },
 }
 
 const Message = {
-    MessageDetail: {screen: Modules.MessageDetailScreen},
+    MessageDetail: { screen: Modules.MessageDetailScreen },
 }
 
 const Navigator = StackNavigator(
@@ -104,7 +101,7 @@ const Navigator = StackNavigator(
         ...Device,
         ...Message,
     }, {
-        navigationOptions: ({navigation, screenProps}) => ({
+        navigationOptions: ({ navigation, screenProps }) => ({
             header: null,
             gesturesEnabled: (() => {//可以通过this.props.navigation.setParams重新设置gesturesEnabled值
                 if (navigation.state.params && navigation.state.params.gesturesEnabled !== undefined) {

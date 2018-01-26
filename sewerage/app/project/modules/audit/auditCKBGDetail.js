@@ -14,13 +14,10 @@ class AuditCKBGDetailScreen extends WrapScreen {
 
     constructor(props) {
         super(props);
-        this.state = {
-            status: '0' //this.props.navigation.state.params.status
-        }
     }
 
     componentDidMount() {
-        this.store.dispatch(Actions.request(this, Urls.Audit.getAuditDetail1)); // 请求
+        this.store.dispatch(Actions.request(this, Urls.Audit.getAuditDetail)); // 请求
     }
 
     _header=()=>{
@@ -31,10 +28,10 @@ class AuditCKBGDetailScreen extends WrapScreen {
 
     _renderCardStatus = (status) => {
         let st = {text: '待审核', color: '#FAA346', backgroundColor: '#FEF5EB'};
-        if (status === '0') st = {text: '待审核', color: '#FAA346', backgroundColor: '#FEF5EB'};
-        else if (status === '1') st = {text: '已通过', color: '#1AAD19', backgroundColor: '#E8F6E8'};
-        else if (status === '2') st = {text: '已驳回', color: '#47A9EB', backgroundColor: '#ECF6FD'};
-        else if (status === '3') st = {text: '已废弃', color: '#FF6E61', backgroundColor: '#FFE2DF'};
+        if (status === 0) st = {text: '待审核', color: '#FAA346', backgroundColor: '#FEF5EB'};
+        else if (status === 1) st = {text: '已通过', color: '#1AAD19', backgroundColor: '#E8F6E8'};
+        else if (status === 2) st = {text: '已驳回', color: '#47A9EB', backgroundColor: '#ECF6FD'};
+        else if (status === 3) st = {text: '已废弃', color: '#FF6E61', backgroundColor: '#FFE2DF'};
         return (
             <View style={{
                 width: 45,

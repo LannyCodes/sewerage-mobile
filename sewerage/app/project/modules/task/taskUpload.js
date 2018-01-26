@@ -1,10 +1,10 @@
 import React from 'react';
-import {WrapScreen} from "../wrap";
-import {connect} from "react-redux";
+import { WrapScreen } from "../wrap";
+import { connect } from "react-redux";
 import * as Utils from "../../../core/utils";
-import {ScrollView, Text, TextInput, TouchableOpacity, View} from "react-native";
-import {Divider, Icon} from "react-native-elements";
-import {GridImagePicker} from "../../components";
+import { ScrollView, Text, TextInput, TouchableOpacity, View } from "react-native";
+import { Divider, Icon } from "react-native-elements";
+import { GridImagePicker } from "../../components";
 import Urls from "../../../config/api/urls";
 
 let imageIds0 = [];
@@ -17,22 +17,25 @@ class TaskUploadScreen extends WrapScreen {
 
         this.state = {
             selectedIndex: 0,
-            typeIndex0: 0,
+            typeIndex0: 0, // 问题类型
             typeIndex1: 0,
-            rankIndex0: 0,
+            rankIndex0: 0, // 问题等级
             rankIndex1: 0,
-            s1Text: '',
+            faultDes0: '', // 故障描述输入
+            faultDes1: '',
+            s1Text: '', // 问题反馈输入
             s2Text: '',
             s3Text: '',
-            uploadImages0: [],
+            uploadImages0: [], // 问题图片
             uploadImages1: [],
-            dealText0: '',
+            dealText0: '', // 处理输入
             dealText1: ''
         }
+        this.type = this.props.navigation.state.params.type;
     }
 
     _header = () => {
-        const {state, goBack} = this.props.navigation;
+        const { state, goBack } = this.props.navigation;
         let type = state.params.type;
         return {
             title: ['巡检内容', '维保内容'][type],
@@ -49,7 +52,8 @@ class TaskUploadScreen extends WrapScreen {
                         }
                     } else if (this.state.selectedIndex === 1) {
                         params = {
-                            'BREAKDOWN_DESCRIBE': this.state.s2Text,
+                            'DESCRIBE': this.state.s2Text,
+                            'BREAKDOWN_DESCRIBE': this.state.faultDes0,
                             'HANDLE_TYPE': 1, // 故障能处理
                             'TYPE': this.state.typeIndex0,
                             'RANK': this.state.rankIndex0,
@@ -58,7 +62,8 @@ class TaskUploadScreen extends WrapScreen {
                         }
                     } else if (this.state.selectedIndex === 2) {
                         params = {
-                            'BREAKDOWN_DESCRIBE': this.state.s3Text,
+                            'DESCRIBE': this.state.s3Text,
+                            'BREAKDOWN_DESCRIBE': this.state.faultDes1,
                             'HANDLE_TYPE': 2, // 故障能处理
                             'TYPE': this.state.typeIndex1,
                             'RANK': this.state.rankIndex1,
@@ -69,6 +74,8 @@ class TaskUploadScreen extends WrapScreen {
                     Object.assign(params, state.params.itemParams);
                     console.log(params);
                     Utils.fetch(this, Urls.Task[this.taskUploadFun[type]], params).then((data) => {
+                        imageIds0 = [];
+                        imageIds1 = [];
                         state.params.onComplete();
                         goBack();
                     });
@@ -170,25 +177,36 @@ class TaskUploadScreen extends WrapScreen {
     }
 
     _renderMulti = (status /*0:故障能处理，1：故障不能处理*/, typeGroup: Array, levelGroup: Array) => {
-        let inputType = ['s2Text', 's3Text'];
+        let inputType = ['s2Text', 's3Text']; // 巡检反馈
+        let faultType = ['faultDes0', 'faultDes1']; // 故障描述
         let typeIndex = ['typeIndex0', 'typeIndex1'];
         let rankIndex = ['rankIndex0', 'rankIndex1'];
         let dealText = ['dealText0', 'dealText1'];
         let imageIds = [imageIds0, imageIds1];
         return (
             <ScrollView>
-                <Text style={styles.groupTitle}>故障描述</Text>
-                <View style={{alignItems: 'center'}}>
+                <Text style={styles.groupTitle}>${['巡检', '维保'][this.type]}反馈</Text>
+                <View style={{ alignItems: 'center' }}>
                     <TextInput
-                        placeholder={'请输入巡检反馈（若无可不填）'}
+                        placeholder={`请输入${['巡检', '维保'][this.type]}反馈（若无可不填）`}
                         multiline={true}
                         style={styles.textInput}
-                        onChangeText={(text) => this.setState({[inputType[status]]: text})}
+                        onChangeText={(text) => this.setState({ [inputType[status]]: text })}
                         value={this.state[inputType[status]]}
                     />
                 </View>
+                <Text style={styles.groupTitle}>故障描述</Text>
+                <View style={{ alignItems: 'center' }}>
+                    <TextInput
+                        placeholder={`请输入故障描述（若无可不填）`}
+                        multiline={true}
+                        style={styles.textInput}
+                        onChangeText={(text) => this.setState({ [faultType[status]]: text })}
+                        value={this.state[faultType[status]]}
+                    />
+                </View>
                 <Text style={styles.groupTitle}>故障类型</Text>
-                <View style={{flexDirection: 'row', height: 32}}>
+                <View style={{ flexDirection: 'row', height: 32 }}>
                     {
                         typeGroup.map((item, i) => {
                             const s = this._getBtnRadioStyle(i, status, 'type');
@@ -205,7 +223,7 @@ class TaskUploadScreen extends WrapScreen {
                     }
                 </View>
                 <Text style={styles.groupTitle}>故障等级</Text>
-                <View style={{flexDirection: 'row', height: 32}}>
+                <View style={{ flexDirection: 'row', height: 32 }}>
                     {
                         levelGroup.map((item, i) => {
                             const s = this._getBtnRadioStyle(i, status);
@@ -222,12 +240,12 @@ class TaskUploadScreen extends WrapScreen {
                     }
                 </View>
                 <Text style={styles.groupTitle}>处理方式</Text>
-                <View style={{alignItems: 'center'}}>
+                <View style={{ alignItems: 'center' }}>
                     <TextInput
                         placeholder={'请输入处理方式（若无可不填）'}
                         multiline={true}
                         style={styles.textInput}
-                        onChangeText={(text) => this.setState({[dealText[status]]: text})}
+                        onChangeText={(text) => this.setState({ [dealText[status]]: text })}
                         value={this.state[dealText[status]]}
                     />
                 </View>
@@ -235,7 +253,7 @@ class TaskUploadScreen extends WrapScreen {
                     cols={4}
                     onPhotoTapped={(picture, imageId) => {
                         console.log(imageId)
-                        let source = {uri: picture.uri};
+                        let source = { uri: picture.uri };
                         let images = status === 0 ? this.state.uploadImages0 : this.state.uploadImages1;
                         images.push(source);
                         imageIds[status].push(imageId);
@@ -256,12 +274,12 @@ class TaskUploadScreen extends WrapScreen {
         switch (this.state.selectedIndex) {
             case 0: {
                 return (
-                    <View style={{flex: 1, alignItems: 'center'}}>
+                    <View style={{ flex: 1, alignItems: 'center' }}>
                         <TextInput
-                            placeholder={'请输入巡检反馈（若无可不填）'}
+                            placeholder={`请输入${['巡检', '维保'][this.type]}反馈（若无可不填）`}
                             multiline={true}
-                            style={[styles.textInput, {marginTop: 12}]}
-                            onChangeText={(text) => this.setState({s1Text: text})}
+                            style={[styles.textInput, { marginTop: 12 }]}
+                            onChangeText={(text) => this.setState({ s1Text: text })}
                             value={this.state.text}
                         />
                     </View>
@@ -279,10 +297,10 @@ class TaskUploadScreen extends WrapScreen {
 
 
     _render() {
-        const btnGroup = ['巡检正常', '故障能处理', '故障不能处理']
+        const btnGroup = [`${['巡检', '维保'][this.type]}正常`, '故障能处理', '故障不能处理']
         return (
-            <ScrollView style={{flex: 1, backgroundColor: 'white'}}>
-                <View style={{flexDirection: 'row', height: 47}}>
+            <ScrollView style={{ flex: 1, backgroundColor: 'white' }}>
+                <View style={{ flexDirection: 'row', height: 47 }}>
                     {
                         btnGroup.map((item, i) => {
                             const s = this._getSelectedStyle(i);
@@ -293,7 +311,7 @@ class TaskUploadScreen extends WrapScreen {
                                     })
                                 }}>
                                     <Icon
-                                        containerStyle={{marginTop: 3}}
+                                        containerStyle={{ marginTop: 3 }}
                                         name={s.icon.name}
                                         type='material-community'
                                         color={s.icon.color}
@@ -305,7 +323,7 @@ class TaskUploadScreen extends WrapScreen {
                         })
                     }
                 </View>
-                <Divider style={{backgroundColor: '#EBEBEB'}}/>
+                <Divider style={{ backgroundColor: '#EBEBEB' }} />
                 {this._renderContent()}
             </ScrollView>
         )
