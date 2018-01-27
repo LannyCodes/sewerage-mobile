@@ -15,9 +15,10 @@ import {
 import { WrapScreen } from '../wrap';
 import { Avatar } from 'react-native-elements';
 import * as Utils from '../../../core/utils';
-import { GridView, TagLabel, PicturesPreview } from '../../components';
+import { GridView, TagLabel, Loading } from '../../components';
 import Urls from "../../../config/api/urls";
-import { WOAuditCell, WOFaultsCell, WOResultCell } from './components';
+import { WOAudit, WOFaults, WOResult } from './components';
+import {StatusHelper} from './utils';
 
 const screenWidth = Dimensions.get('window').width;
 
@@ -37,58 +38,61 @@ class WorkOrderDetailScreen extends WrapScreen {
     }
 
     componentDidMount() {
-
+        this._getDetail();
     }
 
-    getDetail = async () => {
+    _getDetail = async () => {
+        let params = {
+            ID:this.props.navigation.state.params.item.ID
+        }
+        // let self = this;
+        Loading.isLoading(true);
         try {
-            let details = await Utils.get(this, Urls.faults.workOrderDetail)
+            let details = await Utils.get(this, Urls.faults.workOrderDetail,params)
             this.setState({
                 details: details,
             })
+            Loading.isLoading(false);
         } catch (err) {
-
+            Loading.isLoading(false);
         }
     }
-
-    _keyExtractor = (item, index) => item.id;
 
     _dealWorkOrder = () => {
         this.props.navigation.navigate('DealWorkOrder');
     }
 
-    _imageClick = () => {
-        this._pp.showPreview()
-    }
-
-    _renderListHeader = () => {
+    _renderHeader = () => {
+        let detail = this.state.details || '';
+        let item = this.props.navigation.state.params.item;
+        let {auditPerform,auditText} = StatusHelper.getAuditStatusPerform(item.STATUS)
         return (
             <View>
                 <View style={styles.workOrderMessage}>
                     <View style={styles.header}>
                         <View style={styles.headerTitle}>
-                            <Text style={styles.headerText}>一号一体机设备</Text>
-                            <TagLabel>处理中</TagLabel>
+                            <Text style={styles.headerText}>{item.BREAK_NUMBER}</Text>
+                            <TagLabel backgroundColor={auditPerform.backgroundColor} fontColor={auditPerform.color}>{auditText}</TagLabel>
                         </View>
                         <Text style={styles.headerFootText}>
                             发起时间：
-                                <Text>2017-06-30-12:00</Text>
+                                <Text>{item.CREATE_TIME}</Text>
                         </Text>
                     </View>
                     <View style={styles.divider} />
                     <View style={styles.contentCell}>
                         <Text style={styles.cellText}>发起人</Text>
-                        <Text style={[styles.cellText, { color: '#333333' }]}>杨涛</Text>
+                        <Text style={[styles.cellText, { color: '#333333' }]}>{detail.CREATE_USER_NAME}</Text>
                     </View>
                     <View style={styles.divider} />
                     <View style={styles.contentCell}>
                         <Text style={styles.cellText}>责任人</Text>
-                        <Text style={[styles.cellText, { color: '#333333' }]}>孙八一</Text>
+                        <Text style={[styles.cellText, { color: '#333333' }]}>{item.USER_NAME}</Text>
                     </View>
                     <View style={styles.divider} />
                     <View>
                         <Text style={[styles.cellText, { marginTop: 14, marginBottom: 14 }]}>工单描述</Text>
-                        <Text style={[styles.cellText, { color: '#333333', marginBottom: 14 }]}>湖南宁乡经济技术开发区污水处理厂采用较为先进的污水处理工艺五段式A/A/O-A/O+二沉池+微絮凝池+V型滤池+ClO2消毒， 其设计规模为5万立方米/日</Text>
+                        <Text style={[styles.cellText, { color: '#333333', marginBottom: 14 }]}>{item.DESCRIBE}</Text>
                     </View>
                 </View>
                 <View style={styles.listTag}>
@@ -97,31 +101,6 @@ class WorkOrderDetailScreen extends WrapScreen {
                 </View>
             </View>
         )
-    }
-
-    //审核记录
-    _renderAuditRecord = () => {
-        return (
-            <View>
-                <View style={styles.listTag}>
-                    <View style={{ backgroundColor: '#42BB55', height: 16, width: 3 }} />
-                    <Text style={{ color: '#666666', fontSize: 15, marginLeft: 5 }}>审核记录</Text>
-                </View>
-                <View style={styles.divider} />
-                <View>
-                    {
-                        ['a', 'b', 'c', 'd'].map((item, index, items) => {
-                            // return this._renderAuditRecordCell(item, index, items)
-                            return <WOAuditCell item={item} index={index} items={items}/>
-                        })
-                    }
-                </View>
-            </View>
-        )
-    }
-
-    _renderResult=()=>{
-        return <WOResultCell/>
     }
 
     //故障清单
@@ -140,30 +119,23 @@ class WorkOrderDetailScreen extends WrapScreen {
 
     _render() {
         return (
-            <View style={styles.container}>
-                <FlatList
-                    bounces={false}
-                    data={[{ id: '1' }]}
-                    keyExtractor={this._keyExtractor}
-                    renderItem={()=><WOFaultsCell/>}
-                    ListHeaderComponent={this._renderListHeader}
-                    ListFooterComponent={this._renderListFoot}
-                />
+            <View style={{flex:1,justifyContent:'space-between'}}>
+                <ScrollView style={styles.container} bounces={false}>
+                    {this._renderHeader()}
+                    <WOFaults data={this.state.details.BREAKDOWNS || []}/>
+                    <WOResult data={this.state.details.HANDLE_LOGS || []}/>
+                    <WOAudit data={this.state.details.CHECK_LOGS || []}/>
+                </ScrollView>
                 <TouchableOpacity
                     style={styles.dealButton}
                     activeOpacity={1}
                     onPress={this._dealWorkOrder}>
                     <Text style={styles.buttonText}>处理</Text>
                 </TouchableOpacity>
-                <PicturesPreview
-                    ref={pp => this._pp = pp}
-                    images={images} />
             </View>
         );
     };
 };
-
-const images = [{ url: "https://s3.amazonaws.com/uifaces/faces/twitter/brynn/128.jpg" }, { url: "https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg" }, { url: "https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg" }, { url: "https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg" }]
 
 export default WorkOrderDetailScreen;
 
@@ -228,9 +200,6 @@ const styles = Utils.PLStyle({
         fontSize: 15,
         color: '#666666',
     },
-    cellTagContainer: {
-        flexDirection: 'row',
-    },
     listTag: {
         backgroundColor: '#ffffff',
         paddingLeft: 10,
@@ -238,64 +207,8 @@ const styles = Utils.PLStyle({
         flexDirection: 'row',
         alignItems: 'center',
     },
-    listCellTag: {
-        height: 25,
-        backgroundColor: 'rgba(66,187,85,0.2)',
-        paddingLeft: 10,
-        justifyContent: 'center',
-    },
-    listCellTagText: {
-        fontSize: 12,
-        color: '#666666'
-    },
     listFooter: {
         marginTop: 10,
         backgroundColor: '#ffffff',
     },
-    gridContainer: {
-        flexDirection: 'row',
-        flexWrap: 'wrap'
-    },
-    grid: {
-        // backgroundColor:'red',
-        marginRight: 10,
-        marginBottom: 10
-    },
-    //审核记录
-    arContainer: {
-        flexDirection: "row"
-    },
-    arLeft: {
-        alignItems: 'center',
-        width: 40,
-    },
-    arLeftLine: {
-        backgroundColor: '#d8d8d8',
-        width: 1,
-        flex: 1,
-    },
-    arDot: {
-        width: 9,
-        height: 9,
-        borderWidth: 1,
-        borderColor: "#d8d8d8",
-        borderRadius: 25,
-        backgroundColor: '#d8d8d8',
-    },
-    arMsg: {
-        flex: 1,
-        paddingTop: 20,
-        // paddingBottom:12,
-        paddingRight: 10,
-    },
-    arText: {
-        color: '#999999',
-        fontSize: 12,
-    },
-    arFoot: {
-        flexDirection: 'row',
-        marginTop: 10,
-        marginBottom: 20,
-        justifyContent: 'space-between'
-    }
 });

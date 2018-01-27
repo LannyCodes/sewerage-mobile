@@ -1,5 +1,35 @@
 export const StatusHelper = {
-    getStatusPerform(status) {
+    getAuditStatusPerform(status) {
+        let auditPerform = {
+            backgroundColor:'#FEF5EB',
+            color:'#FAA346',
+        }
+        let auditText = '';
+        switch (status) {
+            case 0:
+                auditText='待审核'
+                break;
+            case 1:
+                auditText = '待处理'
+                break;
+            case 2:
+                auditText = '处理完待审'
+                break;
+            case 3:
+                auditText = '已完成'
+                break;
+            case 4:
+                auditText = '废弃';
+                break;
+            case 5:
+                auditText = '驳回';
+                break;
+            default:
+                break;
+        }
+        return {auditPerform,auditText}
+    },
+    getStatusPerform(status) {//工单处理状态
         let statusPerform = {
             backgroundColor: '',
             color: '',
@@ -39,7 +69,7 @@ export const StatusHelper = {
         }
         return { statusPerform, statusText };
     },
-    getRankPerform(rank) {
+    getRankPerform(rank) {//故障等级
         let perform = {
             color: '#47A9EB',
             backgroundColor: '#ECF6FD',
@@ -75,7 +105,7 @@ export const StatusHelper = {
             text,
         }
     },
-    getBreakdownSource(status) {
+    getBreakdownSource(status) {//故障来源
         let source = '';
         switch (status) {
             case 0:
@@ -90,14 +120,14 @@ export const StatusHelper = {
         }
         return source;
     },
-    getBreakdownType(type) {
+    getBreakdownType(type) {//故障类型
         let typeName = '';
         switch (type) {
             case 0:
                 typeName = '机械故障';
                 break;
             case 1:
-                typeName = '机械故障';
+                typeName = '控制故障';
                 break;
             case 2:
             default:

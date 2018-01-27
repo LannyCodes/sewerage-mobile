@@ -52,20 +52,12 @@ class FaultListScreen extends WrapScreen {
     }
 
     _requestWorkorders = (params) => {
-        // params = {
-        //     ...params,
-        //     ...this.state.workderFilter
-        // }
         this.store.dispatch(Actions.get(this, Urls.faults.workOrder, params));
     }
 
     //筛选操作
     _filterReset = (data) => {
-        // this.state.currentTab ? this.setState({
-        //     faultFilter:{}
-        // }):this.setState({
-        //     workderFilter:{}
-        // })
+
     }
 
     _filterConfirm = (data) => {
@@ -87,9 +79,7 @@ class FaultListScreen extends WrapScreen {
             })
             tihs._workorderList.filter = data;
             this._workorderList.refresh();
-        }
-        
-        
+        } 
     }
 
     _filterInitails = () => {

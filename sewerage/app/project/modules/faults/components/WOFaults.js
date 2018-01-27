@@ -13,15 +13,20 @@ import {
 } from "react-native"
 // import {WrapScreen} from '../../wrap'
 import * as Utils from '../../../../core/utils'
-import { GridView,TagLabel } from '../../../components';
+import {StatusHelper} from '../utils';
+import { GridView, TagLabel } from '../../../components';
 
 const screenWidth = Dimensions.get('window').width;
-export class WOFaultsCell extends Component {
+export class WOFaults extends Component {
     constructor(props) {
         super(props)
     }
 
-    render(){
+    _renderItem = (item,index) => {
+        const breakdownSource = StatusHelper.getBreakdownSource(item.BREAKDOWN_SOURCE)
+        const breakdownType = StatusHelper.getBreakdownType(item.TYPE);
+        const {perform,text} = StatusHelper.getRankPerform(item.RANK);
+        const {statusPerform,statusText} = StatusHelper.getStatusPerform(item.STATUS);
         return (
             <View style={{ backgroundColor: '#ffffff' }}>
                 <View style={styles.listCellTag}>
@@ -30,25 +35,37 @@ export class WOFaultsCell extends Component {
                 <View style={{ paddingLeft: 10 }}>
                     <View style={styles.header}>
                         <View style={styles.headerTitle}>
-                            <Text style={{ fontSize: 15, color: '#666666' }}>渗滤液设备一号</Text>
+                            <Text style={{ fontSize: 15, color: '#666666' }}>{item.EQUIPMENT_NAME}</Text>
                             <View style={styles.cellTagContainer}>
-                                <TagLabel containerStyle={{ marginRight: 10 }}>II级</TagLabel>
-                                <TagLabel>处理中</TagLabel>
+                                <TagLabel containerStyle={{ marginRight: 10 }} backgroundColor={perform.backgroundColor} fontColor={perform.color}>{text}</TagLabel>
+                                <TagLabel backgroundColor={statusPerform.backgroundColor} fontColor={statusPerform.color}>{statusText}</TagLabel>
                             </View>
                         </View>
-                        <Text style={[styles.headerFootText, { color: '#333333', marginBottom: 11 }]}>一号一体机设备电机损坏，测试结果现实短路，水泵运转一号一体机设备电机损坏，测试结果现实短路，水泵运转空饷…</Text>
+                        <Text style={[styles.headerFootText, { color: '#333333', marginBottom: 11 }]}>{item.BREAKDOWN_DESCRIBE}</Text>
                     </View>
                     <View style={styles.divider} />
                     <View style={styles.contentCell}>
                         <Text style={styles.cellText}>故障来源</Text>
-                        <Text style={[styles.cellText, { color: '#333333' }]}>杨涛</Text>
+                        <Text style={[styles.cellText, { color: '#333333' }]}>{breakdownSource}</Text>
                     </View>
                     <View style={styles.divider} />
                     <View style={styles.contentCell}>
                         <Text style={styles.cellText}>故障类型</Text>
-                        <Text style={[styles.cellText, { color: '#333333' }]}>杨涛</Text>
+                        <Text style={[styles.cellText, { color: '#333333' }]}>{breakdownType}</Text>
                     </View>
                 </View>
+            </View>
+        )
+    }
+
+    render() {
+        return (
+            <View style={{backgroundColor:'#ffffff'}}>
+                {
+                    this.props.data.map((item,index)=>{
+                        return this._renderItem(item,index)
+                    })
+                }
             </View>
         )
     }

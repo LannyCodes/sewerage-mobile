@@ -34,7 +34,7 @@ export class FaultsList extends Component {
         if (type === 'faultsList') {
             this.props.navigation.navigate('FaultDetail', { faultDetail: item });
         } else {
-            this.props.navigation.navigate('WorkOrderDetail');
+            this.props.navigation.navigate('WorkOrderDetail',{item:item});
         }
     }
 
