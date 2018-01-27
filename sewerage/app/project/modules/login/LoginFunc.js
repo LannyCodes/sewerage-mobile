@@ -51,6 +51,7 @@ export async function loginSubmit(self) {
             key: USER_KEY.USER_STAGE_KEY,
             data: {
                 userId: data.user.userId,
+                userName: data.user.userName,
                 token: data.token
             }
         });

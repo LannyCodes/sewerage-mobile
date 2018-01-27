@@ -1,10 +1,10 @@
 import React from "react";
-import {Component} from 'react'
-import {View} from "react-native";
+import { Component } from 'react'
+import { View } from "react-native";
 import _ from 'lodash'
 import * as Utils from "../../core/utils/index";
-import {USER_KEY} from '../../config/setting'
-import {KHeader} from "../components";
+import { USER_KEY } from '../../config/setting'
+import { KHeader } from "../components";
 import Orientation from 'react-native-orientation';
 import store from '../redux/store/configStore'
 
@@ -30,8 +30,14 @@ export class WrapScreen extends Component {
             } else {
                 _USERTOKEN_ = '';
             }
+            if (!_.isNull(data.userName)) {
+                _USERNAME_ = data.userName;
+            } else {
+                _USERNAME_ = '';
+            }
         }).catch(err => {
             _USERTOKEN_ = '';
+            _USERNAME_ = '';
         })
     }
 
@@ -49,7 +55,7 @@ export class WrapScreen extends Component {
                     if (!(this._header().onLeftPress && this._header().onLeftPress())) {
                         this.props.navigation.goBack()
                     }
-                }}/>
+                }} />
                 {this._render()}
             </View>
         )

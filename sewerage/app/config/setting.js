@@ -13,7 +13,8 @@ const config = {
  */
 const GLOB = {
     _USERID_: '',
-    _USERTOKEN_: ''
+    _USERTOKEN_: '',
+    _USERNAME_: ''
 };
 
 
@@ -42,4 +43,4 @@ if (__DEV__) {
     });
 }
 
-export {config, GLOB, USER_KEY}
+export { config, GLOB, USER_KEY }

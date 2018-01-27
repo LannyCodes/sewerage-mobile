@@ -37,11 +37,16 @@ export default class AuditWBDetailComponent extends Component {
             <Text style={[styles.text, { marginLeft: 5 }]}>{item.EQUIPMENT_NAME}</Text>
             {item.ITEM_CONTENTS.map((item, i) => {
                 return (
-                    <Text key={'item' + i} style={{ fontSize: 12, color: '#999', marginLeft: 5 }}>{item.NAME}</Text>
+                    <Text key={'item' + i} style={{ fontSize: 13, color: '#999', marginLeft: 5, paddingTop: 4 }}>{item.NAME}</Text>
                 )
             })}
         </View>
     );
+
+    /** 审核流程记录*/
+    _renderCheckLogs = () => {
+
+    }
 
     _renderOperate = () => (
         <View style={styles.operate}>
@@ -116,8 +121,9 @@ export default class AuditWBDetailComponent extends Component {
                             )}
                         />
                     </View>
+                    {detail.STATUS !== '0' && this._renderCheckLogs()}
                 </ScrollView>
-                {'0' === '0' && this._renderOperate()}
+                {detail.STATUS === '0' && this._renderOperate()}
             </View>
         )
     }
