@@ -23,7 +23,10 @@ export class AuditProcessList extends Component {
             style = {
                 backgroundColor:this.approveColor,
                 borderWidth:5,
-                borderColor:'#B0F2CA',
+                width:20,
+                height:20,
+                borderRadius:25,
+                borderColor:'#C6EFD6',
             }
         }
         return style
@@ -31,20 +34,12 @@ export class AuditProcessList extends Component {
 
     _renderItem = (item, index, items) => {
         // let items = this.props.data
-        
         return (
             <View style={styles.arContainer}>
                 <View style={styles.arLeft}>
                     <View style={[styles.arLeftLine, { backgroundColor: index === 0 ? 'transparent' : '#d8d8d8' }]} />
                     {
-                        index === 0 || index === items.length - 1 ? <View style={[{
-                            backgroundColor:this.approveColor,
-                            borderWidth:5,
-                            width:20,
-                            height:20,
-                            borderRadius:25,
-                            borderColor:'#C6EFD6',
-                        }]} /> : <View />
+                        index === 0 || index === items.length - 1 ? <View style={[styles.arDot,{...this._dotStyle(item.STATUS)}]} /> : <View />
                     }
                     <View style={[styles.arLeftLine, { backgroundColor: index === items.length - 1 ? 'transparent' : '#d8d8d8' }]} />
                 </View>
