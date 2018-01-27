@@ -30,7 +30,7 @@ class MeScreen extends WrapScreen {
 
     componentDidMount() {
         let me = this;
-        this.store.dispatch(Actions.request(this, Urls.User.userInfo)); // 请求
+        // this.store.dispatch(Actions.request(this, Urls.User.userInfo)); // 请求
         storage.load({key: USER_KEY.USER_INFO_KEY}).then(data => {
             me.setState({
                 user: data.user

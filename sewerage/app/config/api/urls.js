@@ -22,11 +22,9 @@ const Urls = {
         maintenancetaskDealDetail: '/api/maintenancetaskItem/content/detail' // 维保内容处理详情
     },
     Audit: {
-        getAuditList: '/app/audit/list', // 获取巡检列表,
-        getAuditDetail0: '/app/audit/detail/0', // 获取故障工单审核详情
-        getAuditDetail1: '/app/audit/detail/1', // 获取仓库变更审核详情
-        getAuditDetail2: '/app/audit/detail/2', // 获取巡检任务审核详情
-        getAuditDetail3: '/app/audit/detail/3', // 获取维保任务审核详情
+        getWaitAuditList: '/api/businessProcess/waitTaskList', // 获取待审核列表,
+        getDoneAuditList: '/api/businessProcess/doneTaskList', // 获取已审核列表,
+        getAuditDetail: '/api/businessProcess/taskDetail', // 获取审核详情
     },
     Maintenance: {
         getTaskList: '/api/maintenancetask/list', // 获取维保列表

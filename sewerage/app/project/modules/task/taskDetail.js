@@ -18,19 +18,20 @@ class TaskDetailScreen extends WrapScreen {
         this.taskDetail = ['getInspectionTaskDetail', 'getMaintenanceTaskDetail'];
         this.dealFun = ['inspectiontaskDeal', 'maintenancetaskDeal'];
         this.dealDetailFun = ['inspectiontaskDealDetail', 'maintenancetaskDealDetail'];
-        this.headerTitle = ['巡检任务详情', '维保任务详情'];
+        this.headerTitle = '任务详情';
         this.type = 0;
     }
 
     componentDidMount() {
         let params = { 'ITEM_ID': this.props.navigation.state.params.ITEM_ID };
         this.type = this.props.navigation.state.params.type;
+        this.headerTitle = ['巡检任务详情', '维保任务详情'][this.type]
         this.store.dispatch(Actions.request(this, Urls.Task[this.taskDetail[this.type]], params)); // 请求
     }
 
     _header = () => {
         return {
-            title: this.headerTitle[this.type],
+            title: this.headerTitle,
             onLeftPress: () => {
                 this.props.navigation.state.params.onComplete();
                 return false
@@ -39,10 +40,11 @@ class TaskDetailScreen extends WrapScreen {
     };
 
     _renderCardStatus = (status) => {
-        let st = { text: '待执行', color: '#47A9EB', backgroundColor: '#ECF6FD' };
-        if (status === 0) st = { text: '待执行', color: '#47A9EB', backgroundColor: '#ECF6FD' };
-        else if (status === 1) st = { text: '执行中', color: '#FAA346', backgroundColor: '#FEF5EB' };
-        else st = { text: '已完成', color: '#1AAD19', backgroundColor: '#E8F6E8' };
+        let statusText = [['待巡检','正在巡检','巡检完成'], ['待维保', '正在维保', '维保完成']]
+        let st = { text: statusText[this.type][0], color: '#47A9EB', backgroundColor: '#ECF6FD' };
+        if (status === 0) st = { text: statusText[this.type][0], color: '#47A9EB', backgroundColor: '#ECF6FD' };
+        else if (status === 1) st = { text: statusText[this.type][1], color: '#FAA346', backgroundColor: '#FEF5EB' };
+        else st = { text: statusText[this.type][2], color: '#1AAD19', backgroundColor: '#E8F6E8' };
         return (
             <View style={[styles.cardStatus, { backgroundColor: st.backgroundColor }]}>
                 <Text style={{ color: st.color, fontSize: 12 }}>{st.text}</Text>
@@ -207,13 +209,13 @@ class TaskDetailScreen extends WrapScreen {
                         </View>
                         <Divider style={{ backgroundColor: '#ddd' }} />
                         <View style={styles.rowBetween}>
-                            <Text style={[styles.text, { color: '#666' }]}>巡检人</Text>
+                            <Text style={[styles.text, { color: '#666' }]}>{['巡检', '维保'][this.type]}人</Text>
                             <Text style={styles.text}>{detail.USER_NAME}</Text>
                         </View>
                     </View>
                     <View style={styles.content}>
                         <View style={styles.contentTitle}>
-                            <Text>巡检内容</Text>
+                            <Text>{['巡检', '维保'][this.type]}内容</Text>
                         </View>
                         {this._renderUndo(undoList)}
                         {this._renderDo(doList)}
@@ -295,7 +297,8 @@ const styles = Utils.PLStyle({
         justifyContent: 'center',
         alignItems: 'center',
         height: 22,
-        width: 50,
+        paddingLeft: 8,
+        paddingRight: 8,
         borderRadius: 20
     }
 });

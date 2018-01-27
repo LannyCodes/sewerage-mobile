@@ -6,11 +6,11 @@ import {
 } from 'react-native';
 import _ from 'lodash'
 import * as Utils from "../../../core/utils";
-import {WrapScreen} from "../wrap";
-import {homeModules} from '../../../config/nav/home.route'
-import {Divider} from "react-native-elements";
+import { WrapScreen } from "../wrap";
+import { homeModules } from '../../../config/nav/home.route'
+import { Divider } from "react-native-elements";
 import * as Assets from '../../assets'
-import {Carousel} from "teaset";
+import { Carousel } from "teaset";
 import PercentageCircle from 'react-native-percentage-circle';
 
 const circleColor = [['#CAE387', '#FFDC00', '#999EF7', '#0281FF'], ['#FF5646', '#FF7E00', '#8BC7FF', '#76DDAC']];
@@ -22,14 +22,14 @@ class WorkScreen extends WrapScreen {
         this.state = {
             currentIndex: 0,
             parameters: [
-                {type: 'COD', size: '52', symbol: 'mg/l'},
-                {type: '氨氮', size: '71', symbol: 'mg/l'},
-                {type: '总氮', size: '52', symbol: 'mg/l'},
-                {type: '总磷', size: '52', symbol: 'mg/l'},
-                {type: 'SS', size: '51', symbol: 'mg/l'},
-                {type: 'PH', size: '54', symbol: ''},
-                {type: '温度', size: '52', symbol: '°C'},
-                {type: '流量', size: '55', symbol: 'mg/l'}
+                { type: 'COD', size: '52', symbol: 'mg/l' },
+                { type: '氨氮', size: '71', symbol: 'mg/l' },
+                { type: '总氮', size: '52', symbol: 'mg/l' },
+                { type: '总磷', size: '52', symbol: 'mg/l' },
+                { type: 'SS', size: '51', symbol: 'mg/l' },
+                { type: 'PH', size: '54', symbol: '' },
+                { type: '温度', size: '52', symbol: '°C' },
+                { type: '流量', size: '55', symbol: 'mg/l' }
             ]
         };
     }
@@ -39,7 +39,8 @@ class WorkScreen extends WrapScreen {
     _onQrSuccess = (result) => {
         // 进入维保页面
         this.props.navigation.navigate('TaskList', {
-            qrData: result
+            qrData: '11E80005DBC9EC4D943D230B848AE364'
+            // qrData: result
         })
     };
 
@@ -64,34 +65,34 @@ class WorkScreen extends WrapScreen {
             >
                 {
                     parameters.map((item, i) => (
-                            <View style={styles.paramsContainerStyle} key={'CarouselContainer' + i}>
-                                <View style={styles.paramsStyle}>
-                                    {item.map((sim, j) => (
-                                        <View style={styles.paramsItem} key={'CarouselContent' + j}>
-                                            <PercentageCircle radius={33} percent={parseInt(sim.size)}
-                                                              color={circleColor[i][j]}
-                                                              bgcolor={'#EBEBEB'}
-                                                              borderWidth={7}>
-                                                <Text style={styles.paramsSizeText}>{sim.size}</Text>
-                                                {sim.symbol !== '' &&
+                        <View style={styles.paramsContainerStyle} key={'CarouselContainer' + i}>
+                            <View style={styles.paramsStyle}>
+                                {item.map((sim, j) => (
+                                    <View style={styles.paramsItem} key={'CarouselContent' + j}>
+                                        <PercentageCircle radius={33} percent={parseInt(sim.size)}
+                                            color={circleColor[i][j]}
+                                            bgcolor={'#EBEBEB'}
+                                            borderWidth={7}>
+                                            <Text style={styles.paramsSizeText}>{sim.size}</Text>
+                                            {sim.symbol !== '' &&
                                                 <Text style={styles.paramsSymbolText}>{sim.symbol}</Text>}
-                                            </PercentageCircle>
-                                            <Text style={{
-                                                color: '#333',
-                                                fontSize: 13,
-                                                marginTop: 10
-                                            }}>{sim.type}</Text>
-                                        </View>
-                                    ))}
-                                </View>
-                                {this._renderDot(i, [
-                                    <View style={[styles.dot, {
-                                        backgroundColor: '#42BB55'
-                                    }]}/>,
-                                    <View style={styles.dot}/>
-                                ])}
+                                        </PercentageCircle>
+                                        <Text style={{
+                                            color: '#333',
+                                            fontSize: 13,
+                                            marginTop: 10
+                                        }}>{sim.type}</Text>
+                                    </View>
+                                ))}
                             </View>
-                        )
+                            {this._renderDot(i, [
+                                <View style={[styles.dot, {
+                                    backgroundColor: '#42BB55'
+                                }]} />,
+                                <View style={styles.dot} />
+                            ])}
+                        </View>
+                    )
                     )
                 }
             </Carousel>
@@ -104,34 +105,34 @@ class WorkScreen extends WrapScreen {
         return (
             <View style={styles.container}>
                 <View style={styles.container}>
-                    <Image source={Assets.Home.bg} style={styles.bg}/>
+                    <Image source={Assets.Home.bg} style={styles.bg} />
                     <View style={styles.headContainer}>
                         <View style={styles.optTitle}>
                             <View style={{
                                 flexDirection: 'row'
                             }}>
-                                <Image source={Assets.Home.location}/>
+                                <Image source={Assets.Home.location} />
                                 <Text style={styles.optText}>宁乡县污水处理厂</Text>
-                                <Image source={Assets.Home.arrowDown}/>
+                                <Image source={Assets.Home.arrowDown} />
                             </View>
                             <TouchableOpacity onPress={() =>
-                                this.props.navigation.navigate('Qr', {
-                                    onSuccess: this._onQrSuccess
-                                })
-                                //this._onQrSuccess()
+                               // this.props.navigation.navigate('Qr', {
+                                  //  onSuccess: this._onQrSuccess
+                               // })
+                                 this._onQrSuccess()
                             }>
-                                <Image source={Assets.Home.scan} style={styles.icon}/>
+                                <Image source={Assets.Home.scan} style={styles.icon} />
                             </TouchableOpacity>
                         </View>
-                        <View style={{paddingLeft: 15, marginTop: 20}}>
-                            <Text style={{color: 'white', fontSize: 22}}>正常</Text>
-                            <Text style={{color: 'white', fontSize: 12, marginTop: 10}}>运行状态</Text>
+                        <View style={{ paddingLeft: 15, marginTop: 20 }}>
+                            <Text style={{ color: 'white', fontSize: 22 }}>正常</Text>
+                            <Text style={{ color: 'white', fontSize: 12, marginTop: 10 }}>运行状态</Text>
                         </View>
                         {this._renderCard(parameters)}
                         <View style={styles.safeContainer}>
-                            <Image source={Assets.Home.circle} style={styles.circle}/>
+                            <Image source={Assets.Home.circle} style={styles.circle} />
                             <View style={styles.safeContent}>
-                                <Image source={Assets.Home.circleSafe}/>
+                                <Image source={Assets.Home.circleSafe} />
                                 <Text style={styles.safeText}>水质监测</Text>
                             </View>
                         </View>
@@ -142,17 +143,17 @@ class WorkScreen extends WrapScreen {
                                 width: 3,
                                 height: 16,
                                 backgroundColor: '#42BB55'
-                            }}/>
+                            }} />
                             <Text style={{
                                 fontSize: 14,
                                 color: '#666',
                                 marginLeft: 5
                             }}>常用工具</Text>
                         </View>
-                        <Divider style={{backgroundColor: '#E5E5E5'}}/>
+                        <Divider style={{ backgroundColor: '#E5E5E5' }} />
                         {modules.map((item, index) => {
                             return (
-                                <View style={{flex: 1,}} key={index}>
+                                <View style={{ flex: 1, }} key={index}>
                                     <View style={styles.configItemRow}>
                                         {
                                             item.map((module, i) => {
@@ -160,14 +161,14 @@ class WorkScreen extends WrapScreen {
                                                     <TouchableOpacity
                                                         style={styles.configItem} key={i}
                                                         onPress={() => this.props.navigation.navigate(module.router)}>
-                                                        <Image source={module.img}/>
+                                                        <Image source={module.img} />
                                                         <Text style={styles.configText}>{module.name}</Text>
                                                     </TouchableOpacity>
                                                 )
                                             })
                                         }
                                     </View>
-                                    <Divider style={{backgroundColor: '#E5E5E5'}}/>
+                                    <Divider style={{ backgroundColor: '#E5E5E5' }} />
                                 </View>
                             )
                         })}

@@ -49,10 +49,10 @@ class MaintenanceManagementScreen extends WrapScreen {
     }
 
     _renderCardStatus = (status) => {
-        let st = { text: '待执行', color: '#47A9EB', backgroundColor: '#ECF6FD' };
-        if (status === 0) st = { text: '待执行', color: '#47A9EB', backgroundColor: '#ECF6FD' };
-        else if (status === 1) st = { text: '执行中', color: '#FAA346', backgroundColor: '#FEF5EB' };
-        else st = { text: '已完成', color: '#1AAD19', backgroundColor: '#E8F6E8' };
+        let st = { text: '待维保', color: '#47A9EB', backgroundColor: '#ECF6FD' };
+        if (status === 0) st = { text: '待维保', color: '#47A9EB', backgroundColor: '#ECF6FD' };
+        else if (status === 1) st = { text: '正在维保', color: '#FAA346', backgroundColor: '#FEF5EB' };
+        else st = { text: '维保完成', color: '#1AAD19', backgroundColor: '#E8F6E8' };
         return (
             <View style={[styles.cardStatus, { backgroundColor: st.backgroundColor }]}>
                 <Text style={{ color: st.color, fontSize: 12 }}>{st.text}</Text>
@@ -68,7 +68,7 @@ class MaintenanceManagementScreen extends WrapScreen {
                 })
             }}>
             <View style={styles.row}>
-                <Text style={styles.cardTitle}>{item.NAME} {item.TASK_NUMBER}</Text>
+                <Text style={styles.cardTitle}>{item.TASK_NUMBER}</Text>
                 {this._renderCardStatus(item.STATUS)}
             </View>
             <Text style={styles.cardContent}>{item.EQUIPMENT_NAMES}</Text>
@@ -164,7 +164,8 @@ const styles = Utils.PLStyle({
         justifyContent: 'center',
         alignItems: 'center',
         height: 22,
-        width: 50,
+        paddingLeft: 8,
+        paddingRight: 8,
         borderRadius: 20
     }
 })

@@ -10,7 +10,15 @@ import { connect } from "react-redux";
 import Urls from "../../../config/api/urls";
 import { DefaultPage, ErrorPage, ListFilter, Loading } from "../../components";
 import { Status } from "../../../config/api/api.config";
+import { ScrollableTabBar } from '../../components/ScrollableTabViewBars';
+import ScrollableTabView from 'react-native-scrollable-tab-view';
 
+const processTypeObj = {
+    inspection_plan_process: '巡检计划',
+    maintenance_plan_process: '维保计划',
+    breakdown_bill_process: '故障工单',
+    product_store_process: '库存变更'
+}
 class AuditManagementScreen extends WrapScreen {
 
     _keyExtractor = (item, index) => index;
@@ -20,10 +28,31 @@ class AuditManagementScreen extends WrapScreen {
         this.state = {
             isFilterShow: false
         }
+        this.pullingFlag = ''
     }
 
     componentDidMount() {
-        this.store.dispatch(Actions.request(this, Urls.Audit.getAuditList));
+        this._waitListRefresh()
+        this._doneListRefresh()
+    }
+
+
+    _waitListRefresh = () => {
+        this.pullingFlag = 'waitRefresh'
+        let params = {
+            pageIndex: 1,
+            pageSize: 10,
+        }
+        this.store.dispatch(Actions.get(this, Urls.Audit.getWaitAuditList, params));
+    }
+
+    _doneListRefresh = () => {
+        this.pullingFlag = 'doneRefresh'
+        let params = {
+            pageIndex: 1,
+            pageSize: 10,
+        }
+        this.store.dispatch(Actions.get(this, Urls.Audit.getDoneAuditList, params));
     }
 
     _header = () => {
@@ -41,33 +70,19 @@ class AuditManagementScreen extends WrapScreen {
         }
     }
 
-    _enterDetail = (type, status) => {
-        let detail = '';
-        switch (type) {
-            case '0':
-                detail = 'AuditGZGDDetail';
-                break;
-            case '1':
-                detail = 'AuditCKBGDetail';
-                break;
-            case '2':
-                detail = 'AuditXJDetail';
-                break;
-            case '3':
-                detail = 'AuditWBDetail';
-                break;
-        }
-        this.props.navigation.navigate(detail, {
-            status: status
+    _enterDetail = (type, id, status) => {
+        this.props.navigation.navigate('AuditDetail', {
+            processId: id,
+            processType: type
         });
     };
 
     _renderCardStatus = (status) => {
         let st = { text: '待审核', color: '#FAA346', backgroundColor: '#FEF5EB' };
-        if (status === '0') st = { text: '待审核', color: '#FAA346', backgroundColor: '#FEF5EB' };
-        else if (status === '1') st = { text: '已通过', color: '#1AAD19', backgroundColor: '#E8F6E8' };
-        else if (status === '2') st = { text: '已驳回', color: '#47A9EB', backgroundColor: '#ECF6FD' };
-        else if (status === '3') st = { text: '已废弃', color: '#FF6E61', backgroundColor: '#FFE2DF' };
+        if (status === 0) st = { text: '待审核', color: '#FAA346', backgroundColor: '#FEF5EB' };
+        else if (status === 1) st = { text: '已驳回', color: '#47A9EB', backgroundColor: '#ECF6FD' };
+        else if (status === 2) st = { text: '已废弃', color: '#FF6E61', backgroundColor: '#FFE2DF' };
+        else if (status === 3) st = { text: '已通过', color: '#1AAD19', backgroundColor: '#E8F6E8' };
         return (
             <View style={[styles.cardStatus, { backgroundColor: st.backgroundColor }]}>
                 <Text style={{ color: st.color, fontSize: 12 }}>{st.text}</Text>
@@ -75,52 +90,74 @@ class AuditManagementScreen extends WrapScreen {
         )
     };
 
+    _getAuditProcessType = (processType) => {
+
+    }
+
     _renderItem = ({ item }) => (
         <TouchableOpacity style={styles.cardItem}
             onPress={() => {
-                this._enterDetail(item.type, item.status);
+                this._enterDetail(item.PROCESS_TYPE, item.ID, item.STATUS);
             }}
         >
             <View style={styles.row}>
-                <Text style={styles.cardTitle}>{item.title}</Text>
-                {this._renderCardStatus(item.status)}
+                <Text style={styles.cardTitle}>{item.THEME}</Text>
+                {this._renderCardStatus(item.STATUS)}
             </View>
-            <Text style={styles.cardContent}>{item.content}</Text>
+            <Text style={[styles.cardPerson, { marginTop: 5 }]}>{processTypeObj[item.PROCESS_TYPE]}审核</Text>
             <View style={[styles.row, { marginTop: 10 }]}>
-                <Text style={styles.cardPerson}>{item.person}</Text>
-                <Text style={styles.cardTime}>{item.time}</Text>
+                <Text style={styles.cardPerson}>{item.CREATE_USER}</Text>
+                <Text style={styles.cardTime}>{item.CREATE_TIME}</Text>
             </View>
         </TouchableOpacity>
     );
 
     _render() {
         if (this.props.requestStatus === Status.SUCCESS) {
-            if (!Loading.checkData(this.props.auditList)) return;
-            if (this.props.auditList.length > 0) {
-                return (
-                    <View style={{ flex: 1 }}>
+            if (!Loading.checkData(this.props.waitAuditListRequest.list)) return;
+            return (
+                <View style={{ flex: 1 }}>
+                    <ScrollableTabView
+                        locked={true}
+                        renderTabBar={() =>
+                            <ScrollableTabBar
+                                style={{ height: 50 }}
+                                tabStyle={{ height: 50 }}
+                                activeTextColor='#42BB55'
+                                inactiveTextColor='#333333'
+                                backgroundColor="#fff"
+                                underlineAlignLabel={true}
+                                underlineStyle={{ backgroundColor: '#42BB55', height: 2 }}
+                            />
+                        }>
+                        {/* 待审核 */}
                         <FlatList
-                            data={this.props.auditList}
+                            tabLabel='待审核'
+                            data={this.props.waitAuditListRequest.list}
                             keyExtractor={this._keyExtractor}
                             renderItem={this._renderItem}
                         />
-                        {this.state.isFilterShow === true ?
-                            <ListFilter
-                                containerStyles={{ top: 0 }}
-                                filterArray={filterArray}
-                                maskerClick={() => {
-                                    this.setState({
-                                        isFilterShow: false,
-                                    })
-                                }}
-                            /> : <View />}
-                    </View>
-                )
-            } else {
-                return (
-                    <DefaultPage content={'暂无审核任务'} />
-                )
-            }
+                        {/* 已审核 */}
+                        <FlatList
+                            tabLabel='已审核'
+                            data={this.props.doneAuditListRequest.list}
+                            keyExtractor={this._keyExtractor}
+                            renderItem={this._renderItem}
+                        />
+                    </ScrollableTabView>
+                    {this.state.isFilterShow === true ?
+                        <ListFilter
+                            containerStyles={{ top: 0 }}
+                            filterArray={filterArray}
+                            maskerClick={() => {
+                                this.setState({
+                                    isFilterShow: false,
+                                })
+                            }}
+                        /> : <View />}
+                </View>
+            )
+
         } else if (this.props.requestStatus === Status.FAIL) {
             return (
                 <ErrorPage />
@@ -131,7 +168,8 @@ class AuditManagementScreen extends WrapScreen {
 
 function mapStateToProps(state) {
     return {
-        auditList: state.Audit.getAuditList,
+        waitAuditListRequest: state.Audit.waitAuditListRequest,
+        doneAuditListRequest: state.Audit.doneAuditListRequest,
         requestStatus: state.Common.requestStatus
     }
 }
@@ -173,7 +211,8 @@ const styles = Utils.PLStyle({
         justifyContent: 'center',
         alignItems: 'center',
         height: 22,
-        width: 50,
+        paddingLeft: 8,
+        paddingRight: 8,
         borderRadius: 20
     }
 })
