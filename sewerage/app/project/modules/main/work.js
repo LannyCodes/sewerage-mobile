@@ -39,8 +39,8 @@ class WorkScreen extends WrapScreen {
     _onQrSuccess = (result) => {
         // 进入维保页面
         this.props.navigation.navigate('TaskList', {
-            qrData: '11E80005DBC9EC4D943D230B848AE364'
-            // qrData: result
+            // qrData: '11E80005DBC9EC4D943D230B848AE364'
+            qrData: result
         })
     };
 
@@ -116,10 +116,10 @@ class WorkScreen extends WrapScreen {
                                 <Image source={Assets.Home.arrowDown} />
                             </View>
                             <TouchableOpacity onPress={() =>
-                               // this.props.navigation.navigate('Qr', {
-                                  //  onSuccess: this._onQrSuccess
-                               // })
-                                 this._onQrSuccess()
+                                this.props.navigation.navigate('Qr', {
+                                    onSuccess: this._onQrSuccess
+                                })
+                                //  this._onQrSuccess()
                             }>
                                 <Image source={Assets.Home.scan} style={styles.icon} />
                             </TouchableOpacity>

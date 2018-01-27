@@ -1,16 +1,16 @@
 import React from 'react';
 
-import {WrapScreen} from "../wrap";
-import {connect} from "react-redux";
+import { WrapScreen } from "../wrap";
+import { connect } from "react-redux";
 import * as Utils from "../../../core/utils";
 import Urls from "../../../config/api/urls";
 import * as Actions from "../../redux/actions";
-import {Status} from "../../../config/api/api.config";
-import {ErrorPage, Loading, Dialog} from "../../components";
-import {ScrollView, Text, TouchableOpacity, View} from "react-native";
-import {Divider, Icon} from "react-native-elements";
+import { Status } from "../../../config/api/api.config";
+import { ErrorPage, Loading, Dialog } from "../../components";
+import { ScrollView, Text, TouchableOpacity, View } from "react-native";
+import { Divider, Icon } from "react-native-elements";
 
-class AuditCKBGDetailScreen extends WrapScreen {
+export default class AuditCKBGDetailComponent extends WrapScreen {
 
     constructor(props) {
         super(props);
@@ -20,18 +20,18 @@ class AuditCKBGDetailScreen extends WrapScreen {
         this.store.dispatch(Actions.request(this, Urls.Audit.getAuditDetail)); // 请求
     }
 
-    _header=()=>{
+    _header = () => {
         return {
-            title: "仓库变更审核详情",
+            title: 'none',
         };
     }
 
     _renderCardStatus = (status) => {
-        let st = {text: '待审核', color: '#FAA346', backgroundColor: '#FEF5EB'};
-        if (status === 0) st = {text: '待审核', color: '#FAA346', backgroundColor: '#FEF5EB'};
-        else if (status === 1) st = {text: '已通过', color: '#1AAD19', backgroundColor: '#E8F6E8'};
-        else if (status === 2) st = {text: '已驳回', color: '#47A9EB', backgroundColor: '#ECF6FD'};
-        else if (status === 3) st = {text: '已废弃', color: '#FF6E61', backgroundColor: '#FFE2DF'};
+        let st = { text: '待审核', color: '#FAA346', backgroundColor: '#FEF5EB' };
+        if (status === 0) st = { text: '待审核', color: '#FAA346', backgroundColor: '#FEF5EB' };
+        else if (status === 1) st = { text: '已通过', color: '#1AAD19', backgroundColor: '#E8F6E8' };
+        else if (status === 2) st = { text: '已驳回', color: '#47A9EB', backgroundColor: '#ECF6FD' };
+        else if (status === 3) st = { text: '已废弃', color: '#FF6E61', backgroundColor: '#FFE2DF' };
         return (
             <View style={{
                 width: 45,
@@ -42,7 +42,7 @@ class AuditCKBGDetailScreen extends WrapScreen {
                 marginTop: 10,
                 backgroundColor: st.backgroundColor
             }}>
-                <Text style={{fontSize: 10, color: st.color}}>{st.text}</Text>
+                <Text style={{ fontSize: 10, color: st.color }}>{st.text}</Text>
             </View>
         )
     };
@@ -54,24 +54,24 @@ class AuditCKBGDetailScreen extends WrapScreen {
             // 同仓变更
             return (
                 <View>
-                    <View style={[styles.rowBetween, {justifyContent: 'flex-start'}]}>
-                        <View style={{backgroundColor: '#42BB55', width: 3, height: 16}}/>
-                        <Text style={{fontSize: 15, color: '#666', marginLeft: 10}}>变更清单</Text>
+                    <View style={[styles.rowBetween, { justifyContent: 'flex-start' }]}>
+                        <View style={{ backgroundColor: '#42BB55', width: 3, height: 16 }} />
+                        <Text style={{ fontSize: 15, color: '#666', marginLeft: 10 }}>变更清单</Text>
                     </View>
                     {
                         list.map((item, i) => (
                             <View key={i}>
-                                <View style={[styles.rowBetween, {backgroundColor: '#E8F6E8', height: 25}]}><Text
-                                    style={{fontSize: 12, color: '#666'}}>{item.bgname}</Text>
+                                <View style={[styles.rowBetween, { backgroundColor: '#E8F6E8', height: 25 }]}><Text
+                                    style={{ fontSize: 12, color: '#666' }}>{item.bgname}</Text>
                                 </View>
-                                <Divider style={{backgroundColor: '#ddd'}}/>
+                                <Divider style={{ backgroundColor: '#ddd' }} />
                                 <View style={styles.rowBetween}>
-                                    <Text style={{fontSize: 15, color: '#666'}}>变更数量（件）</Text>
-                                    <Text style={{fontSize: 15, color: '#333'}}>{item.size}</Text>
+                                    <Text style={{ fontSize: 15, color: '#666' }}>变更数量（件）</Text>
+                                    <Text style={{ fontSize: 15, color: '#333' }}>{item.size}</Text>
                                 </View>
-                                <Divider style={{backgroundColor: '#ddd'}}/>
-                                <View style={{padding: 10}}>
-                                    <Text style={{fontSize: 15, color: '#666'}}>变更后库存</Text>
+                                <Divider style={{ backgroundColor: '#ddd' }} />
+                                <View style={{ padding: 10 }}>
+                                    <Text style={{ fontSize: 15, color: '#666' }}>变更后库存</Text>
                                     <View style={{
                                         height: 53,
                                         width: 140,
@@ -82,8 +82,8 @@ class AuditCKBGDetailScreen extends WrapScreen {
                                         alignItems: 'center',
                                         marginTop: 10
                                     }}>
-                                        <Text style={{fontSize: 15, color: '#999'}}>{item.ck}</Text>
-                                        <Text style={{fontSize: 15, color: '#999', marginTop: 5}}>{item.after}件</Text>
+                                        <Text style={{ fontSize: 15, color: '#999' }}>{item.ck}</Text>
+                                        <Text style={{ fontSize: 15, color: '#999', marginTop: 5 }}>{item.after}件</Text>
                                     </View>
                                 </View>
                             </View>
@@ -95,19 +95,19 @@ class AuditCKBGDetailScreen extends WrapScreen {
             // 异仓变更
             return (
                 <View>
-                    <View style={[styles.rowBetween, {justifyContent: 'flex-start'}]}>
-                        <View style={{backgroundColor: '#42BB55', width: 3, height: 16}}/>
-                        <Text style={{fontSize: 15, color: '#666', marginLeft: 10}}>变更清单</Text>
+                    <View style={[styles.rowBetween, { justifyContent: 'flex-start' }]}>
+                        <View style={{ backgroundColor: '#42BB55', width: 3, height: 16 }} />
+                        <Text style={{ fontSize: 15, color: '#666', marginLeft: 10 }}>变更清单</Text>
                     </View>
                     {
                         list.map((item, i) => (
                             <View key={i}>
-                                <View style={[styles.rowBetween, {backgroundColor: '#E8F6E8', height: 25}]}><Text
-                                    style={{fontSize: 12, color: '#666'}}>{item.bgname}</Text>
+                                <View style={[styles.rowBetween, { backgroundColor: '#E8F6E8', height: 25 }]}><Text
+                                    style={{ fontSize: 12, color: '#666' }}>{item.bgname}</Text>
                                 </View>
-                                <Divider style={{backgroundColor: '#ddd'}}/>
-                                <View style={{padding: 10}}>
-                                    <Text style={{fontSize: 15, color: '#666'}}>变更仓库</Text>
+                                <Divider style={{ backgroundColor: '#ddd' }} />
+                                <View style={{ padding: 10 }}>
+                                    <Text style={{ fontSize: 15, color: '#666' }}>变更仓库</Text>
                                     <View style={styles.rowBetween}>
                                         <View style={{
                                             height: 32,
@@ -119,10 +119,10 @@ class AuditCKBGDetailScreen extends WrapScreen {
                                             alignItems: 'center',
                                             marginTop: 10
                                         }}>
-                                            <Text style={{fontSize: 15, color: '#999'}}>{item.from.ck}</Text>
+                                            <Text style={{ fontSize: 15, color: '#999' }}>{item.from.ck}</Text>
                                         </View>
-                                        <View style={{justifyContent: 'center', alignItems: 'center'}}>
-                                            <Text style={{fontSize: 15, color: '#999'}}>到</Text>
+                                        <View style={{ justifyContent: 'center', alignItems: 'center' }}>
+                                            <Text style={{ fontSize: 15, color: '#999' }}>到</Text>
                                             <Icon
                                                 name='long-arrow-right'
                                                 type='font-awesome'
@@ -139,14 +139,14 @@ class AuditCKBGDetailScreen extends WrapScreen {
                                             alignItems: 'center',
                                             marginTop: 10
                                         }}>
-                                            <Text style={{fontSize: 15, color: '#999'}}>{item.to.ck}</Text>
+                                            <Text style={{ fontSize: 15, color: '#999' }}>{item.to.ck}</Text>
                                         </View>
                                     </View>
                                 </View>
-                                <Divider style={{backgroundColor: '#ddd'}}/>
-                                <View style={{padding: 10}}>
-                                    <Text style={{fontSize: 15, color: '#666'}}>变更后库存</Text>
-                                    <View style={[styles.rowBetween, {marginTop: 10, marginBottom: 10}]}>
+                                <Divider style={{ backgroundColor: '#ddd' }} />
+                                <View style={{ padding: 10 }}>
+                                    <Text style={{ fontSize: 15, color: '#666' }}>变更后库存</Text>
+                                    <View style={[styles.rowBetween, { marginTop: 10, marginBottom: 10 }]}>
                                         <View style={{
                                             height: 53,
                                             width: 140,
@@ -156,12 +156,12 @@ class AuditCKBGDetailScreen extends WrapScreen {
                                             justifyContent: 'center',
                                             alignItems: 'center',
                                         }}>
-                                            <Text style={{fontSize: 15, color: '#999'}}>{item.from.ck}</Text>
+                                            <Text style={{ fontSize: 15, color: '#999' }}>{item.from.ck}</Text>
                                             <Text
-                                                style={{fontSize: 15, color: '#999', marginTop: 5}}>{item.after}件</Text>
+                                                style={{ fontSize: 15, color: '#999', marginTop: 5 }}>{item.after}件</Text>
                                         </View>
-                                        <View style={{justifyContent: 'center', alignItems: 'center'}}>
-                                            <Text style={{fontSize: 15, color: '#999'}}>到</Text>
+                                        <View style={{ justifyContent: 'center', alignItems: 'center' }}>
+                                            <Text style={{ fontSize: 15, color: '#999' }}>到</Text>
                                             <Icon
                                                 name='long-arrow-right'
                                                 type='font-awesome'
@@ -177,9 +177,9 @@ class AuditCKBGDetailScreen extends WrapScreen {
                                             justifyContent: 'center',
                                             alignItems: 'center',
                                         }}>
-                                            <Text style={{fontSize: 15, color: '#999'}}>{item.to.ck}</Text>
+                                            <Text style={{ fontSize: 15, color: '#999' }}>{item.to.ck}</Text>
                                             <Text
-                                                style={{fontSize: 15, color: '#999', marginTop: 5}}>{item.after}件</Text>
+                                                style={{ fontSize: 15, color: '#999', marginTop: 5 }}>{item.after}件</Text>
                                         </View>
                                     </View>
                                 </View>
@@ -199,7 +199,7 @@ class AuditCKBGDetailScreen extends WrapScreen {
             }}>
                 <Text style={styles.text}>废弃</Text>
             </TouchableOpacity>
-            <View style={{height: 32, width: 0.5, backgroundColor: '#ccc'}}/>
+            <View style={{ height: 32, width: 0.5, backgroundColor: '#ccc' }} />
             <TouchableOpacity style={styles.operateBox} onPress={() => {
                 Dialog.show("确定退出登录？", () => {
                     alert("确定")
@@ -207,7 +207,7 @@ class AuditCKBGDetailScreen extends WrapScreen {
             }}>
                 <Text style={styles.text}>驳回</Text>
             </TouchableOpacity>
-            <View style={{height: 32, width: 0.5, backgroundColor: '#ccc'}}/>
+            <View style={{ height: 32, width: 0.5, backgroundColor: '#ccc' }} />
             <TouchableOpacity style={styles.operateBox}>
                 <Text style={styles.text}>通过</Text>
             </TouchableOpacity>
@@ -216,69 +216,53 @@ class AuditCKBGDetailScreen extends WrapScreen {
 
     _render() {
         const detail = this.props.auditDetail;
-        if (this.props.requestStatus === Status.SUCCESS) {
-            if (!Loading.checkData(detail)) return;
-            return (
-                <View style={styles.container}>
-                    <ScrollView>
-                        <View style={styles.detail}>
+        return (
+            <View style={styles.container}>
+                <ScrollView>
+                    <View style={styles.detail}>
+                        <View style={styles.tag1}>
                             <View style={styles.tag1}>
-                                <View style={styles.tag1}>
-                                    <View style={{justifyContent: 'space-around', alignItems: 'flex-start'}}>
-                                        <Text style={[styles.text, {fontSize: 16}]}>变更单号: {detail.id}</Text>
-                                        <Text
-                                            style={[styles.text, {
-                                                fontSize: 14,
-                                                marginTop: 5
-                                            }]}>发起时间：{detail.startTime}</Text>
-                                    </View>
+                                <View style={{ justifyContent: 'space-around', alignItems: 'flex-start' }}>
+                                    <Text style={[styles.text, { fontSize: 16 }]}>变更单号: {detail.id}</Text>
+                                    <Text
+                                        style={[styles.text, {
+                                            fontSize: 14,
+                                            marginTop: 5
+                                        }]}>发起时间：{detail.startTime}</Text>
                                 </View>
-                                {this._renderCardStatus(this.state.status)}
                             </View>
-                            <Divider style={{backgroundColor: '#ddd'}}/>
-                            <View style={styles.rowBetween}>
-                                <Text style={[styles.text, {color: '#666'}]}>发起人</Text>
-                                <Text style={styles.text}>{detail.fqperson}</Text>
-                            </View>
-                            <Divider style={{backgroundColor: '#ddd'}}/>
-                            <View style={styles.rowBetween}>
-                                <Text style={[styles.text, {color: '#666'}]}>变更类型</Text>
-                                <Text style={styles.text}>{detail.type === '0' ? '同仓变更' : '异仓变更'}</Text>
-                            </View>
-                            <Divider style={{backgroundColor: '#ddd'}}/>
-                            <View style={styles.rowBetween}>
-                                <Text style={[styles.text, {color: '#666'}]}>审核人</Text>
-                                <Text style={styles.text}>{detail.auditPerson}</Text>
-                            </View>
-                            <Divider style={{backgroundColor: '#ddd'}}/>
-                            <View style={{padding: 10}}>
-                                <Text style={[styles.text, {color: '#666', marginBottom: 8}]}>变更原因</Text>
-                                <Text style={styles.text}>{detail.reason}</Text>
-                            </View>
+                            {this._renderCardStatus(this.state.status)}
                         </View>
-                        <View style={styles.content}>
-                            {this._renderContent(detail.type, detail.list)}
+                        <Divider style={{ backgroundColor: '#ddd' }} />
+                        <View style={styles.rowBetween}>
+                            <Text style={[styles.text, { color: '#666' }]}>发起人</Text>
+                            <Text style={styles.text}>{detail.fqperson}</Text>
                         </View>
-                    </ScrollView>
-                    {this.state.status === '0' && this._renderOperate()}
-                </View>
-            )
-        } else if (this.props.requestStatus === Status.FAIL) {
-            return (
-                <ErrorPage/>
-            )
-        }
+                        <Divider style={{ backgroundColor: '#ddd' }} />
+                        <View style={styles.rowBetween}>
+                            <Text style={[styles.text, { color: '#666' }]}>变更类型</Text>
+                            <Text style={styles.text}>{detail.type === '0' ? '同仓变更' : '异仓变更'}</Text>
+                        </View>
+                        <Divider style={{ backgroundColor: '#ddd' }} />
+                        <View style={styles.rowBetween}>
+                            <Text style={[styles.text, { color: '#666' }]}>审核人</Text>
+                            <Text style={styles.text}>{detail.auditPerson}</Text>
+                        </View>
+                        <Divider style={{ backgroundColor: '#ddd' }} />
+                        <View style={{ padding: 10 }}>
+                            <Text style={[styles.text, { color: '#666', marginBottom: 8 }]}>变更原因</Text>
+                            <Text style={styles.text}>{detail.reason}</Text>
+                        </View>
+                    </View>
+                    <View style={styles.content}>
+                        {this._renderContent(detail.type, detail.list)}
+                    </View>
+                </ScrollView>
+                {this._renderOperate()}
+            </View>
+        )
     }
 }
-
-function mapStateToProps(state) {
-    return {
-        auditDetail: state.Audit.getAuditCKBGDetail,
-        requestStatus: state.Common.requestStatus
-    }
-}
-
-export default connect(mapStateToProps)(AuditCKBGDetailScreen);
 
 
 const styles = Utils.PLStyle({
