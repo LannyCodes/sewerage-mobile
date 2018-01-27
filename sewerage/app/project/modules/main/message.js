@@ -51,6 +51,7 @@ class MessageScreen extends WrapScreen {
         let params = {
             pageIndex:1,
             pageSize:15,
+            RECEIVE_USERNAME:_USERNAME_
         }
         this._requestMessageList(params);
     }
@@ -60,7 +61,7 @@ class MessageScreen extends WrapScreen {
     }
 
     _requestMessageList=(param)=>{
-        this.store.dispatch(Actions.get(Urls.message.messageList,param));
+        this.store.dispatch(Actions.get(this,Urls.Message.messageList,param));
     }
 
     _renderItem = (item, index) => {
@@ -88,6 +89,7 @@ class MessageScreen extends WrapScreen {
     _render() {
         return (
             <SWFlatList
+                style={{flex:1}}
                 data={this.props.messageRequest.list}
                 refreshing={this.props.messageRequest.isFetching && this.isPullDown}
                 pullingUp = {this.props.messageRequest.isFetching && this.isPullUp}
@@ -106,7 +108,7 @@ class MessageScreen extends WrapScreen {
 
 function mapStateToProps(state) {
     return {
-        messageRequest: state.message.messageRequest,
+        messageRequest: state.Message.messageRequest,
     }
 }
 

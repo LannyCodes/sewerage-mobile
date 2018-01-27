@@ -6,30 +6,53 @@ import React, { Component } from 'react'
 import {
     View,
     Text,
+    FlatList,
 } from "react-native"
-import * as Utils from '../../../../core/utils'
-import { AuditProcessList } from '../../../components';
+import * as Utils from '../../core/utils'
 
-export class WOAudit extends Component {
+export class AuditProcessList extends Component {
     constructor(props) {
         super(props)
+        this.approveColor = '#4ECC80';
+        this.checkColor = '#999999';
+    }
+
+    _dotStyle=(status)=>{
+        let style = {}
+        if(status===3){
+            style = {
+                backgroundColor:this.approveColor,
+                borderWidth:5,
+                borderColor:'#B0F2CA',
+            }
+        }
+        return style
     }
 
     _renderItem = (item, index, items) => {
+        // let items = this.props.data
+        
         return (
             <View style={styles.arContainer}>
                 <View style={styles.arLeft}>
                     <View style={[styles.arLeftLine, { backgroundColor: index === 0 ? 'transparent' : '#d8d8d8' }]} />
                     {
-                        index === 0 || index === items.length - 1 ? <View style={styles.arDot} /> : <View />
+                        index === 0 || index === items.length - 1 ? <View style={[{
+                            backgroundColor:this.approveColor,
+                            borderWidth:5,
+                            width:20,
+                            height:20,
+                            borderRadius:25,
+                            borderColor:'#C6EFD6',
+                        }]} /> : <View />
                     }
                     <View style={[styles.arLeftLine, { backgroundColor: index === items.length - 1 ? 'transparent' : '#d8d8d8' }]} />
                 </View>
                 <View style={styles.arMsg}>
-                    <Text style={[styles.arText, { fontSize: 14 }]}>{item.CONTENT}</Text>
+                    <Text style={[styles.arText, { fontSize: 14, color: item.STATUS === 3 ? this.approveColor : this.checkColor }]}>{item.CONTENT}</Text>
                     <View style={styles.arFoot}>
-                        <Text style={styles.arText}>审核人：{item.USER_NAME}</Text>
-                        <Text style={styles.arText}>{item.CREAT_TIME}</Text>
+                        <Text style={[styles.arText, { color: item.STATUS === 3 ? this.approveColor : this.checkColor }]}>审核人：{item.USER_NAME}</Text>
+                        <Text style={[styles.arText, { color: item.STATUS === 3 ? this.approveColor : this.checkColor }]}>{item.CREAT_TIME}</Text>
                     </View>
                     {
                         index < items.length - 1 ? <View style={styles.divider} /> : <View />
@@ -39,24 +62,16 @@ export class WOAudit extends Component {
         )
     }
 
-    render() {
+    _keyExtractor = (item, index) => index;
 
+    render() {
         return (
-            <View style={{ backgroundColor: '#ffffff' }}>
-                <View style={styles.listTag}>
-                    <View style={{ backgroundColor: '#42BB55', height: 16, width: 3 }} />
-                    <Text style={{ color: '#666666', fontSize: 15, marginLeft: 5 }}>审核记录</Text>
-                </View>
-                <View>
-                    {/* {
-                        this.props.data.map((item, index, items) => {
-                            // return this._renderAuditRecordCell(item, index, items)
-                            // return <WOAuditCell item={item} index={index} items={items}/>
-                            return this._renderItem(item, index, items)
-                        })
-                    } */}
-                    <AuditProcessList data={this.props.data}/>
-                </View>
+            <View>
+                {
+                    this.props.data.map((item, index, items) => {
+                        return this._renderItem(item, index, items)
+                    })
+                }
             </View>
         )
     }
@@ -115,3 +130,4 @@ const styles = Utils.PLStyle({
         backgroundColor: "#ebebeb",
     },
 })
+
