@@ -29,6 +29,7 @@ class WorkOrderDetailScreen extends WrapScreen {
             showPreview: false,
             details: {},
         }
+        this.item = this.props.navigation.state.params.item;
     };
 
     _header = () => {
@@ -45,7 +46,6 @@ class WorkOrderDetailScreen extends WrapScreen {
         let params = {
             ID:this.props.navigation.state.params.item.ID
         }
-        // let self = this;
         Loading.isLoading(true);
         try {
             let details = await Utils.get(this, Urls.faults.workOrderDetail,params)
@@ -59,7 +59,7 @@ class WorkOrderDetailScreen extends WrapScreen {
     }
 
     _dealWorkOrder = () => {
-        this.props.navigation.navigate('DealWorkOrder');
+        this.props.navigation.navigate('DealWorkOrder',{ID:this.item.ID});
     }
 
     _renderHeader = () => {

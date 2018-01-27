@@ -53,10 +53,12 @@ class MessageScreen extends WrapScreen {
             pageSize:15,
             RECEIVE_USERNAME:_USERNAME_
         }
+        this.isPullDown = true;
         this._requestMessageList(params);
     }
 
     _pullUp=()=>{
+        this.isPullUp = true;
         this._requestMessageList(this.props.messageRequest.body);
     }
 
@@ -64,7 +66,7 @@ class MessageScreen extends WrapScreen {
         this.store.dispatch(Actions.get(this,Urls.Message.messageList,param));
     }
 
-    _renderItem = (item, index) => {
+    _renderItem = ({item, index}) => {
         return (
             <TouchableOpacity
                 style={styles.itemContainer}
@@ -73,13 +75,13 @@ class MessageScreen extends WrapScreen {
                 <View style={{ borderWidth: 1, borderColor: 'transparent', borderRadius: 8, backgroundColor: "#42BB55", width: 40, height: 40 }} />
                 <View style={styles.itemMsg}>
                     <View style={styles.itemTitle}>
-                        <Text style={styles.itemTitleText}>巡检任务通知</Text>
-                        <Text style={[styles.itemTitleText, { fontSize: 12 }]}>2017-09-30</Text>
+                        <Text style={styles.itemTitleText}>{item.TITLE}</Text>
+                        <Text style={[styles.itemTitleText, { fontSize: 12 }]}>{item.SEND_DATE}</Text>
                     </View>
                     <Text
                         style={styles.itemContent}
                         numberOfLines={1}>
-                        固废处理事业部工作任务管理系统正式启用
+                        {item.CONTENT}
                     </Text>
                 </View>
             </TouchableOpacity>

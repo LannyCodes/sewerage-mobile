@@ -23,7 +23,7 @@ const messageRequest = (state, action) => {
             } else {
                 list = state.list.concat(action.data.list || []);
             }
-            if (action.data.list !== null && action.data.list.length > 0) {
+            if (action.data.list !== null && action.data.list != undefined && action.data.list.length > 0) {
                 body.pageIndex = body.pageIndex + 1;
             }
             return {

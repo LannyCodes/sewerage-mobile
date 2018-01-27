@@ -14,7 +14,7 @@ import { connect } from "react-redux";
 import Urls from "../../../config/api/urls";
 import { ListFilter } from '../../components';
 
-import {FaultsList} from '../faults/components';
+import { FaultsList } from '../faults/components';
 // import {FaultDetailScreen, WorkOrderDetailScreen} from '../dataStatistics';
 
 class FaultListScreen extends WrapScreen {
@@ -63,23 +63,23 @@ class FaultListScreen extends WrapScreen {
     _filterConfirm = (data) => {
         // let filter = {};
         // this.state.currentTab ? filter.faultFilter = data : filter.workderFilter = data;
-        if(this.state.currentTab){//清单
+        if (this.state.currentTab) {//清单
             // filter.faultFilter = data;
             this.setState({
                 isFilterShow: false,
-                faultFilter:data,
+                faultFilter: data,
             })
             this._faultsList.filter = data;
             this._faultsList.refresh();
-        }else{//工单
+        } else {//工单
             // filter.workderFilter = data;
             this.setState({
                 isFilterShow: false,
-                workderFilter:data,
+                workderFilter: data,
             })
-            tihs._workorderList.filter = data;
+            this._workorderList.filter = data;
             this._workorderList.refresh();
-        } 
+        }
     }
 
     _filterInitails = () => {
@@ -118,7 +118,7 @@ class FaultListScreen extends WrapScreen {
                         navigation={this.props.navigation}
                         requestMsg={this.props.workOrderRequest}
                         requestAction={this._requestWorkorders}
-                        />
+                    />
                     {/* 故障清单 */}
                     <FaultsList
                         type='faultsList'
@@ -127,8 +127,8 @@ class FaultListScreen extends WrapScreen {
                         ref={faultsList => this._faultsList = faultsList}
                         navigation={this.props.navigation}
                         requestMsg={this.props.faultsListRequest}
-                        requestAction={this._requestFaultsList} 
-                        />
+                        requestAction={this._requestFaultsList}
+                    />
 
                 </ScrollableTabView>
                 {/* 在筛选出现的时候挡住scrolltabbar */}

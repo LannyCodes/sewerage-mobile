@@ -10,8 +10,9 @@ import {
 } from "react-native"
 import { WrapScreen } from '../wrap'
 import * as Utils from '../../../core/utils'
-import { GridView } from '../../components'
+import { GridView , Loading } from '../../components'
 import ImagePicker from 'react-native-image-picker';
+import Urls from "../../../config/api/urls";
 const screenWidth = Dimensions.get('window').width;
 
 class DealWorkOrderScreen extends WrapScreen {
@@ -46,6 +47,19 @@ class DealWorkOrderScreen extends WrapScreen {
         this.setState({
             imgs: imgs
         })
+    }
+
+    _handleWorkorder = async() => {
+        let params = {
+            ID:this.props.navigation.state.params.ID,
+        }
+        Loading.isLoading(true);
+        try {
+            await Utils.post(Urls.faults.breakdownBillHandle,params);
+            Loading.isLoading(false);
+        }catch(err) {
+            Loading.isLoading(false);
+        }
     }
 
     _imagePick = () => {
@@ -105,10 +119,10 @@ class DealWorkOrderScreen extends WrapScreen {
                         ref={textInput => this._textInput = textInput}
                         style={styles.text}
                         multiline={true}
-                        placeholder="请输入巡检反馈（若无可不填）" 
+                        placeholder="请输入巡检反馈（若无可不填）"
                         // includeFontPadding={false}
                         textAlignVertical='top'
-                        underlineColorAndroid="transparent"/>
+                        underlineColorAndroid="transparent" />
                 </View>
                 <GridView
                     containerStyle={{ marginTop: 20 }}

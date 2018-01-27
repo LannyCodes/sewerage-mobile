@@ -92,6 +92,7 @@ export class FaultsList extends Component {
                     return <ListCell
                         item={data}
                         index={index}
+                        tyle={type}
                         clickFunc={this._cellClicked.bind(this, type, item)} />
                 }}
             />

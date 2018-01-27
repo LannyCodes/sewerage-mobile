@@ -34,6 +34,7 @@ const Urls = {
         faultList: '/api/breakdown/list',//故障清单
         workOrder: '/api/breakdownbill/list',//故障工单
         workOrderDetail:'/api/breakdownbill',//故障工单详情
+        breakdownBillHandle:'/api/breakdownbill/handler',//故障工单处理
     },
     statistics: {
         inspectionStatistics: '/app/statistics/inspection',

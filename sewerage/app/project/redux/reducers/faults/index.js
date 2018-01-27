@@ -71,7 +71,7 @@ const workOrderRequest = (state = [], action) => {
             return {
                 ...state,
                 isFetching: false,
-                list: action.data.list,
+                list: list,
                 body:body,
             }
         case url + ActionType.REQUEST_ERROR:
