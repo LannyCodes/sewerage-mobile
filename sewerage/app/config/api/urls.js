@@ -47,7 +47,7 @@ const Urls = {
         deviceDetail: '/app/device/detail',
     },
     User: {
-        userInfo: '/app/user/info'
+        userInfo: '/api/user/info'
     },
     Message: {
         messageList: '/api/message/list',

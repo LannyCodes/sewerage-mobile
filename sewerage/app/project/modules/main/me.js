@@ -1,16 +1,17 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import {
     View,
     Text, TouchableOpacity, Image,
 } from 'react-native';
-import {WrapScreen} from "../wrap";
+import { WrapScreen } from "../wrap";
 import * as Utils from "../../../core/utils";
 import Urls from "../../../config/api/urls";
-import {connect} from "react-redux";
+import { connect } from "react-redux";
 import * as Actions from "../../redux/actions";
-import {USER_KEY} from "../../../config/setting";
+import { USER_KEY } from "../../../config/setting";
+import { Dialog } from '../../components'
 import * as Assets from '../../assets'
-import {Divider, Icon} from "react-native-elements";
+import { Divider, Icon } from "react-native-elements";
 
 class MeScreen extends WrapScreen {
 
@@ -26,45 +27,42 @@ class MeScreen extends WrapScreen {
         }
     }
 
-    _header=()=>'none';
+    _header = () => 'none';
 
     componentDidMount() {
         let me = this;
-        // this.store.dispatch(Actions.request(this, Urls.User.userInfo)); // 请求
-        storage.load({key: USER_KEY.USER_INFO_KEY}).then(data => {
-            me.setState({
-                user: data.user
-            })
-        }).catch((error) => {
-            console.log(error)
-        })
+        this.store.dispatch(Actions.get(this, Urls.User.userInfo)); // 请求
     }
 
     _render() {
         let user = this.props.user || this.state.user;
         return (
             <View style={styles.container}>
-                <Image source={Assets.Me.bg} style={styles.bg}/>
+                <Image source={Assets.Me.bg} style={styles.bg} />
                 <View style={styles.content}>
                     <View style={styles.header}>
                         <Image style={styles.headerImg}
-                               source={{uri: "https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg"}}/>
+                            source={{ uri: "https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg" }} />
                         <Text style={styles.headerText}>{user.nickName}</Text>
                     </View>
-                    <View style={[styles.row, styles.lineContent, {marginTop: -18, backgroundColor: 'transparent'}]}>
+                    <View style={[styles.row, styles.lineContent, { marginTop: -18, backgroundColor: 'transparent' }]}>
                         <View style={styles.row}>
-                            <Image source={Assets.Me.company} style={styles.icon}/>
-                            <Text style={[styles.text, {color: '#cccccc'}]}>{user.organizeName}</Text>
+                            <Image source={Assets.Me.company} style={styles.icon} />
+                            <Text style={[styles.text, { color: '#cccccc' }]}>{user.organizeName}</Text>
                         </View>
                     </View>
-                    <View style={{backgroundColor: '#F3F3F3'}}>
-                        <View style={[styles.row, styles.lineContent, {marginTop: 12}]}>
+                    <View style={{ backgroundColor: '#F3F3F3' }}>
+                        <TouchableOpacity style={[styles.row, styles.lineContent, { marginTop: 12 }]} onPress={() => {
+                            Dialog.showNum('修改手机号', '请输入11号手机号', (input) => {
+
+                            }, () => { }, '')
+                        }}>
                             <View style={styles.row}>
-                                <Image source={Assets.Me.tel} style={styles.icon}/>
+                                <Image source={Assets.Me.tel} style={styles.icon} />
                                 <Text style={styles.text}>电话</Text>
                             </View>
                             <View style={styles.row}>
-                                <Text style={[styles.text, {color: '#333', marginRight: 10}]}>{user.mobile}</Text>
+                                <Text style={[styles.text, { color: '#333', marginRight: 10 }]}>{user.mobile}</Text>
                                 <Icon
                                     size={22}
                                     name={'chevron-right'}
@@ -72,15 +70,15 @@ class MeScreen extends WrapScreen {
                                     color={'#999'}
                                 />
                             </View>
-                        </View>
-                        <Divider style={{backgroundColor: '#efefef', marginLeft: 40}}/>
-                        <View style={[styles.row, styles.lineContent]}>
+                        </TouchableOpacity>
+                        <Divider style={{ backgroundColor: '#efefef', marginLeft: 40 }} />
+                        <TouchableOpacity style={[styles.row, styles.lineContent]}>
                             <View style={styles.row}>
-                                <Image source={Assets.Me.email} style={styles.icon}/>
+                                <Image source={Assets.Me.email} style={styles.icon} />
                                 <Text style={styles.text}>邮箱</Text>
                             </View>
                             <View style={styles.row}>
-                                <Text style={[styles.text, {color: '#333', marginRight: 10}]}>{user.email}</Text>
+                                <Text style={[styles.text, { color: '#333', marginRight: 10 }]}>{user.email}</Text>
                                 <Icon
                                     size={22}
                                     name={'chevron-right'}
@@ -88,27 +86,12 @@ class MeScreen extends WrapScreen {
                                     color={'#999'}
                                 />
                             </View>
-                        </View>
-                        <Divider style={{backgroundColor: '#efefef', marginLeft: 40}}/>
+                        </TouchableOpacity>
+                        <Divider style={{ backgroundColor: '#efefef', marginLeft: 40 }} />
                         <View style={[styles.row, styles.lineContent]}>
                             <View style={styles.row}>
-                                <Image source={Assets.Me.pwd} style={styles.icon}/>
+                                <Image source={Assets.Me.pwd} style={styles.icon} />
                                 <Text style={styles.text}>修改密码</Text>
-                            </View>
-                            <View style={styles.row}>
-                                <Icon
-                                    size={22}
-                                    name={'chevron-right'}
-                                    type='feather'
-                                    color={'#999'}
-                                />
-                            </View>
-                        </View>
-                        <Divider style={{backgroundColor: '#efefef', marginLeft: 40}}/>
-                        <View style={[styles.row, styles.lineContent]}>
-                            <View style={styles.row}>
-                                <Image source={Assets.Me.about} style={styles.icon}/>
-                                <Text style={styles.text}>关于</Text>
                             </View>
                             <View style={styles.row}>
                                 <Icon
@@ -121,11 +104,11 @@ class MeScreen extends WrapScreen {
                         </View>
                     </View>
                 </View>
-                <View style={{flex: 1, backgroundColor: '#F3F3F3'}}>
+                <View style={{ flex: 1, backgroundColor: '#F3F3F3' }}>
                     <TouchableOpacity style={styles.exit} onPress={() => {
                         Utils.exitApp(this)
                     }}>
-                        <Text style={[styles.text, {color: '#FF6E61'}]}>退出</Text>
+                        <Text style={[styles.text, { color: '#FF6E61' }]}>退出</Text>
                     </TouchableOpacity>
                 </View>
             </View>
@@ -141,6 +124,8 @@ function mapStateToProps(state) {
 }
 
 export default connect(mapStateToProps)(MeScreen);
+
+
 const styles = Utils.PLStyle({
     container: {
         flex: 1,

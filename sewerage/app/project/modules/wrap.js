@@ -35,9 +35,15 @@ export class WrapScreen extends Component {
             } else {
                 _USERNAME_ = '';
             }
+            if (!_.isNull(data.userId)) {
+                _USERID_ = data.userId
+            } else {
+                _USERID_ = ''
+            }
         }).catch(err => {
             _USERTOKEN_ = '';
             _USERNAME_ = '';
+            _USERID_ = '';
         })
     }
 
