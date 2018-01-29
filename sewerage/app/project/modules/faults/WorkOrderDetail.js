@@ -18,7 +18,7 @@ import * as Utils from '../../../core/utils';
 import { GridView, TagLabel, Loading } from '../../components';
 import Urls from "../../../config/api/urls";
 import { WOAudit, WOFaults, WOResult } from './components';
-import {StatusHelper} from './utils';
+import { StatusHelper } from './utils';
 
 const screenWidth = Dimensions.get('window').width;
 
@@ -44,11 +44,11 @@ class WorkOrderDetailScreen extends WrapScreen {
 
     _getDetail = async () => {
         let params = {
-            ID:this.props.navigation.state.params.item.ID
+            ID: this.props.navigation.state.params.item.ID
         }
         Loading.isLoading(true);
         try {
-            let details = await Utils.get(this, Urls.faults.workOrderDetail,params)
+            let details = await Utils.get(this, Urls.faults.workOrderDetail, params)
             this.setState({
                 details: details,
             })
@@ -59,21 +59,21 @@ class WorkOrderDetailScreen extends WrapScreen {
     }
 
     _dealWorkOrder = () => {
-        this.props.navigation.navigate('DealWorkOrder',{ID:this.item.ID});
+        this.props.navigation.navigate('DealWorkOrder', { ID: this.item.ID });
     }
 
     _renderHeader = () => {
         let detail = this.state.details || '';
         let item = this.props.navigation.state.params.item;
-        
-        const {statusPerform,statusText} = StatusHelper.getStatusPerform(item.STATUS);
+
+        const { auditPerform, auditText } = StatusHelper.getAuditStatusPerform(item.STATUS);
         return (
             <View>
                 <View style={styles.workOrderMessage}>
                     <View style={styles.header}>
                         <View style={styles.headerTitle}>
                             <Text style={styles.headerText}>{item.BREAK_NUMBER}</Text>
-                            <TagLabel backgroundColor={statusPerform.backgroundColor} fontColor={statusPerform.color}>{statusText}</TagLabel>
+                            <TagLabel backgroundColor={auditPerform.backgroundColor} fontColor={auditPerform.color}>{auditText}</TagLabel>
                         </View>
                         <Text style={styles.headerFootText}>
                             发起时间：
@@ -120,19 +120,21 @@ class WorkOrderDetailScreen extends WrapScreen {
 
     _render() {
         return (
-            <View style={{flex:1,justifyContent:'space-between'}}>
+            <View style={{ flex: 1, justifyContent: 'space-between' }}>
                 <ScrollView style={styles.container} bounces={false}>
                     {this._renderHeader()}
-                    <WOFaults data={this.state.details.BREAKDOWNS || []}/>
-                    <WOResult data={this.state.details.HANDLE_LOGS || []}/>
-                    <WOAudit data={this.state.details.CHECK_LOGS || []}/>
+                    <WOFaults data={this.state.details.BREAKDOWNS || []} />
+                    <WOResult data={this.state.details.HANDLE_LOGS || []} />
+                    <WOAudit data={this.state.details.CHECK_LOGS || []} />
                 </ScrollView>
-                <TouchableOpacity
-                    style={styles.dealButton}
-                    activeOpacity={1}
-                    onPress={this._dealWorkOrder}>
-                    <Text style={styles.buttonText}>处理</Text>
-                </TouchableOpacity>
+                {
+                    this.state.details.STATUS === 1 ? <TouchableOpacity
+                        style={styles.dealButton}
+                        activeOpacity={1}
+                        onPress={this._dealWorkOrder}>
+                        <Text style={styles.buttonText}>处理</Text>
+                    </TouchableOpacity> : <View />
+                }
             </View>
         );
     };

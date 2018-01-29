@@ -12,6 +12,7 @@ import { SWFlatList } from '../../components';
 import * as Actions from "../../redux/actions";
 import { connect } from "react-redux";
 import Urls from "../../../config/api/urls";
+import * as Assets from '../../assets';
 
 class MessageScreen extends WrapScreen {
     constructor(props) {
@@ -67,12 +68,28 @@ class MessageScreen extends WrapScreen {
     }
 
     _renderItem = ({item, index}) => {
+        let iconColor = ''
+        switch(item.STATUS){
+            case 1:
+                iconColor = '#2384E8'
+                break;
+            case 2:
+                iconColor='#42BB55' 
+                break;
+            case 3:
+            default:
+                iconColor = '#FFAC2D'
+                break;
+        }
+
         return (
             <TouchableOpacity
                 style={styles.itemContainer}
                 activeOpacity={1}
                 onPress={this._itemClick.bind(this,item,index)}>
-                <View style={{ borderWidth: 1, borderColor: 'transparent', borderRadius: 8, backgroundColor: "#42BB55", width: 40, height: 40 }} />
+                <View style={{ borderWidth: 1, borderColor: 'transparent', borderRadius: 8, backgroundColor: iconColor, width: 40, height: 40 ,justifyContent:'center',alignItems:'center'}}>
+                    <Image source={Assets.Message.announcement} style={{ width: 25, height: 25 }}/>
+                </View>
                 <View style={styles.itemMsg}>
                     <View style={styles.itemTitle}>
                         <Text style={styles.itemTitleText}>{item.TITLE}</Text>

@@ -47,10 +47,15 @@ const Components = {
     checked: require('./images/icon_filter_checked.png'),
 }
 
+const Message = {
+    announcement: require('./images/icon_announcement.png'),
+}
+
 export {
     Home,
     Login,
     Me,
     Data,
     Components,
+    Message,
 }

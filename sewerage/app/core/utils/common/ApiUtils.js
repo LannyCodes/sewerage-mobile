@@ -23,7 +23,7 @@ export const get = (context, url ,body) => {
 
 export const post = (context, url, body) => {
     return new Promise((resolve,reject)=>{
-        getPost(context, url, body, resolve, reject);
+        postFetch(context, url, body, resolve, reject);
     })
 }
 

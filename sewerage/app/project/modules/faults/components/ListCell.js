@@ -34,11 +34,11 @@ export class ListCell extends Component {
     render() {
         let { perform, text } = StatusHelper.getRankPerform(this.data.rank);
         let { statusPerform, statusText} = StatusHelper.getStatusPerform(this.data.STATUS);
-        // let {auditPerform,auditText} = StatusHelper.getAuditStatusPerform(this.data.STATUS);
-        // if(this.props.type != 'faultsList'){
-        //     statusPerform = auditPerform;
-        //     statusText = auditText;
-        // }
+        let {auditPerform,auditText} = StatusHelper.getAuditStatusPerform(this.data.STATUS);
+        if(this.props.type != 'faultsList'){
+            statusPerform = auditPerform;
+            statusText = auditText;
+        }
         return (
             <TouchableOpacity
                 style={styles.cellContainer}

@@ -13,21 +13,30 @@ import { WrapScreen } from '../../wrap';
 import * as Utils from '../../../../core/utils';
 import { GridView } from '../../../components';
 import { PicturesPreview } from '../../../components';
+import { config } from '../../../../config/setting'
 
 const screenWidth = Dimensions.get('window').width;
 export class WOResult extends Component {
     constructor(props) {
         super(props)
-        this.images = [];
+        this.state={
+            showImages:[]
+        }
     }
 
-    _imageClick = () => {
-        this._pp.showPreview()
+    _imageClick = (images) => {
+        console.log(images);
+        let showImages = images.map((item,index)=>{
+            return {url:item.uri}
+        })
+        this.setState({
+            showImages:showImages
+        })
+        this._pp.showPreview();
     }
 
     _renderItem = (item, index) => {
-        let images = item.ATTACHMENTS;
-        this.images = images;
+        let images = this._getImageUris(item);
         return (
             <View >
                 <View style={{ paddingLeft: 10 }}>
@@ -36,12 +45,19 @@ export class WOResult extends Component {
                     <Text style={[styles.headerFootText, { color: '#333333', marginBottom: 11, marginTop: 14 }]}>{item.CONTENT}</Text>
                 </View>
                 <GridView
-                    imgs={[{ uri: "https://s3.amazonaws.com/uifaces/faces/twitter/brynn/128.jpg" }, { uri: "https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg" }, { uri: "https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg" }, { uri: "https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg" },]}
+                    imgs={images}
                     containerStyle={{ marginBottom: 20 }}
                     columns={4}
-                    gridClick={this._imageClick} />
+                    gridClick={this._imageClick.bind(this,images)} />
             </View>
         )
+    }
+
+    _getImageUris=(item)=>{
+        return item.ATTACHMENT_IDS.map((item,index)=>{
+            console.log(item.FILE_PATH)
+            return {uri:config.ImageServer+item.FILE_PATH}
+        })
     }
 
     render() {
@@ -60,7 +76,7 @@ export class WOResult extends Component {
                 }
                 <PicturesPreview
                     ref={pp => this._pp = pp}
-                    images={this.images} />
+                    images={this.state.showImages} />
             </View>
         )
     }

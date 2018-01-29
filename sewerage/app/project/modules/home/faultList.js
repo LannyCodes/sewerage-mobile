@@ -143,7 +143,7 @@ class FaultListScreen extends WrapScreen {
                 {/* 筛选组件 */}
                 {this.state.isFilterShow === true ? <ListFilter
                     containerStyles={{ top: 50 }}
-                    filterArray={filterArray}
+                    filterArray={this.state.currentTab === 0 ? workorderArray : faultFilterArray}
                     reset={this._filterReset}
                     confirm={this._filterConfirm}
                     initails={this._filterInitails()}
@@ -182,7 +182,28 @@ const styles = Utils.PLStyle({
     }
 })
 
-const filterArray = [
+const workorderArray = [
+    {
+        title: '状态',
+        keyName: 'STATUS',
+        // multipleChoice: true,
+        data: [{
+            name: '待处理',
+            value: '1',
+        }, {
+            name: '处理完待审',
+            value: '2',
+        }, {
+            name: '已完成',
+            value: '3',
+        }, {
+            name: '驳回',
+            value: '5'
+        }]
+    }
+]
+
+const faultFilterArray = [
     {
         title: '状态',
         keyName: 'STATUS',

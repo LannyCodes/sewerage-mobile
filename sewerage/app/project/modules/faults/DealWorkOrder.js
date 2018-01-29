@@ -5,21 +5,23 @@
 import React, { Component } from 'react'
 import {
     View,
+    Alert,
     TextInput,
     Dimensions
 } from "react-native"
 import { WrapScreen } from '../wrap'
 import * as Utils from '../../../core/utils'
-import { GridView , Loading } from '../../components'
+import { GridView, Loading } from '../../components'
 import ImagePicker from 'react-native-image-picker';
 import Urls from "../../../config/api/urls";
+import { FileUpload } from '../../utils';
 const screenWidth = Dimensions.get('window').width;
 
 class DealWorkOrderScreen extends WrapScreen {
     constructor(props) {
         super(props)
         this.state = {
-            imgs: [{ uri: "https://s3.amazonaws.com/uifaces/faces/twitter/brynn/128.jpg" }, { uri: "https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg" }, { uri: "https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg" }]
+            imgs: []
         }
     }
 
@@ -38,26 +40,53 @@ class DealWorkOrderScreen extends WrapScreen {
     //func
 
     _submit = () => {
-        console.log('haha')
+        Alert.alert(
+            '是否确定提交？',
+            '确定提交内容',
+            [
+                {text:'取消'},
+                {text:'确定',onPress:()=>this._handleWorkorder()}
+            ]
+        )
     }
 
     _imageAdd = (source) => {
         let imgs = this.state.imgs;
-        imgs.push({ uri: source.uri });
+        imgs.push(source);
         this.setState({
             imgs: imgs
         })
     }
 
-    _handleWorkorder = async() => {
-        let params = {
-            ID:this.props.navigation.state.params.ID,
-        }
+    _handleWorkorder = async () => {
         Loading.isLoading(true);
         try {
-            await Utils.post(Urls.faults.breakdownBillHandle,params);
+            // let uploadResults = this.state.imgs.map(async (item, index) => {
+            //     return await FileUpload(item.uri, item.fileName);
+            // })
+            let uploadResults = [];
+            for (const key in this.state.imgs) {
+                if (this.state.imgs.hasOwnProperty(key)) {
+                    const img = this.state.imgs[key];
+                    try{
+                        let upload = await FileUpload(img.uri,img.fileName);
+                        console.log('hahaha');
+                        uploadResults = uploadResults.concat(upload);
+                    }catch(err){
+                        return;
+                    }
+                }
+            } 
+            let params = {
+                ID:this.props.navigation.state.params.ID,
+                CONTENT:this.textValue || '',
+                ATTACHMENT_IDS:uploadResults,
+            }
+            // await Utils.post(this,Urls.faults.breakdownBillHandle, params);
             Loading.isLoading(false);
-        }catch(err) {
+            this.props.navigation.goBack();
+        } catch (err) {
+            console.log(err);
             Loading.isLoading(false);
         }
     }
@@ -116,10 +145,10 @@ class DealWorkOrderScreen extends WrapScreen {
             <View style={styles.container}>
                 <View style={styles.textContainer}>
                     <TextInput
-                        ref={textInput => this._textInput = textInput}
                         style={styles.text}
                         multiline={true}
                         placeholder="请输入巡检反馈（若无可不填）"
+                        onChange={(event)=>this.textValue=event.nativeEvent.text}
                         // includeFontPadding={false}
                         textAlignVertical='top'
                         underlineColorAndroid="transparent" />
@@ -129,10 +158,9 @@ class DealWorkOrderScreen extends WrapScreen {
                     columns={4}
                     isShowAdd={true}
                     showDelete={true}
-                    imgs={this.state.imgs}
+                    imgs={this.state.imgs.map((item)=>{return {uri:item.uri}})}
                     addGrid={this._imagePick}
                     deleteClick={this._deleteImage}
-                // addGrid={this._imagePick}
                 />
             </View>
         )
