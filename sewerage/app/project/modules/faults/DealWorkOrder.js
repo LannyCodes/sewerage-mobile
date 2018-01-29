@@ -44,8 +44,8 @@ class DealWorkOrderScreen extends WrapScreen {
             '是否确定提交？',
             '确定提交内容',
             [
-                {text:'取消'},
-                {text:'确定',onPress:()=>this._handleWorkorder()}
+                { text: '取消' },
+                { text: '确定', onPress: () => this._handleWorkorder() }
             ]
         )
     }
@@ -68,19 +68,15 @@ class DealWorkOrderScreen extends WrapScreen {
             for (const key in this.state.imgs) {
                 if (this.state.imgs.hasOwnProperty(key)) {
                     const img = this.state.imgs[key];
-                    try{
-                        let upload = await FileUpload(img.uri,img.fileName);
-                        console.log('hahaha');
-                        uploadResults = uploadResults.concat(upload);
-                    }catch(err){
-                        return;
-                    }
+                    let upload = await FileUpload(img.uri, img.fileName);
+                    console.log('hahaha');
+                    uploadResults = uploadResults.concat(upload);
                 }
-            } 
+            }
             let params = {
-                ID:this.props.navigation.state.params.ID,
-                CONTENT:this.textValue || '',
-                ATTACHMENT_IDS:uploadResults,
+                ID: this.props.navigation.state.params.ID,
+                CONTENT: this.textValue || '',
+                ATTACHMENT_IDS: uploadResults,
             }
             // await Utils.post(this,Urls.faults.breakdownBillHandle, params);
             Loading.isLoading(false);
@@ -148,7 +144,7 @@ class DealWorkOrderScreen extends WrapScreen {
                         style={styles.text}
                         multiline={true}
                         placeholder="请输入巡检反馈（若无可不填）"
-                        onChange={(event)=>this.textValue=event.nativeEvent.text}
+                        onChange={(event) => this.textValue = event.nativeEvent.text}
                         // includeFontPadding={false}
                         textAlignVertical='top'
                         underlineColorAndroid="transparent" />
@@ -158,7 +154,7 @@ class DealWorkOrderScreen extends WrapScreen {
                     columns={4}
                     isShowAdd={true}
                     showDelete={true}
-                    imgs={this.state.imgs.map((item)=>{return {uri:item.uri}})}
+                    imgs={this.state.imgs.map((item) => { return { uri: item.uri } })}
                     addGrid={this._imagePick}
                     deleteClick={this._deleteImage}
                 />

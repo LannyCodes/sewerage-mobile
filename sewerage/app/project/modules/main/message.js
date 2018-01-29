@@ -19,6 +19,7 @@ class MessageScreen extends WrapScreen {
         super(props);
         this.isPullDown = false;
         this.isPullUp = false;
+        
     }
 
     _header = () => {
@@ -52,7 +53,7 @@ class MessageScreen extends WrapScreen {
         let params = {
             pageIndex:1,
             pageSize:15,
-            RECEIVE_USERNAME:_USERNAME_
+            RECEIVE_USER_ID:_USERID_
         }
         this.isPullDown = true;
         this._requestMessageList(params);

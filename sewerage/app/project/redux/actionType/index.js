@@ -10,10 +10,18 @@ const REQUEST = {
 const USER = {
     SAVE_USERS: Symbol()
 };
+
+const TAB = {
+    SET_CURRENT_TAB:Symbol(),
+    SET_TAB_BADGE:Symbol(),
+    // CURRENT_TAB:Symbol(),
+}
+
 //这个一定要放到最后
 const ActionType = {
     ...REQUEST,
-    ...USER
+    ...USER,
+    ...TAB,
 };
 
 export default ActionType;

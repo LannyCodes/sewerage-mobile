@@ -58,15 +58,15 @@ class DataStatisticsScreen extends WrapScreen {
         })
     }
 
-    _turnOrientation = () => {
-        Orientation.getOrientation((err, orientation) => {
-            if (orientation === 'PORTRAIT') {
-                Orientation.lockToLandscapeRight();
-            } else {
-                Orientation.lockToPortrait();
-            }
-        })
-    }
+    // _turnOrientation = () => {
+    //     Orientation.getOrientation((err, orientation) => {
+    //         if (orientation === 'PORTRAIT') {
+    //             Orientation.lockToLandscapeRight();
+    //         } else {
+    //             Orientation.lockToPortrait();
+    //         }
+    //     })
+    // }
 
     _unExpand = () => {
         // this._turnOrientation()

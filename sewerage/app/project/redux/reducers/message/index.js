@@ -5,6 +5,7 @@ import ActionType from '../../actionType';
 const messageRequest = (state, action) => {
     state = state || {
         list: [],
+        totalCount: 0,
         isFetching: false,
         body: action.body,
     }
@@ -26,11 +27,13 @@ const messageRequest = (state, action) => {
             if (action.data.list !== null && action.data.list != undefined && action.data.list.length > 0) {
                 body.pageIndex = body.pageIndex + 1;
             }
+            
             return {
                 ...state,
                 isFetching: false,
                 list: list,
                 body: body,
+                totalCount: action.totalCount
             }
         case url + ActionType.REQUEST_ERROR:
             return {

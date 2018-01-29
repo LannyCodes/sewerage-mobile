@@ -2,7 +2,9 @@ import React from 'react';
 import {TabNavigator, TabBarBottom} from 'react-navigation';
 import {TabBarItem  } from '../../project/components'
 import * as Modules from '../../project/modules';
-import * as Asserts from '../../project/assets'
+import * as Asserts from '../../project/assets';
+import store from '../../project/redux/store/configStore';
+import * as Actions from '../../project/redux/actions';
 
 const Dimensions = require('Dimensions');
 let {width} = Dimensions.get('window');
@@ -17,11 +19,16 @@ const TabNav = TabNavigator(
                 tabBarIcon: ({focused, tintColor}) => (
                     <TabBarItem
                         showMessage={false}
+                        routeName='Work'
                         focused={focused}
                         selectedImage={Asserts.Home.work_selected}
                         normalImage={Asserts.Home.work}
                     />
-                )
+                ),
+                tabBarOnPress:({jumpToIndex,previousScene,scene})=>{
+                    jumpToIndex(scene.index);
+                    store.dispatch(Actions.setCurrentTab(scene.index,scene.route.routeName))
+                }
             },
         },
         Message: {
@@ -32,10 +39,15 @@ const TabNav = TabNavigator(
                     <TabBarItem
                         showMessage={false}
                         focused={focused}
+                        routeName='Message'
                         selectedImage={Asserts.Home.message_selected}
                         normalImage={Asserts.Home.message}
                     />
-                )
+                ),
+                tabBarOnPress:({jumpToIndex,previousScene,scene})=>{
+                    jumpToIndex(scene.index);
+                    store.dispatch(Actions.setCurrentTab(scene.index,scene.route.routeName))
+                }
             },
         },
         Me: {
@@ -46,10 +58,15 @@ const TabNav = TabNavigator(
                     <TabBarItem
                         showMessage={false}
                         focused={focused}
+                        routeName='Me'
                         selectedImage={Asserts.Home.me_selected}
                         normalImage={Asserts.Home.me}
                     />
-                )
+                ),
+                tabBarOnPress:({jumpToIndex,previousScene,scene})=>{
+                    jumpToIndex(scene.index);
+                    store.dispatch(Actions.setCurrentTab(scene.index,scene.route.routeName))
+                }
             },
         }
     },
