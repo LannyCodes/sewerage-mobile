@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {
     View,
-    Text, TouchableOpacity, FlatList,
+    Text, TouchableOpacity, FlatList,DeviceEventEmitter
 } from 'react-native';
 import { WrapScreen } from "../wrap";
 import * as Utils from "../../../core/utils";
@@ -12,7 +12,7 @@ import { DefaultPage, ErrorPage, ListFilter, Loading } from "../../components";
 import { Status } from "../../../config/api/api.config";
 import { ScrollableTabBar } from '../../components/ScrollableTabViewBars';
 import ScrollableTabView from 'react-native-scrollable-tab-view';
-
+import { renderCardStatus } from '../audit/auditComponents'
 const processTypeObj = {
     inspection_plan_process: '巡检计划',
     maintenance_plan_process: '维保计划',
@@ -29,6 +29,18 @@ class AuditManagementScreen extends WrapScreen {
             isFilterShow: false
         }
         this.pullingFlag = ''
+    }
+
+    componentWillMount() {
+        let self = this;
+        this.auditDetailListRefreshBus = DeviceEventEmitter.addListener('AUDIT_LIST_REFRESH', function (event) {
+            self._waitListRefresh()
+            self._doneListRefresh()
+        });
+    }
+
+    componentWillUnmount() {
+        this.auditDetailListRefreshBus.remove();
     }
 
     componentDidMount() {
@@ -76,20 +88,6 @@ class AuditManagementScreen extends WrapScreen {
             processType: type
         });
     };
-
-    _renderCardStatus = (status) => {
-        let st = { text: '待审核', color: '#FAA346', backgroundColor: '#FEF5EB' };
-        if (status === 0) st = { text: '待审核', color: '#FAA346', backgroundColor: '#FEF5EB' };
-        else if (status === 1) st = { text: '已驳回', color: '#47A9EB', backgroundColor: '#ECF6FD' };
-        else if (status === 2) st = { text: '已废弃', color: '#FF6E61', backgroundColor: '#FFE2DF' };
-        else if (status === 3) st = { text: '已通过', color: '#1AAD19', backgroundColor: '#E8F6E8' };
-        return (
-            <View style={[styles.cardStatus, { backgroundColor: st.backgroundColor }]}>
-                <Text style={{ color: st.color, fontSize: 12 }}>{st.text}</Text>
-            </View>
-        )
-    };
-
     _getAuditProcessType = (processType) => {
 
     }
@@ -102,7 +100,7 @@ class AuditManagementScreen extends WrapScreen {
         >
             <View style={styles.row}>
                 <Text style={styles.cardTitle}>{item.THEME}</Text>
-                {this._renderCardStatus(item.STATUS)}
+                {renderCardStatus(item.STATUS)}
             </View>
             <Text style={[styles.cardPerson, { marginTop: 5 }]}>{processTypeObj[item.PROCESS_TYPE]}审核</Text>
             <View style={[styles.row, { marginTop: 10 }]}>

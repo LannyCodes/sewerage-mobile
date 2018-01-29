@@ -9,7 +9,7 @@ import { Status } from "../../../config/api/api.config";
 import { ErrorPage, Loading, Dialog } from "../../components";
 import { ScrollView, Text, TouchableOpacity, View } from "react-native";
 import { Divider, Icon } from "react-native-elements";
-
+import { renderCardStatus } from './auditComponents'
 export default class AuditCKBGDetailComponent extends WrapScreen {
 
     constructor(props) {
@@ -25,27 +25,6 @@ export default class AuditCKBGDetailComponent extends WrapScreen {
             title: 'none',
         };
     }
-
-    _renderCardStatus = (status) => {
-        let st = { text: '待审核', color: '#FAA346', backgroundColor: '#FEF5EB' };
-        if (status === 0) st = { text: '待审核', color: '#FAA346', backgroundColor: '#FEF5EB' };
-        else if (status === 1) st = { text: '已通过', color: '#1AAD19', backgroundColor: '#E8F6E8' };
-        else if (status === 2) st = { text: '已驳回', color: '#47A9EB', backgroundColor: '#ECF6FD' };
-        else if (status === 3) st = { text: '已废弃', color: '#FF6E61', backgroundColor: '#FFE2DF' };
-        return (
-            <View style={{
-                width: 45,
-                height: 18,
-                alignItems: 'center',
-                justifyContent: 'center',
-                borderRadius: 20,
-                marginTop: 10,
-                backgroundColor: st.backgroundColor
-            }}>
-                <Text style={{ fontSize: 10, color: st.color }}>{st.text}</Text>
-            </View>
-        )
-    };
 
     _keyExtractor = (item, index) => index;
     _renderContent = (type, list) => {
@@ -231,7 +210,7 @@ export default class AuditCKBGDetailComponent extends WrapScreen {
                                         }]}>发起时间：{detail.startTime}</Text>
                                 </View>
                             </View>
-                            {this._renderCardStatus(this.state.status)}
+                            {renderCardStatus(this.state.status)}
                         </View>
                         <Divider style={{ backgroundColor: '#ddd' }} />
                         <View style={styles.rowBetween}>
@@ -258,7 +237,7 @@ export default class AuditCKBGDetailComponent extends WrapScreen {
                         {this._renderContent(detail.type, detail.list)}
                     </View>
                 </ScrollView>
-                {this._renderOperate()}
+                {this._renderOperate(this)}
             </View>
         )
     }

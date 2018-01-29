@@ -1,11 +1,11 @@
 /**
  * Created by coderxuan on 2017/5/15.
  */
-import {Toast} from 'teaset'
+import { Toast } from 'teaset'
 import * as Utils from "../../../core/utils";
 import _ from 'lodash'
 import Urls from "../../../config/api/urls";
-import {USER_KEY} from "../../../config/setting"
+import { USER_KEY } from "../../../config/setting"
 import md5 from 'md5'
 
 export function checkOtp(self) {
@@ -26,10 +26,10 @@ export function checkPhoneAndOtp(self) {
 
 export function submitOtp(self) {
     if (Utils.isTel(self.state.inputPhoneNum)) {
-        let params = {'telephone': self.state.inputPhoneNum, 'otp': self.state.inputVertify};
+        let params = { 'telephone': self.state.inputPhoneNum, 'otp': self.state.inputVertify };
         Utils.fetch(self, Urls.Login.otp, params).then(data => {
             console.log(data);
-            self.props.navigation.navigate('Modify', {tel: self.state.inputPhoneNum});
+            self.props.navigation.navigate('Modify', { tel: self.state.inputPhoneNum });
         });
     } else {
         Toast.message('请输入正确手机号！')
@@ -44,7 +44,7 @@ export function submitOtp(self) {
 export async function loginSubmit(self) {
     let username = self.state.inputPhoneAndEmail;
     let password = self.state.inputPwd;
-    let params = {'loginName': username, 'pwd': md5(md5(password))};
+    let params = { 'loginName': username, 'pwd': md5(md5(password)) };
     Utils.fetch(self, Urls.Login.login, params).then((data) => {
         // 保存登录状态 --- 只保存token到localStorage
         storage.save({
@@ -70,7 +70,7 @@ export function checkPwdModify(self) {
  * @param self
  */
 export function modifyFinish(self) {
-    let params = {newPwd: self.state.inputEnNewPwd, telephone: self.props.navigation.state.params.tel};
+    let params = { newPwd: self.state.inputEnNewPwd, telephone: self.props.navigation.state.params.tel };
     Toast.message('修改成功！');
     Utils.resetNavigation(self.props.navigation, 'Login');
 }

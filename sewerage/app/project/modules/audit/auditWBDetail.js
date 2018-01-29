@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { connect } from "react-redux";
 import * as Utils from "../../../core/utils";
 import Urls from "../../../config/api/urls";
 import * as Actions from "../../redux/actions";
@@ -7,28 +6,8 @@ import { Status } from "../../../config/api/api.config";
 import { ErrorPage, Loading } from "../../components";
 import { FlatList, ScrollView, Text, TouchableOpacity, View } from "react-native";
 import { Avatar, Divider, Icon } from "react-native-elements";
-
+import { renderCardStatus, renderOperate,renderCheckLogs } from './auditComponents'
 export default class AuditWBDetailComponent extends Component {
-    _renderCardStatus = (status) => {
-        let st = { text: '待审核', color: '#FAA346', backgroundColor: '#FEF5EB' };
-        if (status === 0) st = { text: '待审核', color: '#FAA346', backgroundColor: '#FEF5EB' };
-        else if (status === 1) st = { text: '已驳回', color: '#47A9EB', backgroundColor: '#ECF6FD' };
-        else if (status === 2) st = { text: '已废弃', color: '#FF6E61', backgroundColor: '#FFE2DF' };
-        else if (status === 3) st = { text: '已通过', color: '#1AAD19', backgroundColor: '#E8F6E8' };
-        return (
-            <View style={{
-                width: 45,
-                height: 18,
-                alignItems: 'center',
-                justifyContent: 'center',
-                borderRadius: 20,
-                marginTop: 10,
-                backgroundColor: st.backgroundColor
-            }}>
-                <Text style={{ fontSize: 10, color: st.color }}>{st.text}</Text>
-            </View>
-        )
-    };
 
     _keyExtractor = (item, index) => index;
 
@@ -37,32 +16,11 @@ export default class AuditWBDetailComponent extends Component {
             <Text style={[styles.text, { marginLeft: 5 }]}>{item.EQUIPMENT_NAME}</Text>
             {item.ITEM_CONTENTS.map((item, i) => {
                 return (
-                    <Text key={'item' + i} style={{ fontSize: 13, color: '#999', marginLeft: 5, paddingTop: 4 }}>{item.NAME}</Text>
+                    <Text key={'item' + i} style={{ fontSize: 14, color: '#999', marginLeft: 7, marginTop: 4 }}>{item.NAME}</Text>
                 )
             })}
         </View>
     );
-
-    /** 审核流程记录*/
-    _renderCheckLogs = () => {
-
-    }
-
-    _renderOperate = () => (
-        <View style={styles.operate}>
-            <TouchableOpacity style={styles.operateBox}>
-                <Text style={styles.text}>废弃</Text>
-            </TouchableOpacity>
-            <View style={{ height: 32, width: 0.5, backgroundColor: '#ccc' }} />
-            <TouchableOpacity style={styles.operateBox}>
-                <Text style={styles.text}>驳回</Text>
-            </TouchableOpacity>
-            <View style={{ height: 32, width: 0.5, backgroundColor: '#ccc' }} />
-            <TouchableOpacity style={styles.operateBox}>
-                <Text style={styles.text}>通过</Text>
-            </TouchableOpacity>
-        </View>
-    )
 
     render() {
         const detail = this.props.auditDetail;
@@ -84,7 +42,7 @@ export default class AuditWBDetailComponent extends Component {
                                     <Text style={[styles.text, { fontSize: 16 }]}>{detail.NAME}</Text>
                                 </View>
                             </View>
-                            {this._renderCardStatus(detail.STATUS)}
+                            {renderCardStatus(detail.STATUS)}
                         </View>
                         <Divider style={{ backgroundColor: '#ddd' }} />
                         <View style={styles.rowBetween}>
@@ -99,7 +57,7 @@ export default class AuditWBDetailComponent extends Component {
                         <Divider style={{ backgroundColor: '#ddd' }} />
                         <View style={styles.rowBetween}>
                             <Text style={[styles.text, { color: '#666' }]}>运营公司</Text>
-                            <Text style={styles.text}>{detail.COMPANY_ID}</Text>
+                            <Text style={styles.text}>{detail.COMPANY_NAME}</Text>
                         </View>
                         <Divider style={{ backgroundColor: '#ddd' }} />
                         <View style={styles.rowBetween}>
@@ -109,7 +67,7 @@ export default class AuditWBDetailComponent extends Component {
                     </View>
                     <View style={styles.content}>
                         <View style={styles.contentTitle}>
-                            <Text>巡检内容</Text>
+                            <Text>维保内容</Text>
                         </View>
                         <Divider style={{ backgroundColor: '#ddd' }} />
                         <FlatList
@@ -121,9 +79,9 @@ export default class AuditWBDetailComponent extends Component {
                             )}
                         />
                     </View>
-                    {detail.STATUS !== '0' && this._renderCheckLogs()}
+                    {detail.STATUS !== 0 && renderCheckLogs(detail.CHECK_LOGS)}
                 </ScrollView>
-                {detail.STATUS === '0' && this._renderOperate()}
+                {detail.STATUS === 0 && renderOperate(this)}
             </View>
         )
     }
@@ -176,19 +134,5 @@ const styles = Utils.PLStyle({
         height: 44,
         marginLeft: 10,
         justifyContent: 'center'
-    },
-    operate: {
-        height: 47,
-        width: Utils.sw,
-        flexDirection: 'row',
-        backgroundColor: 'white',
-        alignItems: 'center',
-        borderWidth: 1,
-        borderColor: '#ddd'
-    },
-    operateBox: {
-        flex: 1,
-        justifyContent: "center",
-        alignItems: 'center'
     }
 });
