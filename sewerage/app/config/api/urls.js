@@ -25,6 +25,7 @@ const Urls = {
         getWaitAuditList: '/api/businessProcess/waitTaskList', // 获取待审核列表,
         getDoneAuditList: '/api/businessProcess/doneTaskList', // 获取已审核列表,
         getAuditDetail: '/api/businessProcess/taskDetail', // 获取审核详情
+        checkTask: '/api/businessProcess/checkTask' // 审核
     },
     Maintenance: {
         getTaskList: '/api/maintenancetask/list', // 获取维保列表
@@ -33,8 +34,8 @@ const Urls = {
     faults: {
         faultList: '/api/breakdown/list',//故障清单
         workOrder: '/api/breakdownbill/list',//故障工单
-        workOrderDetail:'/api/breakdownbill',//故障工单详情
-        breakdownBillHandle:'/api/breakdownbill/handler',//故障工单处理
+        workOrderDetail: '/api/breakdownbill',//故障工单详情
+        breakdownBillHandle: '/api/breakdownbill/handler',//故障工单处理
     },
     statistics: {
         inspectionStatistics: '/app/statistics/inspection',
@@ -48,9 +49,9 @@ const Urls = {
     User: {
         userInfo: '/app/user/info'
     },
-    Message:{
+    Message: {
         messageList: '/api/message/list',
-        messageStatusUpdate:'/api/message',
+        messageStatusUpdate: '/api/message',
     }
 };
 export default Urls

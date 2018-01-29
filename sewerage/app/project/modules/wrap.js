@@ -53,6 +53,10 @@ export class WrapScreen extends Component {
             <View style={styles.container}>
                 <KHeader header={this._header()} title={t} onLeftPress={() => {
                     if (!(this._header().onLeftPress && this._header().onLeftPress())) {
+                        /*
+                         如果拦截left-arrow点击事件，需要复写onLeftPress，并return true.
+                         如果不拦截 retrun false
+                        */
                         this.props.navigation.goBack()
                     }
                 }} />

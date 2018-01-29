@@ -17,16 +17,16 @@ export class AuditProcessList extends Component {
         this.checkColor = '#999999';
     }
 
-    _dotStyle=(status)=>{
+    _dotStyle = (status) => {
         let style = {}
-        if(status===3){
+        if (status === 3) {
             style = {
-                backgroundColor:this.approveColor,
-                borderWidth:5,
-                width:20,
-                height:20,
-                borderRadius:25,
-                borderColor:'#C6EFD6',
+                backgroundColor: this.approveColor,
+                borderWidth: 5,
+                width: 20,
+                height: 20,
+                borderRadius: 25,
+                borderColor: '#C6EFD6',
             }
         }
         return style
@@ -35,18 +35,18 @@ export class AuditProcessList extends Component {
     _renderItem = (item, index, items) => {
         // let items = this.props.data
         return (
-            <View style={styles.arContainer}>
+            <View style={styles.arContainer} key={index}>
                 <View style={styles.arLeft}>
                     <View style={[styles.arLeftLine, { backgroundColor: index === 0 ? 'transparent' : '#d8d8d8' }]} />
                     {
-                        index === 0 || index === items.length - 1 ? <View style={[styles.arDot,{...this._dotStyle(item.STATUS)}]} /> : <View />
+                        index === 0 || index === items.length - 1 ? <View style={[styles.arDot, { ...this._dotStyle(item.STATUS) }]} /> : <View />
                     }
                     <View style={[styles.arLeftLine, { backgroundColor: index === items.length - 1 ? 'transparent' : '#d8d8d8' }]} />
                 </View>
                 <View style={styles.arMsg}>
                     <Text style={[styles.arText, { fontSize: 14, color: item.STATUS === 3 ? this.approveColor : this.checkColor }]}>{item.CONTENT}</Text>
                     <View style={styles.arFoot}>
-                        <Text style={[styles.arText, { color: item.STATUS === 3 ? this.approveColor : this.checkColor }]}>审核人：{item.USER_NAME}</Text>
+                        <Text style={[styles.arText, { color: item.STATUS === 3 ? this.approveColor : this.checkColor }]}>审核人：{item.USER_NAME || item.CREATE_USER}</Text>
                         <Text style={[styles.arText, { color: item.STATUS === 3 ? this.approveColor : this.checkColor }]}>{item.CREAT_TIME}</Text>
                     </View>
                     {
@@ -74,7 +74,8 @@ export class AuditProcessList extends Component {
 
 const styles = Utils.PLStyle({
     arContainer: {
-        flexDirection: "row"
+        flexDirection: "row",
+        backgroundColor: 'white'
     },
     arLeft: {
         alignItems: 'center',
