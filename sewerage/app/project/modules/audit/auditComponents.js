@@ -28,17 +28,17 @@ const FQFLAG = 'abandon';
 const BHFLAG = 'reject';
 const TGFLAG = 'pass';
 
-renderOperate = (context, onRefresh) => (
+renderOperate = (context) => (
     <View style={styles.operate}>
-        <TouchableOpacity style={styles.operateBox} onPress={() => { _auditFetch(context, FQFLAG, onRefresh) }}>
+        <TouchableOpacity style={styles.operateBox} onPress={() => { _auditFetch(context, FQFLAG) }}>
             <Text style={styles.text}>废弃</Text>
         </TouchableOpacity>
         <View style={{ height: 32, width: 0.5, backgroundColor: '#ccc' }} />
-        <TouchableOpacity style={styles.operateBox} onPress={() => { _auditFetch(context, BHFLAG, onRefresh) }}>
+        <TouchableOpacity style={styles.operateBox} onPress={() => { _auditFetch(context, BHFLAG) }}>
             <Text style={styles.text}>驳回</Text>
         </TouchableOpacity>
         <View style={{ height: 32, width: 0.5, backgroundColor: '#ccc' }} />
-        <TouchableOpacity style={styles.operateBox} onPress={() => { _auditFetch(context, TGFLAG, onRefresh) }}>
+        <TouchableOpacity style={styles.operateBox} onPress={() => { _auditFetch(context, TGFLAG) }}>
             <Text style={styles.text}>通过</Text>
         </TouchableOpacity>
     </View>
@@ -48,7 +48,7 @@ renderOperate = (context, onRefresh) => (
  * 审核请求
  * 审核类型和流程ID在auditDetail中通过props传进来的
  */
-_auditFetch = (context, checkType, onRefresh) => {
+_auditFetch = (context, checkType) => {
     Dialog.showInput('审核批注', '请输入审核批注（若无可不填）', (input) => {
         let params = {
             PROCESS_TYPE: context.props.processType, // 审核类型

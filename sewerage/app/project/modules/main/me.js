@@ -53,9 +53,9 @@ class MeScreen extends WrapScreen {
                     </View>
                     <View style={{ backgroundColor: '#F3F3F3' }}>
                         <TouchableOpacity style={[styles.row, styles.lineContent, { marginTop: 12 }]} onPress={() => {
-                            Dialog.showNum('修改手机号', '请输入11号手机号', (input) => {
+                            Dialog.showInput('修改手机号', '请输入11号手机号', (input) => {
 
-                            }, () => { }, '')
+                            }, () => { }, 'number-pad')
                         }}>
                             <View style={styles.row}>
                                 <Image source={Assets.Me.tel} style={styles.icon} />
@@ -72,7 +72,11 @@ class MeScreen extends WrapScreen {
                             </View>
                         </TouchableOpacity>
                         <Divider style={{ backgroundColor: '#efefef', marginLeft: 40 }} />
-                        <TouchableOpacity style={[styles.row, styles.lineContent]}>
+                        <TouchableOpacity style={[styles.row, styles.lineContent]} onPress={() => {
+                            Dialog.showInput('修改Email', '请输入Email地址', (input) => {
+
+                            }, () => { }, 'email-address')
+                        }}>
                             <View style={styles.row}>
                                 <Image source={Assets.Me.email} style={styles.icon} />
                                 <Text style={styles.text}>邮箱</Text>
