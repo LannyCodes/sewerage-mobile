@@ -26,7 +26,7 @@ export class WOFaults extends Component {
         const breakdownSource = StatusHelper.getBreakdownSource(item.BREAKDOWN_SOURCE)
         const breakdownType = StatusHelper.getBreakdownType(item.TYPE);
         const {perform,text} = StatusHelper.getRankPerform(item.RANK);
-        const {statusPerform,statusText} = StatusHelper.getStatusPerform(item.STATUS);
+        let {auditPerform,auditText} = StatusHelper.getAuditStatusPerform(item.STATUS)
         return (
             <View style={{ backgroundColor: '#ffffff' }}>
                 <View style={styles.listCellTag}>
@@ -38,7 +38,7 @@ export class WOFaults extends Component {
                             <Text style={{ fontSize: 15, color: '#666666' }}>{item.EQUIPMENT_NAME}</Text>
                             <View style={styles.cellTagContainer}>
                                 <TagLabel containerStyle={{ marginRight: 10 }} backgroundColor={perform.backgroundColor} fontColor={perform.color}>{text}</TagLabel>
-                                <TagLabel backgroundColor={statusPerform.backgroundColor} fontColor={statusPerform.color}>{statusText}</TagLabel>
+                                <TagLabel backgroundColor={auditPerform.backgroundColor} fontColor={auditPerform.color}>{auditText}</TagLabel>
                             </View>
                         </View>
                         <Text style={[styles.headerFootText, { color: '#333333', marginBottom: 11 }]}>{item.BREAKDOWN_DESCRIBE}</Text>

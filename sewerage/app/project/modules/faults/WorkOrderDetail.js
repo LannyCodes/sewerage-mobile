@@ -65,14 +65,15 @@ class WorkOrderDetailScreen extends WrapScreen {
     _renderHeader = () => {
         let detail = this.state.details || '';
         let item = this.props.navigation.state.params.item;
-        let {auditPerform,auditText} = StatusHelper.getAuditStatusPerform(item.STATUS)
+        
+        const {statusPerform,statusText} = StatusHelper.getStatusPerform(item.STATUS);
         return (
             <View>
                 <View style={styles.workOrderMessage}>
                     <View style={styles.header}>
                         <View style={styles.headerTitle}>
                             <Text style={styles.headerText}>{item.BREAK_NUMBER}</Text>
-                            <TagLabel backgroundColor={auditPerform.backgroundColor} fontColor={auditPerform.color}>{auditText}</TagLabel>
+                            <TagLabel backgroundColor={statusPerform.backgroundColor} fontColor={statusPerform.color}>{statusText}</TagLabel>
                         </View>
                         <Text style={styles.headerFootText}>
                             发起时间：
