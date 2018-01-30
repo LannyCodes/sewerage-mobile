@@ -17,11 +17,17 @@ const TAB = {
     // CURRENT_TAB:Symbol(),
 }
 
+const FAULTS = {
+    SET_WORKORDERDETAIL: Symbol(),
+    CHANGE_WORKORDERLIST: Symbol(),
+}
+
 //这个一定要放到最后
 const ActionType = {
     ...REQUEST,
     ...USER,
     ...TAB,
+    ...FAULTS,
 };
 
 export default ActionType;

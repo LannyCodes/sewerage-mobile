@@ -19,7 +19,7 @@ class MessageScreen extends WrapScreen {
         super(props);
         this.isPullDown = false;
         this.isPullUp = false;
-        
+
     }
 
     _header = () => {
@@ -36,10 +36,11 @@ class MessageScreen extends WrapScreen {
     }
 
     componentWillReceiveProps(nextProps) {
-        if(nextProps.messageRequest.isFetching === false) {
+        if (nextProps.messageRequest.isFetching === false) {
             this.isPullDown = false;
             this.isPullUp = false;
         }
+        this.store.dispatch(Actions.setTabBadge('Message', nextProps.messageRequest.unreadMessage))
     }
 
     _keyExtractor = (item, index) => index
@@ -49,33 +50,33 @@ class MessageScreen extends WrapScreen {
         this.props.navigation.navigate('MessageDetail');
     }
 
-    _onRefresh=()=>{
+    _onRefresh = () => {
         let params = {
-            pageIndex:1,
-            pageSize:15,
-            RECEIVE_USER_ID:_USERID_
+            pageIndex: 1,
+            pageSize: 15,
+            RECEIVE_USER_ID: _USERID_
         }
         this.isPullDown = true;
         this._requestMessageList(params);
     }
 
-    _pullUp=()=>{
+    _pullUp = () => {
         this.isPullUp = true;
         this._requestMessageList(this.props.messageRequest.body);
     }
 
-    _requestMessageList=(param)=>{
-        this.store.dispatch(Actions.get(this,Urls.Message.messageList,param));
+    _requestMessageList = (param) => {
+        this.store.dispatch(Actions.get(this, Urls.Message.messageList, param));
     }
 
-    _renderItem = ({item, index}) => {
+    _renderItem = ({ item, index }) => {
         let iconColor = ''
-        switch(item.STATUS){
+        switch (item.STATUS) {
             case 1:
                 iconColor = '#2384E8'
                 break;
             case 2:
-                iconColor='#42BB55' 
+                iconColor = '#42BB55'
                 break;
             case 3:
             default:
@@ -87,9 +88,9 @@ class MessageScreen extends WrapScreen {
             <TouchableOpacity
                 style={styles.itemContainer}
                 activeOpacity={1}
-                onPress={this._itemClick.bind(this,item,index)}>
-                <View style={{ borderWidth: 1, borderColor: 'transparent', borderRadius: 8, backgroundColor: iconColor, width: 40, height: 40 ,justifyContent:'center',alignItems:'center'}}>
-                    <Image source={Assets.Message.announcement} style={{ width: 25, height: 25 }}/>
+                onPress={this._itemClick.bind(this, item, index)}>
+                <View style={{ borderWidth: 1, borderColor: 'transparent', borderRadius: 8, backgroundColor: iconColor, width: 40, height: 40, justifyContent: 'center', alignItems: 'center' }}>
+                    <Image source={Assets.Message.announcement} style={{ width: 25, height: 25 }} />
                 </View>
                 <View style={styles.itemMsg}>
                     <View style={styles.itemTitle}>
@@ -109,10 +110,10 @@ class MessageScreen extends WrapScreen {
     _render() {
         return (
             <SWFlatList
-                style={{flex:1}}
+                style={{ flex: 1 }}
                 data={this.props.messageRequest.list}
                 refreshing={this.props.messageRequest.isFetching && this.isPullDown}
-                pullingUp = {this.props.messageRequest.isFetching && this.isPullUp}
+                pullingUp={this.props.messageRequest.isFetching && this.isPullUp}
                 pullUp={this._pullUp}
                 onRefresh={this._onRefresh}
                 keyExtractor={this._keyExtractor}
@@ -129,6 +130,7 @@ class MessageScreen extends WrapScreen {
 function mapStateToProps(state) {
     return {
         messageRequest: state.Message.messageRequest,
+        // totalBadge: state.Common.tabBadge,
     }
 }
 

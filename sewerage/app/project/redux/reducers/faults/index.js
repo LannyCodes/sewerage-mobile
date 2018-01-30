@@ -19,15 +19,15 @@ const faultsListRequest = (state, action) => {
         case url:
             let body = action.body;
             let list = [];
-            if(body.pageIndex === 1){
+            if (body.pageIndex === 1) {
                 list = action.data.list
-            }else{
+            } else {
                 list = state.list.concat(action.data.list || []);
             }
             if (action.data.list !== null && action.data.list.length > 0) {
                 body.pageIndex = body.pageIndex + 1;
             }
-            
+
             return {
                 ...state,
                 isFetching: false,
@@ -51,6 +51,7 @@ const workOrderRequest = (state = [], action) => {
         body: action.body,
     }
     let url = Urls.faults.workOrder
+    let list = []
     switch (action.type) {
         case url + ActionType.FETCH_START:
             return {
@@ -59,10 +60,9 @@ const workOrderRequest = (state = [], action) => {
             }
         case url:
             let body = action.body;
-            let list = [];
-            if(body.pageIndex === 1){
+            if (body.pageIndex === 1) {
                 list = action.data.list
-            }else{
+            } else {
                 list = state.list.concat(action.data.list || []);
             }
             if (action.data.list !== null && action.data.list.length > 0) {
@@ -72,19 +72,43 @@ const workOrderRequest = (state = [], action) => {
                 ...state,
                 isFetching: false,
                 list: list,
-                body:body,
+                body: body,
             }
         case url + ActionType.REQUEST_ERROR:
             return {
                 ...state,
                 isFetching: false,
             }
+        case ActionType.CHANGE_WORKORDERLIST:
+            {
+                let data = action.data
+                list = state.list;
+                let item = list[data.index];
+                item = {
+                    ...item,
+                    ...data.data,
+                }
+                list.splice(data.index, 1, item);
+                return {
+                    ...state,
+                    list: list,
+                }
+            }
         default:
             return state
     }
 }
 
+const workorderDetail = (state, action) => {
+    state = state || {};
+    if (action.type === ActionType.SET_WORKORDERDETAIL) {
+        return action.data;
+    }
+    return state;
+}
+
 export default combineReducers({
     faultsListRequest,
     workOrderRequest,
+    workorderDetail,
 })

@@ -30,11 +30,11 @@ export class FaultsList extends Component {
         }
     }
 
-    _cellClicked = (type, item) => {
+    _cellClicked = (type, item, index) => {
         if (type === 'faultsList') {
             this.props.navigation.navigate('FaultDetail', { faultDetail: item });
         } else {
-            this.props.navigation.navigate('WorkOrderDetail',{item:item});
+            this.props.navigation.navigate('WorkOrderDetail', { item: item, index: index });
         }
     }
 
@@ -93,7 +93,7 @@ export class FaultsList extends Component {
                         item={data}
                         index={index}
                         type={type}
-                        clickFunc={this._cellClicked.bind(this, type, item)} />
+                        clickFunc={this._cellClicked.bind(this, type, item, index)} />
                 }}
             />
         )

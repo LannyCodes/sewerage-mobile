@@ -8,7 +8,7 @@ export const setCurrentTab = (index,routeName) => (dispatch) => {
     })
 }
 
-export const setTabBadge = (number, routeName) => (dispatch) => {
+export const setTabBadge = (routeName, number) => (dispatch) => {
     dispatch({
         type: ActionType.SET_TAB_BADGE,
         number: number,

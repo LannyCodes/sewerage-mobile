@@ -15,6 +15,8 @@ import { GridView, Loading } from '../../components'
 import ImagePicker from 'react-native-image-picker';
 import Urls from "../../../config/api/urls";
 import { FileUpload } from '../../utils';
+import * as Actions from '../../redux/actions';
+import { connect } from "react-redux";
 const screenWidth = Dimensions.get('window').width;
 
 class DealWorkOrderScreen extends WrapScreen {
@@ -61,16 +63,14 @@ class DealWorkOrderScreen extends WrapScreen {
     _handleWorkorder = async () => {
         Loading.isLoading(true);
         try {
-            // let uploadResults = this.state.imgs.map(async (item, index) => {
-            //     return await FileUpload(item.uri, item.fileName);
-            // })
             let uploadResults = [];
+            let changeImage = []
             for (const key in this.state.imgs) {
                 if (this.state.imgs.hasOwnProperty(key)) {
                     const img = this.state.imgs[key];
-                    let upload = await FileUpload(img.uri, img.fileName);
-                    console.log('hahaha');
-                    uploadResults = uploadResults.concat(upload);
+                    let { fileSave, upload } = await FileUpload(img.uri, img.fileName);
+                    uploadResults = uploadResults.concat(fileSave);
+                    changeImage.push({ FILE_PATH: upload.FILE_PATH })
                 }
             }
             let params = {
@@ -78,7 +78,22 @@ class DealWorkOrderScreen extends WrapScreen {
                 CONTENT: this.textValue || '',
                 ATTACHMENT_IDS: uploadResults,
             }
+
             await Utils.post(this,Urls.faults.breakdownBillHandle, params);
+
+            //TODO: 工单详情页状态修改有问题
+            let workorderDetail = this.props.workorderDetail;
+            workorderDetail.STATUS = 2;
+            let handle_logs = workorderDetail.HANDLE_LOGS
+            handle_logs.push({
+                CONTENT: this.textValue || '',
+                ATTACHMENT_IDS: changeImage
+            })
+            workorderDetail.BREAK_NUMBER = 'asldfjasdfjasfdljaeilkjklvj';
+            workorderDetail.HANDLE_LOGS = handle_logs;
+            this.store.dispatch(Actions.faults.workorderDetail(workorderDetail))
+            this.store.dispatch(Actions.faults.changeWorkorderListAtIndex({ index: this.props.navigation.state.params.index, data: { STATUS: 2 } }))
+
             Loading.isLoading(false);
             this.props.navigation.goBack();
         } catch (err) {
@@ -163,7 +178,13 @@ class DealWorkOrderScreen extends WrapScreen {
     }
 }
 
-export default DealWorkOrderScreen;
+function mapStateToProps(state) {
+    return {
+        workorderDetail: state.faults.workorderDetail
+    }
+}
+
+export default connect(mapStateToProps)(DealWorkOrderScreen);
 
 const styles = Utils.PLStyle({
     container: {

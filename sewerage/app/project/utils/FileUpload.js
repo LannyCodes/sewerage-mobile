@@ -8,7 +8,7 @@ export const FileUpload = (path,fileName)=>{
             let upload = await Utils.post(this,Urls.Common.fileUpload,params);
             let saveParams = {'files': `[{'FILE_SIZE':${upload.FILE_SIZE},'FILE_NAME':'${upload.FILE_NAME}','FILE_TYPE':'${upload.FILE_TYPE}','FILE_PATH':'${upload.FILE_PATH}'}]`};
             let fileSave = await Utils.post(this, Urls.Common.fileSave, saveParams);
-            resolve(fileSave)
+            resolve({fileSave,upload})
         }catch(err){
             console.log(err);
             reject(err);

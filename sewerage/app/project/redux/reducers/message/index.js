@@ -6,6 +6,7 @@ const messageRequest = (state, action) => {
     state = state || {
         list: [],
         totalCount: 0,
+        unreadMessage:0,
         isFetching: false,
         body: action.body,
     }
@@ -33,7 +34,8 @@ const messageRequest = (state, action) => {
                 isFetching: false,
                 list: list,
                 body: body,
-                totalCount: action.totalCount
+                totalCount: action.data.totalCount,
+                unreadMessage: action.data.unreadMessage,
             }
         case url + ActionType.REQUEST_ERROR:
             return {

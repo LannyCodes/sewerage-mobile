@@ -19,6 +19,8 @@ import { GridView, TagLabel, Loading } from '../../components';
 import Urls from "../../../config/api/urls";
 import { WOAudit, WOFaults, WOResult } from './components';
 import { StatusHelper } from './utils';
+import * as Actions from '../../redux/actions';
+import { connect } from 'react-redux';
 
 const screenWidth = Dimensions.get('window').width;
 
@@ -27,7 +29,6 @@ class WorkOrderDetailScreen extends WrapScreen {
         super(props);
         this.state = {
             showPreview: false,
-            details: {},
         }
         this.item = this.props.navigation.state.params.item;
     };
@@ -42,6 +43,10 @@ class WorkOrderDetailScreen extends WrapScreen {
         this._getDetail();
     }
 
+    componentWillReceiveProps(nextProps) {
+        console.log(nextProps);
+    }
+
     _getDetail = async () => {
         let params = {
             ID: this.props.navigation.state.params.item.ID
@@ -49,9 +54,7 @@ class WorkOrderDetailScreen extends WrapScreen {
         Loading.isLoading(true);
         try {
             let details = await Utils.get(this, Urls.faults.workOrderDetail, params)
-            this.setState({
-                details: details,
-            })
+            this.store.dispatch(Actions.faults.workorderDetail(details))
             Loading.isLoading(false);
         } catch (err) {
             Loading.isLoading(false);
@@ -59,14 +62,14 @@ class WorkOrderDetailScreen extends WrapScreen {
     }
 
     _dealWorkOrder = () => {
-        this.props.navigation.navigate('DealWorkOrder', { ID: this.item.ID });
+        this.props.navigation.navigate('DealWorkOrder', { ID: this.item.ID, index: this.props.navigation.state.params.index });
     }
 
     _renderHeader = () => {
-        let detail = this.state.details || '';
+        let detail = this.props.details || '';
         let item = this.props.navigation.state.params.item;
 
-        const { auditPerform, auditText } = StatusHelper.getAuditStatusPerform(item.STATUS);
+        const { auditPerform, auditText } = StatusHelper.getAuditStatusPerform(detail.STATUS);
         return (
             <View>
                 <View style={styles.workOrderMessage}>
@@ -123,12 +126,12 @@ class WorkOrderDetailScreen extends WrapScreen {
             <View style={{ flex: 1, justifyContent: 'space-between' }}>
                 <ScrollView style={styles.container} bounces={false}>
                     {this._renderHeader()}
-                    <WOFaults data={this.state.details.BREAKDOWNS || []} />
-                    <WOResult data={this.state.details.HANDLE_LOGS || []} />
-                    <WOAudit data={this.state.details.CHECK_LOGS || []} />
+                    <WOFaults data={this.props.details.BREAKDOWNS || []} />
+                    <WOResult data={this.props.details.HANDLE_LOGS || []} />
+                    <WOAudit data={this.props.details.CHECK_LOGS || []} />
                 </ScrollView>
                 {
-                    this.state.details.STATUS === 1 ? <TouchableOpacity
+                    this.props.details.STATUS === 1 ? <TouchableOpacity
                         style={styles.dealButton}
                         activeOpacity={1}
                         onPress={this._dealWorkOrder}>
@@ -140,7 +143,13 @@ class WorkOrderDetailScreen extends WrapScreen {
     };
 };
 
-export default WorkOrderDetailScreen;
+function mapStateToProps(state) {
+    return {
+        details: state.faults.workorderDetail,
+    }
+}
+
+export default connect(mapStateToProps)(WorkOrderDetailScreen);
 
 const styles = Utils.PLStyle({
     container: {
