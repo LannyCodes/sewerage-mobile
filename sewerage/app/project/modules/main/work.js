@@ -12,7 +12,6 @@ import { Divider } from "react-native-elements";
 import * as Assets from '../../assets'
 import { Carousel } from "teaset";
 import PercentageCircle from 'react-native-percentage-circle';
-
 const circleColor = [['#CAE387', '#FFDC00', '#999EF7', '#0281FF'], ['#FF5646', '#FF7E00', '#8BC7FF', '#76DDAC']];
 
 class WorkScreen extends WrapScreen {
@@ -116,10 +115,10 @@ class WorkScreen extends WrapScreen {
                                 <Image source={Assets.Home.arrowDown} />
                             </View>
                             <TouchableOpacity onPress={() =>
-                               //  this.props.navigation.navigate('Qr', {
-                              //       onSuccess: this._onQrSuccess
-                              //   })
-                                 this._onQrSuccess()
+                                //  this.props.navigation.navigate('Qr', {
+                                //       onSuccess: this._onQrSuccess
+                                //   })
+                                this._onQrSuccess()
                             }>
                                 <Image source={Assets.Home.scan} style={styles.icon} />
                             </TouchableOpacity>

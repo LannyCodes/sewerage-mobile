@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
 import {
     View,
-    Text, TouchableOpacity, FlatList,DeviceEventEmitter
+    Text, TouchableOpacity, FlatList, DeviceEventEmitter
 } from 'react-native';
 import { WrapScreen } from "../wrap";
 import * as Utils from "../../../core/utils";
 import * as Actions from "../../redux/actions";
 import { connect } from "react-redux";
 import Urls from "../../../config/api/urls";
-import { DefaultPage, ErrorPage, ListFilter, Loading } from "../../components";
+import { DefaultPage, ErrorPage, ListFilter, Loading, SWFlatList } from "../../components";
 import { Status } from "../../../config/api/api.config";
 import { ScrollableTabBar } from '../../components/ScrollableTabViewBars';
 import ScrollableTabView from 'react-native-scrollable-tab-view';
@@ -50,7 +50,7 @@ class AuditManagementScreen extends WrapScreen {
 
 
     _waitListRefresh = () => {
-        this.pullingFlag = 'waitRefresh'
+        this.pullingFlag = '_waitListRefresh'
         let params = {
             pageIndex: 1,
             pageSize: 10,
@@ -59,12 +59,22 @@ class AuditManagementScreen extends WrapScreen {
     }
 
     _doneListRefresh = () => {
-        this.pullingFlag = 'doneRefresh'
+        this.pullingFlag = '_doneListRefresh'
         let params = {
             pageIndex: 1,
             pageSize: 10,
         }
         this.store.dispatch(Actions.get(this, Urls.Audit.getDoneAuditList, params));
+    }
+
+    _waitListPullUp = () => {
+        this.pullingFlag = '_waitListPullUp'
+        this.store.dispatch(Actions.get(this, Urls.Audit.getWaitAuditList, this.props.Urls.Audit.waitAuditListRequest.body));
+    }
+
+    _doneListPullUp = () => {
+        this.pullingFlag = '_doneListPullUp'
+        this.store.dispatch(Actions.get(this, Urls.Audit.getDoneAuditList, this.props.Urls.Audit.doneAuditListRequest.body));
     }
 
     _header = () => {
@@ -129,18 +139,26 @@ class AuditManagementScreen extends WrapScreen {
                             />
                         }>
                         {/* 待审核 */}
-                        <FlatList
+                        <SWFlatList
                             tabLabel='待审核'
+                            refreshing={this.props.waitAuditListRequest.isFetching && this.pullingFlag === '_waitListRefresh'}
+                            onRefresh={this._refresh}
                             data={this.props.waitAuditListRequest.list}
                             keyExtractor={this._keyExtractor}
                             renderItem={this._renderItem}
+                            pullingUp={this.props.waitAuditListRequest.isFetching && this.pullingFlag === '_waitListPullUp'}
+                            pullUp={this._pullUp}
                         />
                         {/* 已审核 */}
-                        <FlatList
+                        <SWFlatList
                             tabLabel='已审核'
+                            refreshing={this.props.doneAuditListRequest.isFetching && this.pullingFlag === '_doneListRefresh'}
+                            onRefresh={this._refresh}
                             data={this.props.doneAuditListRequest.list}
                             keyExtractor={this._keyExtractor}
                             renderItem={this._renderItem}
+                            pullingUp={this.props.doneAuditListRequest.isFetching && this.pullingFlag === '_doneListPullUp'}
+                            pullUp={this._pullUp}
                         />
                     </ScrollableTabView>
                     {this.state.isFilterShow === true ?

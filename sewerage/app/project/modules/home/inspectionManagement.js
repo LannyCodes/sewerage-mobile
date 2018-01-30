@@ -10,7 +10,6 @@ import * as Actions from '../../redux/actions'
 import Urls from "../../../config/api/urls";
 import { Status } from "../../../config/api/api.config";
 import { DefaultPage, ErrorPage, ListFilter, Loading, SWFlatList } from "../../components";
-
 class InspectionManagementScreen extends WrapScreen {
 
     _keyExtractor = (item, index) => index;
