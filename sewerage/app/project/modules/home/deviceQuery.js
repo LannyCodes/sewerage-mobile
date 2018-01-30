@@ -45,6 +45,7 @@ class DeviceQueryScreen extends WrapScreen {
         this.state = {
             isFilterShow: false,
             filters:{},
+            name:'',
         }
         this.isPullDown = false;
         this.isPullUp = false;
@@ -71,39 +72,102 @@ class DeviceQueryScreen extends WrapScreen {
 
     _searchConfirm = (event) => {
         console.log(event.nativeEvent.text);
-
-    }
-
-    _onRefresh = () => {
-        this.isPullDown = true;
-        let param = {
+        let text = event.nativeEvent.text;
+        let params = {
             pageIndex:1,
             pageSize:15,
-            ...this.state.filter
+            NAME: text,
         }
-        this.store.dispatch(Actions.get(this,Urls.device.deviceList,param));
+        this.setState({
+            name:text,
+            filters:{},
+        })
+        this._onRefresh(params);
+    }
+
+    _onRefresh = (param) => {
+        this.isPullDown = true;
+        param = param || {
+            pageIndex:1,
+            pageSize:15,
+            ...this.state.filters,
+            NAME:this.state.name
+        }
+        this._requestList(param)
     }
 
     _pullUp = () => {
         this.isPullUp = true;
-        this.store.dispatch(Actions.get(this,Urls.device.deviceList,this.props.deviceListRequest.body));
+        this._requestList(this.props.deviceListRequest.body)
+    }
+
+    _requestList = (params) => {
+        this.store.dispatch(Actions.get(this,Urls.device.deviceList,params));
     }
 
     _filterConfirm=(data)=>{
         this.setState({
             filters:data,
+            name:'',
             isFilterShow:false,
         })
+        let params = {
+            pageIndex:1,
+            pageSize:15,
+            ...data,
+        }
+        this._textInput.clear()
+        this._onRefresh(params);
     }
 
     _filterReset=()=>{
-        // this.setState({
-        //     filters:{},
-        // })
+        
+    }
+
+    _getAvatar = (type) => {
+        let text = ''
+        let perform = {
+            backgroundColor:'',
+            color:''
+        }
+        switch (type) {
+            case 1:
+                text = '普'
+                perform = {
+                    backgroundColor:'#E8F6E8',
+                    color:'#1AAD19'
+                }
+                break;
+            case 2:
+                text = '体'
+                perform = {
+                    backgroundColor:'#ECF6FD',
+                    color:'#47A9EB'
+                }
+                break;
+            case 3: 
+                text = '渗';
+                perform = {
+                    backgroundColor:'#FEF5EB',
+                    color:'#FAA346'
+                }
+                break;
+            case 4:
+                text = '视';
+                perform = {
+                    backgroundColor:'#FFE2DF',
+                    color:'#FF6E61'
+                }
+                break;
+            default:
+                break;
+        }
+        return {text,perform}
     }
 
     //渲染单行
     _renderItem = ({ item, index }) => {
+        let {text,perform} = this._getAvatar(item.TYPE)
         return (
             <TouchableOpacity
                 activeOpacity={1}
@@ -112,9 +176,11 @@ class DeviceQueryScreen extends WrapScreen {
                 <Avatar
                     width={50}
                     height={50}
-                    source={{ url: item.avatar }}
+                    title={text}
+                    titleStyle={{color:perform.color}}
+                    overlayContainerStyle={{backgroundColor:perform.backgroundColor}}
                     rounded
-                    containerStyle={styles.listAvatar}
+                    containerStyle={[styles.listAvatar]}
                 />
                 <View style={styles.listItemMsg}>
                     <View style={styles.listItemTitleContainer}>
@@ -157,7 +223,7 @@ class DeviceQueryScreen extends WrapScreen {
                                 size={18}
                                 name={'filter'}
                                 type='feather'
-                                color={this.state.isFilterShow ? '#42BD56' : "#666"}
+                                color={(this.state.isFilterShow || Object.keys(this.state.filters).length > 0) ? '#42BD56' : "#666"}
                                 onPress={() => {
                                     self.setState({
                                         isFilterShow: !self.state.isFilterShow
@@ -176,6 +242,7 @@ class DeviceQueryScreen extends WrapScreen {
                                 size={20} />
                         </View>
                         <TextInput
+                            ref={textInput => this._textInput = textInput}
                             style={styles.searchBar}
                             placeholder="搜索"
                             placeholderTextColor="#97979b"
