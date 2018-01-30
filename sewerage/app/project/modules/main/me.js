@@ -12,30 +12,40 @@ import { USER_KEY } from "../../../config/setting";
 import { Dialog } from '../../components'
 import * as Assets from '../../assets'
 import { Divider, Icon } from "react-native-elements";
-
+import _ from 'lodash'
+import Toast from "teaset/components/Toast/Toast";
 class MeScreen extends WrapScreen {
 
     constructor(props) {
         super(props);
-        this.state = {
-            user: {
-                nickName: '',
-                mobile: '',
-                email: '',
-                organizeName: ''
-            }
+        this.user = {
+            nickName: '',
+            mobile: '',
+            email: '',
+            organizeName: ''
         }
+    }
+
+    componentWillMount() {
+        let me = this;
+        storage.load({
+            key: USER_KEY.USER_STAGE_KEY
+        }).then(data => {
+            console.log(data)
+            if (!_.isNull(data.user)) {
+                me.user = data.user;
+            }
+        }).catch(err => {
+            console.log(err)
+        })
+        this.store.dispatch(Actions.get(this, Urls.User.userInfo))
     }
 
     _header = () => 'none';
 
-    componentDidMount() {
-        let me = this;
-        this.store.dispatch(Actions.get(this, Urls.User.userInfo)); // 请求
-    }
-
     _render() {
-        let user = this.props.user || this.state.user;
+        let me = this;
+        let user = this.props.user || this.user;
         return (
             <View style={styles.container}>
                 <Image source={Assets.Me.bg} style={styles.bg} />
@@ -53,8 +63,14 @@ class MeScreen extends WrapScreen {
                     </View>
                     <View style={{ backgroundColor: '#F3F3F3' }}>
                         <TouchableOpacity style={[styles.row, styles.lineContent, { marginTop: 12 }]} onPress={() => {
-                            Dialog.showInput('修改手机号', '请输入11号手机号', (input) => {
-
+                            Dialog.showInput('修改手机号', '请输入11位手机号', (input) => {
+                                if (!Utils.isTel(input)) {
+                                    Toast.message('请确认手机号是否输入正确！', 'short', 'center');
+                                    return true;
+                                } else {
+                                    // 修改 
+                                    return false
+                                }
                             }, () => { }, 'number-pad')
                         }}>
                             <View style={styles.row}>
@@ -74,7 +90,15 @@ class MeScreen extends WrapScreen {
                         <Divider style={{ backgroundColor: '#efefef', marginLeft: 40 }} />
                         <TouchableOpacity style={[styles.row, styles.lineContent]} onPress={() => {
                             Dialog.showInput('修改Email', '请输入Email地址', (input) => {
-
+                                if (!Utils.isMail(input)) {
+                                    Toast.message('请确认Email是否输入正确！', 'short', 'center');
+                                    return true;
+                                } else {
+                                    // 修改
+                                    let params = { 'userId': _USERID_, 'email': input };
+                                    Utils.fetch(me, Urls.User.updateEmail, );
+                                    return false;
+                                }
                             }, () => { }, 'email-address')
                         }}>
                             <View style={styles.row}>

@@ -95,13 +95,14 @@ const input = (content, placeholder, onSure, onCancel, keyboardType) => {
                     </TouchableOpacity>
                     <View style={{ width: 1, height: '100%', backgroundColor: '#ddd' }} />
                     <TouchableOpacity style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }} onPress={() => {
-                        onSure(input);
-                        Dialog.hide();
+                        if (!onSure(input)) {  // 如果想hide 则return true 若不拦截则 return false
+                            Dialog.hide();
+                        }
                     }}>
                         <Text style={{ fontSize: 16, color: '#4ECC80' }}>确定</Text>
                     </TouchableOpacity>
                 </View>
             </View>
-        </Overlay.PopView>
+        </Overlay.PopView >
     )
 }

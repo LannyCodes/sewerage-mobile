@@ -1,6 +1,6 @@
-import {config} from "../../../config/setting";
+import { config } from "../../../config/setting";
 import api from "../../../config/api/api";
-import {SUCCESS_CODE, TOKEN_ERROR_CODE, header} from "../../../config/api/api.config";
+import { SUCCESS_CODE, TOKEN_ERROR_CODE, header } from "../../../config/api/api.config";
 import Toast from "teaset/components/Toast/Toast";
 import * as Utils from "../index";
 import _ from 'lodash'
@@ -15,14 +15,14 @@ export const fetch = (context, url, body, fn: string) => {
     });
 };
 
-export const get = (context, url ,body) => {
-    return new Promise((resolve,reject)=>{
-        getFetch(context,url,body,resolve,reject);
+export const get = (context, url, body) => {
+    return new Promise((resolve, reject) => {
+        getFetch(context, url, body, resolve, reject);
     })
 }
 
 export const post = (context, url, body) => {
-    return new Promise((resolve,reject)=>{
+    return new Promise((resolve, reject) => {
         postFetch(context, url, body, resolve, reject);
     })
 }
@@ -36,8 +36,8 @@ const getFetch = (context, url, body, resolve, reject) => {
     });
     api(config.WebServerUrl).get(url, body)
         .then((response) => {
-                exec(context, response, resolve);
-            }
+            exec(context, response, resolve, reject);
+        }
         );
 };
 
@@ -60,15 +60,15 @@ const postFetch = (context, url, body, resolve, reject) => {
     }
     api(config.WebServerUrl).post(url, formData || {})
         .then((response) => {
-                console.log(response)
-                exec(context, response, resolve);
-            }
+            console.log(response)
+            exec(context, response, resolve, reject);
+        }
         );
 };
 
 
-const exec = (context, response, resolve) => {
-    const {status} = response;
+const exec = (context, response, resolve, reject) => {
+    const { status } = response;
     if (response.ok) {
         if (response.status && status === 200) {
             if (parseInt(response.data.code) === SUCCESS_CODE) {
@@ -79,7 +79,8 @@ const exec = (context, response, resolve) => {
                 Utils.exitApp(context)
             } else {
                 // 请求有问题
-                Toast.message('请求失败,请稍后重试。')
+                // Toast.message('请求失败,请稍后重试。')
+                reject(response.data);
             }
         }
     } else {

@@ -52,11 +52,15 @@ export async function loginSubmit(self) {
             data: {
                 userId: data.user.userId,
                 userName: data.user.userName,
-                token: data.token
+                token: data.token,
+                user: data.user
             }
         });
         Toast.message('登陆成功！');
         Utils.resetNavigation(self.props.navigation, 'Main');
+    }).catch((err) => {
+        err.code !== 0 && Toast.message(err.msg);
+        console.log(err)
     });
 }
 
