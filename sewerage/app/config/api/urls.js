@@ -3,6 +3,10 @@ const Urls = {
         fileUpload: '/api/file/upload',
         fileSave: '/api/file',
     },
+    Main: {
+        getAppMain: '/api/home/app', // app 首页数据api
+        selectAppHomeDataByStationId: '/api/home/app/selectAppHomeDataByStationId' // App首页选择厂站
+    },
     Login: {
         login: '/api/user/login',
         otp: '/app/login/otp',
@@ -47,7 +51,7 @@ const Urls = {
         deviceDetail: '/app/device/detail',
     },
     User: {
-        userInfo: '/api/user/info',
+        userInfo: '/api/home/getUser',
         updateEmail: '/api/home/updateUserEmail',
         updateMobile: '/api/home/updateUserMobile'
     },

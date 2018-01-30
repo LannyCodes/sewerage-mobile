@@ -60,7 +60,7 @@ export async function loginSubmit(self) {
         Utils.resetNavigation(self.props.navigation, 'Main');
     }).catch((err) => {
         err.code !== 0 && Toast.message(err.msg);
-        console.log(err)
+        console.log(err) 
     });
 }
 

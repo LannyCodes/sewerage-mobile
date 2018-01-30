@@ -30,6 +30,15 @@ class MaintenanceManagementScreen extends WrapScreen {
     _header = () => {
         return {
             title: "维保任务",
+            right: {
+                icon: 'filter',
+                type: 'feather',
+                onPress: () => {
+                    this.setState({
+                        isFilterShow: !this.state.isFilterShow
+                    })
+                }
+            }
         }
     }
 
@@ -183,39 +192,6 @@ const filterArray = [
             value: '22',
         }, {
             name: '类型三',
-            value: '33',
-        }]
-    },
-    {
-        title: '规格',
-        keyName: 'aab',
-        multipleChoice: true,
-        data: [{
-            name: '规格一',
-            value: '11',
-        }, {
-            name: '规格二',
-            value: '22',
-        }, {
-            name: '规格三',
-            value: '33',
-        }, {
-            name: '规格四',
-            value: '44',
-        }]
-    },
-    {
-        title: '规格',
-        keyName: 'ccs',
-        multipleChoice: false,
-        data: [{
-            name: '规格一',
-            value: '11',
-        }, {
-            name: '规格二',
-            value: '22',
-        }, {
-            name: '规格三',
             value: '33',
         }]
     }

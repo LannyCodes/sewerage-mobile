@@ -1,4 +1,4 @@
-import {combineReducers} from 'redux';
+import { combineReducers } from 'redux';
 import Common from './common'
 import Maintenance from './maintenance'
 import Audit from './audit'
@@ -9,6 +9,7 @@ import dataStatistics from './dataStatistics';
 import device from './device';
 import Me from './me';
 import Message from './message'
+import Main from './main'
 
 let MainReducer = combineReducers({
     Common,
@@ -21,6 +22,7 @@ let MainReducer = combineReducers({
     device,
     Me,
     Message,
+    Main
 });
 
 module.exports = MainReducer;

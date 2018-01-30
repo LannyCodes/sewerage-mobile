@@ -29,6 +29,15 @@ class InspectionManagementScreen extends WrapScreen {
     _header = () => {
         return {
             title: "巡检任务",
+            right: {
+                icon: 'filter',
+                type: 'feather',
+                onPress: () => {
+                    this.setState({
+                        isFilterShow: !this.state.isFilterShow
+                    })
+                }
+            }
         }
     }
 

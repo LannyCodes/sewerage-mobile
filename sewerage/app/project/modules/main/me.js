@@ -16,28 +16,11 @@ import _ from 'lodash'
 import Toast from "teaset/components/Toast/Toast";
 class MeScreen extends WrapScreen {
 
-    constructor(props) {
-        super(props);
-        this.user = {
-            nickName: '',
-            mobile: '',
-            email: '',
-            organizeName: ''
-        }
+    componentWillMount() {
+        this._refresh()
     }
 
-    componentWillMount() {
-        let me = this;
-        storage.load({
-            key: USER_KEY.USER_STAGE_KEY
-        }).then(data => {
-            console.log(data)
-            if (!_.isNull(data.user)) {
-                me.user = data.user;
-            }
-        }).catch(err => {
-            console.log(err)
-        })
+    _refresh = () => {
         this.store.dispatch(Actions.get(this, Urls.User.userInfo))
     }
 
@@ -45,7 +28,12 @@ class MeScreen extends WrapScreen {
 
     _render() {
         let me = this;
-        let user = this.props.user || this.user;
+        let user = this.props.user || {
+            nickName: 'unknown',
+            mobile: '',
+            email: '',
+            organizeName: ''
+        };
         return (
             <View style={styles.container}>
                 <Image source={Assets.Me.bg} style={styles.bg} />
@@ -69,6 +57,14 @@ class MeScreen extends WrapScreen {
                                     return true;
                                 } else {
                                     // 修改 
+                                    let params = { 'mobile': input }
+                                    Utils.fetch(me, Urls.User.updateMobile, params).then((data) => {
+                                        console.log(data)
+                                        me._refresh()
+                                    }).catch((err) => {
+                                        console.log(err)
+                                        Toast.message('修改失败');
+                                    });
                                     return false
                                 }
                             }, () => { }, 'number-pad')
@@ -95,9 +91,15 @@ class MeScreen extends WrapScreen {
                                     return true;
                                 } else {
                                     // 修改
-                                    let params = { 'userId': _USERID_, 'email': input };
-                                    Utils.fetch(me, Urls.User.updateEmail, );
-                                    return false;
+                                    let params = { 'email': input };
+                                    Utils.fetch(me, Urls.User.updateEmail, params).then((data) => {
+                                        console.log(data)
+                                        me._refresh()
+                                    }).catch((err) => {
+                                        console.log(err)
+                                        Toast.message('修改失败');
+                                    });
+                                    return false
                                 }
                             }, () => { }, 'email-address')
                         }}>

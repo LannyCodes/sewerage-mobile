@@ -12,25 +12,53 @@ import { Divider } from "react-native-elements";
 import * as Assets from '../../assets'
 import { Carousel } from "teaset";
 import PercentageCircle from 'react-native-percentage-circle';
+import { connect } from 'react-redux';
+import * as Actions from '../../redux/actions'
+import Urls from "../../../config/api/urls";
+import PopoverPicker from "teaset/components/PopoverPicker/PopoverPicker";
+import ListRow from "teaset/components/ListRow/ListRow";
+
 const circleColor = [['#CAE387', '#FFDC00', '#999EF7', '#0281FF'], ['#FF5646', '#FF7E00', '#8BC7FF', '#76DDAC']];
+const typesColor = ['#CAE387', '#FFDC00', '#999EF7'];
 
 class WorkScreen extends WrapScreen {
+
     constructor(props) {
         super(props);
         this.header = 'none';
+        this.items = [
+            'Apple',
+            'Banana',
+            'Cherry',
+            'Durian',
+            'Filbert',
+            'Grape',
+            'Hickory',
+            'Lemon',
+            'Mango',
+        ];
         this.state = {
             currentIndex: 0,
+            station: null,
+            selectedIndex: null,
+            modalSelectedIndex: null,
             parameters: [
-                { type: 'COD', size: '52', symbol: 'mg/l' },
-                { type: '氨氮', size: '71', symbol: 'mg/l' },
-                { type: '总氮', size: '52', symbol: 'mg/l' },
-                { type: '总磷', size: '52', symbol: 'mg/l' },
-                { type: 'SS', size: '51', symbol: 'mg/l' },
-                { type: 'PH', size: '54', symbol: '' },
-                { type: '温度', size: '52', symbol: '°C' },
-                { type: '流量', size: '55', symbol: 'mg/l' }
+                { type: '', size: '', symbol: '' },
+                { type: '', size: '', symbol: '' },
+                { type: '', size: '', symbol: '' },
+                { type: '', size: '', symbol: '' },
+                { type: '', size: '', symbol: '' },
+                { type: '', size: '', symbol: '' },
+                { type: '', size: '', symbol: '' },
+                { type: '', size: '', symbol: '' }
             ]
         };
+    }
+
+    componentDidMount() {
+        setTimeout(() => {
+            this.store.dispatch(Actions.get(this, Urls.Main.getAppMain));
+        });
     }
 
     _header = () => 'none';
@@ -38,8 +66,8 @@ class WorkScreen extends WrapScreen {
     _onQrSuccess = (result) => {
         // 进入维保页面
         this.props.navigation.navigate('TaskList', {
-            qrData: '11E80005DBC9EC4D943D230B848AE364'
-            // qrData: result
+            // qrData: '11E80005DBC9EC4D943D230B848AE364'
+            qrData: result
         })
     };
 
@@ -55,48 +83,116 @@ class WorkScreen extends WrapScreen {
             </View>
         )
     }
+    /**
+     * 选择场站的pickerView
+     * 入参：显示在那个View下面
+     */
+    showPicker = (view) => {
+        let me = this;
+        // 获取stations 
+        let stations = this.props.mainData.STATIONS;
+        let items = stations.map((item) => {
+            return item.NAME
+        });
+        setTimeout(() => {
+            view.measure((x, y, width, height, pageX, pageY) => {
+                PopoverPicker.show(
+                    { x: 50, y: pageY, width, height },
+                    items,
+                    this.state.selectedIndex,
+                    (item, index) => {
+                        this.setState({ station: item })
+                        let params = { 'ID': stations[index].ID };
+                        Utils.fetch(this, Urls.Main.selectAppHomeDataByStationId, params, 'get').then(data => {
+                            me.setState({
+                                parameters: data
+                            })
+                        }).catch(err => {
+                            console.log(err)
+                        })
+                    }
+                );
+            });
+        })
+    }
+    /*  选择场站  **/
+    _onChooseStations = () => {
 
-    _renderCard = (parameters) => (
-        <View style={styles.cardContainer}>
-            <Carousel
-                carousel={false}
-                style={styles.swipeContent}
-            >
-                {
-                    parameters.map((item, i) => (
-                        <View style={styles.paramsContainerStyle} key={'CarouselContainer' + i}>
-                            <View style={styles.paramsStyle}>
-                                {item.map((sim, j) => (
-                                    <View style={styles.paramsItem} key={'CarouselContent' + j}>
-                                        <PercentageCircle radius={33} percent={parseInt(sim.size)}
-                                            color={circleColor[i][j]}
-                                            bgcolor={'#EBEBEB'}
-                                            borderWidth={7}>
-                                            <Text style={styles.paramsSizeText}>{sim.size}</Text>
-                                            {sim.symbol !== '' &&
-                                                <Text style={styles.paramsSymbolText}>{sim.symbol}</Text>}
-                                        </PercentageCircle>
-                                        <Text style={{
-                                            color: '#333',
-                                            fontSize: 13,
-                                            marginTop: 10
-                                        }}>{sim.type}</Text>
-                                    </View>
-                                ))}
+        this.showPicker(this.refs['stationRef'])
+
+    };
+
+    /** 中间切换UI，根据station的值来展示 */
+    _renderCard = (parameters) => {
+        if (_.isNull(this.state.station) && !_.isNull(this.props.mainData.TYPES)) {
+            // 如果是展示场站信息，则station这个字段为null
+            return (
+                <View style={styles.cardContainer}>
+                    <View style={styles.paramsStyle}>
+                        {this.props.mainData.TYPES.map((sim, j) => (
+                            <View style={styles.paramsItem} key={'typeContent' + j}>
+                                <PercentageCircle radius={33} percent={100}
+                                    color={typesColor[j]}
+                                    bgcolor={'#EBEBEB'}
+                                    borderWidth={7}>
+                                    <Text style={styles.paramsSizeText}>{sim.size}</Text>
+                                    {sim.symbol !== '' &&
+                                        <Text style={styles.paramsSymbolText}>{sim.symbol}</Text>}
+                                </PercentageCircle>
+                                <Text style={{
+                                    color: '#333',
+                                    fontSize: 13,
+                                    marginTop: 10
+                                }}>{sim.type}</Text>
                             </View>
-                            {this._renderDot(i, [
-                                <View style={[styles.dot, {
-                                    backgroundColor: '#42BB55'
-                                }]} />,
-                                <View style={styles.dot} />
-                            ])}
-                        </View>
-                    )
-                    )
-                }
-            </Carousel>
-        </View>
-    );
+                        ))}
+                    </View>
+                </View>
+            )
+        } else {
+            return (
+                <View style={styles.cardContainer}>
+                    <Carousel
+                        carousel={false}
+                        style={styles.swipeContent}
+                    >
+                        {
+                            parameters.map((item, i) => (
+                                <View style={styles.paramsContainerStyle} key={'CarouselContainer' + i}>
+                                    <View style={styles.paramsStyle}>
+                                        {item.map((sim, j) => (
+                                            <View style={styles.paramsItem} key={'CarouselContent' + j}>
+                                                <PercentageCircle radius={33} percent={parseInt(sim.size)}
+                                                    color={circleColor[i][j]}
+                                                    bgcolor={'#EBEBEB'}
+                                                    borderWidth={7}>
+                                                    <Text style={styles.paramsSizeText}>{sim.size}</Text>
+                                                    {sim.symbol !== '' &&
+                                                        <Text style={styles.paramsSymbolText}>{sim.symbol}</Text>}
+                                                </PercentageCircle>
+                                                <Text style={{
+                                                    color: '#333',
+                                                    fontSize: 13,
+                                                    marginTop: 10
+                                                }}>{sim.type}</Text>
+                                            </View>
+                                        ))}
+                                    </View>
+                                    {this._renderDot(i, [
+                                        <View style={[styles.dot, {
+                                            backgroundColor: '#42BB55'
+                                        }]} />,
+                                        <View style={styles.dot} />
+                                    ])}
+                                </View>
+                            )
+                            )
+                        }
+                    </Carousel>
+                </View>
+            )
+        }
+    };
 
     _render() {
         const modules = _.chunk(homeModules, 3); // 将HomeModule 每三个分成一个数组
@@ -107,18 +203,18 @@ class WorkScreen extends WrapScreen {
                     <Image source={Assets.Home.bg} style={styles.bg} />
                     <View style={styles.headContainer}>
                         <View style={styles.optTitle}>
-                            <View style={{
+                            <TouchableOpacity style={{
                                 flexDirection: 'row'
-                            }}>
+                            }} onPress={this._onChooseStations} ref='stationRef'>
                                 <Image source={Assets.Home.location} />
-                                <Text style={styles.optText}>宁乡县污水处理厂</Text>
+                                <Text style={styles.optText}>{this.state.station}</Text>
                                 <Image source={Assets.Home.arrowDown} />
-                            </View>
+                            </TouchableOpacity>
                             <TouchableOpacity onPress={() =>
-                                //  this.props.navigation.navigate('Qr', {
-                                //       onSuccess: this._onQrSuccess
-                                //   })
-                                this._onQrSuccess()
+                                this.props.navigation.navigate('Qr', {
+                                    onSuccess: this._onQrSuccess
+                                })
+                                //   this._onQrSuccess()
                             }>
                                 <Image source={Assets.Home.scan} style={styles.icon} />
                             </TouchableOpacity>
@@ -178,7 +274,13 @@ class WorkScreen extends WrapScreen {
     }
 }
 
-export default WorkScreen
+function mapStateToProps(state) {
+    return {
+        mainData: state.Main.getAppMain,
+    }
+}
+
+export default connect(mapStateToProps)(WorkScreen)
 const styles = Utils.PLStyle({
     container: {
         flex: 1,

@@ -15,7 +15,7 @@ export const isTel = function (obj) {
  * @returns {boolean}
  */
 export const isMail = function (obj) {
-    let reg = /[a-zA-Z0-9]{1,10}@[a-zA-Z0-9]{1,5}\.[a-zA-Z0-9]{1,5}/;
+    let reg = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
     if (!reg.test(obj)) {
         return false
     } else {
