@@ -49,6 +49,9 @@ const Components = {
 
 const Message = {
     announcement: require('./images/icon_announcement.png'),
+    maintain:require('./images/icon_message_maintain.png'),
+    inspection:require('./images/icon_message_inspection.png'),
+    alert:require('./images/icon_message_alert.png'),
 }
 
 export {

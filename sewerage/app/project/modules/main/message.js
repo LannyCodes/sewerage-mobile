@@ -2,6 +2,7 @@ import React from 'react';
 import {
     View,
     Text,
+    Alert,
     StyleSheet,
     FlatList,
     Image,
@@ -19,7 +20,6 @@ class MessageScreen extends WrapScreen {
         super(props);
         this.isPullDown = false;
         this.isPullUp = false;
-
     }
 
     _header = () => {
@@ -70,28 +70,26 @@ class MessageScreen extends WrapScreen {
     }
 
     _renderItem = ({ item, index }) => {
-        let iconColor = ''
+        let source;
         switch (item.STATUS) {
             case 1:
-                iconColor = '#2384E8'
+                source = Assets.Message.maintain
                 break;
             case 2:
-                iconColor = '#42BB55'
+                source = Assets.Message.inspection
                 break;
             case 3:
             default:
-                iconColor = '#FFAC2D'
+                source = Assets.Message.alert
                 break;
         }
-
+        
         return (
             <TouchableOpacity
                 style={styles.itemContainer}
                 activeOpacity={1}
                 onPress={this._itemClick.bind(this, item, index)}>
-                <View style={{ borderWidth: 1, borderColor: 'transparent', borderRadius: 8, backgroundColor: iconColor, width: 40, height: 40, justifyContent: 'center', alignItems: 'center' }}>
-                    <Image source={Assets.Message.announcement} style={{ width: 25, height: 25 }} />
-                </View>
+                <Image source={source} style={{ borderWidth: 1, borderColor: 'transparent', borderRadius: 8, width: 40, height: 40}}/>
                 <View style={styles.itemMsg}>
                     <View style={styles.itemTitle}>
                         <Text style={styles.itemTitleText}>{item.TITLE}</Text>
@@ -107,6 +105,41 @@ class MessageScreen extends WrapScreen {
         )
     }
 
+    _deleteRow = () => {
+
+    }
+
+    _renderHiddenItem = (rowData, rowMap) => {
+        return <View style={styles.rowBack}>
+            <TouchableOpacity
+                style={{ width: 150, backgroundColor: 'red' }}
+                onPress={_ => {
+                    Alert.alert(
+                        '删除消息',
+                        '删除后不可恢复',
+                        [
+                            {
+                                text: '取消', onPress: () => {
+                                    rowMap[rowData.index].closeRow();
+                                }
+                            },
+                            {
+                                text: '确定', onPress: () => {
+                                    rowMap[rowData.index].closeRow()
+                                    this._deleteRow();
+                                }
+                            }
+                        ]
+                    )
+
+                }}>
+                <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+                    <Text style={{ color: '#fff', fontWeight: '600', fontSize: 18 }}>Close</Text>
+                </View>
+            </TouchableOpacity>
+        </View>
+    }
+
     _render() {
         return (
             <SWFlatList
@@ -119,9 +152,11 @@ class MessageScreen extends WrapScreen {
                 keyExtractor={this._keyExtractor}
                 renderItem={this._renderItem}
                 ListHeaderComponent={<View style={{ height: 10, backgroundColor: '#f1f1f1' }} />}
+                disableLeftSwipe={false}
                 ItemSeparatorComponent={() => {
                     return <View style={{ backgroundColor: '#e5e5e5', height: 0.5, flex: 1, marginLeft: 20 }} />
                 }}
+                renderHiddenItem={this._renderHiddenItem}
             />
         )
     }
@@ -164,5 +199,13 @@ const styles = StyleSheet.create({
     itemContent: {
         color: '#333333',
         fontSize: 14,
-    }
+    },
+    rowBack: {
+        alignItems: 'center',
+        backgroundColor: '#fff',
+        flex: 1,
+        flexDirection: 'row',
+        justifyContent: 'flex-end',
+        paddingLeft: 15,
+    },
 })

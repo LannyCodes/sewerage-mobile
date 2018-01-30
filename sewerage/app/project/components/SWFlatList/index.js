@@ -6,14 +6,17 @@ import React, { Component } from 'react'
 import {
     View,
     Text,
+    Alert,
     Platform,
     FlatList,
     PanResponder,
     RefreshControl,
     ActivityIndicator,
+    TouchableOpacity,
 } from "react-native"
 import PropTypes from 'prop-types';
 import * as Utils from '../../../core/utils';
+import { SwipeListView } from './react-native-swipe-list-view';
 
 export class SWFlatList extends Component {
     constructor(props) {
@@ -24,7 +27,7 @@ export class SWFlatList extends Component {
         this.state = {
             containerHeight: 0,
             contentHeight: 0,
-            contentInsetBottom:0
+            contentInsetBottom: 0,
         }
     }
 
@@ -35,15 +38,21 @@ export class SWFlatList extends Component {
         refreshing: PropTypes.bool,
         onRefresh: PropTypes.func,
         pullUp: PropTypes.func,
+        disableLeftSwipe: PropTypes.bool,
+        disableRightSwipe: PropTypes.bool,
     };
 
     static defaultProps = {
         reachedThreshold: 50,
+        disableLeftSwipe: true,
+        disableRightSwipe: true,
+        rightOpenValue: -150,
+        leftOpenValue: 75,
     };
 
     componentDidUpdate() {
         // console.log('componentDidMount');
-        if(Platform.OS === 'android' && this.props.pullingUp === true){
+        if (Platform.OS === 'android' && this.props.pullingUp === true) {
             this._flatList.scrollToEnd()
         }
     }
@@ -99,7 +108,7 @@ export class SWFlatList extends Component {
 
     _onScrollEndDrag = () => {
         console.log(this.offset);
-        if(Platform.OS === 'ios'){
+        if (Platform.OS === 'ios') {
             if (this.offset - this.outDistance() > this.props.reachedThreshold && !this.props.pullingUp) {
                 this.props.pullUp();
                 if (!this._isContentTooShort()) {
@@ -107,8 +116,8 @@ export class SWFlatList extends Component {
                 }
             }
             this._showPullControl();
-        }else{
-            if(this.offset - this.outDistance() === 0){
+        } else {
+            if (this.offset - this.outDistance() === 0) {
                 this.props.pullUp();
 
             }
@@ -119,7 +128,7 @@ export class SWFlatList extends Component {
         if (this.props.pullUpControl) {
             return this.props.pullUpControl
         } else {
-            return <View style={[styles.pullUpControl,{height:this.props.reachedThreshold}]}>
+            return <View style={[styles.pullUpControl, { height: this.props.reachedThreshold }]}>
                 <ActivityIndicator animating={true} color='#42BD56' size="small" />
                 {/* <Text>刷新中...</Text> */}
             </View>
@@ -139,15 +148,18 @@ export class SWFlatList extends Component {
         }
     }
 
-    _ListFooterComponent = ()=>{
-        if(Platform.OS === 'android' && this.props.pullingUp){
+    _ListFooterComponent = () => {
+        if (Platform.OS === 'android' && this.props.pullingUp) {
             return this._pullUpControl()
-        }else{
-            return <View/>
+        } else {
+            return <View />
         }
     }
 
+    
+
     render() {
+        // let data = this._testFunc()
         return (
             <View style={{ flex: 1 }}>
                 {
@@ -155,10 +167,11 @@ export class SWFlatList extends Component {
                         {this._pullUpControl()}
                     </View> : <View />
                 }
-                <FlatList
+                <SwipeListView
+                    useFlatList={true}
                     style={{ position: 'absolute', top: 0, bottom: 0, left: 0, right: 0, zIndex: 9999999999999999 }}
                     {...this.props}
-                    ref={(flatList) => this._flatList = flatList}
+                    listViewRef={flatList => this._flatList = flatList}
                     refreshControl={
                         <RefreshControl
                             refreshing={this.props.refreshing}
@@ -168,8 +181,11 @@ export class SWFlatList extends Component {
                             progressBackgroundColor="#f1f1f1"
                         />
                     }
-                    contentInset={{bottom:this.state.contentInsetBottom}}
-                    scrollIndicatorInsets={{top:0,left:0,bottom:0,right:0}}
+                    renderHiddenItem={this.props.renderHiddenItem}
+                    rightOpenValue={this.props.rightOpenValue}
+                    leftOpenValue={this.props.leftOpenValue}
+                    contentInset={{ bottom: this.state.contentInsetBottom }}
+                    scrollIndicatorInsets={{ top: 0, left: 0, bottom: 0, right: 0 }}
                     onLayout={this._onLayout}
                     onMomentumScrollStart={this._onMomentumScrollStart}
                     onMomentumScrollEnd={this._onMomentumScrollEnd}
@@ -190,5 +206,14 @@ const styles = Utils.PLStyle({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-    }
+    },
+    rowFront: {
+        alignItems: 'center',
+        backgroundColor: '#CCC',
+        borderBottomColor: 'black',
+        borderBottomWidth: 1,
+        justifyContent: 'center',
+        height: 50,
+    },
+
 })
