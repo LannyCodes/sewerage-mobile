@@ -18,7 +18,7 @@ import PropTypes from 'prop-types';
 export class ListCell extends Component {
     constructor(props) {
         super(props);
-        this.data = this.props.item;
+        
     }
 
     static propTypes = {
@@ -32,13 +32,10 @@ export class ListCell extends Component {
     }
 
     render() {
+        this.data = this.props.item;
         let { perform, text } = StatusHelper.getRankPerform(this.data.rank);
-        let { statusPerform, statusText} = StatusHelper.getStatusPerform(this.data.STATUS);
-        let {auditPerform,auditText} = StatusHelper.getAuditStatusPerform(this.data.STATUS);
-        if(this.props.type != 'faultsList'){
-            statusPerform = auditPerform;
-            statusText = auditText;
-        }
+        let { statusPerform, statusText } = StatusHelper.getStatusPerform(this.data.STATUS);
+        let { auditPerform, auditText } = StatusHelper.getAuditStatusPerform(this.data.STATUS);
         return (
             <TouchableOpacity
                 style={styles.cellContainer}
@@ -50,7 +47,7 @@ export class ListCell extends Component {
                         {
                             _.isUndefined(this.data.rank) ? <View /> : <TagLabel backgroundColor={perform.backgroundColor} fontColor={perform.color}>{text}</TagLabel>
                         }
-                        <TagLabel containerStyle={{ marginLeft: 10 }} backgroundColor={statusPerform.backgroundColor} fontColor={statusPerform.color}>{statusText}</TagLabel>
+                        <TagLabel containerStyle={{ marginLeft: 10 }} backgroundColor={this.props.type === 'faultsList' ? statusPerform.backgroundColor : auditPerform.backgroundColor} fontColor={this.props.type === 'faultsList' ? statusPerform.color : auditPerform.color}>{this.props.type === 'faultsList' ? statusText : auditText}</TagLabel>
                     </View>
                 </View>
                 <View style={styles.cellContentContainer}>
@@ -59,7 +56,7 @@ export class ListCell extends Component {
                         numberOfLines={1}>{this.data.content}</Text>
                 </View>
                 <View style={styles.cellFootContainer}>
-                    <Text style={styles.footText}>上报人：{this.data.person}</Text>
+                    <Text style={styles.footText}>{this.props.type === 'faultsList' ? '上报人' : '责任人'}：{this.data.person}</Text>
                     <View>
                         {/* <Icon
                             name="ei-clock"

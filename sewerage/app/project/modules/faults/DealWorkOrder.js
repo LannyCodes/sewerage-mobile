@@ -78,7 +78,7 @@ class DealWorkOrderScreen extends WrapScreen {
                 CONTENT: this.textValue || '',
                 ATTACHMENT_IDS: uploadResults,
             }
-            // await Utils.post(this,Urls.faults.breakdownBillHandle, params);
+            await Utils.post(this,Urls.faults.breakdownBillHandle, params);
             Loading.isLoading(false);
             this.props.navigation.goBack();
         } catch (err) {
