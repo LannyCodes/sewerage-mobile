@@ -2,11 +2,12 @@
  * Created by InforeXuan on 2017/5/12.
  */
 import React from 'react';
-import {ScrollView, View, Text, Keyboard} from 'react-native';
-import {LoginPart} from '../LoginPart'
+import { ScrollView, View, Text, Keyboard, Image } from 'react-native';
+import { LoginPart } from '../LoginPart'
 import styles from '../LoginStyles'
-import {WrapScreen} from "../../wrap";
-
+import { WrapScreen } from "../../wrap";
+import * as Assets from '../../../assets'
+import * as Utils from '../../../../core/utils'
 class LoginScreen extends WrapScreen {
 
     componentWillMount() {
@@ -43,7 +44,7 @@ class LoginScreen extends WrapScreen {
      */
     moveKeyboard(self, platform: string, distance: number) {
         if (platform === 'all' || platform === 'ios') {
-            self.refs.scrollView.scrollTo({y: distance, animated: true});
+            self.refs.scrollView.scrollTo({ y: distance, animated: true });
         }
     }
 
@@ -53,16 +54,19 @@ class LoginScreen extends WrapScreen {
      */
     resetKeyboard(self, platform: string) {
         if (platform === 'all' || platform === 'ios') {
-            self.refs.scrollView.scrollTo({y: 0, animated: true});
+            self.refs.scrollView.scrollTo({ y: 0, animated: true });
         }
     }
 
 
     render() {
         return (
-            <ScrollView ref="scrollView" style={{flex: 1, backgroundColor: 'white'}}>
+            <ScrollView ref="scrollView" style={{ flex: 1, backgroundColor: 'white' }}>
                 <View style={styles.container}>
-                    <Text adjustsFontSizeToFit={false} allowFontScaling={false} style={styles.content}>中联污水厂</Text>
+                    <Image
+                        style={{ width: 0.65 * Utils.sw, height: 0.65 * Utils.sw * 0.125, marginTop: 160 }}
+                        source={Assets.Components.logo}
+                    />
                     {LoginPart(this)}
                 </View>
             </ScrollView>

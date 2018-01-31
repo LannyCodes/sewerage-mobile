@@ -236,25 +236,7 @@ const styles = Utils.PLStyle({
 
 const filterArray = [
     {
-        title: '状态',
-        keyName: 'ssb',
-        multipleChoice: false,
-        data: [{
-            name: '待审核',
-            value: '11',
-        }, {
-            name: '已通过',
-            value: '22',
-        }, {
-            name: '已驳回',
-            value: '33',
-        }, {
-            name: '已废弃',
-            value: '44',
-        }]
-    },
-    {
-        title: '类型',
+        title: '审核类型',
         keyName: 'aab',
         multipleChoice: false,
         data: [{

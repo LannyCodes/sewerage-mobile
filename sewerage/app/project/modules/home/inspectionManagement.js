@@ -181,50 +181,17 @@ const styles = Utils.PLStyle({
 
 const filterArray = [
     {
-        title: '类型',
+        title: '巡检状态',
         keyName: 'ssb',
         multipleChoice: false,
         data: [{
-            name: '类型一',
+            name: '待巡检',
             value: '11',
         }, {
-            name: '类型二',
+            name: '正在巡检',
             value: '22',
         }, {
-            name: '类型三',
-            value: '33',
-        }]
-    },
-    {
-        title: '规格',
-        keyName: 'aab',
-        multipleChoice: true,
-        data: [{
-            name: '规格一',
-            value: '11',
-        }, {
-            name: '规格二',
-            value: '22',
-        }, {
-            name: '规格三',
-            value: '33',
-        }, {
-            name: '规格四',
-            value: '44',
-        }]
-    },
-    {
-        title: '规格',
-        keyName: 'ccs',
-        multipleChoice: false,
-        data: [{
-            name: '规格一',
-            value: '11',
-        }, {
-            name: '规格二',
-            value: '22',
-        }, {
-            name: '规格三',
+            name: '巡检完成',
             value: '33',
         }]
     }

@@ -33,7 +33,16 @@ const Me = {
     pwd: require('./images/icon_me_xg.png'),
     about: require('./images/icon_me_message.png'),
     bg: require('./images/icon_me_bg.png'),
-    company:require('./images/icon_me_company.png'),
+    company: require('./images/icon_me_company.png'),
+}
+// 巡检
+const Inspection = {
+    header: require('./images/icon_xj_header.png')
+}
+
+// 维保
+const Maintain = {
+    header: require('./images/icon_wb_header.png')
 }
 
 //数据统计
@@ -45,13 +54,14 @@ const Data = {
 
 const Components = {
     checked: require('./images/icon_filter_checked.png'),
+    logo: require('./images/icon_logo.png')
 }
 
 const Message = {
     announcement: require('./images/icon_announcement.png'),
-    maintain:require('./images/icon_message_maintain.png'),
-    inspection:require('./images/icon_message_inspection.png'),
-    alert:require('./images/icon_message_alert.png'),
+    maintain: require('./images/icon_message_maintain.png'),
+    inspection: require('./images/icon_message_inspection.png'),
+    alert: require('./images/icon_message_alert.png'),
 }
 
 export {
@@ -61,4 +71,6 @@ export {
     Data,
     Components,
     Message,
+    Maintain,
+    Inspection
 }

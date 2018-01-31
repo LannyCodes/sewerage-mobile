@@ -7,7 +7,6 @@ const styles = Utils.PLStyle({
         backgroundColor: 'white',
         alignItems: 'center',
         flexDirection: 'column',
-        padding: 20
     },
     leftImg: {
         marginLeft: 20,
@@ -24,7 +23,6 @@ const styles = Utils.PLStyle({
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-        width: 345,
         height: 44,
         borderBottomColor: 'transparent',
         borderTopColor: 'transparent',
@@ -32,13 +30,10 @@ const styles = Utils.PLStyle({
         borderRightColor: 'transparent',
     },
     input: {
-        flex:1,
-        width: '70%',
         fontSize: 16,
         color: '#333333',
     },
     vertifyInput: {
-        width: '60%',
         fontSize: 16,
         color: '#333333'
     },
@@ -48,7 +43,6 @@ const styles = Utils.PLStyle({
         height: 18,
     },
     mimaManContainer: {
-        width: 345,
         flexDirection: 'row',
         justifyContent: 'space-between',
         marginTop: 10,
@@ -64,7 +58,7 @@ const styles = Utils.PLStyle({
         fontSize: 14
     },
     submit: {
-        marginTop: 46.5
+        marginTop: 50.5,
     },
     columnLine: {
         width: 1,

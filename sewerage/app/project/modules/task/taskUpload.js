@@ -188,6 +188,7 @@ class TaskUploadScreen extends WrapScreen {
                 <Text style={styles.groupTitle}>${['巡检', '维保'][this.type]}反馈</Text>
                 <View style={{ alignItems: 'center' }}>
                     <TextInput
+                        underlineColorAndroid='transparent'
                         placeholder={`请输入${['巡检', '维保'][this.type]}反馈（若无可不填）`}
                         multiline={true}
                         style={styles.textInput}
@@ -198,6 +199,7 @@ class TaskUploadScreen extends WrapScreen {
                 <Text style={styles.groupTitle}>故障描述</Text>
                 <View style={{ alignItems: 'center' }}>
                     <TextInput
+                        underlineColorAndroid='transparent'
                         placeholder={`请输入故障描述（若无可不填）`}
                         multiline={true}
                         style={styles.textInput}
@@ -276,6 +278,7 @@ class TaskUploadScreen extends WrapScreen {
                 return (
                     <View style={{ flex: 1, alignItems: 'center' }}>
                         <TextInput
+                            underlineColorAndroid='transparent'
                             placeholder={`请输入${['巡检', '维保'][this.type]}反馈（若无可不填）`}
                             multiline={true}
                             style={[styles.textInput, { marginTop: 12 }]}

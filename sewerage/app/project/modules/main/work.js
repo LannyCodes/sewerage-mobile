@@ -15,11 +15,9 @@ import PercentageCircle from 'react-native-percentage-circle';
 import { connect } from 'react-redux';
 import * as Actions from '../../redux/actions'
 import Urls from "../../../config/api/urls";
-import PopoverPicker from "teaset/components/PopoverPicker/PopoverPicker";
-import ListRow from "teaset/components/ListRow/ListRow";
 
-const circleColor = [['#CAE387', '#FFDC00', '#999EF7', '#0281FF'], ['#FF5646', '#FF7E00', '#8BC7FF', '#76DDAC']];
-const typesColor = ['#CAE387', '#FFDC00', '#999EF7'];
+const normalColor = ['#FC4442', '#17B978']; // key = normal 0: 不正常 1:正常
+const typesColor = ['#A1D9FF', '#FFDC00', '#999EF7', '#F2BBBB'];
 
 class WorkScreen extends WrapScreen {
 
@@ -38,7 +36,6 @@ class WorkScreen extends WrapScreen {
             'Mango',
         ];
         this.state = {
-            currentIndex: 0,
             station: null,
             selectedIndex: null,
             modalSelectedIndex: null,
@@ -83,43 +80,29 @@ class WorkScreen extends WrapScreen {
             </View>
         )
     }
-    /**
-     * 选择场站的pickerView
-     * 入参：显示在那个View下面
-     */
-    showPicker = (view) => {
-        let me = this;
-        // 获取stations 
-        let stations = this.props.mainData.STATIONS;
-        let items = stations.map((item) => {
-            return item.NAME
-        });
-        setTimeout(() => {
-            view.measure((x, y, width, height, pageX, pageY) => {
-                PopoverPicker.show(
-                    { x: 50, y: pageY, width, height },
-                    items,
-                    this.state.selectedIndex,
-                    (item, index) => {
-                        this.setState({ station: item })
-                        let params = { 'ID': stations[index].ID };
-                        Utils.fetch(this, Urls.Main.selectAppHomeDataByStationId, params, 'get').then(data => {
-                            me.setState({
-                                parameters: data
-                            })
-                        }).catch(err => {
-                            console.log(err)
-                        })
-                    }
-                );
-            });
-        })
-    }
+
     /*  选择场站  **/
     _onChooseStations = () => {
-
-        this.showPicker(this.refs['stationRef'])
-
+        let me = this;
+        me.props.navigation.navigate('ChooseStation', {
+            stations: me.props.mainData.STATIONS,
+            currentStation: me.state.station,
+            onChooseStation: (station) => {
+                console.log(station)
+                me.setState({
+                    station: station
+                })
+                global._STATIONID_ = station.ID; // 将当前场站ID设置为全局变量
+                let params = { 'ID': station.ID };
+                Utils.fetch(me, Urls.Main.selectAppHomeDataByStationId, params, 'get').then(data => {
+                    me.setState({
+                        parameters: data
+                    })
+                }).catch(err => {
+                    console.log(err)
+                })
+            }
+        });
     };
 
     /** 中间切换UI，根据station的值来展示 */
@@ -162,8 +145,8 @@ class WorkScreen extends WrapScreen {
                                     <View style={styles.paramsStyle}>
                                         {item.map((sim, j) => (
                                             <View style={styles.paramsItem} key={'CarouselContent' + j}>
-                                                <PercentageCircle radius={33} percent={parseInt(sim.size)}
-                                                    color={circleColor[i][j]}
+                                                <PercentageCircle radius={33} percent={100}
+                                                    color={normalColor[sim.normal]}
                                                     bgcolor={'#EBEBEB'}
                                                     borderWidth={7}>
                                                     <Text style={styles.paramsSizeText}>{sim.size}</Text>
@@ -197,6 +180,7 @@ class WorkScreen extends WrapScreen {
     _render() {
         const modules = _.chunk(homeModules, 3); // 将HomeModule 每三个分成一个数组
         const parameters = _.chunk(this.state.parameters, 4); // 将HomeModule 每三个分成一个数组
+        const safeText = ['水质监测', '场站信息']
         return (
             <View style={styles.container}>
                 <View style={styles.container}>
@@ -205,9 +189,8 @@ class WorkScreen extends WrapScreen {
                         <View style={styles.optTitle}>
                             <TouchableOpacity style={{
                                 flexDirection: 'row'
-                            }} onPress={this._onChooseStations} ref='stationRef'>
-                                <Image source={Assets.Home.location} />
-                                <Text style={styles.optText}>{this.state.station}</Text>
+                            }} onPress={() => this._onChooseStations()} >
+                                <Text style={styles.optText}>{this.state.station && this.state.station.NAME}</Text>
                                 <Image source={Assets.Home.arrowDown} />
                             </TouchableOpacity>
                             <TouchableOpacity onPress={() =>
@@ -228,7 +211,7 @@ class WorkScreen extends WrapScreen {
                             <Image source={Assets.Home.circle} style={styles.circle} />
                             <View style={styles.safeContent}>
                                 <Image source={Assets.Home.circleSafe} />
-                                <Text style={styles.safeText}>水质监测</Text>
+                                <Text style={styles.safeText}>{this.state.station ? safeText[0] : safeText[1]}</Text>
                             </View>
                         </View>
                     </View>

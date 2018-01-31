@@ -181,17 +181,17 @@ const styles = Utils.PLStyle({
 
 const filterArray = [
     {
-        title: '类型',
+        title: '维保状态',
         keyName: 'ssb',
         multipleChoice: false,
         data: [{
-            name: '类型一',
+            name: '待维保',
             value: '11',
         }, {
-            name: '类型二',
+            name: '正在维保',
             value: '22',
         }, {
-            name: '类型三',
+            name: '维保状态',
             value: '33',
         }]
     }
