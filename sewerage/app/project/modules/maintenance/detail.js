@@ -3,6 +3,7 @@ import React from 'react';
 import {WrapScreen} from "../wrap";
 import {connect} from "react-redux";
 import * as Utils from "../../../core/utils";
+import * as Assets from "../../assets";
 import Urls from "../../../config/api/urls";
 import * as Actions from "../../redux/actions";
 import {Status} from "../../../config/api/api.config";
@@ -72,7 +73,7 @@ class MaintenanceDetailScreen extends WrapScreen {
                                 <Avatar
                                     medium
                                     rounded
-                                    source={{uri: "https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg"}}
+                                    source={Assets.Maintain.header}
                                     activeOpacity={0.7}
                                 />
                                 <View

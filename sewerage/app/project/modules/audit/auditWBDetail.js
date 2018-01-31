@@ -2,11 +2,12 @@ import React, { Component } from 'react';
 import * as Utils from "../../../core/utils";
 import Urls from "../../../config/api/urls";
 import * as Actions from "../../redux/actions";
+import * as Assets from '../../assets'
 import { Status } from "../../../config/api/api.config";
 import { ErrorPage, Loading } from "../../components";
 import { FlatList, ScrollView, Text, TouchableOpacity, View } from "react-native";
 import { Avatar, Divider, Icon } from "react-native-elements";
-import { renderCardStatus, renderOperate,renderCheckLogs } from './auditComponents'
+import { renderCardStatus, renderOperate, renderCheckLogs } from './auditComponents'
 export default class AuditWBDetailComponent extends Component {
 
     _keyExtractor = (item, index) => index;
@@ -34,7 +35,7 @@ export default class AuditWBDetailComponent extends Component {
                                 <Avatar
                                     medium
                                     rounded
-                                    source={{ uri: "https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg" }}
+                                    source={Assets.Maintain.header}
                                     activeOpacity={0.7}
                                 />
                                 <View

@@ -3,6 +3,7 @@ import React from 'react';
 import { WrapScreen } from "../wrap";
 import { connect } from "react-redux";
 import * as Utils from "../../../core/utils";
+import * as Assets from '../../assets'
 import Urls from "../../../config/api/urls";
 import * as Actions from "../../redux/actions";
 import { Status } from "../../../config/api/api.config";
@@ -40,7 +41,7 @@ class TaskDetailScreen extends WrapScreen {
     };
 
     _renderCardStatus = (status) => {
-        let statusText = [['待巡检','正在巡检','巡检完成'], ['待维保', '正在维保', '维保完成']]
+        let statusText = [['待巡检', '正在巡检', '巡检完成'], ['待维保', '正在维保', '维保完成']]
         let st = { text: statusText[this.type][0], color: '#47A9EB', backgroundColor: '#ECF6FD' };
         if (status === 0) st = { text: statusText[this.type][0], color: '#47A9EB', backgroundColor: '#ECF6FD' };
         else if (status === 1) st = { text: statusText[this.type][1], color: '#FAA346', backgroundColor: '#FEF5EB' };
@@ -165,6 +166,7 @@ class TaskDetailScreen extends WrapScreen {
 
     _render() {
         const detail = this.props[this.taskDetail[this.type]];
+        const header = [Assets.Inspection.header, Assets.Maintain.header];
         if (this.props.requestStatus === Status.SUCCESS) {
             if (!Loading.checkData(detail)) return;
             // detail.CONTENTS.STATUS === 0 未巡检
@@ -182,7 +184,7 @@ class TaskDetailScreen extends WrapScreen {
                                 <Avatar
                                     medium
                                     rounded
-                                    source={{ uri: "https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg" }}
+                                    source={header[this.type]}
                                     activeOpacity={0.7}
                                 />
                                 <View

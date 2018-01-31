@@ -3,6 +3,12 @@ package com.sewerage;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.oblador.vectoricons.VectorIconsPackage;
+import com.github.yamill.orientation.OrientationPackage;
+import com.BV.LinearGradient.LinearGradientPackage;
+import com.imagepicker.ImagePickerPackage;
+import com.reactnative.ivpusic.imagepicker.PickerPackage;
+import com.lwansbrough.RCTCamera.RCTCameraPackage;
 import com.imagepicker.ImagePickerPackage;
 import com.reactnative.ivpusic.imagepicker.PickerPackage;
 import com.github.yamill.orientation.OrientationPackage;
@@ -28,6 +34,12 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new VectorIconsPackage(),
+            new OrientationPackage(),
+            new LinearGradientPackage(),
+            new ImagePickerPackage(),
+            new PickerPackage(),
+            new RCTCameraPackage(),
             new ImagePickerPackage(),
             new PickerPackage(),
             new OrientationPackage(),

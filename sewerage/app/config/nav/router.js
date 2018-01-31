@@ -2,6 +2,7 @@ import { StackNavigator } from 'react-navigation';
 import * as Modules from '../../project/modules';
 import TabNav from "./TabNavigator";
 import QrScan from "../../project/components/qrScan";
+import ChooseStation from "../../project/components/ChooseStation"
 
 /**
  * 欢迎页
@@ -31,6 +32,7 @@ const Main = {
 const Common = {
     Bridge: { screen: Modules.BridgeScreen },
     Qr: { screen: QrScan },
+    ChooseStation: { screen: ChooseStation }
 };
 
 const Home = {

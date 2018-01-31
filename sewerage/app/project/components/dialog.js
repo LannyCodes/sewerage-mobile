@@ -68,6 +68,7 @@ const input = (content, placeholder, onSure, onCancel, keyboardType) => {
                     <Text style={{ fontSize: 16, color: '#333' }}>{content}</Text>
                 </View>
                 <TextInput
+                    underlineColorAndroid='transparent'
                     style={{
                         height: 63,
                         marginLeft: 11,
