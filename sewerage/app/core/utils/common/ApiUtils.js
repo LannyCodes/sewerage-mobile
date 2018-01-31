@@ -85,6 +85,7 @@ const exec = (context, response, resolve, reject) => {
         }
     } else {
         // 请求有问题
+        reject(response);
         Toast.message('请求失败,请稍后重试。')
     }
 }

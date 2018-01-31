@@ -11,6 +11,7 @@ const messageRequest = (state, action) => {
         body: action.body,
     }
     let url = Urls.Message.messageList;
+    let list = [];
     switch (action.type) {
         case url + ActionType.FETCH_START:
             return {
@@ -19,7 +20,7 @@ const messageRequest = (state, action) => {
             }
         case url:
             let body = action.body;
-            let list = [];
+            
             if (body.pageIndex === 1) {
                 list = action.data.list
             } else {
@@ -41,6 +42,22 @@ const messageRequest = (state, action) => {
             return {
                 ...state,
                 isFetching: false,
+            }
+        case ActionType.MESSAGE_DELETE_ROW:
+            list  = state.list;
+            list.splice(action.index,1);
+            return {
+                ...state,
+                list:list,
+            }
+        case ActionType.MESSAGE_CHANGE_ROW:
+            list = state.list;
+            let item = list[action.index];
+            item.STATUS = 0;
+            list.splice(action.index,1,item);
+            return {
+                ...state,
+                list:list,
             }
         default:
             return state
