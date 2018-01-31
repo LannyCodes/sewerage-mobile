@@ -25,7 +25,7 @@ class TaskListScreen extends WrapScreen {
         this.store.dispatch(Actions.request(this, Urls.Task.getTaskList, params)); // 请求
     }
 
-_header = () => {
+    _header = () => {
         return {
             title: "任务选择",
             onLeftPress: () => {

@@ -10,7 +10,7 @@ const Urls = {
     Login: {
         login: '/api/user/login',
         otp: '/app/login/otp',
-        inspection: '/api/inspectiontask/list',
+        modifyPassword: '/api/home/modifyPassword'// 修改用户密码
     },
     Inspections: {
         getTaskList: '/api/inspectiontask/list', // 获取巡检列表， get
@@ -43,7 +43,7 @@ const Urls = {
     },
     statistics: {
         getTotalData: '/api/dataStatistics/getTotleData',
-        getInspectionDataDetailsByKey:'/api/dataStatistics/getInspectionDataDetailsByKey',
+        getInspectionDataDetailsByKey: '/api/dataStatistics/getInspectionDataDetailsByKey',
     },
     device: {
         deviceList: '/api/equipment/list',
@@ -52,7 +52,7 @@ const Urls = {
     User: {
         userInfo: '/api/home/getUser',
         updateEmail: '/api/home/updateUserEmail',
-        updateMobile: '/api/home/updateUserMobile'
+        updateMobile: '/api/home/updateUserMobile',
     },
     Message: {
         messageList: '/api/message/list',

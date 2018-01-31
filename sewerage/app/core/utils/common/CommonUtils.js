@@ -1,5 +1,5 @@
-import {NavigationActions} from 'react-navigation'
-import {USER_KEY} from "../../../config/setting";
+import { NavigationActions } from 'react-navigation'
+import { USER_KEY } from "../../../config/setting";
 import * as Utils from "./index";
 import Toast from "teaset/components/Toast/Toast";
 
@@ -7,7 +7,7 @@ export const resetNavigation = (navigation, route) => {
     const resetAction = NavigationActions.reset({
         index: 0,
         actions: [
-            NavigationActions.navigate({routeName: route})
+            NavigationActions.navigate({ routeName: route })
         ]
     });
     (function (options) {
@@ -30,7 +30,7 @@ export const isFastExecute = () => {
 };
 
 
-export const exitApp = (context)=>{
+export const exitApp = (context) => {
     storage.remove({
         key: USER_KEY.USER_STAGE_KEY
     });

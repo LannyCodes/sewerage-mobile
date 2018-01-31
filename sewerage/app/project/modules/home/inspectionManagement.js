@@ -90,8 +90,7 @@ class InspectionManagementScreen extends WrapScreen {
 
     _render() {
         if (this.props.requestStatus === Status.SUCCESS) {
-            if (!Loading.checkData(this.props.taskListRequest.list)) return;
-            if (this.props.taskListRequest.list.length > 0) {
+            if (this.props.taskListRequest.list && this.props.taskListRequest.list.length > 0) {
                 return (
                     <View style={{ flex: 1 }}>
                         <SWFlatList
@@ -116,9 +115,12 @@ class InspectionManagementScreen extends WrapScreen {
                     </View>
                 )
             } else {
-                return (
-                    <DefaultPage content={'暂无巡检任务'} />
-                )
+                this._header = () => {
+                    return {
+                        title: "巡检任务",
+                    }
+                }
+                return (<DefaultPage content={'暂无巡检任务'} />);
             }
         } else if (this.props.requestStatus === Status.FAIL) {
             return (

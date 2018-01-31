@@ -122,57 +122,60 @@ class AuditManagementScreen extends WrapScreen {
 
     _render() {
         if (this.props.requestStatus === Status.SUCCESS) {
-            if (!Loading.checkData(this.props.waitAuditListRequest.list)) return;
-            return (
-                <View style={{ flex: 1 }}>
-                    <ScrollableTabView
-                        locked={true}
-                        renderTabBar={() =>
-                            <ScrollableTabBar
-                                style={{ height: 50 }}
-                                tabStyle={{ height: 50 }}
-                                activeTextColor='#42BB55'
-                                inactiveTextColor='#333333'
-                                backgroundColor="#fff"
-                                underlineAlignLabel={true}
-                                underlineStyle={{ backgroundColor: '#42BB55', height: 2 }}
+            if (this.props.waitAuditListRequest.list && this.props.waitAuditListRequest.list.length > 0) {
+                return (
+                    <View style={{ flex: 1 }}>
+                        <ScrollableTabView
+                            locked={true}
+                            renderTabBar={() =>
+                                <ScrollableTabBar
+                                    style={{ height: 50 }}
+                                    tabStyle={{ height: 50 }}
+                                    activeTextColor='#42BB55'
+                                    inactiveTextColor='#333333'
+                                    backgroundColor="#fff"
+                                    underlineAlignLabel={true}
+                                    underlineStyle={{ backgroundColor: '#42BB55', height: 2 }}
+                                />
+                            }>
+                            {/* 待审核 */}
+                            <SWFlatList
+                                tabLabel='待审核'
+                                refreshing={this.props.waitAuditListRequest.isFetching && this.pullingFlag === '_waitListRefresh'}
+                                onRefresh={this._refresh}
+                                data={this.props.waitAuditListRequest.list}
+                                keyExtractor={this._keyExtractor}
+                                renderItem={this._renderItem}
+                                pullingUp={this.props.waitAuditListRequest.isFetching && this.pullingFlag === '_waitListPullUp'}
+                                pullUp={this._pullUp}
                             />
-                        }>
-                        {/* 待审核 */}
-                        <SWFlatList
-                            tabLabel='待审核'
-                            refreshing={this.props.waitAuditListRequest.isFetching && this.pullingFlag === '_waitListRefresh'}
-                            onRefresh={this._refresh}
-                            data={this.props.waitAuditListRequest.list}
-                            keyExtractor={this._keyExtractor}
-                            renderItem={this._renderItem}
-                            pullingUp={this.props.waitAuditListRequest.isFetching && this.pullingFlag === '_waitListPullUp'}
-                            pullUp={this._pullUp}
-                        />
-                        {/* 已审核 */}
-                        <SWFlatList
-                            tabLabel='已审核'
-                            refreshing={this.props.doneAuditListRequest.isFetching && this.pullingFlag === '_doneListRefresh'}
-                            onRefresh={this._refresh}
-                            data={this.props.doneAuditListRequest.list}
-                            keyExtractor={this._keyExtractor}
-                            renderItem={this._renderItem}
-                            pullingUp={this.props.doneAuditListRequest.isFetching && this.pullingFlag === '_doneListPullUp'}
-                            pullUp={this._pullUp}
-                        />
-                    </ScrollableTabView>
-                    {this.state.isFilterShow === true ?
-                        <ListFilter
-                            containerStyles={{ top: 0 }}
-                            filterArray={filterArray}
-                            maskerClick={() => {
-                                this.setState({
-                                    isFilterShow: false,
-                                })
-                            }}
-                        /> : <View />}
-                </View>
-            )
+                            {/* 已审核 */}
+                            <SWFlatList
+                                tabLabel='已审核'
+                                refreshing={this.props.doneAuditListRequest.isFetching && this.pullingFlag === '_doneListRefresh'}
+                                onRefresh={this._refresh}
+                                data={this.props.doneAuditListRequest.list}
+                                keyExtractor={this._keyExtractor}
+                                renderItem={this._renderItem}
+                                pullingUp={this.props.doneAuditListRequest.isFetching && this.pullingFlag === '_doneListPullUp'}
+                                pullUp={this._pullUp}
+                            />
+                        </ScrollableTabView>
+                        {this.state.isFilterShow === true ?
+                            <ListFilter
+                                containerStyles={{ top: 0 }}
+                                filterArray={filterArray}
+                                maskerClick={() => {
+                                    this.setState({
+                                        isFilterShow: false,
+                                    })
+                                }}
+                            /> : <View />}
+                    </View>
+                )
+            } else {
+                return (<DefaultPage content={'暂无审核任务'} />);
+            }
 
         } else if (this.props.requestStatus === Status.FAIL) {
             return (

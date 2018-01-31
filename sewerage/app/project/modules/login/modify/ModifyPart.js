@@ -10,9 +10,33 @@ import { CheckBox, SubmitBtn } from "../../../components";
 import { Divider } from 'react-native-elements'
 export function ModifyPart(self) {
     return (
-        <View style={styles.container}>
+        <View>
             <View>
                 <View style={[{ marginTop: 41 }, styles.inputContainer]}>
+                    <TextInput
+                        value={self.state.inputOldPwd}
+                        onChangeText={(text) => {
+                            text = text.replace('.', '');
+                            self.setState({ inputOldPwd: text });
+                        }}
+                        style={styles.input}
+                        placeholder="输入旧密码"
+                        placeholderTextColor="#d2d2d2"
+                        underlineColorAndroid='transparent'
+                        secureTextEntry={!self.state.showOldMima}
+                    />
+                    <CheckBox
+                        style={styles.inputEndIcon}
+                        checkedImage={Assets.Login.eye}
+                        unCheckedImage={Assets.Login.invalid}
+                        onClick={(check) => self.setState({ showOldMima: !check })}
+                        isChecked={false}
+                    />
+                </View>
+                <Divider style={{ backgroundColor: '#ddd' }} />
+            </View>
+            <View>
+                <View style={[{ marginTop: 10.5 }, styles.inputContainer]}>
                     <TextInput
                         value={self.state.inputNewPwd}
                         onChangeText={(text) => {

@@ -118,7 +118,9 @@ class MeScreen extends WrapScreen {
                             </View>
                         </TouchableOpacity>
                         <Divider style={{ backgroundColor: '#efefef', marginLeft: 40 }} />
-                        <View style={[styles.row, styles.lineContent]}>
+                        <TouchableOpacity style={[styles.row, styles.lineContent]} onPress={() => {
+                            this.props.navigation.navigate('Modify')
+                        }}>
                             <View style={styles.row}>
                                 <Image source={Assets.Me.pwd} style={styles.icon} />
                                 <Text style={styles.text}>修改密码</Text>
@@ -131,7 +133,7 @@ class MeScreen extends WrapScreen {
                                     color={'#999'}
                                 />
                             </View>
-                        </View>
+                        </TouchableOpacity>
                     </View>
                 </View>
                 <View style={{ flex: 1, backgroundColor: '#F3F3F3' }}>

@@ -1,11 +1,11 @@
 /**
  * Created by InforeXuan on 2017/5/12.
  */
-import React, {Component} from 'react';
-import {View, Text, ScrollView, Keyboard} from 'react-native';
+import React, { Component } from 'react';
+import { View, Text, ScrollView, Keyboard } from 'react-native';
 import styles from '../LoginStyles'
-import {ModifyPart} from './ModifyPart'
-import {WrapScreen} from "../../wrap";
+import { ModifyPart } from './ModifyPart'
+import { WrapScreen } from "../../wrap";
 class ModifyScreen extends WrapScreen {
 
     constructor(props: Object) {
@@ -13,8 +13,10 @@ class ModifyScreen extends WrapScreen {
         this.state = {
             showNewMima: false,
             showConfirmMima: false,
+            showOldMima: false,
             inputNewPwd: '',
             inputEnNewPwd: '',
+            inputOldPwd: ''
         }
     }
 
@@ -35,7 +37,7 @@ class ModifyScreen extends WrapScreen {
      */
     moveKeyboard(self, platform: string, distance: number) {
         if (platform === 'all' || platform === 'ios') {
-            self.refs.scrollView.scrollTo({y: distance, animated: true});
+            self.refs.scrollView.scrollTo({ y: distance, animated: true });
         }
     }
 
@@ -45,7 +47,7 @@ class ModifyScreen extends WrapScreen {
      */
     resetKeyboard(self, platform: string) {
         if (platform === 'all' || platform === 'ios') {
-            self.refs.scrollView.scrollTo({y: 0, animated: true});
+            self.refs.scrollView.scrollTo({ y: 0, animated: true });
         }
     }
 
@@ -59,7 +61,7 @@ class ModifyScreen extends WrapScreen {
 
     render() {
         return (
-            <ScrollView ref="scrollView" style={{flex: 1, backgroundColor: 'white'}}>
+            <ScrollView ref="scrollView" style={{ flex: 1, backgroundColor: 'white' }}>
                 <View style={styles.container}>
                     <Text adjustsFontSizeToFit={false} allowFontScaling={false} style={styles.content}>修改密码</Text>
                     {ModifyPart(this)}

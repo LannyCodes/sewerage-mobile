@@ -3,7 +3,6 @@
  */
 import { Toast } from 'teaset'
 import * as Utils from "../../../core/utils";
-import _ from 'lodash'
 import Urls from "../../../config/api/urls";
 import { USER_KEY } from "../../../config/setting"
 import md5 from 'md5'
@@ -17,11 +16,11 @@ export function checkOtp(self) {
 }
 
 export function checkInput(self) {
-    return !_.isNull(self.state.inputPwd) && !_.isNull(self.state.inputPhoneAndEmail);
+    return self.state.inputPwd != '' && self.state.inputPhoneAndEmail != '';
 }
 
 export function checkPhoneAndOtp(self) {
-    return !_.isNull(self.state.inputPhoneNum) && !_.isNull(self.state.inputVertify);
+    return self.state.inputPhoneNum !== '' && self.state.inputVertify != '';
 }
 
 export function submitOtp(self) {
@@ -60,13 +59,13 @@ export async function loginSubmit(self) {
         Utils.resetNavigation(self.props.navigation, 'Main');
     }).catch((err) => {
         err.code !== 0 && Toast.message(err.msg);
-        console.log(err) 
+        console.log(err)
     });
 }
 
 
 export function checkPwdModify(self) {
-    return !_.isNull(self.state.inputNewPwd) && !_.isNull(self.state.inputEnNewPwd) && self.state.inputNewPwd === self.state.inputEnNewPwd;
+    return self.state.inputNewPwd !== '' && self.state.inputEnNewPwd !== '' && self.state.inputOldPwd !== '' && self.state.inputNewPwd === self.state.inputEnNewPwd;
 }
 
 /**
@@ -74,7 +73,16 @@ export function checkPwdModify(self) {
  * @param self
  */
 export function modifyFinish(self) {
-    let params = { newPwd: self.state.inputEnNewPwd, telephone: self.props.navigation.state.params.tel };
-    Toast.message('修改成功！');
-    Utils.resetNavigation(self.props.navigation, 'Login');
+    let params = {
+        'newPassword': md5(md5(self.state.inputEnNewPwd)),
+        'oldPassword': md5(md5(self.state.inputOldPwd))
+    };
+    Utils.fetch(self, Urls.Login.modifyPassword, params).then(data => {
+        console.log(data);
+        Toast.message('修改成功！');
+        Utils.resetNavigation(self.props.navigation, 'Login');
+    }).catch(err => {
+        console.log(err);
+        Toast.message(err.msg)
+    })
 }

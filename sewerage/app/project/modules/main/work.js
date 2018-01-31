@@ -190,7 +190,7 @@ class WorkScreen extends WrapScreen {
                             <TouchableOpacity style={{
                                 flexDirection: 'row'
                             }} onPress={() => this._onChooseStations()} >
-                                <Text style={styles.optText}>{this.state.station && this.state.station.NAME}</Text>
+                                <Text style={styles.optText}>{this.state.station ? this.state.station.NAME : '请选择'}</Text>
                                 <Image source={Assets.Home.arrowDown} />
                             </TouchableOpacity>
                             <TouchableOpacity onPress={() =>
