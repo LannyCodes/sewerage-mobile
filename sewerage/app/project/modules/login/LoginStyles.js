@@ -15,7 +15,7 @@ const styles = Utils.PLStyle({
         height: 16
     },
     content: {
-        color: '#29a1f7',
+        color: '#42BB55',
         marginTop: 179,
         fontSize: 24
     },
@@ -30,6 +30,7 @@ const styles = Utils.PLStyle({
         borderRightColor: 'transparent',
     },
     input: {
+        width: '60%',
         fontSize: 16,
         color: '#333333',
     },

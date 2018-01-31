@@ -37,7 +37,7 @@ export class SubmitBtn extends Component {
         if (_check) {
             return (
                 <TouchableOpacity style={this.props.style} onPress={() => this.props.onPress()}>
-                    <LinearGradient colors={['#4c669f', '#3b5998', '#192f6a']} style={styles.submitView}>
+                    <LinearGradient colors={['#9EC951', '#42BB55']} style={styles.submitView}>
                         <Text adjustsFontSizeToFit={false} allowFontScaling={false}
                             style={styles.submitText}>{this.props.text}</Text>
                     </LinearGradient>
@@ -57,7 +57,6 @@ export class SubmitBtn extends Component {
 
 const styles = Utils.PLStyle({
     submitView: {
-        backgroundColor: '#0ba8fd',
         width: 296,
         height: 44,
         borderColor: 'transparent',
@@ -77,6 +76,7 @@ const styles = Utils.PLStyle({
     },
     submitText: {
         color: 'white',
+        backgroundColor: 'transparent',
         fontSize: 18
     },
 })

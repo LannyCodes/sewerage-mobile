@@ -87,7 +87,7 @@ class Otp extends Component {
     render() {
         let contentColor;
         if (this.state.enable) {
-            contentColor = '#0ba8fd';
+            contentColor = '#42BB55';
         } else {
             contentColor = '#cccccc';
         }

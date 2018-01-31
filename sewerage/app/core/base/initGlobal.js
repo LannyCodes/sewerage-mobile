@@ -1,6 +1,6 @@
-import {Platform, AsyncStorage} from 'react-native';
+import { Platform, AsyncStorage } from 'react-native';
 import Storage from 'react-native-storage';
-import {GLOB} from '../../config/setting'
+import { GLOB } from '../../config/setting'
 
 const initGlobal = () => {
     return new Promise(function (resolve, reject) {
@@ -19,6 +19,7 @@ const initGlobal = () => {
         global._IOS_ = (Platform.OS === 'ios');
         global._Android_ = (Platform.OS === 'android');
         global.storage = storage;
+        global._STATIONID_ = null;
         Object.assign(global, GLOB);
         resolve(global);
     });

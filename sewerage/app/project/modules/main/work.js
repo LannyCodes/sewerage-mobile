@@ -92,7 +92,7 @@ class WorkScreen extends WrapScreen {
                 me.setState({
                     station: station
                 })
-                global._STATIONID_ = station.ID; // 将当前场站ID设置为全局变量
+                _STATIONID_ = station.ID; // 将当前场站ID设置为全局变量
                 let params = { 'ID': station.ID };
                 Utils.fetch(me, Urls.Main.selectAppHomeDataByStationId, params, 'get').then(data => {
                     me.setState({
