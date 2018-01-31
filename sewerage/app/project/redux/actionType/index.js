@@ -1,4 +1,5 @@
 import 'core-js'
+// import { Symbol } from 'core-js/library/web/timers';
 
 const REQUEST = {
     REQUEST_STATUS: Symbol(),
@@ -22,12 +23,23 @@ const FAULTS = {
     CHANGE_WORKORDERLIST: Symbol(),
 }
 
+const MESSAGE = {
+    MESSAGE_DELETE_ROW: Symbol(),
+    MESSAGE_CHANGE_ROW: Symbol(),
+}
+
+const DATASTATISTICS = {
+    
+}
+
 //这个一定要放到最后
 const ActionType = {
     ...REQUEST,
     ...USER,
     ...TAB,
     ...FAULTS,
+    ...MESSAGE,
+    DATASTATISTICS:DATASTATISTICS
 };
 
 export default ActionType;

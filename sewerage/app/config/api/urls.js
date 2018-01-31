@@ -42,9 +42,8 @@ const Urls = {
         breakdownBillHandle: '/api/breakdownbill/handler',//故障工单处理
     },
     statistics: {
-        inspectionStatistics: '/app/statistics/inspection',
-        maintenanceStatistics: '/app/statistics/maintenance',
-        stationStatistics: '/app/statistics/station',
+        getTotalData: '/api/dataStatistics/getTotleData',
+        getInspectionDataDetailsByKey:'/api/dataStatistics/getInspectionDataDetailsByKey',
     },
     device: {
         deviceList: '/api/equipment/list',
@@ -57,7 +56,7 @@ const Urls = {
     },
     Message: {
         messageList: '/api/message/list',
-        messageStatusUpdate: '/api/message',
-    }
+        messageStatusUpdate: '/api/message/updateAppMessage',
+    },
 };
 export default Urls

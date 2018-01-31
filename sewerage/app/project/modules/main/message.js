@@ -9,11 +9,12 @@ import {
     TouchableOpacity,
 } from 'react-native';
 import { WrapScreen } from "../wrap";
-import { SWFlatList } from '../../components';
+import { SWFlatList,Loading } from '../../components';
 import * as Actions from "../../redux/actions";
 import { connect } from "react-redux";
 import Urls from "../../../config/api/urls";
 import * as Assets from '../../assets';
+import * as Utils from '../../../core/utils';
 
 class MessageScreen extends WrapScreen {
     constructor(props) {
@@ -46,8 +47,9 @@ class MessageScreen extends WrapScreen {
     _keyExtractor = (item, index) => index
 
     _itemClick = (item, index) => {
-        console.log(item)
-        this.props.navigation.navigate('MessageDetail');
+        this._changeMessageStatus(item.ID,0,index);
+        this.store.dispatch(Actions.message.changeMessageListAtIndex(index));
+        this.props.navigation.navigate('MessageDetail',{item:item});
     }
 
     _onRefresh = () => {
@@ -69,9 +71,26 @@ class MessageScreen extends WrapScreen {
         this.store.dispatch(Actions.get(this, Urls.Message.messageList, param));
     }
 
+    _deleteRow = (item,index) => {
+        this._changeMessageStatus(item.ID,2,index);
+        this.store.dispatch(Actions.message.deleteMessageListAtIndex(index));
+    }
+
+    _changeMessageStatus = async (id, status, index) => {
+        let params = {
+            ID: id,
+            STATUS: status
+        }
+        try {
+            let data = await Utils.post(this, Urls.Message.messageStatusUpdate, params);
+        } catch (err) {
+            console.log(err);
+        }
+    }
+
     _renderItem = ({ item, index }) => {
         let source;
-        switch (item.STATUS) {
+        switch (item.TYPE) {
             case 1:
                 source = Assets.Message.maintain
                 break;
@@ -83,13 +102,18 @@ class MessageScreen extends WrapScreen {
                 source = Assets.Message.alert
                 break;
         }
-        
+
         return (
             <TouchableOpacity
                 style={styles.itemContainer}
                 activeOpacity={1}
                 onPress={this._itemClick.bind(this, item, index)}>
-                <Image source={source} style={{ borderWidth: 1, borderColor: 'transparent', borderRadius: 8, width: 40, height: 40}}/>
+                <View>
+                    <Image source={source} style={styles.image} />
+                    {
+                        item.STATUS === 1 ? <View style={styles.unread} /> : <View />
+                    }
+                </View>
                 <View style={styles.itemMsg}>
                     <View style={styles.itemTitle}>
                         <Text style={styles.itemTitleText}>{item.TITLE}</Text>
@@ -105,11 +129,8 @@ class MessageScreen extends WrapScreen {
         )
     }
 
-    _deleteRow = () => {
-
-    }
-
     _renderHiddenItem = (rowData, rowMap) => {
+        let self = this;
         return <View style={styles.rowBack}>
             <TouchableOpacity
                 style={{ width: 150, backgroundColor: 'red' }}
@@ -125,8 +146,8 @@ class MessageScreen extends WrapScreen {
                             },
                             {
                                 text: '确定', onPress: () => {
+                                    self._deleteRow(rowData.item,rowData.index);
                                     rowMap[rowData.index].closeRow()
-                                    this._deleteRow();
                                 }
                             }
                         ]
@@ -208,4 +229,22 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-end',
         paddingLeft: 15,
     },
+    image: {
+        borderWidth: 1,
+        borderColor: 'transparent',
+        borderRadius: 8,
+        width: 40,
+        height: 40
+    },
+    unread: {
+        position: 'absolute',
+        width: 10,
+        height: 10,
+        borderWidth: 1,
+        borderColor: 'transparent',
+        borderRadius: 20,
+        backgroundColor: '#E44036',
+        right: -5,
+        top: -4
+    }
 })

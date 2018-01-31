@@ -25,20 +25,17 @@ export default class MessageDetailScreen extends WrapScreen {
     }
 
     _render() {
-        // /-image:.*-/
-        // /\/n/
-        MessageHelper.messageContentAnalysis('阿斯顿发生的发斯蒂芬-image:http://www.baidu.com---asdasdfel');
-        let test = '啊啊是发生的发生法撒旦法\n阿斯顿发斯蒂芬垃圾啊士大夫';
+        let item = this.props.navigation.state.params.item;
         return (
             <ScrollView style={styles.scrollView}>
                 <View style={styles.container}>
                     <View style={{ paddingTop: 18, paddingBottom: 12 }}>
-                        <Text style={styles.title}>固废处理事业部工作任务管理系统正式启用!</Text>
-                        <Text style={styles.time}>2017-09-22 杨涛</Text>
+                        <Text style={styles.title}>{item.TITLE}</Text>
+                        <Text style={styles.time}>{item.SEND_DATE} {item.SEND_NICKNAME}</Text>
                     </View>
                     <View style={styles.divider} />
                     <View>
-                        <Text>{test}</Text>
+                        <Text>{item.CONTENT}</Text>
                     </View>
                 </View>
             </ScrollView>
