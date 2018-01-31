@@ -3,6 +3,4 @@ platform :ios, '8.0'
 target 'sewerage' do
     pod 'RSKImageCropper'
     pod 'QBImagePickerController'
-  pod 'BVLinearGradient', :path => '../node_modules/react-native-linear-gradient'
-
 end

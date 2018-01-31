@@ -11,7 +11,7 @@ import {
 } from "react-native"
 import PropTypes from 'prop-types'
 import * as Utils from "../../core/utils/style";
-
+import LinearGradient from 'react-native-linear-gradient'
 export class SubmitBtn extends Component {
 
     constructor(props) {
@@ -26,7 +26,7 @@ export class SubmitBtn extends Component {
         check: PropTypes.func,
         onPress: PropTypes.func,
     };
-    
+
     static defaultProps = {
         // 默认属性值
         text: '完成',
@@ -37,10 +37,10 @@ export class SubmitBtn extends Component {
         if (_check) {
             return (
                 <TouchableOpacity style={this.props.style} onPress={() => this.props.onPress()}>
-                    <View style={styles.submitView}>
+                    <LinearGradient colors={['#4c669f', '#3b5998', '#192f6a']} style={styles.submitView}>
                         <Text adjustsFontSizeToFit={false} allowFontScaling={false}
                             style={styles.submitText}>{this.props.text}</Text>
-                    </View>
+                    </LinearGradient>
                 </TouchableOpacity>)
         } else {
             return (
