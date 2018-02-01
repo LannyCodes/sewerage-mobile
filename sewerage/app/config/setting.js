@@ -30,12 +30,12 @@ const USER_KEY = {
 
 if (__DEV__) {
     Object.assign(config, {
-        // WebServerUrl: "http://192.168.39.106:10086",
+        WebServerUrl: "http://localhost:10086",
         // WebServerUrl: "http://192.168.31.177:8089", // dandan
         // WebServerUrl: "http://192.168.39.75:8089", // doujiang
         // WebServerUrl: "http://192.168.31.234:8089", // 服务器
         // ImageServer: "http://192.168.31.234:80/",//图片请求地址 （与后台字段拼接得到完整url）
-        WebServerUrl: "http://192.168.37.6:8450", // 服务器
+        // WebServerUrl: "http://192.168.37.6:8450", // 服务器
         ImageServer: "http://192.168.37.6:8470/",//图片请求地址 （与后台字段拼接得到完整url）
     })
 } else {

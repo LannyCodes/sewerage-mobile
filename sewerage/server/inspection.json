@@ -1,0 +1,71 @@
+[
+    {
+        "url": "/api/inspectiontask/list",
+        "method": "get",
+        "response": {
+            "code": 0,
+            "msg": "成功",
+            "data": {
+                "totalCount": 1,
+                "list": [
+                    {
+                        "EQUIPMENT_NAMES": "渗滤液设备,",
+                        "STATUS": 0,
+                        "TASK_NUMBER": "3011552200",
+                        "VALID_TIME": "2018-01-17 09:19:30",
+                        "USER_ID": "11E7F9B3F7BE1097AE38192A4CB03053",
+                        "PLAN_ID": "11E7FA5B40B0676AABCBAF19A0DFDFBD",
+                        "ID": "11E7FA5B4D5C1E1CABCBAF19A0DFDFBD",
+                        "USER_NAME": "刘烨",
+                        "ITEMS": 1,
+                        "COMPANY_ID": "11E7E48AF5B09735B418057D9106F500",
+                        "NAME": "蛋总测试",
+                        "ROW_ID": 1
+                    }
+                ]
+            }
+         }
+        },
+    {
+        "url": "/api/inspectiontask/detail",
+        "method": "get",
+        "response":{
+            "code": 0,
+            "msg": "成功",
+            "data": {
+                "VALID_TIME": "2018-01-17 09:19:30",
+                "USER_ID": "11E7F9B3F7BE1097AE38192A4CB03053",
+                "EXE_USER_NAME": "刘烨",
+                "PLAN_ID": "11E7FA5B40B0676AABCBAF19A0DFDFBD",
+                "UPDATE_TIME": 1516065570495,
+                "PLAN_NAME": "蛋总测试",
+                "ITEMS": [
+                    {
+                        "EQUIPMENT_NAME": "渗滤液设备",
+                        "ITEM_CONTENTS": [
+                            {
+                                "STATUS": 0,
+                                "ID": "11E7FA5B4D62118EABCBAF19A0DFDFBD",
+                                "CONTENT": "单体设备是否正常运行"
+                            },
+                            {
+                                "STATUS": 0,
+                                "ID": "11E7FA5B4D63E64FABCBAF19A0DFDFBD",
+                                "CONTENT": "单体设备是否达到设定流量"
+                            }
+                        ],
+                        "STATION_NAME": "002"
+                    }
+                ],
+                "STATUS": 0,
+                "TASK_NUMBER": "3011552200",
+                "CHECK_USER_NAME": "吴茂丹",
+                "ID": "11E7FA5B4D5C1E1CABCBAF19A0DFDFBD",
+                "CREATE_TIME": 1516065570495,
+                "DESCRIBE": "关于蛋总的一个测试。",
+                "COMPANY_ID": "11E7E48AF5B09735B418057D9106F500"
+            }
+        }
+
+    }
+]

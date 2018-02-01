@@ -1,0 +1,208 @@
+[
+    {
+        "url": "/api/home/scan",
+        "method": "post",
+        "response": {
+            "code": 0,
+            "msg": "成功",
+            "data": [
+                {
+                    "EQUIPMENT_NAMES": "002,渗滤液设备",
+                    "STATUS": 0,
+                    "TASK_NUMBER": "3011552200",
+                    "VALID_TIME": "2018-01-17 09:19:30",
+                    "USER_ID": "11E7F9B3F7BE1097AE38192A4CB03053",
+                    "ITEM_ID": "11E7FA5B4D5F2B5DABCBAF19A0DFDFBD",
+                    "PLAN_ID": "11E7FA5B40B0676AABCBAF19A0DFDFBD",
+                    "ID": "11E7FA5B4D5C1E1CABCBAF19A0DFDFBD",
+                    "USER_NAME": "刘烨",
+                    "TYPE": 0
+                },
+                {
+                    "EQUIPMENT_NAMES": "002,渗滤液设备",
+                    "STATUS": 0,
+                    "TASK_NUMBER": "401100",
+                    "VALID_TIME": "2018-01-16 19:27:49",
+                    "USER_ID": "11E7F9B3F7BE1097AE38192A4CB03053",
+                    "ITEM_ID": "11E7F9E71E459E5B9CBFD55140058EDE",
+                    "PLAN_ID": "11E7F9E6C32CD92A84C475FC8640B565",
+                    "ID": "11E7F9E71E41318A9CBFD55140058EDE",
+                    "USER_NAME": "刘烨",
+                    "TYPE": 1
+                }
+            ]
+        }
+    },
+    {
+        "url": "/api/inspectiontaskItem",
+        "method": "post",
+        "response":{
+            "code": 0,
+            "msg": "成功",
+            "data": {
+                "STATUS": 0,
+                "TASK_NUMBER": "3011552200",
+                "VALID_TIME": "2018-01-17 09:19:30",
+                "EQUIPMENT_NAME": "渗滤液设备",
+                "USER_ID": "11E7F9B3F7BE1097AE38192A4CB03053",
+                "ID": "11E7FA5B4D5F2B5DABCBAF19A0DFDFBD",
+                "USER_NAME": "刘烨",
+                "STATION_ID": "11E7EFAA8590D68C8634A53AE34579A2",
+                "TASK_ID": "11E7FA5B4D5C1E1CABCBAF19A0DFDFBD",
+                "STATION_NAME": "002",
+                "EQUIPMENT_ID": "11E7F1FDB2B6E585AAD92F719B809195",
+                "CONTENTS": [
+                    {
+                        "STATUS": 0,
+                        "ID": "11E7FA5B4D62118EABCBAF19A0DFDFBD",
+                        "CONTENT": "单体设备是否正常运行"
+                    },
+                    {
+                        "STATUS": 0,
+                        "ID": "11E7FA5B4D63E64FABCBAF19A0DFDFBD",
+                        "CONTENT": "单体设备是否达到设定流量"
+                    }
+                ]
+            }
+        }
+    },
+    {
+        "url": "/api/maintenancetaskItem",
+        "method": "post",
+        "response":{
+            "code": 0,
+            "msg": "成功",
+            "data": {
+                "STATUS": 0,
+                "TASK_NUMBER": "401100",
+                "VALID_TIME": "2018-01-16 19:27:49",
+                "EQUIPMENT_NAME": "渗滤液设备",
+                "USER_ID": "11E7F9B3F7BE1097AE38192A4CB03053",
+                "ID": "11E7F9E71E459E5B9CBFD55140058EDE",
+                "USER_NAME": "刘烨",
+                "STATION_ID": "11E7EFAA8590D68C8634A53AE34579A2",
+                "TASK_ID": "11E7F9E71E41318A9CBFD55140058EDE",
+                "STATION_NAME": "002",
+                "EQUIPMENT_ID": "11E7F1FDB2B6E585AAD92F719B809195",
+                "CONTENTS": [
+                    {
+                        "STATUS": "0",
+                        "ID": "11E7F9E71E47E84C9CBFD55140058EDE",
+                        "CONTENT": "自清洗过滤器运动部件是否堵塞，卡滞"
+                    },
+                    {
+                        "STATUS": "0",
+                        "ID": "11E7F9E71E49BD0D9CBFD55140058EDE",
+                        "CONTENT": "电气接头是否松弛，脱落"
+                    }
+                ]
+            }
+        }
+    },
+    {
+        "url": "/api/inspectiontaskItem/deal",
+        "method": "post",
+        "response":{
+            "code": 0,
+            "msg": "成功",
+            "data": ""
+        }
+    },
+    {
+        "url": "/api/maintenancetaskItem/deal",
+        "method": "post",
+        "response":{
+            "code": 0,
+            "msg": "成功",
+            "data": ""
+        }
+    },
+    {
+        "url": "/api/inspectiontaskItem/content/detail",
+        "method": "post",
+        "response":{
+            "code": 0,
+            "msg": "成功",
+            "data": {
+                "STATUS": 0,
+                "ID": "11E7FDC047D52B498A389F1DC3C6EE96",
+                "TASK_ITEM_ID": "11E7FDC047D049478A389F1DC3C6EE96",
+                "CONTENT": "管道是否堵塞",
+                "CREATE_TIME": 1516438793879,
+                "UPDATE_TIME": 1516438793879,
+                "BREAKDOWN": {
+                    "CREATE_USER": "11E7F9B3F7BE1097AE38192A4CB03053",
+                    "UPDATE_USER": "11E7F9B3F7BE1097AE38192A4CB03053",
+                    "RANK": 0,
+                    "UPDATE_TIME": 1516099728421,
+                    "HANDLE_WAY": "手动调试",
+                    "ATTACHMENT_IDS": [
+                        {
+                            "FILE_SIZE": 33232,
+                            "CREATE_USER": "super",
+                            "ID": "11E7E3C2D83DD1FFA1BD0D3E0A2F3C9A",
+                            "FILE_TYPE": ".jpg",
+                            "CREATE_TIME": 1513581164918,
+                            "UPDATE_TIME": 1513581164918,
+                            "FILE_PATH": "file/1600B9F4A0034FCAA0C7550F04BCC026.jpg",
+                            "FILE_NAME": "W020080822221006461534.jpg"
+                        }
+                    ],
+                    "BREAKDOWN_SOURCE": 0,
+                    "BREAKDOWN_DESCRIBE": "声音有点异常",
+                    "STATUS": 0,
+                    "EXTERNAL_ID": "11E7FDC047D52B498A389F1DC3C6EE96",
+                    "ID": "11E7FAAAD511FEE686104DE879960114",
+                    "CREATE_TIME": 1516099728421,
+                    "TYPE": 1,
+                    "COMPANY_ID": "11E7E48AF5B09735B418057D9106F500",
+                    "EQUIPMENT_ID": "11E7F1FDB2B6E585AAD92F719B809195"
+                }
+            }
+        }
+    },
+    {
+        "url": "/api/maintenancetaskItem/content/detail",
+        "method": "post",
+        "response":{
+            "code": 0,
+            "msg": "成功",
+            "data": {
+                "STATUS": 0,
+                "ID": "11E7FDC047D52B498A389F1DC3C6EE96",
+                "TASK_ITEM_ID": "11E7FDC047D049478A389F1DC3C6EE96",
+                "CONTENT": "管道是否堵塞",
+                "CREATE_TIME": 1516438793879,
+                "UPDATE_TIME": 1516438793879,
+                "BREAKDOWN": {
+                    "CREATE_USER": "11E7F9B3F7BE1097AE38192A4CB03053",
+                    "UPDATE_USER": "11E7F9B3F7BE1097AE38192A4CB03053",
+                    "RANK": 0,
+                    "UPDATE_TIME": 1516099728421,
+                    "HANDLE_WAY": "手动调试",
+                    "ATTACHMENT_IDS": [
+                        {
+                            "FILE_SIZE": 33232,
+                            "CREATE_USER": "super",
+                            "ID": "11E7E3C2D83DD1FFA1BD0D3E0A2F3C9A",
+                            "FILE_TYPE": ".jpg",
+                            "CREATE_TIME": 1513581164918,
+                            "UPDATE_TIME": 1513581164918,
+                            "FILE_PATH": "file/1600B9F4A0034FCAA0C7550F04BCC026.jpg",
+                            "FILE_NAME": "W020080822221006461534.jpg"
+                        }
+                    ],
+                    "BREAKDOWN_SOURCE": 0,
+                    "BREAKDOWN_DESCRIBE": "声音有点异常",
+                    "STATUS": 0,
+                    "EXTERNAL_ID": "11E7FDC047D52B498A389F1DC3C6EE96",
+                    "ID": "11E7FAAAD511FEE686104DE879960114",
+                    "CREATE_TIME": 1516099728421,
+                    "TYPE": 1,
+                    "COMPANY_ID": "11E7E48AF5B09735B418057D9106F500",
+                    "EQUIPMENT_ID": "11E7F1FDB2B6E585AAD92F719B809195"
+                }
+            }
+        }
+    }
+]

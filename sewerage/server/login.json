@@ -1,0 +1,41 @@
+[
+    {
+        "url": "/api/user/login",
+        "method": "post",
+        "response": {
+            "code": 0,
+            "msg": "成功",
+            "data": {
+                "user": {
+                    "userId": "11E7F9B3F7BE1097AE38192A4CB03053",
+                    "userName": "liuuy",
+                    "nickName": "刘烨",
+                    "mobile": "16512345877",
+                    "email": "liuye@sina.com",
+                    "deleted": "0",
+                    "lastLoginTime": 1516078593000,
+                    "locked": "0",
+                    "createTime": 1515993700000,
+                    "updateTime": 1515993700000,
+                    "createUser": "super",
+                    "updateUser": "super",
+                    "applicationName": "中联环境乡镇污水处理厂",
+                    "organizeId": "11E7E48AF5B09735B418057D9106F500",
+                    "organizeName": "运营公司一",
+                    "userGender": 0,
+                    "pwdErrorTimes": 0
+                },
+                "token": "11E7FA81F1C628AD94987D9036BA8BAF"
+            }
+        }
+    },
+    {
+        "url": "/api/home/modifyPassword",
+        "method": "post",
+        "response":{
+            "code": 0,
+            "msg": "成功",
+            "data": []
+        }
+    }
+]

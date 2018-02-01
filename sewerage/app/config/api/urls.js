@@ -9,7 +9,7 @@ const Urls = {
     },
     Login: {
         login: '/api/user/login',
-        otp: '/app/login/otp',
+        otp: '/app/login/otp', // TODO
         modifyPassword: '/api/home/modifyPassword'// 修改用户密码
     },
     Inspections: {

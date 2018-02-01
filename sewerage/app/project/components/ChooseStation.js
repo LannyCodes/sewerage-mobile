@@ -29,14 +29,27 @@ export default class ChooseStation extends WrapScreen {
         let { stations, currentStation } = this.props.navigation.state.params;
         return (
             <View style={styles.container}>
-                {currentStation && <View>
-                    <View style={{ paddingTop: 10, paddingLeft: 10, paddingBottom: 10 }}>
-                        <Text style={{ color: '#666', fontSize: 14 }}>当前场站</Text>
+                {
+                    currentStation &&
+                    <View>
+                        <TouchableOpacity style={{ paddingTop: 12, paddingLeft: 10, paddingBottom: 12, backgroundColor: 'white' }}
+                            onPress={() => {
+                                this.props.navigation.state.params.onChooseStation(null);
+                                this.props.navigation.goBack();
+                            }}
+                        >
+                            <Text style={{ color: '#333', fontSize: 16 }}>请选择</Text>
+                            <Text style={{ color: '#666', fontSize: 12, marginTop: 3 }}>点击这里查看场站信息</Text>
+                        </TouchableOpacity>
+                        <View style={{ paddingTop: 10, paddingLeft: 10, paddingBottom: 10 }}>
+                            <Text style={{ color: '#666', fontSize: 14 }}>当前场站</Text>
+                        </View>
+                        <View style={{ paddingTop: 12, paddingLeft: 10, paddingBottom: 12, backgroundColor: 'white' }}>
+                            <Text style={{ color: '#333', fontSize: 16 }}>{currentStation.NAME}</Text>
+                            <Text style={{ color: '#666', fontSize: 12, marginTop: 3 }}>{currentStation.ADDRESS}</Text>
+                        </View>
                     </View>
-                    <View style={{ paddingTop: 12, paddingLeft: 10, paddingBottom: 12, backgroundColor: 'white' }}>
-                        <Text style={{ color: '#333', fontSize: 16 }}>{currentStation.NAME}</Text>
-                        <Text style={{ color: '#666', fontSize: 12, marginTop: 3 }}>{currentStation.ADDRESS}</Text>
-                    </View></View>}
+                }
                 <View style={{ paddingTop: 10, paddingLeft: 10, paddingBottom: 10 }}>
                     <Text style={{ color: '#666', fontSize: 14 }}>所有场站</Text>
                 </View>

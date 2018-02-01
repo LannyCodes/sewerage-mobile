@@ -115,11 +115,6 @@ class MaintenanceManagementScreen extends WrapScreen {
                     </View>
                 )
             } else {
-                this._header = () => {
-                    return {
-                        title: "维保任务",
-                    }
-                }
                 return (<DefaultPage content={'暂无维保任务'} />);
             }
         } else if (this.props.requestStatus === Status.FAIL) {

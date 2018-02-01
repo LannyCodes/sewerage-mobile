@@ -11,7 +11,7 @@ import { Divider, Icon } from "react-native-elements";
 import AuditWBDetailComponent from './auditWBDetail'
 import AuditXJDetailComponent from './auditXJDetail'
 import AuditGZGDDetailComponent from './auditGZGDDetail'
-
+import AuditCKBGDetailComponent from './auditCKBGDetail'
 const PROCESSTYPE = {
     INSPECTION: 'inspection_plan_process', // 巡检
     MAINTENANCE: 'maintenance_plan_process', // 维保
@@ -70,7 +70,7 @@ class AuditDetailScreen extends WrapScreen {
                 contentView = (<AuditGZGDDetailComponent auditDetail={detail} processId={this.processId} processType={this.processType} />)
                 break;
             case PROCESSTYPE.PRODUCT:
-                contentView = (<AuditWBDetailComponent auditDetail={detail} processId={this.processId} processType={this.processType} />)
+                contentView = (<AuditCKBGDetailComponent auditDetail={detail} processId={this.processId} processType={this.processType} />)
                 break;
         }
         return contentView

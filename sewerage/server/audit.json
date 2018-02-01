@@ -1,0 +1,118 @@
+[{
+    "url": "/api/businessProcess/waitTaskList",
+    "method": "get",
+    "response": {
+      "code": 0,
+      "msg": "成功",
+      "data": {
+        "totalCount": 2,
+        "list": [{
+            "STATUS": 0,
+            "PROCESS_INST_ID": "285011",
+            "CREATE_USER": "超级管理员",
+            "THEME": "嘉伟测试02",
+            "PROCESS_TYPE": "inspection_plan_process",
+            "ID": "11E7FF5FC4083E7AB597A79148AAA3D9",
+            "CREATE_TIME": "2018-01-22 18:34:04",
+            "ROW_ID": 1
+          },
+          {
+            "STATUS": 0,
+            "PROCESS_INST_ID": "195011",
+            "CREATE_USER": "刘烨",
+            "THEME": "111111",
+            "PROCESS_TYPE": "inspection_plan_process",
+            "ID": "11E7FCC6CFE848418A389F1DC3C6EE96",
+            "CREATE_TIME": "2018-01-19 11:14:29",
+            "ROW_ID": 2
+          }
+        ]
+      }
+    }
+  },
+  {
+    "url": "/api/businessProcess/doneTaskList",
+    "method": "get",
+    "response": {
+      "code": 0,
+      "msg": "成功",
+      "data": {
+        "totalCount": 2,
+        "list": [{
+            "STATUS": 0,
+            "PROCESS_INST_ID": "195011",
+            "CREATE_USER": "刘烨",
+            "THEME": "111111",
+            "PROCESS_TYPE": "inspection_plan_process",
+            "ID": "11E7FCC6CFE848418A389F1DC3C6EE96",
+            "CREATE_TIME": "2018-01-19 11:14:29",
+            "ROW_ID": 1
+          },
+          {
+            "STATUS": 3,
+            "PROCESS_INST_ID": "105009",
+            "CREATE_USER": "刘烨",
+            "THEME": "故障工单",
+            "PROCESS_TYPE": "breakdown_bill_process",
+            "ID": "11E7FC0F412B3945A8E679255029E712",
+            "CREATE_TIME": "2018-01-18 13:28:14",
+            "ROW_ID": 2
+          },
+          {
+            "STATUS": 3,
+            "PROCESS_INST_ID": "105002",
+            "CREATE_USER": "刘烨",
+            "THEME": "故障工单",
+            "PROCESS_TYPE": "product_store_process",
+            "ID": "11E7FC0F412B3945A8E679255029E712",
+            "CREATE_TIME": "2018-01-18 13:28:14",
+            "ROW_ID": 2
+          }
+        ]
+      }
+    }
+  },
+  {
+    "url": "/api/businessProcess/taskDetail",
+    "method": "get",
+    "response": {
+      "code": 0,
+      "msg": "成功",
+      "data": {
+        "STATUS": 0,
+        "CODE": "302018012914563700",
+        "CHECK_USER_JSON": "11E7E48ACE9AF1E4B418057D9106F500,zengxm",
+        "CHECK_USER": "11E7F5AAD04508D1AE38192A4CB03053",
+        "CHECK_USER_NAME": "曾小明",
+        "WAREHOUSE_ID_BEFORE": "11E7E47B0C59EE2AA725F9904B14C3C5",
+        "WAREHOUSE_ID_BEFORE_NAME": "11",
+        "WAREHOUSE_ID_AFTER": "11E7E47B0C59EE2AA725F9904B14C3C5",
+        "WAREHOUSE_ID_AFTER_NAME": "11",
+        "ID": "11E804C18D36FB99BD6E4F07C625A842",
+        "REASON": "听说不能新增听说不能新增听说不能新增",
+        "WAY": "1",
+        "NAME": "听说不能新增",
+        "PROCESS_ID": "11E804C18D363848BD6E4F07C625A842",
+        "info": [{
+          "OPERATION": "1",
+          "QUANTITY": 1,
+          "TOTAL_QUANTITY": 19,
+          "ITEM_ID": "11E804C18D3ACC2ABD6E4F07C625A842",
+          "MODEL": "11",
+          "PRODUCT_ID": "11E7EF7CB5AFF464B65F7F711C263F36",
+          "PRODUCT_ID_NAME": "备件2"
+        }]
+      }
+    }
+
+  },
+  {
+    "url": "/api/businessProcess/checkTask",
+    "method": "get",
+    "response": {
+      "code": 0,
+      "msg": "成功",
+      "data": ""
+    }
+  }
+]

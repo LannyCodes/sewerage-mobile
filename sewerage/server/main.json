@@ -1,0 +1,190 @@
+[
+    {
+        "url": "/api/home/app",
+        "method": "get",
+        "response": {
+            "code": 0,
+            "msg": "成功",
+            "data": {
+                "TYPES": [
+                    {
+                        "symbol": "厂",
+                        "normal": "1",
+                        "size": "23",
+                        "type": "厂站数"
+                    },
+                    {
+                        "symbol": "设备",
+                        "normal": "1",
+                        "size": "13",
+                        "type": "在线设备数"
+                    },
+                    {
+                        "symbol": "设备",
+                        "normal": "1",
+                        "size": "0",
+                        "type": "离线设备数"
+                    },
+                    {
+                        "symbol": "设备",
+                        "normal": "1",
+                        "size": "13",
+                        "type": "设备总数"
+                    }
+                ],
+                "STATIONS": [
+                    {
+                        "ID": "11E8019CCC6A1467A2C98FCD87B5AEC8",
+                        "NAME": "1111111111"
+                    },
+                    {
+                        "ID": "11E801A1EA7CF3EA848D9F0806D6B079",
+                        "NAME": "asdf"
+                    },
+                    {
+                        "ID": "11E8019AEA271057A2C98FCD87B5AEC8",
+                        "NAME": "007站点"
+                    },
+                    {
+                        "ID": "11E8019E2919FE41A2C98FCD87B5AEC8",
+                        "NAME": "清华信息港"
+                    },
+                    {
+                        "ID": "11E80244427C8AF8833D2FABF79A74B2",
+                        "NAME": "fdadaf"
+                    },
+                    {
+                        "ID": "11E7E52416BC9341BFDA89B16BF5763C",
+                        "NAME": "厂站一"
+                    },
+                    {
+                        "ID": "11E7FB58297D229A8201F7572B8837CC",
+                        "NAME": "0117152841厂站"
+                    },
+                    {
+                        "ID": "11E7EFAA8590D68C8634A53AE34579A2",
+                        "NAME": "002"
+                    },
+                    {
+                        "ID": "11E7FB59B942C0038201F7572B8837CC",
+                        "NAME": "0117153952厂站修改"
+                    },
+                    {
+                        "ID": "11E7FB332BD061498201F7572B8837CC",
+                        "NAME": "0117110356厂站"
+                    },
+                    {
+                        "ID": "11E7FB33B2DD497D8201F7572B8837CC",
+                        "NAME": "0117110742厂站修改"
+                    },
+                    {
+                        "ID": "11E7E52D873313EDBFCC91E0EC1FB7DC",
+                        "NAME": "厂站三"
+                    },
+                    {
+                        "ID": "11E7EFAC819812FA9AD4ADA87068BD3C",
+                        "NAME": "004"
+                    },
+                    {
+                        "ID": "11E8000802D064EA943D230B848AE364",
+                        "NAME": "嘉伟污水处理厂"
+                    },
+                    {
+                        "ID": "11E80259538D3CD68206B7EF985F20BC",
+                        "NAME": "aaaa"
+                    },
+                    {
+                        "ID": "11E801997E96DB91A2C98FCD87B5AEC8",
+                        "NAME": "gsgfsgfs"
+                    },
+                    {
+                        "ID": "11E801A1BDFCE5A9848D9F0806D6B079",
+                        "NAME": "1111"
+                    },
+                    {
+                        "ID": "11E801A52F1EF652848D9F0806D6B079",
+                        "NAME": "1111"
+                    },
+                    {
+                        "ID": "11E80259D419B790943A15AE1BF90B71",
+                        "NAME": "污水处理厂"
+                    },
+                    {
+                        "ID": "11E803283BC74426B16D7B52BDB6CD9E",
+                        "NAME": "heheheh"
+                    },
+                    {
+                        "ID": "11E8032F77115219B16D7B52BDB6CD9E",
+                        "NAME": "0127145730厂站"
+                    },
+                    {
+                        "ID": "11E804CA9D00CC5AA31EABFAB7FEFFDF",
+                        "NAME": "范德萨发达5"
+                    },
+                    {
+                        "ID": "11E8059D9FAD501FA1090FAB2A54A078",
+                        "NAME": "清华001"
+                    }
+                ]
+            }
+        }
+    },
+    {
+        "url": "/api/home/app/selectAppHomeDataByStationId",
+        "method": "get",
+        "response": {
+            "code": 0,
+            "msg": "成功",
+            "data": [
+                {
+                    "normal": "1",
+                    "symbol": "mg/l",
+                    "size": "100",
+                    "type": "COD"
+                },
+                {
+                    "normal": "1",
+                    "symbol": "mg/l",
+                    "size": "99",
+                    "type": "氨氮"
+                },
+                {
+                    "normal": "1",
+                    "symbol": "mg/l",
+                    "size": "62",
+                    "type": "总氮"
+                },
+                {
+                    "normal": "0",
+                    "symbol": "mg/l",
+                    "size": "88",
+                    "type": "总磷"
+                },
+                {
+                    "normal": "0",
+                    "symbol": "mg/l",
+                    "size": "54",
+                    "type": "SS"
+                },
+                {
+                    "normal": "0",
+                    "symbol": "mg/l",
+                    "size": "53",
+                    "type": "PH"
+                },
+                {
+                    "normal": "1",
+                    "symbol": "°c",
+                    "size": "52",
+                    "type": "温度"
+                },
+                {
+                    "normal": "1",
+                    "symbol": "mg/l",
+                    "size": "55",
+                    "type": "流量"
+                }
+            ]
+        }
+    }
+]

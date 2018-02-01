@@ -92,15 +92,20 @@ class WorkScreen extends WrapScreen {
                 me.setState({
                     station: station
                 })
-                _STATIONID_ = station.ID; // 将当前场站ID设置为全局变量
-                let params = { 'ID': station.ID };
-                Utils.fetch(me, Urls.Main.selectAppHomeDataByStationId, params, 'get').then(data => {
-                    me.setState({
-                        parameters: data
+                if (station) {
+                    _STATIONID_ = station.ID; // 将当前场站ID设置为全局变量
+                    let params = { 'ID': station.ID };
+                    Utils.fetch(me, Urls.Main.selectAppHomeDataByStationId, params, 'get').then(data => {
+                        me.setState({
+                            parameters: data
+                        })
+                    }).catch(err => {
+                        console.log(err)
                     })
-                }).catch(err => {
-                    console.log(err)
-                })
+                } else {
+                    _STATIONID_ = null;
+                    this.store.dispatch(Actions.get(this, Urls.Main.getAppMain));
+                }
             }
         });
     };

@@ -115,11 +115,6 @@ class InspectionManagementScreen extends WrapScreen {
                     </View>
                 )
             } else {
-                this._header = () => {
-                    return {
-                        title: "巡检任务",
-                    }
-                }
                 return (<DefaultPage content={'暂无巡检任务'} />);
             }
         } else if (this.props.requestStatus === Status.FAIL) {
