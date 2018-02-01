@@ -7,7 +7,7 @@ import { Status } from "../../../config/api/api.config";
 import { ErrorPage, Loading, Dialog } from "../../components";
 import { ScrollView, Text, TouchableOpacity, View } from "react-native";
 import { Divider, Icon } from "react-native-elements";
-import { renderCardStatus } from './auditComponents'
+import { renderCardStatus, renderOperate, renderCheckLogs } from './auditComponents'
 export default class AuditCKBGDetailComponent extends Component {
 
     _keyExtractor = (item, index) => index;
@@ -112,44 +112,9 @@ export default class AuditCKBGDetailComponent extends Component {
                                     </View>
                                 </View>
                                 <Divider style={{ backgroundColor: '#ddd' }} />
-                                <View style={{ padding: 10 }}>
-                                    <Text style={{ fontSize: 15, color: '#666' }}>变更后库存</Text>
-                                    <View style={[styles.rowBetween, { marginTop: 10, marginBottom: 10 }]}>
-                                        <View style={{
-                                            height: 53,
-                                            width: 140,
-                                            borderRadius: 2,
-                                            borderColor: '#ccc',
-                                            borderWidth: 1,
-                                            justifyContent: 'center',
-                                            alignItems: 'center',
-                                        }}>
-                                            <Text style={{ fontSize: 15, color: '#999' }}>{detail.WAREHOUSE_ID_BEFORE_NAME}</Text>
-                                            <Text
-                                                style={{ fontSize: 15, color: '#999', marginTop: 5 }}>{item.QUANTITY}件</Text>
-                                        </View>
-                                        <View style={{ justifyContent: 'center', alignItems: 'center' }}>
-                                            <Text style={{ fontSize: 15, color: '#999' }}>到</Text>
-                                            <Icon
-                                                name='long-arrow-right'
-                                                type='font-awesome'
-                                                color='#42BB55'
-                                            />
-                                        </View>
-                                        <View style={{
-                                            height: 53,
-                                            width: 140,
-                                            borderRadius: 2,
-                                            borderColor: '#ccc',
-                                            borderWidth: 1,
-                                            justifyContent: 'center',
-                                            alignItems: 'center',
-                                        }}>
-                                            <Text style={{ fontSize: 15, color: '#999' }}>{detail.WAREHOUSE_ID_AFTER_NAME}</Text>
-                                            <Text
-                                                style={{ fontSize: 15, color: '#999', marginTop: 5 }}>{item.QUANTITY}件</Text>
-                                        </View>
-                                    </View>
+                                <View style={styles.rowBetween}>
+                                    <Text style={{ fontSize: 15, color: '#666' }}>变更数量（件）</Text>
+                                    <Text style={{ fontSize: 15, color: '#333' }}>{item.QUANTITY}</Text>
                                 </View>
                             </View>
                         ))
@@ -158,29 +123,6 @@ export default class AuditCKBGDetailComponent extends Component {
             )
         }
     };
-    _renderOperate = () => (
-        <View style={styles.operate}>
-            <TouchableOpacity style={styles.operateBox} onPress={() => {
-                Dialog.showInput("审核备注", "请输入备注", (input) => {
-                    console.log(input)
-                });
-            }}>
-                <Text style={styles.text}>废弃</Text>
-            </TouchableOpacity>
-            <View style={{ height: 32, width: 0.5, backgroundColor: '#ccc' }} />
-            <TouchableOpacity style={styles.operateBox} onPress={() => {
-                Dialog.show("确定退出登录？", () => {
-                    alert("确定")
-                });
-            }}>
-                <Text style={styles.text}>驳回</Text>
-            </TouchableOpacity>
-            <View style={{ height: 32, width: 0.5, backgroundColor: '#ccc' }} />
-            <TouchableOpacity style={styles.operateBox}>
-                <Text style={styles.text}>通过</Text>
-            </TouchableOpacity>
-        </View>
-    )
 
     render() {
         const detail = this.props.auditDetail;
